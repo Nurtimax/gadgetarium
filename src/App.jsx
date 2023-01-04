@@ -1,7 +1,12 @@
 import React from "react";
+import Themes from "./components/UI/Themes";
 
 const App = () => {
-  return <div>test</div>;
+  return (
+    <div>
+      <Themes />
+    </div>
+  );
 };
 
 export default App;
