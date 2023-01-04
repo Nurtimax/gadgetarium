@@ -1,37 +1,42 @@
-import { TextField, styled } from "@mui/material";
-// import { InputStyled } from "./InputStyled";
+import { InputBase, styled } from "@mui/material";
 
-const Input = ({ value, setValue }) => {
-  console.log(value);
+const Input = ({ value, onChange, error, ...props }) => {
   return (
-    <div>
-      <TextFieldStyled
-        // {...props}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    </div>
+    <InputStyled
+      {...props}
+      value={value}
+      onChange={onChange}
+      error={error}
+      classes={{
+        root: "input",
+        focused: "focused",
+        error: "error",
+      }}
+    />
   );
 };
 
 export default Input;
 
-const TextFieldStyled = styled(TextField)(() => ({
-  "& label.Mui-focused": {},
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: " 1px solid #909CB5",
-      //   backgrounColor: "#F6F6F6",
-    },
-    "&:hover fieldset": {
-      borderColor: "#CB11AB",
-    },
-    "&:active fieldset": {
-      //   background: "black",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#909CB5",
-      //   background: "#F6F6F6",
-    },
+const InputStyled = styled(InputBase)(() => ({
+  "&.input": {
+    border: "0.1px solid #909CB5",
+    background: "#F6F6F6",
+    borderRadius: "5px",
+    padding: "0 10px",
+  },
+  "&.input.focused": {
+    border: "0.1px solid #909CB5",
+    background: "#F6F6F6",
+    borderRadius: "5px",
+    color: "#292929",
+  },
+  "&.input:hover": {
+    border: `0.1px solid #CB11AB`,
+    borderRadius: "5px",
+  },
+  "&.input.error": {
+    border: `0.1px solid #F10000`,
+    borderRadius: "5px",
   },
 }));

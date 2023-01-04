@@ -1,13 +1,7 @@
-import React, { useState } from "react";
-import StyledInput from "./components/UI/input/Input";
+import React from "react";
 
 const App = () => {
-  const [value, setValue] = useState("");
-  return (
-    <div>
-      <StyledInput value={value} setValue={setValue} />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
