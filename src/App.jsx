@@ -13,7 +13,7 @@ const App = () => {
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -35,10 +35,16 @@ const App = () => {
     </>
   );
   return (
-    <div>
+    <>
       <Button onClick={handleClick}>Show Snackbar</Button>
-      <PopUp handleClose={handleClose} action={action} open={open} />
-    </div>
+      <PopUp
+        handleClose={handleClose}
+        action={action}
+        open={open}
+        duration={6000}
+        title={"Добавить в избранное"}
+      />
+    </>
   );
 };
 

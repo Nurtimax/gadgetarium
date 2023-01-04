@@ -1,16 +1,14 @@
 import { Snackbar } from "@mui/material";
 
-const PopUp = ({ handleClose, action, open }) => {
+const PopUp = ({ handleClose, action, open, duration, title }) => {
   return (
-    <>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="Товар добовлен в избранное!"
-        action={action}
-      />
-    </>
+    <Snackbar
+      open={open}
+      autoHideDuration={duration}
+      onClose={handleClose}
+      message={title}
+      action={action}
+    />
   );
 };
 
