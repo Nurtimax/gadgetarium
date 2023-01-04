@@ -1,20 +1,12 @@
 import { Dialog, DialogContent } from "@mui/material";
 
-const Modal = ({ children, setOpen, open }) => {
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+const Modal = ({ children, open, handleClose }) => {
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+    <>
+      <Dialog open={open} onClose={handleClose}>
         <DialogContent>{children}</DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 };
 
