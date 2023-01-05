@@ -1,12 +1,11 @@
 import { Dialog, DialogContent, styled } from "@mui/material";
-import { closeIcon } from "../../assets";
-
+import { iconClose } from "../../assets/index";
 const Modal = ({ children, open, handleClose, state }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       {state && (
         <ContainerIcon>
-          <img src={closeIcon} alt="closeIcon" onClick={handleClose} />
+          <img src={iconClose} alt="closeIcon" onClick={handleClose} />
         </ContainerIcon>
       )}
       <ContainerModal>{children}</ContainerModal>
@@ -26,4 +25,5 @@ const ContainerIcon = styled("div")(() => ({
   display: "flex",
   justifyContent: "flex-end",
   padding: "15px 15px 0 0",
+  cursor: "pointer",
 }));
