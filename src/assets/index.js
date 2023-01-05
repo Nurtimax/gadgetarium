@@ -1,0 +1,10 @@
+export { ReactComponent as Logo } from "./images/gadgetarium-logo.svg";
+export { ReactComponent as ProfileIcon } from "./icons/profile-user.svg";
+export { ReactComponent as CatalogIcon } from "./icons/CatalogIcon.svg";
+export { ReactComponent as SearchIcon } from "./icons/SearchIcon.svg";
+export { ReactComponent as FaceBookIcon } from "./icons/FacebookIcon.svg";
+export { ReactComponent as InstagramIcon } from "./icons/InstagramIcon.svg";
+export { ReactComponent as WhatsAppIcon } from "./icons/WhatsAppIcon.svg";
+export { ReactComponent as HeartIcon } from "./icons/heartIcon.svg";
+export { ReactComponent as ComparativeIcon } from "./icons/comparativeIcon.svg";
+export { ReactComponent as CartIcon } from "./icons/Cart.svg";
