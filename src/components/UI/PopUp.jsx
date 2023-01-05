@@ -69,10 +69,11 @@ const TransitionTitleStyle = styled("div")(({ theme }) => ({
   fontSize: "18px",
   lineHeight: "130%",
   color: theme.palette.success.light,
+  cursor: "pointer",
 }));
 
 const IconCloseBtn = styled("img")(() => ({
   width: "12px",
   height: "12px",
-  // background: "#858FA4",
+  cursor: "pointer",
 }));
