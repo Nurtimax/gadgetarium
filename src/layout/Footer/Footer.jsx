@@ -1,9 +1,6 @@
 import { styled } from "@mui/material";
-import numberIcon from "../../assets/icons/Vector.svg";
-import messageIcon from "../../assets/icons/icon.svg";
-import gpsIcon from "../../assets/icons/icon (1).svg";
-import clockIcon from "../../assets/icons/clock.svg";
-import logo from "../../assets/icons/Group 337505 (1).svg";
+import { Typography } from "@mui/material";
+import { ClockIcon, Logo, Phone, Message, Locotion } from "../../assets";
 const Footer = () => {
   return (
     <FooterStyled>
@@ -11,31 +8,55 @@ const Footer = () => {
         <BoxContainer>
           <BoxBlock>
             <Box>
-              <li>
+              <Typography variant="body1" component="p">
                 <Title> Каталог</Title>
-              </li>
-              <li>Смартфоны</li>
-              <li> Ноутбуки и планшеты</li>
-              <li> Смарт-часы и браслеты</li>
-              <li>Аксессуары</li>
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Смартфоны
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                {" "}
+                Ноутбуки и планшеты
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                {" "}
+                Смарт-часы и браслеты
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Аксессуары
+              </Typography>
             </Box>
             <Box>
-              <li>
+              <Typography variant="body1" component="p">
                 <Title> Будь с нами </Title>
-              </li>
-              <li>Акции</li>
-              <li>Новинки</li>
-              <li>Популярные котегории</li>
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Акции
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Новинки
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Популярные котегории
+              </Typography>
             </Box>
 
             <Box>
-              <li>
+              <Typography variant="body1" component="p">
                 <Title> Помощь и сервисы </Title>
-              </li>
-              <li>О магазине</li>
-              <li>Доставка</li>
-              <li>FAQ</li>
-              <li>Контакты</li>
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                О магазине
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Доставка
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                FAQ
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                Контакты
+              </Typography>
             </Box>
           </BoxBlock>
           <ContactsBox>
@@ -50,27 +71,39 @@ const Footer = () => {
               </p>
             </FooterFormBlock>
             <Contacts>
-              <li>
-                <Icons src={numberIcon} />
-                <p> +996 (400) 00 00 00</p>
-              </li>
-              <li>
-                <Icons src={messageIcon} />
-                <p> Gadgetarium.kg </p>
-              </li>
+              <Typography component="li" variant="body1" color="inherit">
+                <Phone />
+                <Typography variant="body1" component="p">
+                  {" "}
+                  +996 (400) 00 00 00
+                </Typography>
+              </Typography>
+              <Typography component="li" variant="body1" color="inherit">
+                <Message />
+                <Typography variant="body1" component="p">
+                  {" "}
+                  Gadgetarium.kg{" "}
+                </Typography>
+              </Typography>
               <div>
-                <Icons src={gpsIcon} />
-                <li> г.Бишкек, ул. Гражданская 119 </li>
+                <Locotion />
+                <Typography component="li" variant="body1" color="inherit">
+                  {" "}
+                  г.Бишкек, ул. Гражданская 119{" "}
+                </Typography>
               </div>
               <div>
-                <Icons src={clockIcon} />
-                <li> С 10:00 до 21:00 (без выходных) </li>
+                <ClockIcon />
+                <Typography component="li" variant="body1" color="inherit">
+                  {" "}
+                  С 10:00 до 21:00 (без выходных){" "}
+                </Typography>
               </div>
             </Contacts>
           </ContactsBox>
         </BoxContainer>
         <FooterBox>
-          <Block src={logo} />
+          <Logo />
           <FooterBlock>
             © 2022 Gadgetarium. Интернет магазин Все права защищены.
           </FooterBlock>
@@ -88,10 +121,6 @@ const FooterStyled = styled("footer")`
 `;
 
 const FooterContainer = styled("div")`
-  max-width: 1430px;
-  margin-left: auto;
-  margin-right: auto;
-  /* height: 600px; */
   padding: 60px 100px;
   display: flex;
   flex-direction: column;
@@ -114,12 +143,9 @@ const ContactsBox = styled("div")`
   justify-content: space-between;
 `;
 const FooterBox = styled("div")`
-  /* height: 95px; */
   display: flex;
   flex-direction: column;
   margin-top: 61px;
-  gap: 20px;
-  justify-content: space-between;
   align-items: center;
   border-top: 1px solid #858fa4;
 `;
@@ -130,8 +156,6 @@ const Title = styled("span")`
   cursor: pointer;
 `;
 const Box = styled("ul")`
-  white-space: nowrap;
-  /* height: 138px; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -172,10 +196,7 @@ const Contacts = styled("div")`
     line-height: 23px;
   }
 `;
-const Icons = styled("img")`
-  width: 20px;
-  height: 20px;
-`;
+
 const FooterFormBlock = styled("div")`
   height: 136px;
   color: #858fa4;
@@ -205,7 +226,4 @@ const FooterBlock = styled("p")`
   color: #858fa4;
   line-height: 20px;
   text-align: center;
-`;
-const Block = styled("img")`
-  padding-top: 31px;
 `;
