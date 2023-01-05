@@ -15,11 +15,9 @@ const Footer = () => {
                 Смартфоны
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                {" "}
                 Ноутбуки и планшеты
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                {" "}
                 Смарт-часы и браслеты
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
@@ -74,29 +72,26 @@ const Footer = () => {
               <Typography component="li" variant="body1" color="inherit">
                 <Phone />
                 <Typography variant="body1" component="p">
-                  {" "}
                   +996 (400) 00 00 00
                 </Typography>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
                 <Message />
                 <Typography variant="body1" component="p">
-                  {" "}
-                  Gadgetarium.kg{" "}
+                  Gadgetarium.kg
                 </Typography>
               </Typography>
               <div>
                 <Locotion />
                 <Typography component="li" variant="body1" color="inherit">
-                  {" "}
+                
                   г.Бишкек, ул. Гражданская 119{" "}
                 </Typography>
               </div>
               <div>
                 <ClockIcon />
                 <Typography component="li" variant="body1" color="inherit">
-                  {" "}
-                  С 10:00 до 21:00 (без выходных){" "}
+                  С 10:00 до 21:00 (без выходных)
                 </Typography>
               </div>
             </Contacts>
