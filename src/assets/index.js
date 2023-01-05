@@ -1,1 +1,1 @@
-export { ReactComponent as iconClose } from "../assets/icons/CloseIconPopUp.svg";
+export { ReactComponent as IconClose } from "../assets/icons/CloseIconPopUp.svg";
