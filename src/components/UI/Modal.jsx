@@ -1,12 +1,12 @@
 import { Dialog, DialogContent, styled } from "@mui/material";
-import Icon from "../../assets/icons/closeIcon.png";
+import { ReactComponent as iconClose } from "../../assets/icons/closeIcon.png";
 
 const Modal = ({ children, open, handleClose, state }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       {state && (
         <ContainerIcon>
-          <img src={Icon} alt="closeIcon" onClick={handleClose} />
+          <img src={iconClose} alt="closeIcon" onClick={handleClose} />
         </ContainerIcon>
       )}
       <ContainerModal>{children}</ContainerModal>
