@@ -1,7 +1,11 @@
 import React from "react";
-
+import Footer from "./layout/Footer/Footer";
 const App = () => {
-  return <div>test</div>;
+  return (
+    <>
+      <Footer />
+    </>
+  );
 };
 
 export default App;
