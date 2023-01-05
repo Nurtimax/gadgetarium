@@ -2,7 +2,7 @@ import Search from "./components/UI/Search";
 const App = () => {
   return (
     <div>
-      <Search />
+      <Search placeholder="Поиск по каталогу магазина" />
     </div>
   );
 };
