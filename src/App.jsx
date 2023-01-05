@@ -10,7 +10,7 @@ const App = () => {
         Open
       </button>
       {open && (
-        <DropDown propsWidth="300px" height="300px">
+        <DropDown propsWidth="300px" propsHeight="200px">
           Alisher
         </DropDown>
       )}
