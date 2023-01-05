@@ -1,81 +1,75 @@
-import { styled } from "@mui/material";
-import { useEffect } from "react";
-import Icon from "../../assets/icons/iconClose.png";
-const PopUp = ({ handleClose, transitionHandler, added, transition }) => {
-  useEffect(() => {
-    const time = setTimeout(() => {
-      handleClose();
-    }, 4000);
-    return () => {
-      clearTimeout(time);
-    };
-  }, []);
+import { Snackbar, styled } from "@mui/material";
+import iconClose from "../../assets/icons/iconClose.png";
+
+const PopUp = ({
+  vertical,
+  horizontal,
+  open,
+  handleClose,
+  addedTitle,
+  transitionTitle,
+  durationSnackbar,
+}) => {
+  const snackbar = (
+    <Box>
+      <AddedTitleStyle>{addedTitle}</AddedTitleStyle>
+      <TransitionTitleStyle>{transitionTitle}</TransitionTitleStyle>
+      <IconCloseBtn src={iconClose} alt="icon" />
+    </Box>
+  );
 
   return (
-    <>
-      <Container>
-        <Added>{added}</Added>
-        <Transition onClick={transitionHandler}>{transition}</Transition>
-        <IconClose src={Icon} alt="Icon" onClick={handleClose} />
-      </Container>
-    </>
+    <Container
+      anchorOrigin={{ vertical, horizontal }}
+      autoHideDuration={durationSnackbar}
+      open={open}
+      onClose={handleClose}
+      message={snackbar}
+      key={vertical + horizontal}
+      classes={{ root: "snackbar", anchorOriginTopRight: "test" }}
+    />
   );
 };
 
 export default PopUp;
 
-//Style
+///Style
 
-const Container = styled("div")(() => ({
-  width: "470px",
-  height: "45px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "20px 18px",
-  gap: "36px",
-  background: "#202027",
-  borderRadius: "4px",
-  position: "absolute",
-  animationName: "popUp",
-  animationDuration: "infinity",
-
-  "@keyframes popUp": {
-    "0%": {
-      top: 0,
-      right: 0,
-    },
-    "100%": {
-      right: "30%",
-    },
+const Container = styled(Snackbar)(() => ({
+  "& .MuiPaper-root": {
+    background: "#202027",
   },
 }));
 
-const Added = styled("div")(() => ({
-  fontFamily: "Inter",
-  fontStyle: "normal",
-  fontSize: "18px",
-  lineHeight: "140%",
-  textAlign: "center",
-  color: "white",
-  flex: "none",
-  order: "0",
-  flexGrow: "0",
+const Box = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  gap: "36px",
+  borderRadius: "4px",
 }));
 
-const Transition = styled("div")(() => ({
+const AddedTitleStyle = styled("div")(() => ({
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: "400",
+  fontSize: "18px",
+  lineHeight: "140%",
+  texAlign: "center",
+  color: "#fffff",
+}));
+
+const TransitionTitleStyle = styled("div")(() => ({
   fontFamily: "Inter",
   fontStyle: "normal",
   fontWeight: "700",
   fontSize: "18px",
   lineHeight: "130%",
-  color: "#3cde14",
-  flex: "none",
-  flexGrow: "0",
+  color: "#3CDE14",
 }));
 
-const IconClose = styled("img")(() => ({
+const IconCloseBtn = styled("img")(() => ({
   width: "12px",
   height: "12px",
+  // background: "#858FA4",
 }));
