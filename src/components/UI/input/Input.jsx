@@ -1,42 +1,36 @@
 import { InputBase, styled } from "@mui/material";
+import { forwardRef } from "react";
 
-const Input = ({ value, onChange, error, ...props }) => {
+const Input = forwardRef(({ value, onChange, error, ...props }, ref) => {
   return (
     <InputStyled
       {...props}
       value={value}
       onChange={onChange}
       error={error}
-      classes={{
-        root: "input",
-        focused: "focused",
-        error: "error",
-      }}
+      classes={{ root: "input", focused: "focused", error: "error" }}
+      ref={ref}
     />
   );
-};
-
+});
+Input.displayName = Input;
 export default Input;
 
-const InputStyled = styled(InputBase)(() => ({
+const InputStyled = styled(InputBase)(({ theme }) => ({
   "&.input": {
-    border: "0.1px solid #909CB5",
-    background: "#F6F6F6",
+    border: `0.1px solid ${theme.palette.grey[900]}`,
+    background: `${theme.palette.background.default}`,
     borderRadius: "5px",
     padding: "0 10px",
   },
   "&.input.focused": {
-    border: "0.1px solid #909CB5",
-    background: "#F6F6F6",
+    border: `0.1px solid ${theme.palette.secondary.main}`,
+    background: `${theme.palette.background.default}`,
     borderRadius: "5px",
-    color: "#292929",
-  },
-  "&.input:hover": {
-    border: `0.1px solid #CB11AB`,
-    borderRadius: "5px",
+    color: `${theme.palette.primary.dark}`,
   },
   "&.input.error": {
-    border: `0.1px solid #F10000`,
+    border: `1px solid ${theme.palette.error.main}`,
     borderRadius: "5px",
   },
 }));
