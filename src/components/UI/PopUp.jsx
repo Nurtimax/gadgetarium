@@ -9,12 +9,15 @@ const PopUp = ({
   addedTitle,
   transitionTitle,
   durationSnackbar,
+  transition,
 }) => {
   const snackbar = (
     <Box>
       <AddedTitleStyle>{addedTitle}</AddedTitleStyle>
-      <TransitionTitleStyle>{transitionTitle}</TransitionTitleStyle>
-      <IconCloseBtn src={iconClose} alt="icon" />
+      <TransitionTitleStyle onClick={transition}>
+        {transitionTitle}
+      </TransitionTitleStyle>
+      <IconCloseBtn src={iconClose} alt="icon" onClick={handleClose} />
     </Box>
   );
 
@@ -49,23 +52,23 @@ const Box = styled("div")(() => ({
   borderRadius: "4px",
 }));
 
-const AddedTitleStyle = styled("div")(() => ({
+const AddedTitleStyle = styled("div")(({ theme }) => ({
   fontFamily: "Inter",
   fontStyle: "normal",
   fontWeight: "400",
   fontSize: "18px",
   lineHeight: "140%",
   texAlign: "center",
-  color: "#fffff",
+  color: theme.palette.secondary.contrastText,
 }));
 
-const TransitionTitleStyle = styled("div")(() => ({
+const TransitionTitleStyle = styled("div")(({ theme }) => ({
   fontFamily: "Inter",
   fontStyle: "normal",
   fontWeight: "700",
   fontSize: "18px",
   lineHeight: "130%",
-  color: "#3CDE14",
+  color: theme.palette.success.light,
 }));
 
 const IconCloseBtn = styled("img")(() => ({
