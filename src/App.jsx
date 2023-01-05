@@ -1,5 +1,21 @@
+import { useState } from "react";
+import DropDown from "./components/UI/DropDown";
+
 const App = () => {
-  return <div></div>;
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button type="submit" onClick={() => setOpen(!open)}>
+        Open
+      </button>
+      {open && (
+        <DropDown propsWidth="300px" height="300px">
+          Alisher
+        </DropDown>
+      )}
+    </>
+  );
 };
 
 export default App;
