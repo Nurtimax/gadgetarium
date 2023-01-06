@@ -84,7 +84,6 @@ const Footer = () => {
               <div>
                 <Locotion />
                 <Typography component="li" variant="body1" color="inherit">
-                
                   г.Бишкек, ул. Гражданская 119{" "}
                 </Typography>
               </div>
@@ -110,115 +109,119 @@ const Footer = () => {
 
 export default Footer;
 
-const FooterStyled = styled("footer")`
-  width: 100%;
-  background: #1a1a25;
-`;
+const FooterStyled = styled("footer")(() => ({
+  width: "100%",
+  background: "#1a1a25",
+}));
 
-const FooterContainer = styled("div")`
-  padding: 60px 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin-top: auto;
-`;
-const BoxContainer = styled("div")`
-  display: flex;
-  justify-content: space-between;
-`;
-const BoxBlock = styled("div")`
-  display: flex;
-  height: 300px;
-  gap: 120px;
-  margin-right: 50px;
-`;
-const ContactsBox = styled("div")`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const FooterBox = styled("div")`
-  display: flex;
-  flex-direction: column;
-  margin-top: 61px;
-  align-items: center;
-  border-top: 1px solid #858fa4;
-`;
+const FooterContainer = styled("div")(() => ({
+  padding: "60px 100px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  marginTop: "auto",
+}));
 
-const Title = styled("span")`
-  color: #ffffff;
-  margin-bottom: 15px;
-  cursor: pointer;
-`;
-const Box = styled("ul")`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 19px;
-  li {
-    color: #858fa4;
-    text-decoration: none;
-    list-style: none;
-  }
-  li:hover {
-    color: #ffffff;
-    transition: 0.4s;
-    cursor: pointer;
-  }
-`;
-const Contacts = styled("div")`
-  width: 300px;
-  height: 132px;
-  color: #858fa4;
-  display: flex;
-  flex-direction: column;
-  align-items: centers;
-  gap: 18px;
-  div {
-    display: flex;
-    gap: 15px;
-  }
-  li {
-    font-weight: 400;
-    font-size: 14px;
-    text-decoration: none;
-    color: #858fa4;
-    display: flex;
-    gap: 15px;
-  }
-  div {
-    color: #858fa4;
-    line-height: 23px;
-  }
-`;
+const BoxContainer = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+}));
 
-const FooterFormBlock = styled("div")`
-  height: 136px;
-  color: #858fa4;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  & input {
-    width: 100px;
-    display: inline;
-  }
-  & button {
-    display: inline;
-  }
-  p {
-    margin-top: 10px;
-    line-height: 20px;
-    color: #ffffff;
-    font-size: 14px;
-    width: 360px;
-  }
-`;
+const BoxBlock = styled("div")(() => ({
+  display: "flex",
+  height: "300px",
+  gap: "120px",
+  marginRight: "50px",
+}));
+const ContactsBox = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+}));
+const FooterBox = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  marginTop: "61px",
+  alignItems: "center",
+  borderTop: "1px solid #858fa4",
+  paddingTop: "20px",
+}));
 
-const FooterBlock = styled("p")`
-  width: 278px;
-  height: 40px;
-  font-size: 14px;
-  color: #858fa4;
-  line-height: 20px;
-  text-align: center;
-`;
+const Title = styled("span")(() => ({
+  cursor: "pointer",
+  marginBottom: "15px",
+  color: "#ffffff",
+}));
+
+const Box = styled("ul")(() => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "19px",
+
+  "& li": {
+    color: "#858fa4",
+    textDecoration: "none",
+    listStyle: "none",
+  },
+  "& li:hover": {
+    color: "#ffffff",
+    transition: "0.4s",
+    cursor: "pointer",
+  },
+}));
+
+const Contacts = styled("div")(() => ({
+  width: "300px",
+  height: "132px",
+  color: "#858fa4",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "felex-start",
+  gap: "18px",
+  "& div": {
+    display: "flex",
+    gap: "15px",
+  },
+  "& li": {
+    fontWeight: "400",
+    fontSize: "14px",
+    textDecoration: "none",
+    display: "flex",
+    gap: "15px",
+  },
+}));
+
+const FooterFormBlock = styled("div")(() => ({
+  height: "135px",
+  color: "#858fa4",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  "& input": {
+    width: "50%",
+    display: "inline",
+  },
+  "& button": {
+    display: "inline",
+  },
+  "& p": {
+    marginTop: "10px",
+    lineHeight: "20px",
+    color: "#ffffff",
+    fontSize: "14px",
+    width: "350px",
+    alignItems: "flex-start",
+  },
+}));
+
+const FooterBlock = styled("p")(() => ({
+  width: "278px",
+  height: "40px",
+  fontSize: "14px",
+  color: "#858fa4",
+  lineHeight: "20px",
+  textAlign: "center",
+  paddingTop: "8px",
+}));
