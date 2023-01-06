@@ -1,10 +1,5 @@
-import Search from "./components/UI/Search";
 const App = () => {
-  return (
-    <div>
-      <Search />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
