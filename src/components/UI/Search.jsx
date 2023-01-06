@@ -2,55 +2,70 @@ import {
   FormControl,
   IconButton,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
   styled,
 } from "@mui/material";
-import React from "react";
+import React, { forwardRef } from "react";
 import { SearchIcon } from "../../assets/index.js";
 
-const Search = ({ label, ...props }) => {
-  return (
-    <FormControlStyled classes={{ root: "search", placeholder: "placeholder" }}>
-      {label && (
-        <InputLabel htmlFor="outlined-adornment-search">{label}</InputLabel>
-      )}
-      <OutlinedInputStyled
-        id="outlined-adornment-search"
-        {...props}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButtonStyled>
-              <SearchIconStyled classes={{ root: "search-icon" }} />
-            </IconButtonStyled>
-          </InputAdornment>
-        }
-        label={label}
-      />
-    </FormControlStyled>
-  );
-};
+const Search = forwardRef(
+  ({ value, onChange, fullWidth, icon, position = "end", ...props }, ref) => {
+    return (
+      <FormControl fullWidth={fullWidth}>
+        <OutlinedInputStyled
+          id="outlined-adornment-search"
+          {...props}
+          value={value}
+          onChange={onChange}
+          classes={{ root: "outlined-input", focused: "focused" }}
+          ref={ref}
+          endAdornment={
+            <InputAdornment position={position}>
+              <IconButton>{!icon && <SearchIcon />}</IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+    );
+  }
+);
+
+Search.displayName = Search;
 
 export default Search;
 
-const FormControlStyled = styled(FormControl)(() => ({
-  "&.search": {
-    fill: "#FFFFFF",
-    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-      border: `1px solid  #FFFFFF`,
-      borderRadius: "10px",
+const OutlinedInputStyled = styled(OutlinedInput)(
+  ({ width, border, fill, borderRadius, backgroundColor }) => ({
+    "&.outlined-input": {
+      fill: fill || "#FFFFFF",
+      width: width || "100%",
+      borderRadius: borderRadius || "10px",
+      "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+        border: border || `1px solid  #FFFFFF`,
+      },
+      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+        height: "7px",
+      },
+      "& ::placeholder": {
+        color: "#FFFFFF",
+      },
     },
-  },
-  "& ::placeholder": {
-    color: "#FFFFFF",
-  },
-}));
-const OutlinedInputStyled = styled(OutlinedInput)(() => ({}));
-const IconButtonStyled = styled(IconButton)(() => ({
-  backgroundColor: "none",
-}));
-const SearchIconStyled = styled(SearchIcon)(() => ({
-  "&.search-icon": {
-    fill: "red",
-  },
-}));
+    "&.outlined-input:hover": {
+      fill: fill || "#969696",
+      backgroundColor: backgroundColor || "#FAFAFA",
+      "& ::placeholder": {
+        color: "#91969E",
+      },
+    },
+    "&.outlined-input.focused": {
+      fill: fill || "#CB11AB",
+      backgroundColor: backgroundColor || "#FAFAFA",
+      "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+        border: border || `1px solid  #FAFAFA`,
+      },
+      "& ::placeholder": {
+        color: "#91969E",
+      },
+    },
+  })
+);
