@@ -8,3 +8,4 @@ export { ReactComponent as WhatsAppIcon } from "./icons/WhatsAppIcon.svg";
 export { ReactComponent as HeartIcon } from "./icons/heartIcon.svg";
 export { ReactComponent as ComparativeIcon } from "./icons/comparativeIcon.svg";
 export { ReactComponent as CartIcon } from "./icons/Cart.svg";
+export { ReactComponent as IconClose } from "../assets/icons/CloseIconPopUp.svg";
