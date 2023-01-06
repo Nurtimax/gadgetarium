@@ -9,7 +9,11 @@ import React, { forwardRef } from "react";
 import { SearchIcon } from "../../assets/index.js";
 
 const Search = forwardRef(
-  ({ value, onChange, fullWidth, icon, position = "end", ...props }, ref) => {
+  (
+    { value, onChange, fullWidth, position = "end", placeholder, ...props },
+    ref
+  ) => {
+    // console.log(showBackground);
     return (
       <FormControl fullWidth={fullWidth}>
         <OutlinedInputStyled
@@ -17,11 +21,17 @@ const Search = forwardRef(
           {...props}
           value={value}
           onChange={onChange}
-          classes={{ root: "outlined-input", focused: "focused" }}
+          placeholder={placeholder}
+          classes={{
+            root: "outlined-input",
+            focused: "focused",
+          }}
           ref={ref}
           endAdornment={
             <InputAdornment position={position}>
-              <IconButton>{!icon && <SearchIcon />}</IconButton>
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
             </InputAdornment>
           }
         />
@@ -35,33 +45,34 @@ Search.displayName = Search;
 export default Search;
 
 const OutlinedInputStyled = styled(OutlinedInput)(
-  ({ width, border, fill, borderRadius, backgroundColor }) => ({
+  ({ width, border, fill, borderRadius, showBackground = "false" }) => ({
     "&.outlined-input": {
-      fill: fill || "#FFFFFF",
+      fill: showBackground ? "#969696" : "#FFFFFF",
       width: width || "100%",
       borderRadius: borderRadius || "10px",
+      backgroundColor: showBackground ? "#FFFFFF" : "none",
       "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-        border: border || `1px solid  #FFFFFF`,
+        border: showBackground ? "1px solid #CDCDCD" : "1px solid #FFFFFF",
       },
       "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
         height: "7px",
       },
       "& ::placeholder": {
-        color: "#FFFFFF",
+        color: showBackground ? "#91969E" : "#FFFFFF",
       },
     },
     "&.outlined-input:hover": {
       fill: fill || "#969696",
-      backgroundColor: backgroundColor || "#FAFAFA",
+      backgroundColor: "#FAFAFA",
       "& ::placeholder": {
         color: "#91969E",
       },
     },
     "&.outlined-input.focused": {
       fill: fill || "#CB11AB",
-      backgroundColor: backgroundColor || "#FAFAFA",
+      backgroundColor: "#FAFAFA",
       "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-        border: border || `1px solid  #FAFAFA`,
+        border: border || `1px solid  #CB11AB`,
       },
       "& ::placeholder": {
         color: "#91969E",
