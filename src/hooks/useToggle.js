@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
 export const useToggle = (value) => {
-  const [state, setState] = useState(value);
+  const [status, setStatus] = useState(value);
 
-  const useToggleHandler = (changeValue) => {
-    setState(changeValue);
+  const useToggleHadler = (change) => {
+    setStatus(change);
   };
   useEffect(() => {
-    setState(value);
+    setStatus(value);
   }, [value]);
 
-  return [state, useToggleHandler];
+  return [status, useToggleHadler];
 };
