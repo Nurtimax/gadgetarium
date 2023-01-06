@@ -1,11 +1,5 @@
-import Search from "./components/UI/Search";
-
 const App = () => {
-  return (
-    <div>
-      <Search placeholder="enter your name" />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
