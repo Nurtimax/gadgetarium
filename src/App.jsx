@@ -1,11 +1,5 @@
-import React from "react";
-import Footer from "./layout/Footer/Footer";
 const App = () => {
-  return (
-    <div>
-      <Footer>Alisher</Footer>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
