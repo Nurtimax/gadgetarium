@@ -17,6 +17,7 @@ const DropDown = ({
         open={open}
         onClose={handleClose}
         classes={{ root: "dropDown" }}
+        PopoverClasses={{ paper: "paper" }}
         anchorOrigin={{
           vertical: { vertical },
           horizontal: { horizontal },
@@ -35,7 +36,7 @@ const DropDown = ({
 export default DropDown;
 
 const Container = styled(Menu)((props) => ({
-  "& .MuiPopover-paper": {
+  "& .paper": {
     width: props.width || "200px",
     height: props.height || "200px",
     background: "#fffff",
