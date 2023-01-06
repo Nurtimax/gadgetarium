@@ -1,6 +1,14 @@
 import { Menu, styled } from "@mui/material";
 
-const DropDown = ({ children, width, height, open, handleClose }) => {
+const DropDown = ({
+  children,
+  width,
+  height,
+  open,
+  handleClose,
+  vertical,
+  horizontal,
+}) => {
   return (
     open && (
       <Container
@@ -9,6 +17,14 @@ const DropDown = ({ children, width, height, open, handleClose }) => {
         open={open}
         onClose={handleClose}
         classes={{ root: "dropDown" }}
+        anchorOrigin={{
+          vertical: { vertical },
+          horizontal: { horizontal },
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
       >
         {children}
       </Container>
@@ -19,21 +35,14 @@ const DropDown = ({ children, width, height, open, handleClose }) => {
 export default DropDown;
 
 const Container = styled(Menu)((props) => ({
-  dropDown: {
+  "& .MuiPopover-paper": {
     width: props.width || "200px",
     height: props.height || "200px",
-    background: "#FFFFFF",
+    background: "#fffff",
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
     borderRadius: "4px",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
-  //   animation: "modal 0.5s ease-out",
-
-  //   "@keyframes modal": {
-  //     "0%": {
-  //       transform: "scale(0.5)",
-  //     },
-  //     "100%": {
-  //       transform: "scale(1)",
-  //     },
-  //   },
 }));
