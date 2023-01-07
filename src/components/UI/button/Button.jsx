@@ -46,8 +46,4 @@ const ButtonStyled = styled(Button)((props) => ({
     backgroundColor: "#CB11AB",
     color: "#FFFFFF",
   },
-  //   "&.button:active": {
-  //     backgroundColor: "#BAD7E0;",
-  //     color: "#FFFFFF",
-  //   },
 }));
