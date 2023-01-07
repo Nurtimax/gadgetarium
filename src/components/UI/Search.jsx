@@ -1,11 +1,5 @@
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  OutlinedInput,
-  styled,
-} from "@mui/material";
 import React, { forwardRef } from "react";
+import { InputAdornment, OutlinedInput, styled } from "@mui/material";
 import { SearchIcon } from "../../assets/index.js";
 
 const Search = forwardRef(
@@ -13,29 +7,26 @@ const Search = forwardRef(
     { value, onChange, fullWidth, position = "end", placeholder, ...props },
     ref
   ) => {
-    // console.log(showBackground);
     return (
-      <FormControl fullWidth={fullWidth}>
-        <OutlinedInputStyled
-          id="outlined-adornment-search"
-          {...props}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          classes={{
-            root: "outlined-input",
-            focused: "focused",
-          }}
-          ref={ref}
-          endAdornment={
-            <InputAdornment position={position}>
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
+      <OutlinedInputStyled
+        {...props}
+        value={value}
+        onChange={onChange}
+        fullWidth={fullWidth}
+        placeholder={placeholder}
+        classes={{
+          root: "outlined-input",
+          focused: "focused",
+          notchedOutline: "notchedOutline",
+          input: "input",
+        }}
+        ref={ref}
+        endAdornment={
+          <InputAdornment position={position}>
+            <SearchIcon />
+          </InputAdornment>
+        }
+      />
     );
   }
 );
@@ -48,13 +39,13 @@ const OutlinedInputStyled = styled(OutlinedInput)(
   ({ width, border, fill, borderRadius, showBackground = "false" }) => ({
     "&.outlined-input": {
       fill: showBackground ? "#969696" : "#FFFFFF",
-      width: width || "100%",
+      width: width || "784px;",
       borderRadius: borderRadius || "10px",
       backgroundColor: showBackground ? "#FFFFFF" : "none",
-      "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+      "& .notchedOutline": {
         border: showBackground ? "1px solid #CDCDCD" : "1px solid #FFFFFF",
       },
-      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+      "& .input": {
         height: "7px",
       },
       "& ::placeholder": {
@@ -71,7 +62,7 @@ const OutlinedInputStyled = styled(OutlinedInput)(
     "&.outlined-input.focused": {
       fill: fill || "#CB11AB",
       backgroundColor: "#FAFAFA",
-      "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+      "& .notchedOutline": {
         border: border || `1px solid  #CB11AB`,
       },
       "& ::placeholder": {
