@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Badge,
   Box,
   Button,
@@ -16,7 +17,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CartIcon,
   CatalogIcon,
@@ -29,27 +30,66 @@ import {
   SearchIcon,
   WhatsAppIcon,
 } from "../assets";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const Header = () => {
-  const [value, setValue] = useState("Главная");
+const Header = ({ isAdmin = false, scroll = false }) => {
+  const [admin, setAdmin] = useState(isAdmin);
+  const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
-  const [scroll, setScroll] = useState(false);
+  const [isScroll, setScroll] = useState(scroll);
+  const [anchorState, setAnchorState] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-    setScroll(true);
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const pages = ["Главная", "О магазине", "Доставка", "FAG", "Контакты"];
+  const toggleAdminHandler = () => {
+    setAdmin((prev) => prev);
+  };
+
+  const toggleAnchorStateHandler = () => {
+    setAnchorState((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (!admin) {
+      setValue("Главная");
+    } else {
+      setValue("Товары");
+    }
+  }, [admin]);
+
+  useEffect(() => {
+    setScroll(scroll);
+  }, [scroll]);
+
+  const userPages = [
+    { id: 11, theme: "Главная" },
+    { id: 12, theme: "О магазине" },
+    { id: 13, theme: "Доставка" },
+    { id: 14, theme: "FAG" },
+    { id: 15, theme: "Контакты" },
+  ];
+  const adminPage = [
+    { id: 22, theme: "Товары" },
+    { id: 23, theme: "Заказы" },
+    { id: 24, theme: "Отзывы и рейтинг" },
+  ];
+
+  const pageIsAdmin = !admin ? userPages : adminPage;
+
+  if (!value) {
+    return <h1>Loading...</h1>;
+  }
 
   const search = (
-    <Box>
+    <>
       <FormControlStyled>
         <OutlinedInput
           placeholder="Поиск по каталогу магазина"
@@ -65,7 +105,7 @@ const Header = () => {
           }
         />
       </FormControlStyled>
-    </Box>
+    </>
   );
 
   const catalog = (
@@ -82,8 +122,8 @@ const Header = () => {
   );
 
   const icons = (
-    <Box className="flex gap2 height">
-      <Badge badgeContent={4} color="error">
+    <Box className="flex gap2 height flex-end">
+      <Badge badgeContent={1} color="error">
         <ComparativeIcon />
       </Badge>
       <Badge badgeContent={4} color="error">
@@ -95,102 +135,145 @@ const Header = () => {
     </Box>
   );
 
+  const userProfile = (
+    <Box className="flex gap flexgrow flex-end">
+      <Typography variant="body1" component="div">
+        +996 (400) 00-00-00
+      </Typography>
+      <IconButton size="large" color="inherit">
+        <ProfileIcon />
+      </IconButton>
+    </Box>
+  );
+
+  const adminProfile = (
+    <Box className="flex gap">
+      <Box>
+        <ButtonStyled className="createlink">Создать рассылку</ButtonStyled>
+      </Box>
+      <Divider flexItem orientation="vertical" variant="middle" color="white" />
+      <Box>
+        <AvatarStyled>G</AvatarStyled>
+      </Box>
+      <Box
+        className="flex color-white pointer"
+        onClick={toggleAnchorStateHandler}
+      >
+        <Typography component="div" variant="body2">
+          Администратор
+        </Typography>
+        <IconButton
+          color="inherit"
+          className={anchorState ? "transition arrowAnimation" : "transition"}
+        >
+          <KeyboardArrowRightIcon />
+        </IconButton>
+      </Box>
+    </Box>
+  );
+
+  const navLinks = (
+    <Box className="flex">
+      <Tabs
+        textColor="inherit"
+        value={value}
+        onChange={handleChange}
+        indicatorColor="none"
+      >
+        {pageIsAdmin?.map((adminList) => (
+          <TabStyled
+            key={adminList.id}
+            value={adminList.theme}
+            label={adminList.theme}
+          />
+        ))}
+      </Tabs>
+    </Box>
+  );
+
+  const tabsPath = (
+    <>
+      <Grid item xs={5}>
+        {navLinks}
+      </Grid>
+      <Grid item xs={4} className="height flex">
+        {!admin ? userProfile : adminProfile}
+      </Grid>
+    </>
+  );
+
   return (
     <HeaderStyled>
-      <AppBar>
+      <AppBar position={admin ? "fixed" : isScroll ? "fixed" : "relative"}>
         <Container>
           <Toolbar>
-            <Grid container>
+            <Grid container spacing={1} className="between">
               <Grid item xs={2.5}>
-                <Logo />
+                <Logo onClick={toggleAdminHandler} />
               </Grid>
-              {!scroll ? (
-                <>
-                  <Grid item xs={7}>
-                    <Box className="flex">
-                      <Tabs
-                        textColor="inherit"
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="none"
-                      >
-                        {pages.map((page) => (
-                          <TabStyled
-                            key={page}
-                            value={page}
-                            label={page}
-                            className="capitalize"
-                          />
-                        ))}
-                      </Tabs>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={2.5}>
-                    <Box className="flex gap flexgrow">
-                      <Typography variant="body1" component="div">
-                        +996 (400) 00-00-00
-                      </Typography>
-                      <IconButton size="large" color="inherit">
-                        <ProfileIcon />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                </>
+              {!admin ? (
+                !isScroll ? (
+                  tabsPath
+                ) : (
+                  <>
+                    <Grid item xs={1.5}>
+                      {catalog}
+                    </Grid>
+                    <Grid item xs={6}>
+                      {search}
+                    </Grid>
+                    <Grid item xs={2}>
+                      {icons}
+                    </Grid>
+                  </>
+                )
               ) : (
-                <>
-                  <Grid item xs={1.5}>
-                    {catalog}
-                  </Grid>
-                  <Grid item xs={6}>
-                    {search}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {icons}
-                  </Grid>
-                </>
+                tabsPath
               )}
             </Grid>
           </Toolbar>
         </Container>
         <Divider color="grey[200]" />
-        {!scroll && (
-          <Container>
-            <Toolbar>
-              <Grid container>
-                <Grid item xs={1} className="flex gap2">
-                  {catalog}
-                </Grid>
-                <Grid item xs={1}>
-                  <Divider
-                    orientation="vertical"
-                    color="white"
-                    variant="middle"
-                    flexItem
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  {search}
-                </Grid>
-                <Grid item xs={2} className="">
-                  <Box className="flex gap2 height">
-                    <Badge badgeContent={4} color="success">
-                      <FaceBookIcon />
-                    </Badge>
-                    <Badge badgeContent={4} color="success">
-                      <InstagramIcon />
-                    </Badge>
-                    <Badge badgeContent={4} color="success">
-                      <WhatsAppIcon />
-                    </Badge>
-                  </Box>
-                </Grid>
-                <Grid item xs={2}>
-                  {icons}
-                </Grid>
-              </Grid>
-            </Toolbar>
-          </Container>
-        )}
+        {!admin
+          ? !isScroll && (
+              <Container>
+                <Toolbar>
+                  <Grid container className="between">
+                    <Grid item xs={1} className="flex gap2">
+                      {catalog}
+                    </Grid>
+                    <Grid item xs={1}>
+                      <Divider
+                        orientation="vertical"
+                        color="white"
+                        variant="middle"
+                        flexItem
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      {search}
+                    </Grid>
+                    <Grid item xs={2} className="">
+                      <Box className="flex gap2 height">
+                        <Badge badgeContent={4} color="success">
+                          <FaceBookIcon />
+                        </Badge>
+                        <Badge badgeContent={4} color="success">
+                          <InstagramIcon />
+                        </Badge>
+                        <Badge badgeContent={4} color="success">
+                          <WhatsAppIcon />
+                        </Badge>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {icons}
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </Container>
+            )
+          : null}
       </AppBar>
     </HeaderStyled>
   );
@@ -219,6 +302,24 @@ const HeaderStyled = styled("header")(({ theme }) => ({
   "& .height": {
     height: "100%",
   },
+  "& .flex-end": {
+    justifyContent: "flex-end",
+  },
+  "& .pointer": {
+    cursor: "pointer",
+  },
+  "& .color-white": {
+    color: "white",
+  },
+  "& .arrowAnimation": {
+    transform: "rotate(90deg)",
+  },
+  "& .transition": {
+    transition: "0.3s",
+  },
+  "& .between": {
+    justifyContent: "space-between",
+  },
 }));
 
 const TabStyled = styled(Tab)(({ theme }) => ({
@@ -235,18 +336,16 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   fontWeight: "700",
   padding: theme.spacing(1),
   "&:hover": {
-    background: theme.palette.secondary.main + "",
+    background: theme.palette.secondary.main,
+  },
+  "&.createlink": {
+    background: theme.palette.secondary.main,
+    color: "white",
+    borderRadius: "46px",
+    fontWeight: 500,
+    fontSize: 12,
   },
 }));
-
-// const TextFieldStyled = styled(TextField)(({ theme }) => ({
-//   "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-//     borderColor: theme.palette.background.default,
-//   },
-//   "& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input": {
-//     height: "1.5px",
-//   },
-// }));
 
 const FormControlStyled = styled(FormControl)(() => ({
   width: "100%",
@@ -261,4 +360,14 @@ const FormControlStyled = styled(FormControl)(() => ({
     top: "1%",
     height: "100%",
   },
+}));
+
+const AvatarStyled = styled(Avatar)(({ theme }) => ({
+  background: theme.palette.background.default,
+  color: theme.palette.secondary.main,
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 600,
+  fontSize: "26px",
+  lineHeight: "31px",
 }));
