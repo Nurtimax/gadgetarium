@@ -1,6 +1,6 @@
 import { styled, Button } from "@mui/material";
 const FOND_SIZE = {
-  small: "12px",
+  small: "10px",
   medium: "16px",
   large: "20px",
 };
@@ -14,7 +14,6 @@ const Buttons = ({
   size = "medium",
   ...props
 }) => {
-  console.log(props);
   return (
     <ButtonStyled
       onClick={onClick}
@@ -33,6 +32,7 @@ export default Buttons;
 
 const ButtonStyled = styled(Button)((props) => ({
   textTransform: "inherit",
+
   "&.button": {
     width: props.width || "290px",
     height: props.height || "43px",
@@ -40,6 +40,7 @@ const ButtonStyled = styled(Button)((props) => ({
     border: "1px solid #CB11AB",
     color: props.colors || "#CB11AB",
     fontSize: FOND_SIZE[props.size],
+    borderRadius: props.borderRadius || "4px",
   },
   "&.button:hover": {
     backgroundColor: "#CB11AB",
