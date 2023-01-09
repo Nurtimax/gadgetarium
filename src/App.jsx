@@ -1,11 +1,5 @@
-import IconButton from "./components/UI/IconButton";
-
 const App = () => {
-  return (
-    <div>
-      <IconButton variant="outlined">В корзину</IconButton>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
