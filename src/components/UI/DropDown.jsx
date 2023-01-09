@@ -1,4 +1,14 @@
-import { Menu, styled } from "@mui/material";
+import { createTheme, Menu, styled, ThemeProvider } from "@mui/material";
+
+const theme = createTheme({
+  components: {
+    MuiMenuItem: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
+});
 
 const DropDown = ({
   children,
@@ -19,7 +29,7 @@ const DropDown = ({
       }}
       anchorEl={anchorEl}
     >
-      {children}
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </Container>
   );
 };
@@ -31,10 +41,13 @@ const Container = styled(Menu)(() => ({
     background: "#fffff",
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
     borderRadius: "4px",
-    padding: "20px",
+    padding: "0",
+    minWidth: "142px",
   },
-
-  "& .MuiButtonBase-root:hover": {
-    backgroundColor: "#ffff",
+  "& .MuiMenuItem-root:hover": {
+    color: "rgba(203, 17, 171, 1)",
+  },
+  "&:hover .MuiMenuItem-root": {
+    background: "transparent",
   },
 }));
