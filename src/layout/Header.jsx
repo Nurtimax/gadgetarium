@@ -6,11 +6,8 @@ import {
   Button,
   Container,
   Divider,
-  FormControl,
   Grid,
   IconButton,
-  InputAdornment,
-  OutlinedInput,
   styled,
   Tab,
   Tabs,
@@ -27,15 +24,14 @@ import {
   InstagramIcon,
   Logo,
   ProfileIcon,
-  SearchIcon,
   WhatsAppIcon,
 } from "../assets";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Search from "../components/UI/Search";
 
 const Header = ({ isAdmin = false }) => {
   const [admin, setAdmin] = useState(isAdmin);
   const [value, setValue] = useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
   const [anchorState, setAnchorState] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
 
@@ -53,12 +49,6 @@ const Header = ({ isAdmin = false }) => {
       return;
     }
     setIsScroll(false);
-  };
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
   };
 
   const handleChange = (event, newValue) => {
@@ -81,10 +71,6 @@ const Header = ({ isAdmin = false }) => {
     }
   }, [admin]);
 
-  useEffect(() => {
-    setScroll(scroll);
-  }, [scroll]);
-
   const userPages = [
     { id: 11, theme: "Главная" },
     { id: 12, theme: "О магазине" },
@@ -104,26 +90,6 @@ const Header = ({ isAdmin = false }) => {
     return <h1>Loading...</h1>;
   }
 
-  const search = (
-    <>
-      <FormControlStyled>
-        <OutlinedInput
-          placeholder="Поиск по каталогу магазина"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControlStyled>
-    </>
-  );
-
   const catalog = (
     <Box className="flexgrow flex height">
       <ButtonStyled
@@ -132,7 +98,7 @@ const Header = ({ isAdmin = false }) => {
         color="secondary"
       >
         <CatalogIcon />
-        Каталог{showPassword}
+        Каталог
       </ButtonStyled>
     </Box>
   );
@@ -236,7 +202,10 @@ const Header = ({ isAdmin = false }) => {
                       {catalog}
                     </Grid>
                     <Grid item xs={6}>
-                      {search}
+                      <Search
+                        width="100%"
+                        placeholder="Поиск по каталогу магазина"
+                      />
                     </Grid>
                     <Grid item xs={2}>
                       {icons}
@@ -267,7 +236,10 @@ const Header = ({ isAdmin = false }) => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      {search}
+                      <Search
+                        width="100%"
+                        placeholder="Поиск по каталогу магазина"
+                      />
                     </Grid>
                     <Grid item xs={2} className="">
                       <Box className="flex gap2 height">
@@ -360,21 +332,6 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
     borderRadius: "46px",
     fontWeight: 500,
     fontSize: 12,
-  },
-}));
-
-const FormControlStyled = styled(FormControl)(() => ({
-  width: "100%",
-  border: `1px solid white`,
-  padding: 2,
-  borderRadius: "10px",
-  "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-    height: "4px",
-    color: "white",
-  },
-  "& .MuiFormLabel-root": {
-    top: "1%",
-    height: "100%",
   },
 }));
 

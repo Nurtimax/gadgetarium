@@ -1,12 +1,5 @@
-import Header from "./layout/Header";
-import "./App.css";
-
 const App = () => {
-  return (
-    <div className="App">
-      <Header isAdmin={false} />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
