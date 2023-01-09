@@ -1,33 +1,28 @@
-import { styled } from "@mui/material";
+import { Menu, styled } from "@mui/material";
 
-const DropDown = ({ children, propsWidth, propsHeight, open }) => {
+const DropDown = ({ children, open, handleClose, vertical, horizontal }) => {
   return (
-    <>
-      {open && (
-        <Container propsWidth={propsWidth} propsHeight={propsHeight}>
-          {children}
-        </Container>
-      )}
-    </>
+    <Container
+      open={open}
+      onClose={handleClose}
+      PopoverClasses={{ paper: "paper" }}
+      anchorOrigin={{
+        vertical,
+        horizontal,
+      }}
+    >
+      {children}
+    </Container>
   );
 };
 
 export default DropDown;
 
-const Container = styled("div")((props) => ({
-  width: props.propsWidth || "200px",
-  height: props.propsHeight || "200px",
-  background: "#FFFFFF",
-  boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
-  borderRadius: "4px",
-  animation: "modal 0.5s ease-out",
-
-  "@keyframes modal": {
-    "0%": {
-      transform: "scale(0.5)",
-    },
-    "100%": {
-      transform: "scale(1)",
-    },
+const Container = styled(Menu)(() => ({
+  "& .paper": {
+    background: "#fffff",
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
+    borderRadius: "4px",
+    padding: "20px",
   },
 }));
