@@ -1,3 +1,4 @@
+export { ReactComponent as SearchIcon } from "./icons/System.svg";
 export { ReactComponent as ClockIcon } from "./icons/clock.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as Phone } from "./icons/numberPhone.svg";
