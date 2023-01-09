@@ -35,6 +35,22 @@ const Themes = ({ children }) => {
         900: "#909CB5",
       },
     },
+    components: {
+      MuiContainer: {
+        styleOverrides: {
+          maxWidthLg: {
+            "&.MuiContainer-maxWidthLg": {
+              maxWidth: 1400,
+            },
+          },
+          maxWidthMd: {
+            "&.MuiContainer-maxWidthMd": {
+              maxWidth: 1200,
+            },
+          },
+        },
+      },
+    },
   });
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
