@@ -2,7 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { styled, Typography } from "@mui/material";
-import { ImageKyrgyzstanKart } from "../../assets";
+import { IconNext, IconPrev, ImageKyrgyzstanKart } from "../../assets";
 
 export const dataDigitalBestSeller = [
   "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/mario-kart-8-deluxe-switch/hero?_a=AJADJWI0",
@@ -17,22 +17,56 @@ export const dataDigitalBestSeller = [
 
   "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/minecraft-switch/hero?_a=AJADJWI0",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/mario-plus-rabbids-kingdom-battle-switch/hero?_a=AJADJWI0",
-
   "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/u/unravel-two-switch/hero?_a=AJADJWI0",
 ];
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 1000,
-  slidesToShow: 2.5,
-  slidesToScroll: 2,
-  initialSlide: 2.5,
-  autoplay: true,
-};
+function SampleNextArrow({ onClick, style, className }) {
+  return (
+    <IconNext
+      onClick={onClick}
+      className={className}
+      style={{
+        ...style,
+        position: "absolute",
+        width: "50px",
+        height: "50px",
+        bottom: "140px",
+        right: "350px",
+      }}
+    />
+  );
+}
+
+function SamplePrevArrow({ onClick, style, className }) {
+  return (
+    <IconPrev
+      onClick={onClick}
+      className={className}
+      style={{
+        ...style,
+        position: "absolute",
+        width: "50px",
+        height: "50px",
+        top: "113px",
+        left: "350px",
+        zIndex: "1",
+      }}
+    />
+  );
+}
 
 const AboutStore = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 3,
+    autoplay: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
   return (
     <BoxMain>
       <Title variant="h3" component="h5">
@@ -128,9 +162,8 @@ const AboutStore = () => {
             Sem tortor molestie odio.
           </BoxText>
         </div>
-        <div>
-          <ImageKyrgyzstanKart />
-        </div>
+
+        <ImageKyrgyzstanKart />
       </LastContainer>
     </BoxMain>
   );
@@ -141,7 +174,6 @@ export default AboutStore;
 // Style
 
 const BoxMain = styled("div")`
-  background: #bad7e0;
   width: 100%;
 `;
 
