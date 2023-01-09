@@ -32,12 +32,28 @@ import {
 } from "../assets";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const Header = ({ isAdmin = false, scroll = false }) => {
+const Header = ({ isAdmin = false }) => {
   const [admin, setAdmin] = useState(isAdmin);
   const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
-  const [isScroll, setScroll] = useState(scroll);
   const [anchorState, setAnchorState] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  const scrollHandler = (e) => {
+    const scroll = e.target.documentElement.scrollTop;
+    if (scroll > 50) {
+      setIsScroll(true);
+      return;
+    }
+    setIsScroll(false);
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

@@ -6,7 +6,7 @@ export { ReactComponent as InstagramIcon } from "./icons/InstagramIcon.svg";
 export { ReactComponent as WhatsAppIcon } from "./icons/WhatsAppIcon.svg";
 export { ReactComponent as HeartIcon } from "./icons/heartIcon.svg";
 export { ReactComponent as ComparativeIcon } from "./icons/comparativeIcon.svg";
-export { ReactComponent as CartIcon } from "./icons/Cart.svg";
+export { ReactComponent as CartIcon } from "./icons/car";
 export { ReactComponent as ClockIcon } from "./icons/clock.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as Phone } from "./icons/numberPhone.svg";
