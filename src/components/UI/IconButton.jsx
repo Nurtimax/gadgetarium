@@ -1,16 +1,11 @@
 import React from "react";
 import { Button, styled } from "@mui/material";
 import { CartIcon } from "../../assets";
-const FOND_SIZE = {
-  small: "12px",
-  medium: "16px",
-  large: "20px",
-};
-const IconButton = ({ children, variant, size = "small", ...props }) => {
+
+const IconButton = ({ children, variant, ...props }) => {
   return (
     <ButtonStyled
-      variant={variant || "outlined"}
-      size={size}
+      variant={variant}
       classes={{ root: "button" }}
       startIcon={<CartIcon />}
       {...props}
@@ -23,16 +18,13 @@ const IconButton = ({ children, variant, size = "small", ...props }) => {
 export default IconButton;
 
 const ButtonStyled = styled(Button)((props) => ({
-  background: props.background || "#CB11AB",
+  // background: props.background || "#CB11AB",
+  width: props.width || "151px",
+  height: props.height || "41px",
+  border: "none",
+  color: props.colors || "white",
+  borderRadius: props.borderradius || "4px",
 
-  "&.button": {
-    width: props.width || "151px",
-    height: props.height || "41px",
-    border: "none",
-    color: props.colors || "white",
-    borderRadius: props.borderradius || "4px",
-    fontSize: FOND_SIZE[props.size],
-  },
   "&.button:hover": {
     backgroundColor: "#C90EA9",
     color: "white",
