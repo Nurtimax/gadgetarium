@@ -8,6 +8,7 @@ const IconButton = ({ children, variant, ...props }) => {
       variant={variant}
       classes={{ root: "button" }}
       startIcon={<CartIcon />}
+      color="success"
       {...props}
     >
       {children}
@@ -18,11 +19,11 @@ const IconButton = ({ children, variant, ...props }) => {
 export default IconButton;
 
 const ButtonStyled = styled(Button)((props) => ({
-  // background: props.background || "#CB11AB",
+  background: props.background || "#CB11AB",
   width: props.width || "151px",
   height: props.height || "41px",
-  border: "none",
-  color: props.colors || "white",
+  // border: "none",
+  // color: props.colors || "white",
   borderRadius: props.borderradius || "4px",
 
   "&.button:hover": {
