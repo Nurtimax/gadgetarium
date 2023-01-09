@@ -24,7 +24,7 @@ const Container = styled(Menu)(() => ({
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
     borderRadius: "4px",
     position: "absolute",
-    padding: "5px",
+    padding: "20px",
     top: 0,
     left: 0,
   },
