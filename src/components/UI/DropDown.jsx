@@ -1,6 +1,13 @@
 import { Menu, styled } from "@mui/material";
 
-const DropDown = ({ children, open, handleClose, vertical, horizontal }) => {
+const DropDown = ({
+  children,
+  open,
+  handleClose,
+  vertical = "top",
+  horizontal = "left",
+  anchorEl,
+}) => {
   return (
     <Container
       open={open}
@@ -10,6 +17,7 @@ const DropDown = ({ children, open, handleClose, vertical, horizontal }) => {
         vertical,
         horizontal,
       }}
+      anchorEl={anchorEl}
     >
       {children}
     </Container>
@@ -24,5 +32,9 @@ const Container = styled(Menu)(() => ({
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
     borderRadius: "4px",
     padding: "20px",
+  },
+
+  "& .MuiButtonBase-root:hover": {
+    backgroundColor: "#ffff",
   },
 }));
