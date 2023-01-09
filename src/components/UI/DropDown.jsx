@@ -44,6 +44,10 @@ const Container = styled(Menu)(() => ({
     padding: "0",
     minWidth: "142px",
   },
+  "& .MuiMenuItem-root": {
+    color: "black",
+    transitionDuration: "1s",
+  },
   "& .MuiMenuItem-root:hover": {
     color: "rgba(203, 17, 171, 1)",
   },
