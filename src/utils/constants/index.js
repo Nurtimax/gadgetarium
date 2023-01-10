@@ -1,15 +1,15 @@
 export const dataDigitalBestSeller = [
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/mario-kart-8-deluxe-switch/hero?_a=AJADJWI0",
+  "https://3dnews.ru/assets/external/illustrations/2020/07/22/1016342/01.jpg",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/t/triangle-strategy-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbedmOlhd0mmj2blgVn5usNddav4p2kTaUVQ&usqp=CAU",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/p/pokemon-legends-arceus-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK618zzI7YJta-FfoYKmc6QfbgAd0mE3yPKw&usqp=CAU",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/s/super-mario-3d-world-plus-bowsers-fury-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRibUlLAdLfhlqh2_9XJRYZFOE_oshPVIKctg&usqp=CAU",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/c/cuphead-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuN9iIQrazTiDXwhvTdBnsMPsCcJPcdDOZrA&usqp=CAU",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/minecraft-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzV3cjGC456dNveEbV10Pj-V4gE-Fc8-AZXrdu2-IDzbj0fkDGWNnvDth0uKL0PqwSJZ0&usqp=CAU",
 
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/u/unravel-two-switch/hero?_a=AJADJWI0",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDUa9J-V7RAQviRXQF41lWESWZgxJWYZXlHayXQn6pc0DEWyK23T6_cCXsdy2NnA21ttY&usqp=CAU",
 ];

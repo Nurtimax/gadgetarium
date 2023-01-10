@@ -1,9 +1,10 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { styled, Typography } from "@mui/material";
+import { Container, styled, Typography } from "@mui/material";
 import { IconNext, IconPrev, ImageKyrgyzstanKart } from "../../assets";
 import { dataDigitalBestSeller } from "../../utils/constants";
+import { useState } from "react";
 
 function SampleNextArrow({ onClick, style, className }) {
   return (
@@ -16,7 +17,7 @@ function SampleNextArrow({ onClick, style, className }) {
         width: "50px",
         height: "50px",
         bottom: "140px",
-        right: "350px",
+        right: "29%",
       }}
     />
   );
@@ -32,8 +33,8 @@ function SamplePrevArrow({ onClick, style, className }) {
         position: "absolute",
         width: "50px",
         height: "50px",
-        top: "111px",
-        left: "350px",
+        top: "167.5px",
+        left: "29%",
         zIndex: "1",
       }}
     />
@@ -41,14 +42,18 @@ function SamplePrevArrow({ onClick, style, className }) {
 }
 
 const AboutStore = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
   const settings = {
     dots: true,
-    infinite: true,
+    infinity: true,
     speed: 1000,
     slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 3,
+    slidesToScroll: 1,
     autoplay: true,
+    autoplaySpeed: 4000,
+    beforeChange: (current, next) => setSlideIndex(next),
+    centerMode: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -59,86 +64,97 @@ const AboutStore = () => {
       </Title>
       <MainContainer>
         <Slider {...settings}>
-          {dataDigitalBestSeller.map((item, i) => (
-            <Image src={item} alt="image" key={i} />
+          {dataDigitalBestSeller.map((item, index) => (
+            <div
+              key={index}
+              className={index === slideIndex ? "slide slide-active" : "slide"}
+            >
+              <ImageBox src={item} alt="photos" />
+            </div>
           ))}
         </Slider>
       </MainContainer>
-      <StoreGadgetariumTitle variant="h4" component="h5">
-        Магазин Gadgetarium
-      </StoreGadgetariumTitle>
-      <UlList>
-        <li>
-          слаженная команда людей, любящих спорт и здоровый образ жизни знающих
-          свое дело и ориентирующихся <br /> во всех нюансах фитнес
-          оборудования;
-        </li>
-        <li>
-          широкая номенклатура качественной продукции ведущих мировых брендов с
-          огромным выбором товаров в <br /> наличии;
-        </li>
-        <li>
-          склад запчастей для обеспечения качественного сервиса и бесперебойной
-          работы оборудования;
-        </li>
-        <li>
-          полный послепродажный сервис с информационной и технической
-          поддержкой;
-        </li>
-        <li>строгое соблюдение всех обязательств перед партнерами;</li>
-        <li>отличные цены и эксклюзивные условия для постоянных партнеров.</li>
-      </UlList>
+      <ContainerText>
+        <StoreGadgetariumTitle variant="h4" component="h5">
+          Магазин Gadgetarium
+        </StoreGadgetariumTitle>
+        <UlList>
+          <li>
+            слаженная команда людей, любящих спорт и здоровый образ жизни
+            знающих свое дело и ориентирующихся <br /> во всех нюансах фитнес
+            оборудования;
+          </li>
+          <li>
+            широкая номенклатура качественной продукции ведущих мировых брендов
+            с огромным выбором товаров в <br /> наличии;
+          </li>
+          <li>
+            склад запчастей для обеспечения качественного сервиса и
+            бесперебойной работы оборудования;
+          </li>
+          <li>
+            полный послепродажный сервис с информационной и технической
+            поддержкой;
+          </li>
+          <li>строгое соблюдение всех обязательств перед партнерами;</li>
+          <li>
+            отличные цены и эксклюзивные условия для постоянных партнеров.
+          </li>
+        </UlList>
 
-      <StoreGadgetariumTitle>
-        В чем причина нашего успеха?
-      </StoreGadgetariumTitle>
-      <BoxText>
-        Развитие цифровых технологий привело к тому, что рациональное отношение
-        человека к своему времени стало <br /> ведущим трендом, определяющим то,
-        как ведут себя потребители. Именно по этой <br /> причине те сервисы,
-        которые дают возможность использовать время наиболее оптимально,
-        становятся востребованными: <br /> выгул собак, уборка дома, каршеринг.
-        Все эти появившиеся за последнее время сервисы не что иное, как
-        отражение этого <br /> тренда. Этот запрос распространяется даже на
-        состав продуктов и их упаковку. Среди ярких примеров — напитки, <br />
-        содержащие все необходимые питательные вещества и повышенное количество
-      </BoxText>
-      <br />
-      <BoxText>
-        Ассортимент cамая распространенная ошибка — копирование
-        офлайн-ассортимента. Нельзя взять бестселлеры <br /> из офлайн и
-        перенести их в онлайн. Они не повторят своего успеха. У многих есть
-        <br /> иллюзия, что онлайн-полка бесконечна, но на самом деле она
-        намного уже, чем, например, в супермаркете. Все чаще <br />
-        выбор товаров происходит со смартфона, и если в магазине вы видите на
-        полке 100 или 200 категорий товаров, то в <br /> интернете пользователи
-        готовы просматривать всего 10–20 из них. Чтобы покупатель обратил
-        внимание <br /> именно на вас, придется постараться.
-      </BoxText>
+        <StoreGadgetariumTitle>
+          В чем причина нашего успеха?
+        </StoreGadgetariumTitle>
+        <BoxText>
+          Развитие цифровых технологий привело к тому, что рациональное
+          отношение человека к своему времени стало <br /> ведущим трендом,
+          определяющим то, как ведут себя потребители. Именно по этой <br />{" "}
+          причине те сервисы, которые дают возможность использовать время
+          наиболее оптимально, становятся востребованными: <br /> выгул собак,
+          уборка дома, каршеринг. Все эти появившиеся за последнее время сервисы
+          не что иное, как отражение этого <br /> тренда. Этот запрос
+          распространяется даже на состав продуктов и их упаковку. Среди ярких
+          примеров — напитки, <br />
+          содержащие все необходимые питательные вещества и повышенное
+          количество
+        </BoxText>
+        <br />
+        <BoxText>
+          Ассортимент cамая распространенная ошибка — копирование
+          офлайн-ассортимента. Нельзя взять бестселлеры <br /> из офлайн и
+          перенести их в онлайн. Они не повторят своего успеха. У многих есть
+          <br /> иллюзия, что онлайн-полка бесконечна, но на самом деле она
+          намного уже, чем, например, в супермаркете. Все чаще <br />
+          выбор товаров происходит со смартфона, и если в магазине вы видите на
+          полке 100 или 200 категорий товаров, то в <br /> интернете
+          пользователи готовы просматривать всего 10–20 из них. Чтобы покупатель
+          обратил внимание <br /> именно на вас, придется постараться.
+        </BoxText>
 
-      <LastContainer>
-        <div>
-          <StoreGadgetariumTitle>Мы сегодня - это:</StoreGadgetariumTitle>
+        <LastContainer>
+          <div>
+            <StoreGadgetariumTitle>Мы сегодня - это:</StoreGadgetariumTitle>
 
-          <BoxText>
-            Информированность и доступ к информации в любой момент <br />
-            времени – становится особой ценностью на сегодняшний день. <br />
-            одной стороны, быть все время на связи нам помогают <br /> постоянно
-            совершенствующиеся другие гаджеты.
-          </BoxText>
-          <br />
-          <BoxText>
-            В наше время Интернет приобретает колоссальные масштабы. <br />
-            Современный человек, который не хочет отставать от <br /> жизни, уже
-            не представляет работу на компьютере без <br /> Интернета. С его
-            помощью пользователь может <br /> общаться и получать нужную
-            информацию. Существует <br /> большой выбор телекоммуникационных
-            компаний <br /> с различными условиями обслуживания.
-          </BoxText>
-        </div>
+            <BoxText>
+              Информированность и доступ к информации в любой момент <br />
+              времени – становится особой ценностью на сегодняшний день. <br />
+              одной стороны, быть все время на связи нам помогают <br />{" "}
+              постоянно совершенствующиеся другие гаджеты.
+            </BoxText>
+            <br />
+            <BoxText>
+              В наше время Интернет приобретает колоссальные масштабы. <br />
+              Современный человек, который не хочет отставать от <br /> жизни,
+              уже не представляет работу на компьютере без <br /> Интернета. С
+              его помощью пользователь может <br /> общаться и получать нужную
+              информацию. Существует <br /> большой выбор телекоммуникационных
+              компаний <br /> с различными условиями обслуживания.
+            </BoxText>
+          </div>
 
-        <ImageKyrgyzstanKart />
-      </LastContainer>
+          <ImageKyrgyzstanKart />
+        </LastContainer>
+      </ContainerText>
     </BoxMain>
   );
 };
@@ -153,15 +169,30 @@ const BoxMain = styled("div")`
   margin: 0 auto;
 `;
 
-const MainContainer = styled("div")`
-  width: 90%;
-  margin: 0 auto;
+const ContainerText = styled(Container)`
+  padding-left: 195px;
 `;
 
-const Image = styled("img")`
+const MainContainer = styled("div")`
+  width: 90%;
+  height: 330px;
+  .slide {
+    transform: scale(0.9);
+    transition: 0.5;
+    filter: brightness(0.3);
+    outline: none;
+  }
+
+  .slide-active {
+    filter: brightness(1);
+    transform: scale(1);
+    outline: none;
+  }
+`;
+
+const ImageBox = styled("img")`
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 330px;
 `;
 
 const Title = styled(Typography)`
@@ -173,11 +204,11 @@ const Title = styled(Typography)`
   line-height: 110%;
   border-bottom: 1px solid #cdcdcd;
   padding-bottom: 20px;
-  margin-left: 195px;
+  margin-left: 155px;
   margin-bottom: 40px;
   display: flex;
   justify-content: flex-start;
-  width: 50vw;
+  width: 59vw;
 `;
 
 const StoreGadgetariumTitle = styled(Typography)`
@@ -189,21 +220,19 @@ const StoreGadgetariumTitle = styled(Typography)`
   color: #292929;
   padding-top: 60px;
   padding-bottom: 24px;
-  padding-left: 195px;
   display: flex;
   justify-content: flex-start;
 `;
 
 const UlList = styled("ul")`
-  padding-left: 210px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   text-align: left;
+  padding-left: 20px;
 `;
 
 const BoxText = styled("div")`
-  padding-left: 195px;
   display: flex;
   justify-content: flex-start;
   text-align: left;
