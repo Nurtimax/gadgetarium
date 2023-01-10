@@ -1,12 +1,22 @@
 import { styled, Button as MuiButton } from "@mui/material";
 
-function Button({ children, disabled, onClick, variant, bgcolor, ...props }) {
+function Button({
+  children,
+  disabled,
+  onClick,
+  variant,
+  bgcolor,
+  hover,
+  active,
+  ...props
+}) {
   return (
     <ButtonStyled
       bgcolor={bgcolor}
       onClick={onClick}
       disabled={disabled}
       variant={variant}
+      className={hover ? "btnHover" : active ? "btnActive" : "btn"}
       {...props}
     >
       {children}
@@ -25,16 +35,10 @@ const ButtonStyled = styled(MuiButton)`
     font-size: 14px;
     border: none;
     color: #ffffff;
-    &:hover {
-      background: ${({ bgcolor }) => bgcolor || "#CB11AB"};
-      color: #ffffff;
-    }
-    &:active {
-      background: ${({ bgcolor }) => (bgcolor ? "#2fc509" : "#E313BF")};
-    }
   }
+
   &.MuiButton-outlined {
-    color: ${(props) => (props.bgcolor ? "gray" : "#E313BF")};
+    color: ${(props) => props.bgcolor || "#E313BF"};
     border-color: ${(props) => props.bgcolor || "#E313BF"};
 
     &:hover {
@@ -43,6 +47,7 @@ const ButtonStyled = styled(MuiButton)`
     }
     &:active {
       background: ${({ bgcolor }) => (bgcolor ? "#2fc509" : "#E313BF")};
+      border: none;
     }
     &:disabled {
       background-color: rgba(0, 0, 0, 0.12);
@@ -52,23 +57,23 @@ const ButtonStyled = styled(MuiButton)`
       border: none;
     }
   }
+
   &.MuiButton-text {
     color: ${(props) => (props.bgcolor ? "gray" : "#E313BF")};
     border-color: ${(props) => props.bgcolor || "#E313BF"};
-
-    &:hover {
-      background: ${(props) => props.bgcolor || "#CB11AB"};
-      color: #ffffff;
-    }
-    &:active {
-      background: ${({ bgcolor }) => (bgcolor ? "#969696" : "#E313BF")};
-    }
-    &:disabled {
-      background-color: rgba(0, 0, 0, 0.12);
-      color: #6a6363;
-      box-shadow: none;
-      cursor: "not-drop";
-      border: none;
-    }
+  }
+  &:hover {
+    background: ${(props) => props.bgcolor || "#CB11AB"};
+    color: #ffffff;
+  }
+  &:active {
+    background: ${({ bgcolor }) => (bgcolor ? "#969696" : "#E313BF")};
+  }
+  &.Mui-disabled {
+    background-color: rgba(0, 0, 0, 0.12);
+    color: #6a6363;
+    box-shadow: none;
+    cursor: "not-drop";
+    border: none;
   }
 `;
