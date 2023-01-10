@@ -3,22 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { styled, Typography } from "@mui/material";
 import { IconNext, IconPrev, ImageKyrgyzstanKart } from "../../assets";
-
-export const dataDigitalBestSeller = [
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/mario-kart-8-deluxe-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/t/triangle-strategy-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/p/pokemon-legends-arceus-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/s/super-mario-3d-world-plus-bowsers-fury-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/c/cuphead-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/m/minecraft-switch/hero?_a=AJADJWI0",
-
-  "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_300/v1/ncom/en_US/games/switch/u/unravel-two-switch/hero?_a=AJADJWI0",
-];
+import { dataDigitalBestSeller } from "../../utils/constants";
 
 function SampleNextArrow({ onClick, style, className }) {
   return (
@@ -47,7 +32,7 @@ function SamplePrevArrow({ onClick, style, className }) {
         position: "absolute",
         width: "50px",
         height: "50px",
-        top: "113px",
+        top: "111px",
         left: "350px",
         zIndex: "1",
       }}
@@ -108,29 +93,27 @@ const AboutStore = () => {
         В чем причина нашего успеха?
       </StoreGadgetariumTitle>
       <BoxText>
-        Non ultricies sollicitudin nisi quisque. Morbi integer quis tincidunt
-        vitae penatibus. Feugiat quis tincidunt volutpat <br /> scelerisque elit
-        fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. <br />
-        Adipiscing etiam vitae in semper sed eget nec aliquet aliquam. Morbi
-        integer quis tincidunt vitae penatibus. Feugiat quis <br /> tincidunt
-        volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem
-        tortor molestie odio.Adipiscing etiam vitae <br /> in semper sed eget
-        nec aliquet aliquam. Morbi integer quis tincidunt vitae penatibus.
-        Feugiat quis tincidunt volutpat <br /> scelerisque elit fermentum nullam
-        rhoncus adipiscing. Sem tortor molestie odio.
+        Развитие цифровых технологий привело к тому, что рациональное отношение
+        человека к своему времени стало <br /> ведущим трендом, определяющим то,
+        как ведут себя потребители. Именно по этой <br /> причине те сервисы,
+        которые дают возможность использовать время наиболее оптимально,
+        становятся востребованными: <br /> выгул собак, уборка дома, каршеринг.
+        Все эти появившиеся за последнее время сервисы не что иное, как
+        отражение этого <br /> тренда. Этот запрос распространяется даже на
+        состав продуктов и их упаковку. Среди ярких примеров — напитки, <br />
+        содержащие все необходимые питательные вещества и повышенное количество
       </BoxText>
       <br />
       <BoxText>
-        Non ultricies sollicitudin nisi quisque. Morbi integer quis tincidunt
-        vitae penatibus. Feugiat quis tincidunt volutpat <br /> scelerisque elit
-        fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. <br />
-        Adipiscing etiam vitae in semper sed eget nec aliquet aliquam. Morbi
-        integer quis tincidunt vitae penatibus. Feugiat quis <br /> tincidunt
-        volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem
-        tortor molestie odio.Adipiscing etiam vitae <br /> in semper sed eget
-        nec aliquet aliquam. Morbi integer quis tincidunt vitae penatibus.
-        Feugiat quis tincidunt volutpat <br /> scelerisque elit fermentum nullam
-        rhoncus adipiscing. Sem tortor molestie odio.
+        Ассортимент cамая распространенная ошибка — копирование
+        офлайн-ассортимента. Нельзя взять бестселлеры <br /> из офлайн и
+        перенести их в онлайн. Они не повторят своего успеха. У многих есть
+        <br /> иллюзия, что онлайн-полка бесконечна, но на самом деле она
+        намного уже, чем, например, в супермаркете. Все чаще <br />
+        выбор товаров происходит со смартфона, и если в магазине вы видите на
+        полке 100 или 200 категорий товаров, то в <br /> интернете пользователи
+        готовы просматривать всего 10–20 из них. Чтобы покупатель обратил
+        внимание <br /> именно на вас, придется постараться.
       </BoxText>
 
       <LastContainer>
@@ -138,28 +121,19 @@ const AboutStore = () => {
           <StoreGadgetariumTitle>Мы сегодня - это:</StoreGadgetariumTitle>
 
           <BoxText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet amet
-            <br /> est orci volutpat placerat maecenas egestas augue ac. Tortor,
-            sed
-            <br />
-            magnis interdum massa. Id phasellus lectus dui nisl. Adipiscing{" "}
-            <br />
-            etiam vitae in semper sed eget nec aliquet aliquam.
+            Информированность и доступ к информации в любой момент <br />
+            времени – становится особой ценностью на сегодняшний день. <br />
+            одной стороны, быть все время на связи нам помогают <br /> постоянно
+            совершенствующиеся другие гаджеты.
           </BoxText>
           <br />
           <BoxText>
-            Non ultricies sollicitudin nisi quisque. Morbi integer quis
-            tincidunt
-            <br />
-            vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit
-            <br />
-            fermentum nullam rhoncus adipiscing. Sem tortor molestie odio.
-            <br />
-            Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.
-            <br /> Morbi integer quis tincidunt vitae penatibus. Feugiat quis
-            tincidunt <br /> volutpat scelerisque elit fermentum nullam rhoncus
-            adipiscing. <br />
-            Sem tortor molestie odio.
+            В наше время Интернет приобретает колоссальные масштабы. <br />
+            Современный человек, который не хочет отставать от <br /> жизни, уже
+            не представляет работу на компьютере без <br /> Интернета. С его
+            помощью пользователь может <br /> общаться и получать нужную
+            информацию. Существует <br /> большой выбор телекоммуникационных
+            компаний <br /> с различными условиями обслуживания.
           </BoxText>
         </div>
 
@@ -175,6 +149,8 @@ export default AboutStore;
 
 const BoxMain = styled("div")`
   width: 100%;
+  max-width: 1424px;
+  margin: 0 auto;
 `;
 
 const MainContainer = styled("div")`
@@ -193,7 +169,7 @@ const Title = styled(Typography)`
   font-family: "Ubuntu";
   font-style: normal;
   font-weight: 500;
-  font-size: 30px;
+  font-size: 1.8rem;
   line-height: 110%;
   border-bottom: 1px solid #cdcdcd;
   padding-bottom: 20px;
@@ -201,14 +177,14 @@ const Title = styled(Typography)`
   margin-bottom: 40px;
   display: flex;
   justify-content: flex-start;
-  width: 1000px;
+  width: 50vw;
 `;
 
 const StoreGadgetariumTitle = styled(Typography)`
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 120%;
   color: #292929;
   padding-top: 60px;
