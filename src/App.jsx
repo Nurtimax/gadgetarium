@@ -1,9 +1,10 @@
-import Search from "./components/UI/Search";
+import IconButton from "./components/UI/IconButton";
 
 const App = () => {
   return (
     <div>
-      <Search />
+      <IconButton>в карзину</IconButton>
+      <IconButton bgColor="green">в карзину</IconButton>
     </div>
   );
 };

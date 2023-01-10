@@ -5,7 +5,6 @@ import { CartIcon } from "../../assets";
 const IconButton = ({ children, width, bgColor, ...props }) => {
   return (
     <ButtonStyled
-      variant="outlined"
       width={width}
       bgColor={bgColor}
       classes={{ root: "button" }}
@@ -22,9 +21,9 @@ export default IconButton;
 const ButtonStyled = styled(Button)((props) => ({
   width: props.width || "200px",
   height: props.height || "45px",
-  backgroundColor: props.bgColor || "#CB11AB",
+  backgroundColor: props.bgColor || "#E313BF",
   border: "none",
-  color: "white",
+  color: "#fff",
   "&:hover": {
     border: "none",
     backgroundColor: props.bgColor || "#CB11AB",
