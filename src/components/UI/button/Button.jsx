@@ -1,28 +1,33 @@
 import { styled, Button as MuiButton } from "@mui/material";
 
-function Button({
+const Button = ({
   children,
   disabled,
   onClick,
   variant,
   bgcolor,
   hover,
+  width,
+  height,
   active,
   ...props
-}) {
+}) => {
   return (
     <ButtonStyled
+      width={width}
+      height={height}
       bgcolor={bgcolor}
       onClick={onClick}
       disabled={disabled}
       variant={variant}
-      className={hover ? "btnHover" : active ? "btnActive" : "btn"}
+      hover={hover}
+      active={active}
       {...props}
     >
       {children}
     </ButtonStyled>
   );
-}
+};
 export default Button;
 
 const ButtonStyled = styled(MuiButton)`
@@ -30,6 +35,7 @@ const ButtonStyled = styled(MuiButton)`
   width: ${(props) => (props.width ? props.width : "290px")};
   height: ${(props) => (props.height ? props.height : "")};
   white-space: nowrap;
+
   &.MuiButton-contained {
     background: ${({ bgcolor }) => bgcolor || "#E20FBE"};
     font-size: 14px;
@@ -40,22 +46,6 @@ const ButtonStyled = styled(MuiButton)`
   &.MuiButton-outlined {
     color: ${(props) => props.bgcolor || "#E313BF"};
     border-color: ${(props) => props.bgcolor || "#E313BF"};
-
-    &:hover {
-      background: ${(props) => props.bgcolor || "#CB11AB"};
-      color: #ffffff;
-    }
-    &:active {
-      background: ${({ bgcolor }) => (bgcolor ? "#2fc509" : "#E313BF")};
-      border: none;
-    }
-    &:disabled {
-      background-color: rgba(0, 0, 0, 0.12);
-      color: #6a6363;
-      box-shadow: none;
-      cursor: "not-drop";
-      border: none;
-    }
   }
 
   &.MuiButton-text {
@@ -63,16 +53,16 @@ const ButtonStyled = styled(MuiButton)`
     border-color: ${(props) => props.bgcolor || "#E313BF"};
   }
   &:hover {
-    background: ${(props) => props.bgcolor || "#CB11AB"};
-    color: #ffffff;
+    background: ${(props) => props.hover || "#CB11AB"};
+    color: ${(props) => props.color || "#ffffff"};
   }
   &:active {
-    background: ${({ bgcolor }) => (bgcolor ? "#969696" : "#E313BF")};
+    background: ${(props) => props.active || "#E313BF"};
+    border: none;
   }
   &.Mui-disabled {
-    background-color: rgba(0, 0, 0, 0.12);
-    color: #6a6363;
-    box-shadow: none;
+    background-color: rgb(81, 81, 81);
+    color: #fff;
     cursor: "not-drop";
     border: none;
   }
