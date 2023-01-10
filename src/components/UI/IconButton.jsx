@@ -2,9 +2,10 @@ import React from "react";
 import { Button, styled } from "@mui/material";
 import { CartIcon } from "../../assets";
 
-const IconButton = ({ children, width, bgColor, ...props }) => {
+const IconButton = ({ children, onClick, width, bgColor, ...props }) => {
   return (
     <ButtonStyled
+      onClick={onClick}
       width={width}
       bgColor={bgColor}
       classes={{ root: "button" }}
