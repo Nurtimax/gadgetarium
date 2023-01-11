@@ -17,7 +17,7 @@ function SampleNextArrow({ onClick, style, className }) {
         width: "50px",
         height: "50px",
         bottom: "140px",
-        right: "29%",
+        right: "10%",
       }}
     />
   );
@@ -34,7 +34,7 @@ function SamplePrevArrow({ onClick, style, className }) {
         width: "50px",
         height: "50px",
         top: "167.5px",
-        left: "29%",
+        left: "10%",
         zIndex: "1",
       }}
     />
@@ -185,7 +185,7 @@ const Title = styled(Typography)`
   margin-bottom: 40px;
   display: flex;
   justify-content: flex-start;
-  width: 59vw;
+  width: 50vw;
 `;
 
 const MainContainer = styled(Container)`
