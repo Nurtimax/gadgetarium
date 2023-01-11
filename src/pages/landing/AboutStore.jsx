@@ -45,13 +45,12 @@ const AboutStore = () => {
   const [slideIndex, setSlideIndex] = useState(0);
 
   const settings = {
-    dots: true,
     infinity: true,
     speed: 1000,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000,
     beforeChange: (current, next) => setSlideIndex(next),
     centerMode: true,
     nextArrow: <SampleNextArrow />,
@@ -59,11 +58,13 @@ const AboutStore = () => {
   };
   return (
     <BoxMain>
-      <Title variant="h3" component="h5">
-        О магазине
-      </Title>
+      <Container>
+        <Title variant="h3" component="h5">
+          О магазине
+        </Title>
+      </Container>
       <MainContainer>
-        <Slider {...settings}>
+        <Slider {...settings} variableWidth={true}>
           {dataDigitalBestSeller.map((item, index) => (
             <div
               key={index}
@@ -78,7 +79,7 @@ const AboutStore = () => {
         <StoreGadgetariumTitle variant="h4" component="h5">
           Магазин Gadgetarium
         </StoreGadgetariumTitle>
-        <UlList>
+        <ContainerUl>
           <li>
             слаженная команда людей, любящих спорт и здоровый образ жизни
             знающих свое дело и ориентирующихся <br /> во всех нюансах фитнес
@@ -100,9 +101,9 @@ const AboutStore = () => {
           <li>
             отличные цены и эксклюзивные условия для постоянных партнеров.
           </li>
-        </UlList>
+        </ContainerUl>
 
-        <StoreGadgetariumTitle>
+        <StoreGadgetariumTitle variant="h4" component="h5">
           В чем причина нашего успеха?
         </StoreGadgetariumTitle>
         <BoxText>
@@ -132,13 +133,15 @@ const AboutStore = () => {
         </BoxText>
 
         <LastContainer>
-          <div>
-            <StoreGadgetariumTitle>Мы сегодня - это:</StoreGadgetariumTitle>
+          <Container>
+            <StoreGadgetariumTitle variant="h1" component="h5">
+              Мы сегодня - это:
+            </StoreGadgetariumTitle>
 
             <BoxText>
               Информированность и доступ к информации в любой момент <br />
               времени – становится особой ценностью на сегодняшний день. <br />
-              одной стороны, быть все время на связи нам помогают <br />{" "}
+              одной стороны, быть все время на связи нам помогают <br />
               постоянно совершенствующиеся другие гаджеты.
             </BoxText>
             <br />
@@ -150,7 +153,7 @@ const AboutStore = () => {
               информацию. Существует <br /> большой выбор телекоммуникационных
               компаний <br /> с различными условиями обслуживания.
             </BoxText>
-          </div>
+          </Container>
 
           <ImageKyrgyzstanKart />
         </LastContainer>
@@ -163,36 +166,10 @@ export default AboutStore;
 
 // Style
 
-const BoxMain = styled("div")`
+const BoxMain = styled(Container)`
   width: 100%;
   max-width: 1424px;
   margin: 0 auto;
-`;
-
-const ContainerText = styled(Container)`
-  padding-left: 195px;
-`;
-
-const MainContainer = styled("div")`
-  width: 90%;
-  height: 330px;
-  .slide {
-    transform: scale(0.9);
-    transition: 0.5;
-    filter: brightness(0.3);
-    outline: none;
-  }
-
-  .slide-active {
-    filter: brightness(1);
-    transform: scale(1);
-    outline: none;
-  }
-`;
-
-const ImageBox = styled("img")`
-  width: 100%;
-  height: 330px;
 `;
 
 const Title = styled(Typography)`
@@ -211,6 +188,35 @@ const Title = styled(Typography)`
   width: 59vw;
 `;
 
+const MainContainer = styled(Container)`
+  width: 90%;
+  height: 330px;
+  .slide {
+    transform: scale(0.9);
+    transition: 0.5;
+    filter: brightness(0.3);
+    outline: none;
+  }
+
+  .slide-active {
+    filter: brightness(1);
+    transform: scale(1);
+    outline: none;
+  }
+  .slick-slide {
+    width: 600px;
+  }
+`;
+
+const ImageBox = styled("img")`
+  width: 100%;
+  height: 330px;
+`;
+
+const ContainerText = styled(Container)`
+  margin-left: 155px;
+`;
+
 const StoreGadgetariumTitle = styled(Typography)`
   font-family: "Inter";
   font-style: normal;
@@ -224,20 +230,10 @@ const StoreGadgetariumTitle = styled(Typography)`
   justify-content: flex-start;
 `;
 
-const UlList = styled("ul")`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: left;
-  padding-left: 20px;
-`;
-
-const BoxText = styled("div")`
-  display: flex;
-  justify-content: flex-start;
-  text-align: left;
-`;
+const BoxText = styled("div")``;
+const ContainerUl = styled("div")``;
 
 const LastContainer = styled("div")`
   display: flex;
+  margin-left: -20px;
 `;
