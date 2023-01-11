@@ -1,5 +1,11 @@
+import AboutStore from "./pages/landing/AboutStore";
+
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <AboutStore />
+    </div>
+  );
 };
 
 export default App;
