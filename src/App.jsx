@@ -1,5 +1,11 @@
+import FrequentlyAskedQuestions from "./pages/landing/FAQ/FrequentlyAskedQuestions";
+
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <FrequentlyAskedQuestions />
+    </div>
+  );
 };
 
 export default App;

@@ -1,10 +1,11 @@
 import { Container, styled, Typography } from "@mui/material";
-import React, { useState } from "react";
 import AccordionComponents from "./AccordionComponents";
-import { title } from "./listQuestions";
+import { title } from "../../../utils/constants/listQuestions";
+import { useToggle } from "../../../hooks/useToggle";
 
 const FrequentlyAskedQuestions = () => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useToggle(false);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -17,7 +18,9 @@ const FrequentlyAskedQuestions = () => {
         </Typography>
       </Container>
       <Container className="accordion-container">
-        <p className="general-text">Часто задаваемые вопросы</p>
+        <Typography variant="body2" component="p" className="general-text">
+          Часто задаваемые вопросы
+        </Typography>
         {title.map((item) => (
           <AccordionComponents
             key={item.number}
@@ -33,17 +36,18 @@ const FrequentlyAskedQuestions = () => {
 };
 
 export default FrequentlyAskedQuestions;
+
 const FAQStyled = styled("div")(() => ({
   fontFamily: "Inter",
   backgroundColor: "#f4f4f4",
   "& .faq-container": {
-    padding: "18px 0",
+    padding: "1rem 0",
     borderBottom: "1px solid #CDCDCD",
     "& h1": {
       fontFamily: "Ubuntu",
       fontWeight: "500",
-      fontSize: "30px",
-      lineHeight: "33px",
+      fontSize: "2rem",
+      lineHeight: "2rem",
     },
   },
   "& .accordion-container": {
@@ -54,7 +58,7 @@ const FAQStyled = styled("div")(() => ({
     padding: "4rem",
     "& .general-text": {
       fontWeight: "700",
-      fontSize: "28px",
+      fontSize: "2rem",
       lineHeight: "110%",
       padding: "2rem",
       textAlign: "center",
