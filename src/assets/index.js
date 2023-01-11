@@ -7,6 +7,6 @@ export { ReactComponent as ArrowLeftIcon } from "./icons/arrows/arrowLeftPink.sv
 export { ReactComponent as ImageKyrgyzstanKart } from "../assets/images/kyrgyzstanMap.svg";
 export { ReactComponent as IconNext } from "./icons/arrows/arrowRightWhiteBackround.svg";
 export { ReactComponent as IconPrev } from "./icons/arrows/arrowLeftWhiteBackround.svg";
-export { ReactComponent as IconClose } from "../assets/icons/CloseIconPopUp.svg";
+export { ReactComponent as IconClose } from "../assets/icons/closeIconPopUp.svg";
 export { ReactComponent as CartIcon } from "../assets/icons/cartIcon.svg";
 export { ReactComponent as SearchIcon } from "./icons/search.svg";
