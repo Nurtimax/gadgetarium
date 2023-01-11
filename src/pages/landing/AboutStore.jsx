@@ -79,7 +79,7 @@ const AboutStore = () => {
         <StoreGadgetariumTitle variant="h4" component="h5">
           Магазин Gadgetarium
         </StoreGadgetariumTitle>
-        <ContainerUl>
+        <div>
           <li>
             слаженная команда людей, любящих спорт и здоровый образ жизни
             знающих свое дело и ориентирующихся <br /> во всех нюансах фитнес
@@ -101,12 +101,12 @@ const AboutStore = () => {
           <li>
             отличные цены и эксклюзивные условия для постоянных партнеров.
           </li>
-        </ContainerUl>
+        </div>
 
         <StoreGadgetariumTitle variant="h4" component="h5">
           В чем причина нашего успеха?
         </StoreGadgetariumTitle>
-        <BoxText>
+        <div>
           Развитие цифровых технологий привело к тому, что рациональное
           отношение человека к своему времени стало <br /> ведущим трендом,
           определяющим то, как ведут себя потребители. Именно по этой <br />{" "}
@@ -118,9 +118,9 @@ const AboutStore = () => {
           примеров — напитки, <br />
           содержащие все необходимые питательные вещества и повышенное
           количество
-        </BoxText>
+        </div>
         <br />
-        <BoxText>
+        <div>
           Ассортимент cамая распространенная ошибка — копирование
           офлайн-ассортимента. Нельзя взять бестселлеры <br /> из офлайн и
           перенести их в онлайн. Они не повторят своего успеха. У многих есть
@@ -130,31 +130,30 @@ const AboutStore = () => {
           полке 100 или 200 категорий товаров, то в <br /> интернете
           пользователи готовы просматривать всего 10–20 из них. Чтобы покупатель
           обратил внимание <br /> именно на вас, придется постараться.
-        </BoxText>
+        </div>
 
         <LastContainer>
-          <Container>
+          <div>
             <StoreGadgetariumTitle variant="h1" component="h5">
               Мы сегодня - это:
             </StoreGadgetariumTitle>
 
-            <BoxText>
+            <div>
               Информированность и доступ к информации в любой момент <br />
               времени – становится особой ценностью на сегодняшний день. <br />
               одной стороны, быть все время на связи нам помогают <br />
               постоянно совершенствующиеся другие гаджеты.
-            </BoxText>
+            </div>
             <br />
-            <BoxText>
+            <div>
               В наше время Интернет приобретает колоссальные масштабы. <br />
               Современный человек, который не хочет отставать от <br /> жизни,
               уже не представляет работу на компьютере без <br /> Интернета. С
               его помощью пользователь может <br /> общаться и получать нужную
               информацию. Существует <br /> большой выбор телекоммуникационных
               компаний <br /> с различными условиями обслуживания.
-            </BoxText>
-          </Container>
-
+            </div>
+          </div>
           <ImageKyrgyzstanKart />
         </LastContainer>
       </ContainerText>
@@ -213,7 +212,7 @@ const ImageBox = styled("img")`
   height: 330px;
 `;
 
-const ContainerText = styled(Container)`
+const ContainerText = styled("div")`
   margin-left: 155px;
 `;
 
@@ -229,9 +228,6 @@ const StoreGadgetariumTitle = styled(Typography)`
   display: flex;
   justify-content: flex-start;
 `;
-
-const BoxText = styled("div")``;
-const ContainerUl = styled("div")``;
 
 const LastContainer = styled("div")`
   display: flex;
