@@ -15,7 +15,6 @@ const FrequentlyAskedQuestions = () => {
         <Typography variant="h5" component="h1">
           FAQ
         </Typography>
-        <div>a</div>
       </Container>
       <Container className="accordion-container">
         <p className="general-text">Часто задаваемые вопросы</p>
