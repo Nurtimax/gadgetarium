@@ -1,11 +1,5 @@
-import Delivery from "./pages/landing/Delivery";
-
 const App = () => {
-  return (
-    <div>
-      <Delivery />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
