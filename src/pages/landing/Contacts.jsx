@@ -6,87 +6,87 @@ import Input from "../../components/UI/input/Input";
 
 const Contacts = () => {
   return (
-    <Container style={{ backgroundColor: "#f4f4f4" }}>
-      <HeaderTitle variant="h1" component="h5">
-        Контакты
-      </HeaderTitle>
-      <ContainerSeparating>
-        <ContainerAboutShop>
-          <AboutShopTitle variant="h1" component="h5">
-            Магазин Gadgetarium
-          </AboutShopTitle>
+    <div style={{ backgroundColor: "#f4f4f4" }}>
+      <Container>
+        <HeaderTitle variant="h1" component="h5">
+          Контакты
+        </HeaderTitle>
+        <ContainerSeparating>
+          <ContainerAboutShop>
+            <AboutShopTitle variant="h1" component="h5">
+              Магазин Gadgetarium
+            </AboutShopTitle>
 
-          <ContainerDataGadgetarium>
-            <ContainerEachData>
-              <DataGadgetariumTitle variant="h1" component="h5">
-                Адрес:
-              </DataGadgetariumTitle>
-              <DataGadgetariumTitleValue variant="h1" component="h5">
-                г. Бишкек, ул. Гражданская 119
-              </DataGadgetariumTitleValue>
-            </ContainerEachData>
-            <ContainerEachData>
-              <DataGadgetariumTitle variant="h1" component="h5">
-                Телефон:
-              </DataGadgetariumTitle>
-              <DataGadgetariumTitleValue variant="h1" component="h5">
-                г+996(400) 00-00-00
-              </DataGadgetariumTitleValue>
-            </ContainerEachData>
-            <ContainerEachData>
-              <DataGadgetariumTitle variant="h1" component="h5">
-                Почта:
-              </DataGadgetariumTitle>
-              <DataGadgetariumTitleValue variant="h1" component="h5">
-                Gadgetarium.kg
-              </DataGadgetariumTitleValue>
-            </ContainerEachData>
-            <ContainerEachData>
-              <DataGadgetariumTitle variant="h1" component="h5">
-                Режим работы:
-              </DataGadgetariumTitle>
-              <DataGadgetariumTitleValue variant="h1" component="h5">
-                10:00 - 21:00
-              </DataGadgetariumTitleValue>
-            </ContainerEachData>
-          </ContainerDataGadgetarium>
-        </ContainerAboutShop>
+            <ContainerDataGadgetarium>
+              <ContainerEachData>
+                <DataGadgetariumTitle variant="h1" component="h5">
+                  Адрес:
+                </DataGadgetariumTitle>
+                <DataGadgetariumTitleValue variant="h1" component="h5">
+                  г. Бишкек, ул. Гражданская 119
+                </DataGadgetariumTitleValue>
+              </ContainerEachData>
+              <ContainerEachData>
+                <DataGadgetariumTitle variant="h1" component="h5">
+                  Телефон:
+                </DataGadgetariumTitle>
+                <DataGadgetariumTitleValue variant="h1" component="h5">
+                  г+996(400) 00-00-00
+                </DataGadgetariumTitleValue>
+              </ContainerEachData>
+              <ContainerEachData>
+                <DataGadgetariumTitle variant="h1" component="h5">
+                  Почта:
+                </DataGadgetariumTitle>
+                <DataGadgetariumTitleValue variant="h1" component="h5">
+                  Gadgetarium.kg
+                </DataGadgetariumTitleValue>
+              </ContainerEachData>
+              <ContainerEachData>
+                <DataGadgetariumTitle variant="h1" component="h5">
+                  Режим работы:
+                </DataGadgetariumTitle>
+                <DataGadgetariumTitleValue variant="h1" component="h5">
+                  10:00 - 21:00
+                </DataGadgetariumTitleValue>
+              </ContainerEachData>
+            </ContainerDataGadgetarium>
+          </ContainerAboutShop>
 
-        <FormMainContainer>
-          <FormMainTitle variant="h1" component="h5">
-            Напишите нам
-          </FormMainTitle>
-          <ContainerInputSeperating>
-            <ContainerInput>
-              <LabelInput>Имя</LabelInput>
-              <StyledInput placeholder="Напишите ваше имя" />
-            </ContainerInput>
-            <ContainerInput>
-              <LabelInput>Фамилия</LabelInput>
-              <StyledInput placeholder="Напишите вашу фамилию" />
-            </ContainerInput>
-            <ContainerInput>
-              <LabelInput>E-mail</LabelInput>
-              <StyledInput placeholder="Напишите ваш email" />
-            </ContainerInput>
-            <ContainerInput>
-              <LabelInput>Телефон</LabelInput>
-              <StyledInput placeholder="+996 (_ _ _) _ _  _ _  _ _" />
-            </ContainerInput>
-          </ContainerInputSeperating>
-          <ContainerTextarea>
-            <TextareaTitle variant="h1" component="h5">
-              Сообщение
-            </TextareaTitle>
-            <StyledTextarea placeholder="Напишите сообщение" />
-          </ContainerTextarea>
-          <StyledButton width="685px" height="47px">
-            отправить
-          </StyledButton>
-        </FormMainContainer>
-      </ContainerSeparating>
-      <BishkekMapImage />
-    </Container>
+          <FormMainContainer>
+            <FormMainTitle variant="h1" component="h5">
+              Напишите нам
+            </FormMainTitle>
+            <ContainerInputSeperating>
+              <ContainerInput>
+                <LabelInput>Имя</LabelInput>
+                <StyledInput placeholder="Напишите ваше имя" />
+              </ContainerInput>
+              <ContainerInput>
+                <LabelInput>Фамилия</LabelInput>
+                <StyledInput placeholder="Напишите вашу фамилию" />
+              </ContainerInput>
+              <ContainerInput>
+                <LabelInput>E-mail</LabelInput>
+                <StyledInput placeholder="Напишите ваш email" />
+              </ContainerInput>
+              <ContainerInput>
+                <LabelInput>Телефон</LabelInput>
+                <StyledInput placeholder="+996 (_ _ _) _ _  _ _  _ _" />
+              </ContainerInput>
+            </ContainerInputSeperating>
+            <ContainerTextarea>
+              <TextareaTitle variant="h1" component="h5">
+                Сообщение
+              </TextareaTitle>
+              <StyledTextarea placeholder="Напишите сообщение" />
+            </ContainerTextarea>
+            <StyledButton>отправить</StyledButton>
+          </FormMainContainer>
+        </ContainerSeparating>
+        <StyleBishkekImage />
+      </Container>
+    </div>
   );
 };
 
@@ -190,7 +190,13 @@ const StyledButton = styled(Button)(() => ({
   lineHeight: "17px",
   textTransform: "uppercase",
   color: "#FFFFFF !important",
+  width: "100%",
+  height: "47px",
 }));
+
+const StyleBishkekImage = styled(BishkekMapImage)`
+  width: 100%;
+`;
 
 // Form Style________________________________________________________________________
 

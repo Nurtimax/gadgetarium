@@ -1,11 +1,5 @@
-import Contacts from "./pages/landing/Contacts";
-
 const App = () => {
-  return (
-    <div>
-      <Contacts />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
