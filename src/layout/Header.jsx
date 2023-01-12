@@ -56,7 +56,8 @@ const Header = ({ isAdmin = false }) => {
   };
 
   const toggleAdminHandler = () => {
-    setAdmin((prev) => prev);
+    setAdmin((prev) => !prev);
+    setValue("");
   };
 
   const toggleAnchorStateHandler = () => {
