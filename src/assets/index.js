@@ -10,3 +10,8 @@ export { ReactComponent as IconPrev } from "./icons/arrows/arrowLeftWhiteBackrou
 export { ReactComponent as IconClose } from "../assets/icons/CloseIconPopUp.svg";
 export { ReactComponent as CartIcon } from "../assets/icons/cartIcon.svg";
 export { ReactComponent as SearchIcon } from "./icons/search.svg";
+export { ReactComponent as DeliveryIcon } from "./icons/Pickup.svg";
+export { ReactComponent as WalletIcon } from "./icons/wallet.svg";
+export { ReactComponent as CardUponReceiptIcon } from "./icons/cardUponReceipt.svg";
+export { ReactComponent as PaymentByCardIcon } from "./icons/PaymentByCard.svg";
+export { ReactComponent as CashIcon } from "./icons/Cash.svg";

@@ -1,3 +1,11 @@
+import {
+  CardUponReceiptIcon,
+  CashIcon,
+  DeliveryIcon,
+  PaymentByCardIcon,
+  WalletIcon,
+} from "../../assets";
+
 export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/laptop-pens-phone-note-with-blank-screen-on-table_155003-5339.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
 
@@ -17,4 +25,45 @@ export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/charming-lucky-goodlooking-energized-young-blond-caucasian-girl-blurred-behind-stretch-hand-show-camera-smartphone-display-promoting-phone-application-gadget-standing-white-background_176420-55485.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
   "https://img.freepik.com/premium-photo/modern-desktop-and-laptop-computers-with-sample-software-interfaces-on-the-screen-isolated-on-white_746318-3.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
   "https://808.media/wp-content/uploads/2021/03/airpods-pro.jpg",
+];
+
+export const delivery = [
+  {
+    id: 1,
+    deliveryIcon: <DeliveryIcon />,
+    caption: "Самовывоз со склада",
+    title: "Забрать в течение 14 дней",
+    walletIcon: <WalletIcon />,
+    text: " Предоплата не требуется",
+  },
+  {
+    id: 2,
+    deliveryIcon: <DeliveryIcon />,
+    caption: "Самовывоз из магазина",
+    title: "Забрать в течение 14 дней",
+    walletIcon: <WalletIcon />,
+    text: " Предоплата не требуется",
+  },
+  {
+    id: 3,
+    deliveryIcon: <DeliveryIcon />,
+    caption: "Доставка",
+    title:
+      " По городу 200сом, по регионам Бесплатная доставка при покупках свыше — 10 000с.",
+    walletIcon: <WalletIcon />,
+    text: " Предоплата не требуется",
+  },
+];
+export const paymentMethod = [
+  {
+    id: 1,
+    paymentIcon: <PaymentByCardIcon />,
+    paymentText: "Оплата картой онлайн",
+  },
+  { id: 2, paymentIcon: <CashIcon />, paymentText: "Наличными при получении" },
+  {
+    id: 3,
+    paymentIcon: <CardUponReceiptIcon />,
+    paymentText: "Картой при получении",
+  },
 ];
