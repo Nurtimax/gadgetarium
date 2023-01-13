@@ -8,19 +8,20 @@ import {
   Divider,
   Grid,
   IconButton,
+  MenuItem,
+  Paper,
   styled,
   Tab,
   Tabs,
   Toolbar,
+  Tooltip,
+  tooltipClasses,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
-  CartIcon,
   CatalogIcon,
-  ComparativeIcon,
   FaceBookIcon,
-  HeartIcon,
   InstagramIcon,
   Logo,
   ProfileIcon,
@@ -28,12 +29,25 @@ import {
 } from "../assets";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Search from "../components/UI/Search";
+import DropDown from "../components/UI/DropDown";
+import { adminPage, iconsData, userPages } from "../utils/constants";
 
 const Header = ({ isAdmin = false }) => {
   const [admin, setAdmin] = useState(isAdmin);
   const [value, setValue] = useState("");
   const [anchorState, setAnchorState] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    if (!open) {
+      setAnchorEl(event.currentTarget);
+      return;
+    }
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
@@ -44,7 +58,7 @@ const Header = ({ isAdmin = false }) => {
 
   const scrollHandler = (e) => {
     const scroll = e.target.documentElement.scrollTop;
-    if (scroll > 50) {
+    if (scroll > 80) {
       setIsScroll(true);
       return;
     }
@@ -72,19 +86,6 @@ const Header = ({ isAdmin = false }) => {
     }
   }, [admin]);
 
-  const userPages = [
-    { id: 11, theme: "Главная" },
-    { id: 12, theme: "О магазине" },
-    { id: 13, theme: "Доставка" },
-    { id: 14, theme: "FAG" },
-    { id: 15, theme: "Контакты" },
-  ];
-  const adminPage = [
-    { id: 22, theme: "Товары" },
-    { id: 23, theme: "Заказы" },
-    { id: 24, theme: "Отзывы и рейтинг" },
-  ];
-
   const pageIsAdmin = !admin ? userPages : adminPage;
 
   if (!value) {
@@ -105,16 +106,33 @@ const Header = ({ isAdmin = false }) => {
   );
 
   const icons = (
-    <Box className="flex gap2 height flex-end">
-      <Badge badgeContent={1} color="error">
-        <ComparativeIcon />
-      </Badge>
-      <Badge badgeContent={4} color="error">
-        <HeartIcon />
-      </Badge>
-      <Badge badgeContent={4} color="error">
-        <CartIcon />
-      </Badge>
+    <Box className="flex gap2 height flex-end pointer">
+      {iconsData.map((icon) => (
+        <StyledTooltip
+          key={icon.id}
+          placement={icon.placementTooltip}
+          title={
+            icon.title === "cart" ? (
+              !icon.cartItem.length ? (
+                <Box>
+                  <Item>item1</Item>
+                </Box>
+              ) : (
+                <StyledEmptyCart />
+              )
+            ) : icon.focused ? (
+              icon.tooltip_title_compative_remove
+            ) : (
+              icon.tooltip_title_compative_add
+            )
+          }
+          className={icon.className}
+        >
+          <Badge badgeContent={icon.badgeContent.length} color={icon.color}>
+            {icon.iconDefault}
+          </Badge>
+        </StyledTooltip>
+      ))}
     </Box>
   );
 
@@ -123,14 +141,32 @@ const Header = ({ isAdmin = false }) => {
       <Typography variant="body1" component="div">
         +996 (400) 00-00-00
       </Typography>
-      <IconButton size="large" color="inherit">
-        <ProfileIcon />
-      </IconButton>
+      <Box className="relative">
+        <IconButton size="large" color="inherit" onClick={handleClick}>
+          <ProfileIcon />
+        </IconButton>
+        <StyledDropDown
+          open={open}
+          handleClose={handleClick}
+          anchorEl={anchorEl}
+          vertical="bottom"
+          horizontal="center"
+        >
+          <Grid container spacing={1} className="pointer">
+            <Grid item xs={12}>
+              <MenuItem>Войти</MenuItem>
+            </Grid>
+            <Grid item xs={12}>
+              <MenuItem>Регистрация</MenuItem>
+            </Grid>
+          </Grid>
+        </StyledDropDown>
+      </Box>
     </Box>
   );
 
   const adminProfile = (
-    <Box className="flex gap">
+    <Box className="flex gap between">
       <Box>
         <ButtonStyled className="createlink">Создать рассылку</ButtonStyled>
       </Box>
@@ -162,6 +198,7 @@ const Header = ({ isAdmin = false }) => {
         value={value}
         onChange={handleChange}
         indicatorColor="none"
+        classes={{ flexContainer: "gap" }}
       >
         {pageIsAdmin?.map((adminList) => (
           <TabStyled
@@ -176,10 +213,10 @@ const Header = ({ isAdmin = false }) => {
 
   const tabsPath = (
     <>
-      <Grid item xs={5}>
+      <Grid item xs={5.5}>
         {navLinks}
       </Grid>
-      <Grid item xs={4} className="height flex">
+      <Grid item xs={3.5} className="height flex">
         {!admin ? userProfile : adminProfile}
       </Grid>
     </>
@@ -189,7 +226,7 @@ const Header = ({ isAdmin = false }) => {
     <HeaderStyled>
       <AppBar position={admin ? "fixed" : isScroll ? "fixed" : "relative"}>
         <Container>
-          <Toolbar>
+          <Toolbar className="padding flex">
             <Grid container spacing={1} className="between">
               <Grid item xs={2.5}>
                 <Logo onClick={toggleAdminHandler} />
@@ -223,7 +260,7 @@ const Header = ({ isAdmin = false }) => {
         {!admin
           ? !isScroll && (
               <Container>
-                <Toolbar>
+                <Toolbar className="padding">
                   <Grid container className="between">
                     <Grid item xs={1} className="flex gap2">
                       {catalog}
@@ -243,7 +280,7 @@ const Header = ({ isAdmin = false }) => {
                       />
                     </Grid>
                     <Grid item xs={2} className="">
-                      <Box className="flex gap2 height">
+                      <Box className="flex gap2 height pointer">
                         <Badge badgeContent={4} color="success">
                           <FaceBookIcon />
                         </Badge>
@@ -309,11 +346,16 @@ const HeaderStyled = styled("header")(({ theme }) => ({
   "& .between": {
     justifyContent: "space-between",
   },
+  "& .padding": {
+    padding: "20px",
+  },
+  "& .relative": {
+    position: "relative",
+  },
 }));
 
-const TabStyled = styled(Tab)(({ theme }) => ({
+const TabStyled = styled(Tab)(() => ({
   "&.Mui-selected": {
-    border: `1px solid ${theme.palette.primary.light}`,
     background: "#f8f7f733",
     borderRadius: "3px",
   },
@@ -344,4 +386,43 @@ const AvatarStyled = styled(Avatar)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "26px",
   lineHeight: "31px",
+}));
+
+const StyledDropDown = styled(DropDown)(() => ({
+  position: "absolute",
+}));
+
+const StyledTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: theme.palette.common.black,
+  },
+  [`&.show_cart_items .${tooltipClasses.arrow}`]: {
+    color: theme.palette.common.white,
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.black,
+  },
+  [`&.show_cart_items .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    padding: theme.spacing(0.2),
+    color: theme.palette.common.black,
+  },
+}));
+
+export const StyledEmptyCart = styled("div")(({ image }) => ({
+  background: `url(${image})`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  width: "100%",
+  height: "100%",
+}));
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
 }));

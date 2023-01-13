@@ -2,14 +2,15 @@ import { Snackbar, styled } from "@mui/material";
 import iconClose from "../../assets/icons/iconClose.png";
 
 const PopUp = ({
-  vertical,
-  horizontal,
+  vertical = "top",
+  horizontal = "right",
   open,
   handleClose,
   addedTitle,
   transitionTitle,
   durationSnackbar,
   transition,
+  icon = false,
 }) => {
   const snackbar = (
     <Box>
@@ -17,7 +18,9 @@ const PopUp = ({
       <TransitionTitleStyle onClick={transition}>
         {transitionTitle}
       </TransitionTitleStyle>
-      <IconCloseBtn src={iconClose} alt="icon" onClick={handleClose} />
+      {icon && (
+        <IconCloseBtn src={iconClose} alt="icon" onClick={handleClose} />
+      )}
     </Box>
   );
 

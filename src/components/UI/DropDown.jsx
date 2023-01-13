@@ -14,9 +14,10 @@ const DropDown = ({
   children,
   open,
   handleClose,
-  vertical = "top",
-  horizontal = "left",
+  vertical,
+  horizontal,
   anchorEl,
+  ...props
 }) => {
   return (
     <Container
@@ -28,6 +29,7 @@ const DropDown = ({
         horizontal,
       }}
       anchorEl={anchorEl}
+      {...props}
     >
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </Container>
