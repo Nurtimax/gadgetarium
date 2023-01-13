@@ -1,12 +1,17 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
 import React from "react";
-import { BishkekMapImage } from "../../assets";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 
 const Contacts = () => {
+  const defaultState = {
+    center: [42.87, 74.59],
+    zoom: 11,
+  };
+
   return (
-    <div style={{ backgroundColor: "#f4f4f4" }}>
+    <ContainerPage>
       <Container>
         <HeaderTitle variant="h1" component="h5">
           Контакты
@@ -75,31 +80,37 @@ const Contacts = () => {
                 <StyledInput placeholder="+996 (_ _ _) _ _  _ _  _ _" />
               </ContainerInput>
             </ContainerInputSeperating>
-            <ContainerTextarea>
-              <TextareaTitle variant="h1" component="h5">
-                Сообщение
-              </TextareaTitle>
-              <StyledTextarea placeholder="Напишите сообщение" />
-            </ContainerTextarea>
-            <StyledButton>отправить</StyledButton>
+            <div>
+              <ContainerTextarea>
+                <TextareaTitle variant="h1" component="h5">
+                  Сообщение
+                </TextareaTitle>
+                <StyledTextarea placeholder="Напишите сообщение" />
+              </ContainerTextarea>
+              <StyledButton>отправить</StyledButton>
+            </div>
+            <YMaps>
+              <Map defaultState={defaultState}>
+                <Placemark geometry={[42.87, 74.59]} />
+              </Map>
+            </YMaps>
           </FormMainContainer>
         </ContainerSeparating>
-        <StyleBishkekImage />
       </Container>
-    </div>
+    </ContainerPage>
   );
 };
 
 export default Contacts;
 
-// Style
+const ContainerPage = styled("div")`
+  background-color: #f4f4f4;
+`;
 
 const ContainerSeparating = styled("div")`
   display: flex;
   justify-content: space-between;
 `;
-
-// Form Style__________________________________________________________________________
 
 const FormMainContainer = styled("div")`
   padding: 60px 0 120px;
@@ -192,15 +203,8 @@ const StyledButton = styled(Button)(() => ({
   color: "#FFFFFF !important",
   width: "100%",
   height: "47px",
+  marginBottom: "120px",
 }));
-
-const StyleBishkekImage = styled(BishkekMapImage)`
-  width: 100%;
-`;
-
-// Form Style________________________________________________________________________
-
-// Data Style|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 const HeaderTitle = styled(Typography)`
   padding-top: 30px;
@@ -257,5 +261,3 @@ const DataGadgetariumTitleValue = styled(Typography)`
   line-height: 110%;
   color: #292929;
 `;
-
-// Data Style|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
