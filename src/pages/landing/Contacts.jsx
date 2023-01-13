@@ -1,15 +1,8 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
-import React from "react";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
-import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 
 const Contacts = () => {
-  const defaultState = {
-    center: [42.87, 74.59],
-    zoom: 11,
-  };
-
   return (
     <ContainerPage>
       <Container>
@@ -89,13 +82,13 @@ const Contacts = () => {
               </ContainerTextarea>
               <StyledButton>отправить</StyledButton>
             </div>
-            <YMaps>
-              <Map defaultState={defaultState}>
-                <Placemark geometry={[42.87, 74.59]} />
-              </Map>
-            </YMaps>
           </FormMainContainer>
         </ContainerSeparating>
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?um=constructor%3A7c9e32c235e852302eb25a02c6b96f88cbebb9457e9a77022bb71341ecfb86e7&amp;source=constructor"
+          width="100%"
+          height="400"
+        ></iframe>
       </Container>
     </ContainerPage>
   );
@@ -105,6 +98,7 @@ export default Contacts;
 
 const ContainerPage = styled("div")`
   background-color: #f4f4f4;
+  padding-bottom: 120px;
 `;
 
 const ContainerSeparating = styled("div")`
@@ -203,7 +197,6 @@ const StyledButton = styled(Button)(() => ({
   color: "#FFFFFF !important",
   width: "100%",
   height: "47px",
-  marginBottom: "120px",
 }));
 
 const HeaderTitle = styled(Typography)`
