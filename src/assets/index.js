@@ -7,4 +7,3 @@ export { ReactComponent as Message } from "./icons/messageIcon.svg";
 export { ReactComponent as Locotion } from "./icons/locotion.svg";
 export { ReactComponent as CartIcon } from "../assets/icons/cartIcon.svg";
 export { ReactComponent as SearchIcon } from "./icons/search.svg";
-export { ReactComponent as IconClose } from "../assets/icons/CloseIconPopUp.svg";
