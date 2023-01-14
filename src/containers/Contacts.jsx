@@ -1,6 +1,8 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
-import Button from "../../components/UI/button/Button";
-import Input from "../../components/UI/input/Input";
+import ReactInputMask from "react-input-mask";
+import Button from "../components/UI/button/Button";
+import Input from "../components/UI/input/Input";
+import { contactsData, URLMAP } from "../utils/constants";
 
 const Contacts = () => {
   return (
@@ -14,40 +16,17 @@ const Contacts = () => {
             <AboutShopTitle variant="h1" component="h5">
               Магазин Gadgetarium
             </AboutShopTitle>
-
             <ContainerDataGadgetarium>
-              <ContainerEachData>
-                <DataGadgetariumTitle variant="h1" component="h5">
-                  Адрес:
-                </DataGadgetariumTitle>
-                <DataGadgetariumTitleValue variant="h1" component="h5">
-                  г. Бишкек, ул. Гражданская 119
-                </DataGadgetariumTitleValue>
-              </ContainerEachData>
-              <ContainerEachData>
-                <DataGadgetariumTitle variant="h1" component="h5">
-                  Телефон:
-                </DataGadgetariumTitle>
-                <DataGadgetariumTitleValue variant="h1" component="h5">
-                  г+996(400) 00-00-00
-                </DataGadgetariumTitleValue>
-              </ContainerEachData>
-              <ContainerEachData>
-                <DataGadgetariumTitle variant="h1" component="h5">
-                  Почта:
-                </DataGadgetariumTitle>
-                <DataGadgetariumTitleValue variant="h1" component="h5">
-                  Gadgetarium.kg
-                </DataGadgetariumTitleValue>
-              </ContainerEachData>
-              <ContainerEachData>
-                <DataGadgetariumTitle variant="h1" component="h5">
-                  Режим работы:
-                </DataGadgetariumTitle>
-                <DataGadgetariumTitleValue variant="h1" component="h5">
-                  10:00 - 21:00
-                </DataGadgetariumTitleValue>
-              </ContainerEachData>
+              {contactsData.map((data, i) => (
+                <ContainerEachData key={i}>
+                  <DataGadgetariumTitle variant="h1" component="h5">
+                    {data.title}
+                  </DataGadgetariumTitle>
+                  <DataGadgetariumTitleValue variant="h1" component="h5">
+                    {data.value}
+                  </DataGadgetariumTitleValue>
+                </ContainerEachData>
+              ))}
             </ContainerDataGadgetarium>
           </ContainerAboutShop>
 
@@ -70,7 +49,10 @@ const Contacts = () => {
               </ContainerInput>
               <ContainerInput>
                 <LabelInput>Телефон</LabelInput>
-                <StyledInput placeholder="+996 (_ _ _) _ _  _ _  _ _" />
+                <StyledInputMask
+                  mask="+996(999)99-99-99"
+                  placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                />
               </ContainerInput>
             </ContainerInputSeperating>
             <div>
@@ -80,15 +62,11 @@ const Contacts = () => {
                 </TextareaTitle>
                 <StyledTextarea placeholder="Напишите сообщение" />
               </ContainerTextarea>
-              <StyledButton>отправить</StyledButton>
+              <StyledButton type="submit">отправить</StyledButton>
             </div>
           </FormMainContainer>
         </ContainerSeparating>
-        <iframe
-          src="https://yandex.ru/map-widget/v1/?um=constructor%3A7c9e32c235e852302eb25a02c6b96f88cbebb9457e9a77022bb71341ecfb86e7&amp;source=constructor"
-          width="100%"
-          height="400"
-        ></iframe>
+        <iframe src={URLMAP} width="100%" height="400" />
       </Container>
     </ContainerPage>
   );
@@ -101,7 +79,7 @@ const ContainerPage = styled("div")`
   padding-bottom: 120px;
 `;
 
-const ContainerSeparating = styled("div")`
+const ContainerSeparating = styled("form")`
   display: flex;
   justify-content: space-between;
 `;
@@ -113,10 +91,8 @@ const FormMainContainer = styled("div")`
 const FormMainTitle = styled(Typography)`
   padding-bottom: 40px;
   font-family: "Inter";
-  font-style: normal;
   font-weight: 700;
   font-size: 24px;
-  line-height: 110%;
   color: #292929;
 `;
 
@@ -135,10 +111,8 @@ const ContainerInput = styled("span")`
 
 const LabelInput = styled(InputLabel)`
   font-family: "Inter";
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 150%;
   color: #384255;
   &::after {
     content: " *";
@@ -151,12 +125,28 @@ const StyledInput = styled(Input)(() => ({
   height: "48px",
 }));
 
+const StyledInputMask = styled(ReactInputMask)(() => ({ theme }) => ({
+  width: "338px",
+  height: "48px",
+  "&": {
+    border: `0.1px solid ${theme.palette.grey[900]}`,
+    background: `${theme.palette.background.default}`,
+    borderRadius: "5px",
+    padding: "0 10px",
+  },
+  "&:focus": {
+    border: `0.1px solid ${theme.palette.secondary.main}`,
+    background: `${theme.palette.background.default}`,
+    borderRadius: "5px",
+    color: `${theme.palette.primary.dark}`,
+    outline: "none",
+  },
+}));
+
 const TextareaTitle = styled(Typography)`
   font-family: "Inter";
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 150%;
   color: #384255;
   padding-bottom: 6px;
 `;
@@ -173,7 +163,6 @@ const StyledTextarea = styled("textarea")(({ theme }) => ({
   fontFamily: "Inter",
   fontWeight: "400",
   fontSize: "1rem",
-  lineHeight: "150%",
   color: "#91969E",
   " &:focus": {
     border: `0.1px solid ${theme.palette.secondary.main}`,
@@ -192,7 +181,6 @@ const StyledButton = styled(Button)(() => ({
   fontFamily: "Inter",
   fontWeight: "500",
   fontSize: "14px",
-  lineHeight: "17px",
   textTransform: "uppercase",
   color: "#FFFFFF !important",
   width: "100%",
@@ -203,10 +191,8 @@ const HeaderTitle = styled(Typography)`
   padding-top: 30px;
   padding-bottom: 20px;
   font-family: "Ubuntu";
-  font-style: normal;
   font-weight: 500;
   font-size: 30px;
-  line-height: 110%;
   color: #292929;
   border-bottom: 1px solid #cdcdcd;
 `;
@@ -218,10 +204,8 @@ const ContainerAboutShop = styled("div")`
 const AboutShopTitle = styled(Typography)`
   padding-bottom: 47px;
   font-family: "Inter";
-  font-style: normal;
   font-weight: 500;
   font-size: 24px;
-  line-height: 110%;
   color: #292929;
 `;
 
@@ -239,18 +223,14 @@ const ContainerEachData = styled("span")`
 
 const DataGadgetariumTitle = styled(Typography)`
   font-family: "Inter";
-  font-style: normal;
   font-weight: 700;
   font-size: 18px;
-  line-height: 110%;
   color: #292929;
 `;
 
 const DataGadgetariumTitleValue = styled(Typography)`
   font-family: "Inter";
-  font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 110%;
   color: #292929;
 `;
