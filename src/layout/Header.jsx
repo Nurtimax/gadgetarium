@@ -8,13 +8,13 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Logo } from "../assets";
-import Search from "../components/UI/Search";
 import { adminPage, userPages } from "../utils/constants";
 import TabsPath from "../components/header/TabsPath";
 import Catalog from "../components/header/Catalog";
 import FunctionalIcons from "../components/header/FunctionalIcons";
 import SocialIcons from "../components/header/SocialIcons";
 import { useNavigate } from "react-router-dom";
+import SearchItem from "../components/header/SearchItem";
 
 const Header = ({ isAdmin = false }) => {
   const [admin, setAdmin] = useState(isAdmin);
@@ -88,10 +88,7 @@ const Header = ({ isAdmin = false }) => {
                       <Catalog />
                     </Grid>
                     <Grid item xs={6}>
-                      <Search
-                        width="100%"
-                        placeholder="Поиск по каталогу магазина"
-                      />
+                      <SearchItem />
                     </Grid>
                     <Grid item xs={2}>
                       <FunctionalIcons />
@@ -127,10 +124,7 @@ const Header = ({ isAdmin = false }) => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <Search
-                        width="100%"
-                        placeholder="Поиск по каталогу магазина"
-                      />
+                      <SearchItem />
                     </Grid>
                     <Grid item xs={2} className="flex-end">
                       <SocialIcons />

@@ -1,5 +1,6 @@
 import { Badge, styled, Tooltip, tooltipClasses } from "@mui/material";
 import React, { useState } from "react";
+import PopUp from "../UI/PopUp";
 import FunctionalIconsItemTooltipTitle from "./FunctionalIconsItemTooltipTitle";
 
 const FunctionalIconsItem = ({
@@ -10,10 +11,16 @@ const FunctionalIconsItem = ({
   iconDefault,
   focused,
   iconRemoveItem,
-  toggleAnchorEl,
+  addedTitle,
+  transitionTitle,
   ...props
 }) => {
   const [state, setState] = useState(focused);
+  const [anchorEl, setAnchorEl] = useState(false);
+
+  const toggleAnchorEl = () => {
+    setAnchorEl((prevState) => !prevState);
+  };
 
   const toggleHandler = () => {
     setState((prevState) => !prevState);
@@ -21,16 +28,29 @@ const FunctionalIconsItem = ({
   };
 
   return (
-    <StyledTooltip
-      placement={placementTooltip}
-      title={<FunctionalIconsItemTooltipTitle {...props} focused={state} />}
-      className={className}
-      onClick={toggleHandler}
-    >
-      <Badge badgeContent={badgeContent.length} color={color} className="icon">
-        {!state ? iconDefault : iconRemoveItem}
-      </Badge>
-    </StyledTooltip>
+    <>
+      <StyledTooltip
+        placement={placementTooltip}
+        title={<FunctionalIconsItemTooltipTitle {...props} focused={state} />}
+        className={className}
+        onClick={toggleHandler}
+      >
+        <StyledBadge badgeContent={badgeContent.length} color={color}>
+          {!state ? iconDefault : iconRemoveItem}
+        </StyledBadge>
+      </StyledTooltip>
+      {anchorEl && (
+        <PopUp
+          open={anchorEl}
+          handleClose={toggleAnchorEl}
+          durationSnackbar={2000}
+          addedTitle={addedTitle}
+          transitionTitle={transitionTitle}
+          to={Math.random().toString()}
+          icon
+        />
+      )}
+    </>
   );
 };
 
@@ -55,8 +75,11 @@ const StyledTooltip = styled(({ className, ...props }) => (
     width: "500px",
     boxShadow: "rgba(0,0,0,0.5) 0 1px 2px",
   },
-  [`& .icon svg`]: {
-    width: "32px",
-    height: "31px",
+}));
+
+const StyledBadge = styled(Badge)(() => ({
+  "& svg": {
+    width: "30px",
+    height: "30px",
   },
 }));
