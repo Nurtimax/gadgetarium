@@ -1,11 +1,5 @@
-import Contacts from "./containers/Contacts";
-
 const App = () => {
-  return (
-    <div>
-      <Contacts />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
