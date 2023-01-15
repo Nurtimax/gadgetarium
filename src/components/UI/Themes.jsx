@@ -40,7 +40,7 @@ const Themes = ({ children }) => {
         styleOverrides: {
           maxWidthLg: {
             "&.MuiContainer-maxWidthLg": {
-              maxWidth: 1400,
+              maxWidth: "90%",
             },
           },
           maxWidthMd: {
@@ -48,6 +48,11 @@ const Themes = ({ children }) => {
               maxWidth: 1200,
             },
           },
+        },
+      },
+      MuiMenuItem: {
+        defaultProps: {
+          disableRipple: true,
         },
       },
     },

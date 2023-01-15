@@ -2,7 +2,11 @@ import {
   CartIcon,
   ComparativeIcon,
   ComporativePinkIcon,
+  FaceBookIcon,
+  HeartActiveIcon,
   HeartIcon,
+  InstagramIcon,
+  WhatsAppIcon,
 } from "../../assets";
 
 export const dataDigitalBestSeller = [
@@ -58,7 +62,7 @@ export const iconsData = [
     tooltip_title_compative_add: "Добавить в избранное",
     tooltip_title_compative_remove: "Удалить из избранного",
     iconDefault: <HeartIcon />,
-    iconRemoveItem: <ComporativePinkIcon />,
+    iconRemoveItem: <HeartActiveIcon />,
     title: "heart",
     badgeContent: [],
     className: "dispatch_message",
@@ -77,7 +81,13 @@ export const iconsData = [
     badgeContent: [],
     className: "show_cart_items",
     color: "error",
-    placementTooltip: "bottom",
+    placementTooltip: "bottom-end",
     focused: false,
   },
+];
+
+export const socialIconsData = [
+  { id: 1, icon: <FaceBookIcon /> },
+  { id: 3, icon: <InstagramIcon /> },
+  { id: 2, icon: <WhatsAppIcon /> },
 ];

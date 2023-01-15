@@ -26,3 +26,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.capitalize {
+  text-transform: capitalize;
+}
+.height {
+  height: 100%;
+}
+.flex-end {
+  justify-content: flex-end;
+}
+.pointer {
+  cursor: pointer;
+}
+.color-white {
+  color: white;
+}
+.transition {
+  transition: 0.3s;
+}
+.between {
+  justify-content: space-between;
+}
+.center {
+  justify-content: center;
+}
+.padding {
+  padding: 20px;
+}
+.relative {
+  position: relative;
+}
+.flexgrow {
+  flex-grow: 1;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

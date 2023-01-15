@@ -4,7 +4,7 @@ import "./App.css";
 const App = () => {
   return (
     <div className="App">
-      <Header />
+      <Header isAdmin={false} />
     </div>
   );
 };
