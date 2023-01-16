@@ -4,6 +4,7 @@ export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as Phone } from "./icons/numberPhone.svg";
 export { ReactComponent as Message } from "./icons/messageIcon.svg";
 export { ReactComponent as Locotion } from "./icons/locotion.svg";
+export { ReactComponent as Locotion } from "./icons/locotion.svg";
 export { ReactComponent as IconClose } from "../assets/icons/closeIconPopUp.svg";
 export { ReactComponent as SearchIcon } from "./icons/search.svg";
 export { ReactComponent as ArrowLeftIcon } from "./icons/arrows/arrowLeftPink.svg";
