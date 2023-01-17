@@ -1,6 +1,6 @@
 import React from "react";
 import { InputAdornment, OutlinedInput, styled } from "@mui/material";
-import { SearchIcon } from "../../assets/index.js";
+import { SearchIcon } from "../../assets";
 
 const Search = ({
   value,
