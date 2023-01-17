@@ -63,22 +63,14 @@ export const paymentMethod = [
     paymentIcon: <PaymentByCardIcon />,
     paymentText: "Оплата картой онлайн",
   },
-  { id: 2, paymentIcon: <CashIcon />, paymentText: "Наличными при получении" },
+  {
+    id: 2,
+    paymentIcon: <CashIcon />,
+    paymentText: "Наличными при получении",
+  },
   {
     id: 3,
     paymentIcon: <CardUponReceiptIcon />,
     paymentText: "Картой при получении",
   },
-];
-
-export const headerTitle = [
-  "ID",
-  "Фото",
-  "Артикул",
-  "Наименование товара",
-  "Дата создания",
-  "Кол-во",
-  "Цена товара",
-  "Текущая цена",
-  "Действия",
 ];
