@@ -1,4 +1,4 @@
-// export { ReactComponent as CartIcon } from "../assets/icons/cardicon.svg";
+export { ReactComponent as CartIcon } from "../assets/icons/cardIcon.svg";
 export { ReactComponent as ClockIcon } from "./icons/clock.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as Phone } from "./icons/numberPhone.svg";
@@ -13,7 +13,7 @@ export { ReactComponent as IconPrev } from "./icons/arrows/arrowLeftWhiteBackrou
 export { ReactComponent as DeliveryIcon } from "./icons/Pickup.svg";
 export { ReactComponent as WalletIcon } from "./icons/wallet.svg";
 export { ReactComponent as CardUponReceiptIcon } from "./icons/cardUponReceipt.svg";
-export { ReactComponent as PaymentByCardIcon } from "./icons/PaymentByCard.svg";
-export { ReactComponent as CashIcon } from "./icons/Cash.svg";
 export { ReactComponent as EditIcon } from "./icons/edit.svg";
 export { ReactComponent as DeleteIcon } from "./icons/delete.svg";
+export { ReactComponent as PaymentByCardIcon } from "./icons/paymentByCard.svg";
+export { ReactComponent as CashIcon } from "./icons/cash.svg";
