@@ -1,4 +1,4 @@
-import { Box, styled, Tab, Tabs } from "@mui/material";
+import { Box, styled, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,7 @@ const NavLinks = ({ setValue, value, pageIsAdmin }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log(value);
 
   return (
     <Box className="flex center">
@@ -20,7 +21,13 @@ const NavLinks = ({ setValue, value, pageIsAdmin }) => {
           <TabStyled
             key={adminList.id}
             value={adminList.theme}
-            label={<Link to={adminList.theme}>{adminList.theme}</Link>}
+            label={
+              <Link to={adminList.theme}>
+                <Typography component="p" variant="body1">
+                  {adminList.theme}
+                </Typography>
+              </Link>
+            }
           />
         ))}
       </Tabs>

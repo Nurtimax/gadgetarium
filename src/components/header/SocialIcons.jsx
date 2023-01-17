@@ -1,18 +1,19 @@
 import { Badge, Box, styled } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 import { socialIconsData } from "../../utils/constants";
 
 const SocialIcons = () => {
   return (
     <StyledSocialIcons className="flex gap2 height pointer flex-end">
-      {socialIconsData.map(({ id, icon }) => (
+      {socialIconsData.map(({ id, icon, to }) => (
         <Badge
           badgeContent={4}
           color="info"
           key={id}
           classes={{ colorInfo: "badgeColor" }}
         >
-          {icon}
+          <Link to={to}>{icon}</Link>
         </Badge>
       ))}
     </StyledSocialIcons>

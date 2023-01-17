@@ -1,6 +1,7 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import React from "react";
 import { CatalogIcon } from "../../assets";
+import IconButton from "../UI/IconButton";
 
 const Catalog = () => {
   return (
@@ -9,8 +10,8 @@ const Catalog = () => {
         className="gap capitalize"
         variant="contained"
         color="secondary"
+        icon={<CatalogIcon />}
       >
-        <CatalogIcon />
         Каталог
       </ButtonStyled>
     </Box>
@@ -19,11 +20,12 @@ const Catalog = () => {
 
 export default Catalog;
 
-const ButtonStyled = styled(Button)(({ theme }) => ({
+const ButtonStyled = styled(IconButton)(({ theme }) => ({
   fontFamily: "Inter",
   fontStyle: "normal",
   fontWeight: "700",
   padding: theme.spacing(1),
+  width: "136px",
   "&:hover": {
     background: theme.palette.secondary.main,
   },

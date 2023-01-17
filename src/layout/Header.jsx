@@ -15,6 +15,7 @@ import FunctionalIcons from "../components/header/FunctionalIcons";
 import SocialIcons from "../components/header/SocialIcons";
 import { useNavigate } from "react-router-dom";
 import SearchItem from "../components/header/SearchItem";
+import IsScroll from "../components/header/IsScroll";
 
 const Header = ({ isAdmin = false }) => {
   const [admin, setAdmin] = useState(isAdmin);
@@ -44,11 +45,6 @@ const Header = ({ isAdmin = false }) => {
     setIsScroll(false);
   };
 
-  const toggleAdminHandler = () => {
-    setAdmin((prev) => !prev);
-    setValue("");
-  };
-
   useEffect(() => {
     if (!admin) {
       setValue("Главная");
@@ -72,29 +68,16 @@ const Header = ({ isAdmin = false }) => {
           <Toolbar className="padding flex">
             <Grid container spacing={1} className="between">
               <Grid item xs={2.5}>
-                <Logo onClick={toggleAdminHandler} />
+                <Logo />
               </Grid>
               {!admin ? (
-                !isScroll ? (
-                  <TabsPath
-                    admin={admin}
-                    pageIsAdmin={pageIsAdmin}
-                    setValue={setValue}
-                    value={value}
-                  />
-                ) : (
-                  <>
-                    <Grid item xs={1.5}>
-                      <Catalog />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <SearchItem />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <FunctionalIcons />
-                    </Grid>
-                  </>
-                )
+                <IsScroll
+                  isScroll={isScroll}
+                  admin={admin}
+                  pageIsAdmin={pageIsAdmin}
+                  setValue={setValue}
+                  value={value}
+                />
               ) : (
                 <TabsPath
                   admin={admin}

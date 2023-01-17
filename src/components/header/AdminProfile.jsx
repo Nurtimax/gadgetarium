@@ -7,16 +7,10 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const AdminProfile = () => {
-  const [anchorState, setAnchorState] = useState(false);
-
-  const toggleAnchorStateHandler = () => {
-    setAnchorState((prevState) => !prevState);
-  };
-
   return (
     <Box className="flex gap between">
       <Box>
@@ -26,17 +20,11 @@ const AdminProfile = () => {
       <Box>
         <AvatarStyled>G</AvatarStyled>
       </Box>
-      <Box
-        className="flex color-white pointer"
-        onClick={toggleAnchorStateHandler}
-      >
+      <Box className="flex color-white pointer">
         <Typography component="div" variant="body2">
           Администратор
         </Typography>
-        <IconButton
-          color="inherit"
-          className={anchorState ? "transition arrowAnimation" : "transition"}
-        >
+        <IconButton color="inherit">
           <KeyboardArrowRightIcon />
         </IconButton>
       </Box>

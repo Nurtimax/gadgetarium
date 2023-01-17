@@ -92,9 +92,9 @@ export const iconsData = [
 ];
 
 export const socialIconsData = [
-  { id: 1, icon: <FaceBookIcon /> },
-  { id: 3, icon: <InstagramIcon /> },
-  { id: 2, icon: <WhatsAppIcon /> },
+  { id: 1, icon: <FaceBookIcon />, to: "https://www.facebook.com/" },
+  { id: 3, icon: <InstagramIcon />, to: "https://www.instagram.com/" },
+  { id: 2, icon: <WhatsAppIcon />, to: "https://web.whatsapp.com/" },
 ];
 
 export const contactsData = [

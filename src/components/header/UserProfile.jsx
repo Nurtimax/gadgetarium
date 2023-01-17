@@ -36,7 +36,7 @@ const UserProfile = () => {
           handleClose={handleClick}
           anchorEl={anchorEl}
           vertical="bottom"
-          horizontal="center"
+          horizontal="left"
         >
           <Grid container spacing={1} className="pointer">
             <Grid item xs={12}>
