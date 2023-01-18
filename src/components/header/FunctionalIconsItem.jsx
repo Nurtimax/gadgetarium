@@ -1,6 +1,5 @@
 import { Badge, styled, Tooltip, tooltipClasses } from "@mui/material";
 import React, { useState } from "react";
-import PopUp from "../UI/PopUp";
 import FunctionalIconsItemTooltipTitle from "./FunctionalIconsItemTooltipTitle";
 
 const FunctionalIconsItem = ({
@@ -11,20 +10,12 @@ const FunctionalIconsItem = ({
   iconDefault,
   focused,
   iconRemoveItem,
-  addedTitle,
-  transitionTitle,
   ...props
 }) => {
   const [state, setState] = useState(focused);
-  const [anchorEl, setAnchorEl] = useState(false);
-
-  const toggleAnchorEl = () => {
-    setAnchorEl((prevState) => !prevState);
-  };
 
   const toggleHandler = () => {
     setState((prevState) => !prevState);
-    toggleAnchorEl();
   };
 
   return (
@@ -39,17 +30,6 @@ const FunctionalIconsItem = ({
           {!state ? iconDefault : iconRemoveItem}
         </StyledBadge>
       </StyledTooltip>
-      {anchorEl && (
-        <PopUp
-          open={anchorEl}
-          handleClose={toggleAnchorEl}
-          durationSnackbar={2000}
-          addedTitle={addedTitle}
-          transitionTitle={transitionTitle}
-          to={Math.random().toString()}
-          icon
-        />
-      )}
     </>
   );
 };

@@ -8,6 +8,7 @@ const UserProfile = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     if (!open) {
       setAnchorEl(event.currentTarget);

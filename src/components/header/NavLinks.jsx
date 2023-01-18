@@ -1,10 +1,9 @@
 import { Box, styled, Tab, Tabs, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { adminPage, userPages } from "../../utils/constants";
 
-const NavLinks = ({ setValue, value, admin }) => {
-  const pageIsAdmin = !admin ? userPages : adminPage;
+const NavLinks = ({ page = [] }) => {
+  const [value, setValue] = useState(page[0].theme);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -19,7 +18,7 @@ const NavLinks = ({ setValue, value, admin }) => {
         indicatorColor="none"
         classes={{ flexContainer: "gap" }}
       >
-        {pageIsAdmin?.map((adminList) => (
+        {page?.map((adminList) => (
           <TabStyled
             key={adminList.id}
             value={adminList.theme}

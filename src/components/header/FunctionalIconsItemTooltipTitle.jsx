@@ -12,9 +12,11 @@ const FunctionalIconsItemTooltipTitle = ({
     if (cartItem.length) {
       return (
         <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Item>item1</Item>
-          </Grid>
+          {cartItem.map((cart) => (
+            <Grid item xs={12} key={cart.id}>
+              <Item>{cart.title}</Item>
+            </Grid>
+          ))}
         </Grid>
       );
     }

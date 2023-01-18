@@ -3,26 +3,45 @@ import {
   Box,
   Divider,
   IconButton,
+  MenuItem,
   styled,
   Typography,
 } from "@mui/material";
-import React from "react";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import React, { useState } from "react";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "../UI/button/Button";
+import DropDown from "../UI/DropDown";
 
 const AdminProfile = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const toggleAnchorElHandler = (e) => {
+    if (open) return setAnchorEl(null);
+    return setAnchorEl(e.currentTarget);
+  };
+
   return (
     <Box className="flex gap2 between">
       <ButtonStyled>Создать рассылку</ButtonStyled>
       <Divider flexItem orientation="vertical" variant="middle" color="white" />
       <AvatarStyled>G</AvatarStyled>
-      <Box className="flex color-white pointer">
+      <Box className="flex color-white pointer" onClick={toggleAnchorElHandler}>
         <Typography component="div" variant="body2">
           Администратор
         </Typography>
         <IconButton color="inherit">
-          <KeyboardArrowRightIcon />
+          <KeyboardArrowDownIcon />
         </IconButton>
+        <DropDown
+          open={open}
+          anchorEl={anchorEl}
+          handleClose={toggleAnchorElHandler}
+          vertical="bottom"
+          horizontal="left"
+        >
+          <MenuItem>Выйти</MenuItem>
+        </DropDown>
       </Box>
     </Box>
   );

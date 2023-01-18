@@ -68,3 +68,20 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.none {
+  visibility: hidden;
+  height: 0 !important;
+  width: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+.gap {
+  gap: 8px;
+}
+.gap2 {
+  gap: 16px;
+}
