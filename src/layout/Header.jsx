@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Logo } from "../assets";
-import { adminPage, userPages } from "../utils/constants";
 import TabsPath from "../components/header/TabsPath";
 import Catalog from "../components/header/Catalog";
 import FunctionalIcons from "../components/header/FunctionalIcons";
@@ -55,8 +54,6 @@ const Header = ({ isAdmin = false }) => {
     }
   }, [admin]);
 
-  const pageIsAdmin = !admin ? userPages : adminPage;
-
   if (!value) {
     return <h1>Loading...</h1>;
   }
@@ -74,17 +71,11 @@ const Header = ({ isAdmin = false }) => {
                 <IsScroll
                   isScroll={isScroll}
                   admin={admin}
-                  pageIsAdmin={pageIsAdmin}
                   setValue={setValue}
                   value={value}
                 />
               ) : (
-                <TabsPath
-                  admin={admin}
-                  pageIsAdmin={pageIsAdmin}
-                  setValue={setValue}
-                  value={value}
-                />
+                <TabsPath admin={admin} setValue={setValue} value={value} />
               )}
             </Grid>
           </Toolbar>
@@ -95,17 +86,15 @@ const Header = ({ isAdmin = false }) => {
               <Container>
                 <Toolbar className="padding">
                   <Grid container className="between flex">
-                    <Grid item xs={1} className="flex gap2">
+                    <Grid item xs={1.5} className="flex gap2">
                       <Catalog />
                     </Grid>
-                    <Grid item xs={1}>
-                      <Divider
-                        orientation="vertical"
-                        color="white"
-                        variant="middle"
-                        flexItem
-                      />
-                    </Grid>
+                    <Divider
+                      orientation="vertical"
+                      color="white"
+                      variant="middle"
+                      flexItem
+                    />
                     <Grid item xs={6}>
                       <SearchItem />
                     </Grid>

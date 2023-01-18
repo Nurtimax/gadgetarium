@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   IconButton,
   styled,
@@ -9,17 +8,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Button from "../UI/button/Button";
 
 const AdminProfile = () => {
   return (
-    <Box className="flex gap between">
-      <Box>
-        <ButtonStyled className="createlink">Создать рассылку</ButtonStyled>
-      </Box>
+    <Box className="flex gap2 between">
+      <ButtonStyled>Создать рассылку</ButtonStyled>
       <Divider flexItem orientation="vertical" variant="middle" color="white" />
-      <Box>
-        <AvatarStyled>G</AvatarStyled>
-      </Box>
+      <AvatarStyled>G</AvatarStyled>
       <Box className="flex color-white pointer">
         <Typography component="div" variant="body2">
           Администратор
@@ -46,9 +42,10 @@ const AvatarStyled = styled(Avatar)(({ theme }) => ({
 
 const ButtonStyled = styled(Button)(({ theme }) => ({
   background: theme.palette.secondary.main,
-  color: "white",
+  color: "white !important",
   borderRadius: "46px",
-  fontWeight: 500,
-  fontSize: 12,
-  padding: "12px 20px",
+  fontWeight: 700,
+  fontSize: 16,
+  padding: "10px 15px",
+  width: "190px",
 }));

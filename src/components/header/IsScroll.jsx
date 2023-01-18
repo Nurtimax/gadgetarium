@@ -5,16 +5,9 @@ import FunctionalIcons from "./FunctionalIcons";
 import SearchItem from "./SearchItem";
 import TabsPath from "./TabsPath";
 
-const IsScroll = ({ isScroll, admin, pageIsAdmin, setValue, value }) => {
+const IsScroll = ({ isScroll, admin, setValue, value }) => {
   if (!isScroll) {
-    return (
-      <TabsPath
-        admin={admin}
-        pageIsAdmin={pageIsAdmin}
-        setValue={setValue}
-        value={value}
-      />
-    );
+    return <TabsPath admin={admin} setValue={setValue} value={value} />;
   }
   return (
     <>

@@ -1,12 +1,14 @@
 import { Box, styled, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { adminPage, userPages } from "../../utils/constants";
 
-const NavLinks = ({ setValue, value, pageIsAdmin }) => {
+const NavLinks = ({ setValue, value, admin }) => {
+  const pageIsAdmin = !admin ? userPages : adminPage;
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(value);
 
   return (
     <Box className="flex center">
