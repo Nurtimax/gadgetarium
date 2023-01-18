@@ -147,3 +147,17 @@ export const paymentMethod = [
     paymentText: "Картой при получении",
   },
 ];
+
+export const userProfileStatus_FAKE_DATA = {
+  enter: [
+    { id: 1, title: "Войти" },
+    { id: 2, title: "Регистрация" },
+  ],
+  enteredLogIn: [
+    { id: 1, title: "История заказов" },
+    { id: 2, title: "Избранное" },
+    { id: 3, title: "Профиль" },
+    { id: 4, title: "Выйти" },
+  ],
+  logIn: false,
+};

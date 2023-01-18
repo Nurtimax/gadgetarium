@@ -1,14 +1,8 @@
-import {
-  Box,
-  Grid,
-  IconButton,
-  MenuItem,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, IconButton, styled, Typography } from "@mui/material";
 import React from "react";
 import { ProfileIcon } from "../../assets";
 import DropDown from "../UI/DropDown";
+import UserProfileList from "./UserProfileList";
 
 const UserProfile = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,14 +31,10 @@ const UserProfile = () => {
           anchorEl={anchorEl}
           vertical="bottom"
           horizontal="left"
+          classes={{ paper: "drop_paper" }}
         >
           <Grid container spacing={1} className="pointer">
-            <Grid item xs={12}>
-              <MenuItem>Войти</MenuItem>
-            </Grid>
-            <Grid item xs={12}>
-              <MenuItem>Регистрация</MenuItem>
-            </Grid>
+            <UserProfileList />
           </Grid>
         </StyledDropDown>
       </Box>
@@ -56,4 +46,7 @@ export default UserProfile;
 
 const StyledDropDown = styled(DropDown)(() => ({
   position: "absolute",
+  "& .drop_paper": {
+    width: "200px",
+  },
 }));

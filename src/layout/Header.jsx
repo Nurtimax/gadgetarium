@@ -85,16 +85,10 @@ const Header = ({ isAdmin = false }) => {
           ? !isScroll && (
               <Container>
                 <Toolbar className="padding">
-                  <Grid container className="between flex">
+                  <Grid container className="between flex gap">
                     <Grid item xs={1.5} className="flex gap2">
                       <Catalog />
                     </Grid>
-                    <Divider
-                      orientation="vertical"
-                      color="white"
-                      variant="middle"
-                      flexItem
-                    />
                     <Grid item xs={6}>
                       <SearchItem />
                     </Grid>
