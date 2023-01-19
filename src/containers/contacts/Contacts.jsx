@@ -1,8 +1,8 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
 import ReactInputMask from "react-input-mask";
-import Button from "../components/UI/button/Button";
-import Input from "../components/UI/input/Input";
-import { contactsData, URLMAP } from "../utils/constants";
+import Button from "../../components/UI/button/Button";
+import Input from "../../components/UI/input/Input";
+import { contactsData, URLMAP } from "../../utils/constants";
 
 const Contacts = () => {
   return (
@@ -55,7 +55,7 @@ const Contacts = () => {
                 />
               </ContainerInput>
             </ContainerInputSeperating>
-            <div>
+            <>
               <ContainerTextarea>
                 <TextareaTitle variant="h1" component="h5">
                   Сообщение
@@ -63,7 +63,7 @@ const Contacts = () => {
                 <StyledTextarea placeholder="Напишите сообщение" />
               </ContainerTextarea>
               <StyledButton type="submit">отправить</StyledButton>
-            </div>
+            </>
           </FormMainContainer>
         </ContainerSeparating>
         <iframe src={URLMAP} width="100%" height="400" />
