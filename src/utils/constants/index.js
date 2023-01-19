@@ -1,10 +1,13 @@
 import {
   CardUponReceiptIcon,
   CashIcon,
+  DeleteIcon,
   DeliveryIcon,
+  EditIcon,
   PaymentByCardIcon,
   WalletIcon,
 } from "../../assets";
+import ImageTable from "../../assets/images/imageTables.png";
 
 export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/laptop-pens-phone-note-with-blank-screen-on-table_155003-5339.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
@@ -85,4 +88,64 @@ export const titlesTables = [
   "Цена товара",
   "Текущая цена",
   "Действия",
+];
+
+export const dataTables = [
+  {
+    id: 1,
+    photo: ImageTable,
+    vendor: 123456789,
+    nameOfProduct: {
+      quantityProduct: "Кол-во товара 105шт.",
+      model: "Samsung Galaxy S21... ",
+    },
+
+    createOfDate: {
+      date: "05.05.2022",
+      time: "12:05",
+    },
+
+    quantity: 1,
+
+    priceOfProduct: {
+      price: "50 000c",
+      discount: "15%",
+    },
+
+    currentPrice: "45 000c",
+
+    action: {
+      edit: <EditIcon />,
+      delete: <DeleteIcon />,
+    },
+  },
+
+  {
+    id: 2,
+    photo: ImageTable,
+    vendor: 123456789,
+    nameOfProduct: {
+      quantityProduct: "Кол-во товара 105шт.",
+      model: "Samsung Galaxy S21... ",
+    },
+
+    createOfDate: {
+      date: "05.05.2022",
+      time: "12:05",
+    },
+
+    quantity: 1,
+
+    priceOfProduct: {
+      price: "50 000c",
+      discount: "15%",
+    },
+
+    currentPrice: "45 000c",
+
+    action: {
+      edit: <EditIcon />,
+      delete: <DeleteIcon />,
+    },
+  },
 ];
