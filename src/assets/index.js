@@ -15,3 +15,7 @@ export { ReactComponent as WalletIcon } from "./icons/wallet.svg";
 export { ReactComponent as CardUponReceiptIcon } from "./icons/cardUponReceipt.svg";
 export { ReactComponent as PaymentByCardIcon } from "./icons/paymentByCard.svg";
 export { ReactComponent as CashIcon } from "./icons/cash.svg";
+export { ReactComponent as PhoneIcon } from "./icons/mobile.svg";
+export { ReactComponent as ComputerIcon } from "./icons/computer.svg";
+export { ReactComponent as SmartWatchIcon } from "./icons/smartWatch.svg";
+export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arrowRight.svg";

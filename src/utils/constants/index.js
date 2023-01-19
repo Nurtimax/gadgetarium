@@ -1,8 +1,11 @@
 import {
   CardUponReceiptIcon,
   CashIcon,
+  ComputerIcon,
   DeliveryIcon,
   PaymentByCardIcon,
+  PhoneIcon,
+  SmartWatchIcon,
   WalletIcon,
 } from "../../assets";
 
@@ -68,5 +71,49 @@ export const paymentMethod = [
     id: 3,
     paymentIcon: <CardUponReceiptIcon />,
     paymentText: "Картой при получении",
+  },
+];
+
+export const catalogMenu_FAKE_DATA = [
+  {
+    id: 1,
+    title: "Смартфоны",
+    icon: <PhoneIcon />,
+    subcategories: [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Sumsung" },
+      { id: 3, title: "Huawei" },
+      { id: 4, title: "Honor" },
+      { id: 5, title: "Xiaomi" },
+    ],
+  },
+  {
+    id: 2,
+    title: "Ноутбуки и планшеты ",
+    icon: <ComputerIcon />,
+    subcategories: [
+      { id: 1, title: "Acer" },
+      { id: 2, title: "Asus" },
+      { id: 3, title: "Apple" },
+      { id: 4, title: "DELL" },
+      { id: 5, title: "Digma" },
+      { id: 6, title: "Huawei" },
+      { id: 7, title: "HONOR" },
+      { id: 8, title: "Lenovo" },
+      { id: 9, title: "HP" },
+      { id: 10, title: "MSI" },
+      { id: 11, title: "Xiaomi" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Смарт-часы и браслеты ",
+    icon: <SmartWatchIcon />,
+    subcategories: [
+      { id: 1, title: "Смарт-часы Apple Watch" },
+      { id: 2, title: "Умные часы для взрослых" },
+      { id: 3, title: "Умные часы для детей" },
+      { id: 4, title: "Фитнес браслеты" },
+    ],
   },
 ];

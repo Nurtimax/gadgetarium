@@ -17,6 +17,7 @@ const DropDown = ({
   vertical = "top",
   horizontal = "left",
   anchorEl,
+  ...props
 }) => {
   return (
     <Container
@@ -28,6 +29,8 @@ const DropDown = ({
         horizontal,
       }}
       anchorEl={anchorEl}
+      disablePortal
+      {...props}
     >
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </Container>
