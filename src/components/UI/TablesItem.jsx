@@ -1,22 +1,22 @@
 import { Checkbox, styled, TableBody, TableCell } from "@mui/material";
-// import React, { useState } from "react";
+import React, { useState } from "react";
 
 const TablesItem = ({ obj }) => {
-  // const [state, setState] = useState(false);
+  const [state, setState] = useState(false);
 
   return (
     <ContainerTableBodyList
       key={obj.id}
-      // onMouseEnter={() => setState(true)}
-      // onMouseLeave={() => setState(false)}
+      onMouseEnter={() => setState(true)}
+      onMouseLeave={() => setState(false)}
     >
-      {/* {state ? ( */}
-      <TableCell>
-        <TableCheckbox />
-      </TableCell>
-      {/* // ) : ( */}
-      {/* //   <TableCell>{obj.id}</TableCell> */}
-      {/* // )} */}
+      {state ? (
+        <TableCell>
+          <TableCheckbox />
+        </TableCell>
+      ) : (
+        <TableCell>{obj.id}</TableCell>
+      )}
       <img src={obj.photo} alt="tablePhoto" />
       <TableCell>{obj.vendor}</TableCell>
       <td>
@@ -46,8 +46,6 @@ export default TablesItem;
 const TableCheckbox = styled(Checkbox)(() => ({
   width: "20px",
   height: "20px",
-  "& :MuiSvgIcon-root": {},
-  // border: `1px solid ${theme.palette.grey[900]}`,
 }));
 
 const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
