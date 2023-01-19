@@ -7,7 +7,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { ArrowLeftIcon } from "../../../assets";
+import { ArrowLeftIcon } from "../../assets";
 
 const AccordionComponents = ({
   expanded,
@@ -19,34 +19,32 @@ const AccordionComponents = ({
   ...props
 }) => {
   return (
-    <div>
-      <Accordion expanded={expanded === panel} onChange={onChange} {...props}>
-        <AccordionSummaryStyled
-          classes={{
-            root: "summary",
-            expanded: "expanded",
-            expandIconWrapper: "expandIconWrapper",
-          }}
-          expandIcon={<ArrowLeftIcon />}
+    <Accordion expanded={expanded === panel} onChange={onChange} {...props}>
+      <AccordionSummaryStyled
+        classes={{
+          root: "summary",
+          expanded: "expanded",
+          expandIconWrapper: "expandIconWrapper",
+        }}
+        expandIcon={<ArrowLeftIcon />}
+      >
+        <Box
+          className={
+            expanded === panel ? "icon-number open" : "icon-number close"
+          }
         >
-          <Box
-            className={
-              expanded === panel ? "icon-number open" : "icon-number close"
-            }
-          >
-            {number}
-          </Box>
-          <Typography className="title" component="span" variant="body1">
-            {question}
-          </Typography>
-        </AccordionSummaryStyled>
-        <AccordionDetailsStyled>
-          <Typography className="text" component="p" variant="body1">
-            {text}
-          </Typography>
-        </AccordionDetailsStyled>
-      </Accordion>
-    </div>
+          {number}
+        </Box>
+        <Typography className="title" component="span" variant="body1">
+          {question}
+        </Typography>
+      </AccordionSummaryStyled>
+      <AccordionDetailsStyled>
+        <Typography className="text" component="p" variant="body1">
+          {text}
+        </Typography>
+      </AccordionDetailsStyled>
+    </Accordion>
   );
 };
 
