@@ -1,7 +1,7 @@
 import { Checkbox, styled, TableBody, TableCell } from "@mui/material";
 import React, { useState } from "react";
 
-const TablesItem = ({ obj }) => {
+const TableItem = ({ obj }) => {
   const [state, setState] = useState(false);
 
   return (
@@ -41,7 +41,7 @@ const TablesItem = ({ obj }) => {
   );
 };
 
-export default TablesItem;
+export default TableItem;
 
 const TableCheckbox = styled(Checkbox)(() => ({
   width: "20px",
@@ -82,7 +82,7 @@ const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
     paddingLeft: "36px",
     paddingTop: "17px",
 
-    "& div:first-child": {
+    "& div:first-of-type": {
       fontFamily: "Inter",
       fontWeight: "400",
       fontSize: "16px",
@@ -103,7 +103,7 @@ const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
     paddingLeft: "70px",
     paddingTop: "17px",
 
-    "& div:first-child": {
+    "& div:first-of-type": {
       fontFamily: "Inter",
       fontWeight: "400",
       fontSize: "16px",
@@ -133,7 +133,7 @@ const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
     paddingLeft: "120px",
     paddingTop: "17px",
 
-    "& div:first-child": {
+    "& div:first-of-type": {
       fontFamily: "Inter",
       fontWeight: "400",
       fontSize: "16px",

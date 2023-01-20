@@ -1,17 +1,17 @@
+import React from "react";
 import {
   styled,
-  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import { Table as ProductTable } from "@mui/material";
+import TableItem from "./TableItem";
 import { dataTables, titlesTables } from "../../utils/constants";
-import TablesItem from "./TablesItem";
 
-const Tables = () => {
+const Table = () => {
   return (
     <MainContainer>
       <ContainerTable>
@@ -25,7 +25,7 @@ const Tables = () => {
 
         <ContainerTableBody>
           {dataTables.map((obj) => (
-            <TablesItem key={obj.id} obj={obj} />
+            <TableItem key={obj.id} obj={obj} />
           ))}
         </ContainerTableBody>
       </ContainerTable>
@@ -33,7 +33,7 @@ const Tables = () => {
   );
 };
 
-export default Tables;
+export default Table;
 
 const MainContainer = styled(TableContainer)(() => ({
   paddingTop: "16px",
@@ -42,7 +42,7 @@ const MainContainer = styled(TableContainer)(() => ({
   width: "100%",
 }));
 
-const ContainerTable = styled(Table)(() => ({
+const ContainerTable = styled(ProductTable)(() => ({
   width: "1305px",
   display: "flex",
   flexDirection: "column",
