@@ -1,4 +1,4 @@
-export { ReactComponent as CartIcon } from "../assets/icons/cardIcon.svg";
+export { ReactComponent as CartIcon } from "../assets/icons/cartIcon.svg";
 export { ReactComponent as ClockIcon } from "./icons/clock.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as Phone } from "./icons/numberPhone.svg";
