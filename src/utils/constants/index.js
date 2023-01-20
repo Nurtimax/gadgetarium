@@ -76,7 +76,7 @@ export const iconsData = [
   },
   {
     id: 3,
-    tooltip_title_compative_add: "come on",
+    tooltip_title_compative_add: "",
     tooltip_title_compative_remove: "Удалить из избранного",
     iconDefault: <CartIcon />,
     iconRemoveItem: <CartIcon />,
@@ -93,9 +93,9 @@ export const iconsData = [
 ];
 
 export const socialIconsData = [
-  { id: 1, icon: <FaceBookIcon />, to: "https://www.facebook.com/" },
-  { id: 3, icon: <InstagramIcon />, to: "https://www.instagram.com/" },
-  { id: 2, icon: <WhatsAppIcon />, to: "https://web.whatsapp.com/" },
+  { id: 1, icon: <FaceBookIcon />, href: "https://www.facebook.com/" },
+  { id: 3, icon: <InstagramIcon />, href: "https://www.instagram.com/" },
+  { id: 2, icon: <WhatsAppIcon />, href: "https://web.whatsapp.com/" },
 ];
 
 export const contactsData = [
@@ -151,14 +151,14 @@ export const paymentMethod = [
 
 export const userProfileStatus_FAKE_DATA = {
   enter: [
-    { id: 1, title: "Войти" },
-    { id: 2, title: "Регистрация" },
+    { id: 1, title: "Войти", link: "" },
+    { id: 2, title: "Регистрация", link: "" },
   ],
   enteredLogIn: [
-    { id: 1, title: "История заказов" },
-    { id: 2, title: "Избранное" },
-    { id: 3, title: "Профиль" },
-    { id: 4, title: "Выйти" },
+    { id: 1, title: "История заказов", link: "" },
+    { id: 2, title: "Избранное", link: "" },
+    { id: 3, title: "Профиль", link: "" },
+    { id: 4, title: "Выйти", link: "" },
   ],
   logIn: false,
 };

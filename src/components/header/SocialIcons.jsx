@@ -5,14 +5,14 @@ import { socialIconsData } from "../../utils/constants";
 const SocialIcons = () => {
   return (
     <StyledSocialIcons className="flex gap2 height pointer flex-end">
-      {socialIconsData.map(({ id, icon, to }) => (
+      {socialIconsData.map(({ id, icon, href }) => (
         <Badge
           badgeContent={4}
           color="info"
           key={id}
           classes={{ colorInfo: "badgeColor" }}
         >
-          <a href={to}>{icon}</a>
+          <a href={href}>{icon}</a>
         </Badge>
       ))}
     </StyledSocialIcons>
