@@ -1,21 +1,12 @@
 import { Box, Grid, IconButton, styled, Typography } from "@mui/material";
 import React from "react";
 import { ProfileIcon } from "../../assets";
+import useDropDown from "../../hooks/useDropDown";
 import DropDown from "../UI/DropDown";
 import UserProfileList from "./UserProfileList";
 
 const UserProfile = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    if (!open) {
-      setAnchorEl(event.currentTarget);
-      return;
-    }
-    setAnchorEl(null);
-  };
+  const [anchorEl, handleClick, open] = useDropDown();
 
   return (
     <Box className="flex gap flexgrow flex-end">

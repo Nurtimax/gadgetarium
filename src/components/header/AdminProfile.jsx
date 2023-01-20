@@ -7,19 +7,13 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "../UI/button/Button";
 import DropDown from "../UI/DropDown";
+import useDropDown from "../../hooks/useDropDown";
 
 const AdminProfile = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const toggleAnchorElHandler = (e) => {
-    if (open) return setAnchorEl(null);
-    return setAnchorEl(e.currentTarget);
-  };
+  const [anchorEl, toggleAnchorElHandler, open] = useDropDown();
 
   return (
     <Box className="flex gap2 between">

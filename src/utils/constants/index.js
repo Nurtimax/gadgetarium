@@ -30,16 +30,17 @@ export const dataDigitalBestSeller = [
 ];
 
 export const userPages = [
-  { id: 11, theme: "Главная" },
-  { id: 12, theme: "О магазине" },
-  { id: 13, theme: "Доставка" },
-  { id: 14, theme: "FAG" },
-  { id: 15, theme: "Контакты" },
+  { id: 11, theme: "Главная", to: "/" },
+  { id: 12, theme: "О магазине", to: "about" },
+  { id: 13, theme: "Доставка", to: "delivery" },
+  { id: 14, theme: "FAG", to: "fag" },
+  { id: 15, theme: "Контакты", to: "contacts" },
 ];
+
 export const adminPage = [
-  { id: 22, theme: "Товары" },
-  { id: 23, theme: "Заказы" },
-  { id: 24, theme: "Отзывы и рейтинг" },
+  { id: 22, theme: "Товары", to: "goods" },
+  { id: 23, theme: "Заказы", to: "orders" },
+  { id: 24, theme: "Отзывы и рейтинг", to: "reviews-rating" },
 ];
 
 export const iconsData = [

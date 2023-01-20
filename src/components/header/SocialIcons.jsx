@@ -1,6 +1,5 @@
 import { Badge, Box, styled } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
 import { socialIconsData } from "../../utils/constants";
 
 const SocialIcons = () => {
@@ -13,7 +12,7 @@ const SocialIcons = () => {
           key={id}
           classes={{ colorInfo: "badgeColor" }}
         >
-          <Link to={to}>{icon}</Link>
+          <a href={to}>{icon}</a>
         </Badge>
       ))}
     </StyledSocialIcons>

@@ -23,7 +23,7 @@ const NavLinks = ({ page = [] }) => {
             key={adminList.id}
             value={adminList.theme}
             label={
-              <Link to={adminList.theme}>
+              <Link to={adminList.to}>
                 <Typography component="p" variant="body1">
                   {adminList.theme}
                 </Typography>

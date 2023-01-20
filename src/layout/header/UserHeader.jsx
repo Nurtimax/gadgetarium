@@ -1,13 +1,21 @@
-import { AppBar, Container, Divider, Grid, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Container,
+  Divider,
+  Grid,
+  styled,
+  Toolbar,
+} from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import { Logo } from "../../assets";
-import Catalog from "../../components/header/Catalog";
+import { CatalogIcon, Logo } from "../../assets";
 import FunctionalIcons from "../../components/header/FunctionalIcons";
 import SocialIcons from "../../components/header/SocialIcons";
 import SearchItem from "../../components/header/SearchItem";
 import NavLinks from "../../components/header/NavLinks";
 import UserProfile from "../../components/header/UserProfile";
 import { userPages } from "../../utils/constants";
+import IconButton from "../../components/UI/IconButton";
 
 const UserHeader = () => {
   const [isScroll, setIsScroll] = useState(false);
@@ -54,7 +62,16 @@ const UserHeader = () => {
                 <Logo />
               </Grid>
               <Grid item xs={1.5} className="flex gap2">
-                <Catalog />
+                <Box className="flexgrow flex height">
+                  <ButtonStyled
+                    className="gap capitalize"
+                    variant="contained"
+                    color="secondary"
+                    icon={<CatalogIcon />}
+                  >
+                    Каталог
+                  </ButtonStyled>
+                </Box>
               </Grid>
               <Grid item xs={6}>
                 <SearchItem />
@@ -78,3 +95,14 @@ const UserHeader = () => {
 };
 
 export default UserHeader;
+
+const ButtonStyled = styled(IconButton)(({ theme }) => ({
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: "700",
+  padding: theme.spacing(1),
+  width: "136px",
+  "&:hover": {
+    background: theme.palette.secondary.main,
+  },
+}));
