@@ -1,4 +1,12 @@
 import {
+  CartIcon,
+  ComparativeIcon,
+  ComporativePinkIcon,
+  FaceBookIcon,
+  HeartActiveIcon,
+  HeartIcon,
+  InstagramIcon,
+  WhatsAppIcon,
   CardUponReceiptIcon,
   CashIcon,
   DeliveryIcon,
@@ -21,6 +29,75 @@ export const dataDigitalBestSeller = [
   "https://808.media/wp-content/uploads/2021/03/airpods-pro.jpg",
 ];
 
+export const userPages = [
+  { id: 11, theme: "Главная", to: "/" },
+  { id: 12, theme: "О магазине", to: "about" },
+  { id: 13, theme: "Доставка", to: "delivery" },
+  { id: 14, theme: "FAG", to: "fag" },
+  { id: 15, theme: "Контакты", to: "contacts" },
+];
+
+export const adminPage = [
+  { id: 22, theme: "Товары", to: "goods" },
+  { id: 23, theme: "Заказы", to: "orders" },
+  { id: 24, theme: "Отзывы и рейтинг", to: "reviews-rating" },
+];
+
+export const iconsData = [
+  {
+    id: 1,
+    tooltip_title_compative_add: "Добавить к сравнению",
+    tooltip_title_compative_remove: "Удалить из сравнения",
+    iconDefault: <ComparativeIcon />,
+    iconRemoveItem: <ComporativePinkIcon />,
+    title: "comporative",
+    badgeContent: [],
+    className: "dispatch_message",
+    color: "error",
+    placementTooltip: "top",
+    focused: false,
+    addedTitle: "Товар добавлен в список сравнения!",
+    transitionTitle: "Перейти к сравнению",
+  },
+  {
+    id: 2,
+    tooltip_title_compative_add: "Добавить в избранное",
+    tooltip_title_compative_remove: "Удалить из избранного",
+    iconDefault: <HeartIcon />,
+    iconRemoveItem: <HeartActiveIcon />,
+    title: "heart",
+    badgeContent: [],
+    className: "dispatch_message",
+    color: "error",
+    placementTooltip: "top",
+    focused: false,
+    addedTitle: "Товар добавлен в избранное!",
+    transitionTitle: "Перейти в избранное",
+  },
+  {
+    id: 3,
+    tooltip_title_compative_add: "",
+    tooltip_title_compative_remove: "Удалить из избранного",
+    iconDefault: <CartIcon />,
+    iconRemoveItem: <CartIcon />,
+    title: "cart",
+    cartItem: [],
+    badgeContent: [],
+    className: "show_cart_items",
+    color: "error",
+    placementTooltip: "bottom-end",
+    focused: false,
+    addedTitle: "Товар успешно добавлен в корзину!",
+    transitionTitle: "Перейти в корзину",
+  },
+];
+
+export const socialIconsData = [
+  { id: 1, icon: <FaceBookIcon />, href: "https://www.facebook.com/" },
+  { id: 3, icon: <InstagramIcon />, href: "https://www.instagram.com/" },
+  { id: 2, icon: <WhatsAppIcon />, href: "https://web.whatsapp.com/" },
+];
+
 export const contactsData = [
   { title: "Адрес:", value: "г. Бишкек, ул. Гражданская 119" },
   { title: "Телефон:", value: "г+996(400) 00-00-00" },
@@ -30,6 +107,7 @@ export const contactsData = [
 
 export const URLMAP =
   "https://yandex.ru/map-widget/v1/?um=constructor%3A7c9e32c235e852302eb25a02c6b96f88cbebb9457e9a77022bb71341ecfb86e7&amp;source=constructor";
+
 export const delivery = [
   {
     id: 1,
@@ -70,3 +148,17 @@ export const paymentMethod = [
     paymentText: "Картой при получении",
   },
 ];
+
+export const userProfileStatus_FAKE_DATA = {
+  enter: [
+    { id: 1, title: "Войти", link: "" },
+    { id: 2, title: "Регистрация", link: "" },
+  ],
+  enteredLogIn: [
+    { id: 1, title: "История заказов", link: "" },
+    { id: 2, title: "Избранное", link: "" },
+    { id: 3, title: "Профиль", link: "" },
+    { id: 4, title: "Выйти", link: "" },
+  ],
+  logIn: false,
+};
