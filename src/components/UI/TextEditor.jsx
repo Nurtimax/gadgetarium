@@ -70,9 +70,7 @@ const TextEditor = () => {
 
   return (
     <>
-      <p>
-        Описание <span style={{ color: "red" }}>* </span>
-      </p>
+      Описание <span style={{ color: "red" }}>* </span>
       <MenuBar editor={editor} />
       <StyledTexteria>
         <EditorContent editor={editor} />
@@ -113,6 +111,6 @@ const StyledTexteria = styled("div")(() => ({
   ".ProseMirror": {
     border: "none",
     minHeight: "300px",
-    padding: "20px",
+    padding: "40px",
   },
 }));

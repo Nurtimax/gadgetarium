@@ -1,5 +1,14 @@
+import { Container } from "@mui/material";
+import Editor from "./components/Editor";
+
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Container>
+        <Editor />
+      </Container>
+    </div>
+  );
 };
 
 export default App;
