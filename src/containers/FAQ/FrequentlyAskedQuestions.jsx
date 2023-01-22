@@ -1,7 +1,7 @@
 import { Container, styled, Typography } from "@mui/material";
-import AccordionComponents from "./AccordionComponents";
-import { title } from "../../../utils/constants/listQuestions";
-import { useToggle } from "../../../hooks/useToggle";
+import AccordionComponents from "../../components/UI/AccordionComponents";
+import { title } from "../../utils/constants/listQuestions";
+import { useToggle } from "../../hooks/useToggle";
 
 const FrequentlyAskedQuestions = () => {
   const [expanded, setExpanded] = useToggle(false);
