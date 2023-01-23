@@ -25,4 +25,8 @@ const StyledLayoutWrapper = styled(Box)(() => ({
   flexDirection: "column",
   justifyContent: "space-between",
   height: "100vh",
+  gap: "2rem",
+  "& .stop": {
+    padding: "0 0 11rem",
+  },
 }));

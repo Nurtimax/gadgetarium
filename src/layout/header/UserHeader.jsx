@@ -37,7 +37,7 @@ const UserHeader = () => {
   }, []);
 
   return (
-    <>
+    <Box className={isScroll ? "stop" : ""}>
       <AppBar position={isScroll ? "fixed" : "relative"}>
         <Container className={`${isScroll ? "none" : ""}`}>
           <Toolbar className="padding flex">
@@ -69,7 +69,7 @@ const UserHeader = () => {
                     color="secondary"
                     icon={<CatalogIcon />}
                   >
-                    Каталог
+                    Каталог {Math.round(Math.random() * 10)}
                   </ButtonStyled>
                 </Box>
               </Grid>
@@ -90,7 +90,7 @@ const UserHeader = () => {
           </Toolbar>
         </Container>
       </AppBar>
-    </>
+    </Box>
   );
 };
 
