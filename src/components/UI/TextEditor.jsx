@@ -10,7 +10,7 @@ import {
   FaListOl,
   FaUnderline,
 } from "react-icons/fa";
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
@@ -62,15 +62,15 @@ const TextEditor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
       Placeholder.configure({ placeholder: "Введите описание о товаре" }),
+      Underline,
     ],
     content: ``,
   });
 
   return (
     <>
-      Описание <span style={{ color: "red" }}>* </span>
+      <Typography component="span" style={{ color: "red" }}></Typography>
       <MenuBar editor={editor} />
       <StyledTexteria>
         <EditorContent editor={editor} />
@@ -111,6 +111,19 @@ const StyledTexteria = styled("div")(() => ({
   ".ProseMirror": {
     border: "none",
     minHeight: "300px",
-    padding: "40px",
+    padding: "20px",
+  },
+  "& .ProseMirror": {
+    " > * + *": {
+      marginTop: "0.75em",
+    },
+  },
+
+  "& .ProseMirror p.is-editor-empty:first-child::before": {
+    color: "#adb5bd",
+    content: "attr(data-placeholder)",
+    float: "left",
+    height: 0,
+    pointerEvents: "none",
   },
 }));
