@@ -1,19 +1,9 @@
 import React from "react";
 import { Button, styled } from "@mui/material";
-const IconButton = ({
-  children,
-  onClick,
-  width,
-  bgColor,
-  icon,
-  fontSize,
-  ...props
-}) => {
+const IconButton = ({ children, onClick, icon, fontSize, ...props }) => {
   return (
     <ButtonStyled
       onClick={onClick}
-      width={width}
-      bgColor={bgColor}
       fontSize={fontSize}
       classes={{ root: "button" }}
       {...props}
@@ -26,15 +16,15 @@ const IconButton = ({
 
 export default IconButton;
 
-const ButtonStyled = styled(Button)((props) => ({
-  width: props.width || "200px",
-  height: props.height || "45px",
-  backgroundColor: props.bgColor || "#E313BF",
+const ButtonStyled = styled(Button)(() => ({
+  width: "200px",
+  height: "45px",
+  backgroundColor: "#E313BF",
   border: "none",
   color: "#fff",
-  fontSize: props.fontSize || "14px",
+  fontSize: "14px",
   "&:hover": {
     border: "none",
-    backgroundColor: props.bgColor || "#CB11AB",
+    backgroundColor: "#CB11AB",
   },
 }));
