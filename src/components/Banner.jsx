@@ -1,4 +1,4 @@
-import { Container, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -41,7 +41,7 @@ const StyledWrapper = styled("section")(() => ({
   background: "#E9EAEF",
 }));
 
-const StyledContainer = styled(Container)(() => ({
+const StyledContainer = styled("div")(() => ({
   width: "100%",
   position: "relative",
 
