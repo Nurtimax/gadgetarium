@@ -1,6 +1,8 @@
 import { styled } from "@mui/material";
 import { Typography } from "@mui/material";
 import { ClockIcon, Logo, Phone, Message, Locotion } from "../../assets";
+import Input from "./../../components/UI/input/Input";
+import Button from "./../../components/UI/button/Button";
 const Footer = () => {
   return (
     <FooterStyled>
@@ -60,9 +62,13 @@ const Footer = () => {
           <ContactsBox>
             <FooterFormBlock>
               <Title> Расскажем об акциях и скидках </Title>
+              <Typography component="div">
+                <Input />
+                <Button width="130px" height="34px" variant="contained">
+                  Подписаться
+                </Button>
+              </Typography>
 
-              <input type="email" />
-              <button>Подписаться</button>
               <p>
                 Нажимая на кнопку «подписаться» Вы соглашаетесь на обработку
                 персональных данных
