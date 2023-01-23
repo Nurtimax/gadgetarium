@@ -1,11 +1,5 @@
-import Banner from "./components/Banner";
-
 const App = () => {
-  return (
-    <div>
-      <Banner />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;

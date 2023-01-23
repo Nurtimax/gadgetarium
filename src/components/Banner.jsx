@@ -12,23 +12,22 @@ const Banner = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
+    arrows: false,
   };
   return (
     <StyledWrapper>
-      <StyledContainer>
-        <Slider {...settings}>
-          {img_banner.map((image) => (
-            <WrapperStyled key={image.id}>
-              <div className="container">
-                <Styled_H3>GATGETARIUM</Styled_H3>
-                <Styled_H1>{image.title}</Styled_H1>
-                <Styled_H2>{image.desctop}</Styled_H2>
-              </div>
-              <StyledImg src={image.url} alt={image.id}></StyledImg>
-            </WrapperStyled>
-          ))}
-        </Slider>
-      </StyledContainer>
+      <Slider {...settings}>
+        {img_banner.map((image) => (
+          <WrapperStyled key={image.id}>
+            <div className="container">
+              <Styled_H3>GATGETARIUM</Styled_H3>
+              <Styled_H1>{image.title}</Styled_H1>
+              <Styled_H2>{image.desctop}</Styled_H2>
+            </div>
+            <StyledImg src={image.url} alt={image.id}></StyledImg>
+          </WrapperStyled>
+        ))}
+      </Slider>
     </StyledWrapper>
   );
 };
@@ -39,24 +38,17 @@ const StyledWrapper = styled("section")(() => ({
   width: "100%",
   height: "500px",
   background: "#E9EAEF",
-}));
 
-const StyledContainer = styled("div")(() => ({
-  width: "100%",
-  position: "relative",
-
-  ".slick-arrow": {
-    position: "absolute",
-    top: "80%",
-    right: "50px",
+  ".slick-dots li.slick-active button:before": {
+    color: "#CB11AB",
+    fontSize: "14px",
   },
-  ".slick-prev": {
-    position: "absolute",
-    top: "80%",
-    left: "85%",
-    zIndex: "10",
+  ".slick-dots li button:before": {
+    color: "#CB11AB",
+    fontSize: "8px",
   },
 }));
+
 const WrapperStyled = styled("div")(() => ({
   width: "100%",
   height: "100%",
