@@ -58,7 +58,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const TextEditor = () => {
+const TextEditor = ({ onChange }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -66,11 +66,18 @@ const TextEditor = () => {
       Underline,
     ],
     content: ``,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      onChange(html);
+    },
   });
 
   return (
     <>
-      <Typography component="span" style={{ color: "red" }}></Typography>
+      Описание
+      <Typography component="span" style={{ color: "red" }}>
+        *
+      </Typography>
       <MenuBar editor={editor} />
       <StyledTexteria>
         <EditorContent editor={editor} />
@@ -113,13 +120,8 @@ const StyledTexteria = styled("div")(() => ({
     minHeight: "300px",
     padding: "20px",
   },
-  "& .ProseMirror": {
-    " > * + *": {
-      marginTop: "0.75em",
-    },
-  },
 
-  "& .ProseMirror p.is-editor-empty:first-child::before": {
+  "& .ProseMirror p.is-editor-empty:last-child::before": {
     color: "#adb5bd",
     content: "attr(data-placeholder)",
     float: "left",
