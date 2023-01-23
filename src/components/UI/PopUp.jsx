@@ -1,23 +1,28 @@
 import { Snackbar, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 import iconClose from "../../assets/icons/iconClose.png";
 
 const PopUp = ({
-  vertical,
-  horizontal,
+  vertical = "top",
+  horizontal = "right",
   open,
   handleClose,
   addedTitle,
   transitionTitle,
   durationSnackbar,
   transition,
+  to,
+  icon = false,
 }) => {
   const snackbar = (
     <Box>
       <AddedTitleStyle>{addedTitle}</AddedTitleStyle>
       <TransitionTitleStyle onClick={transition}>
-        {transitionTitle}
+        <Link to={to}>{transitionTitle}</Link>
       </TransitionTitleStyle>
-      <IconCloseBtn src={iconClose} alt="icon" onClick={handleClose} />
+      {icon && (
+        <IconCloseBtn src={iconClose} alt="icon" onClick={handleClose} />
+      )}
     </Box>
   );
 
@@ -46,10 +51,11 @@ const Container = styled(Snackbar)(() => ({
 
 const Box = styled("div")(() => ({
   display: "flex",
-  flexDirection: "row",
   alignItems: "center",
   gap: "36px",
   borderRadius: "4px",
+  width: "100%",
+  justifyContent: "space-between",
 }));
 
 const AddedTitleStyle = styled("div")(({ theme }) => ({

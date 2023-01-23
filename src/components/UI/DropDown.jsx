@@ -1,21 +1,11 @@
-import { createTheme, Menu, styled, ThemeProvider } from "@mui/material";
-
-const theme = createTheme({
-  components: {
-    MuiMenuItem: {
-      defaultProps: {
-        disableRipple: true,
-      },
-    },
-  },
-});
+import { Menu, styled } from "@mui/material";
 
 const DropDown = ({
   children,
   open,
   handleClose,
-  vertical = "top",
-  horizontal = "left",
+  vertical,
+  horizontal,
   anchorEl,
   ...props
 }) => {
@@ -29,10 +19,14 @@ const DropDown = ({
         horizontal,
       }}
       anchorEl={anchorEl}
+<<<<<<< HEAD
       disablePortal
+=======
+      autoFocus={false}
+>>>>>>> development
       {...props}
     >
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      {children}
     </Container>
   );
 };
