@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Table as ProductTable } from "@mui/material";
 import TableItem from "./TableItem";
-import { dataTables, titlesTables } from "../../utils/constants";
+import { dataTables, titlesTables } from "../utils/constants";
 
 const Table = () => {
   return (
