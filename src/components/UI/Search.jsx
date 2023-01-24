@@ -37,6 +37,7 @@ export default Search;
 
 const OutlinedInputStyled = styled(OutlinedInput)(
   ({ width, border, fill, borderRadius }) => ({
+    color: "white",
     "&.outlined-input": {
       fill: "#FFFFFF",
       width: width || "784px",
@@ -65,6 +66,7 @@ const OutlinedInputStyled = styled(OutlinedInput)(
     "&.outlined-input.focused": {
       fill: fill || "#CB11AB",
       backgroundColor: "#FAFAFA",
+      color: "black",
       "& .notchedOutline": {
         border: border || `1px solid  #CB11AB`,
       },
