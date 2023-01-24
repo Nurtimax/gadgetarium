@@ -241,3 +241,28 @@ export const userProfileStatus_FAKE_DATA = {
   ],
   logIn: false,
 };
+export const TAB_ITEMS = [
+  {
+    id: 1,
+    param: "description",
+    label: "Описание",
+    Component: "Описание",
+  },
+  {
+    id: 2,
+    param: "characteristics",
+    label: "Характеристики",
+    Component: "Характеристики",
+  },
+  { id: 3, param: "reviews", label: "Отзывы", Component: "Отзывы" },
+  {
+    id: 4,
+    param: "shipping-and-payment",
+    label: "Доставка и оплата",
+    Component: "Доставка и оплата",
+  },
+];
+
+export const SEARCH_PARAMS = {
+  CONTENT: "content",
+};
