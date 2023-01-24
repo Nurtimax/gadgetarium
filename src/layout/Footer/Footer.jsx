@@ -63,7 +63,7 @@ const Footer = () => {
             <FooterFormBlock>
               <Title> Расскажем об акциях и скидках </Title>
               <Typography component="div">
-                <Input />
+                <Input type="email" placeholder="Email" />
                 <Button width="130px" height="34px" variant="contained">
                   Подписаться
                 </Button>
