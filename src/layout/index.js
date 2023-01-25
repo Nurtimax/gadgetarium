@@ -1,15 +1,19 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
 
 const Layout = () => {
-  const role = "user";
+  const location = useLocation();
+  const role = "admin";
+
+  const roleResult = location.pathname.split("/").includes(role);
+
   return (
     <StyledLayoutWrapper>
-      {role === "admin" ? <AdminHeader /> : <UserHeader />}
+      {roleResult ? <AdminHeader /> : <UserHeader />}
       <main>
         <Outlet />
       </main>
