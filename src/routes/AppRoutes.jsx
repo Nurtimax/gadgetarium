@@ -32,7 +32,7 @@ const AppRoutes = () => {
             }
           >
             <Route
-              path="phone-item"
+              path=":phone_id"
               element={
                 <>
                   <h1>Galaxy S21 5G</h1>

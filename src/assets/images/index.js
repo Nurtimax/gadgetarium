@@ -17,4 +17,10 @@ export const img_banner = [
     title: "Успей  купить iphone 14 pro",
     desctop: "со скидкой 20%",
   },
+  {
+    id: "3",
+    url: "https://cdn.shopify.com/s/files/1/0808/0067/files/category_banner_ip14pro_promax_desktop_1.jpg?v=1662594151",
+    title: "Успей  купить iphone 14 pro",
+    desctop: "со скидкой 20%",
+  },
 ];
