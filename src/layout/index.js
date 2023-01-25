@@ -26,7 +26,10 @@ const StyledLayoutWrapper = styled(Box)(() => ({
   justifyContent: "space-between",
   height: "100vh",
   gap: "2rem",
-  "& .stop": {
+  "& .user_stop": {
     padding: "0 0 11rem",
+  },
+  "& .admin_stop": {
+    padding: "0 0 4rem",
   },
 }));
