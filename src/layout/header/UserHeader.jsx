@@ -37,7 +37,7 @@ const UserHeader = () => {
   }, []);
 
   return (
-    <>
+    <Box className={isScroll ? "user_stop" : ""}>
       <AppBar position={isScroll ? "fixed" : "relative"}>
         <Container className={`${isScroll ? "none" : ""}`}>
           <Toolbar className="padding flex">
@@ -90,7 +90,7 @@ const UserHeader = () => {
           </Toolbar>
         </Container>
       </AppBar>
-    </>
+    </Box>
   );
 };
 
