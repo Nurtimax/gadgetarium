@@ -55,10 +55,8 @@ const OutlinedInputStyled = styled(OutlinedInput)(
     },
     "&.outlined-input:hover": {
       fill: fill || "#969696",
+      color: "black",
       backgroundColor: "#FAFAFA",
-      "& .notchedOutline": {
-        border: "1px solid #CDCDCD",
-      },
       "& ::placeholder": {
         color: "#91969E",
       },
@@ -67,13 +65,11 @@ const OutlinedInputStyled = styled(OutlinedInput)(
       fill: fill || "#CB11AB",
       backgroundColor: "#FAFAFA",
       color: "black",
-      "& .notchedOutline": {
-        border: border || `1px solid  #CB11AB`,
-      },
     },
     "&.showBackground": {
       backgroundColor: "#FAFAFA",
       fill: "#969696",
+      color: "black",
       "& ::placeholder": {
         color: "#91969E",
         "& .notchedOutlineShow": {
@@ -87,9 +83,10 @@ const OutlinedInputStyled = styled(OutlinedInput)(
       },
     },
     "&.showBackground.focused": {
-      fill: fill || "#CB11AB",
+      fill: fill || "#969696",
+      color: "black",
       "& .notchedOutlineShow": {
-        border: border || `1px solid  #CB11AB`,
+        border: border || `1px solid   #CB11AB`,
       },
     },
   })
