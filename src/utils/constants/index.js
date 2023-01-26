@@ -138,6 +138,7 @@ export const delivery = [
     text: " Предоплата не требуется",
   },
 ];
+
 export const paymentMethod = [
   {
     id: 1,
@@ -241,6 +242,7 @@ export const userProfileStatus_FAKE_DATA = {
   ],
   logIn: false,
 };
+
 export const TAB_ITEMS = [
   {
     id: 1,
@@ -374,4 +376,25 @@ export const dataAboutStore = {
       ),
     },
   ],
+};
+
+export const pathsInRoutes = {
+  ADMIN: "/admin",
+  main: "/",
+  aboutStore: "/about",
+  phone: "phone",
+  cart: "cart",
+  compatisonProduct: "comparison",
+  like: "like",
+  delivery: "delivery",
+  fag: "fag",
+  contacts: "contacts",
+  vip: "/vip",
+  history: "history",
+  goods: "goods",
+  orders: "orders",
+  reviewsRating: "reviews-rating",
+  signIn: "/sign-in",
+  signUp: "/sign-up",
+  notFound: "/*",
 };
