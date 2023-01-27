@@ -7,18 +7,18 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowRightWithoutColorIcon } from "../../assets";
 import { catalogMenu_FAKE_DATA } from "../../utils/constants";
 import DropDown from "../UI/DropDown";
 
 const initialState = {
+  id: "",
   title: "",
   subMenu: [],
 };
 
 const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
-  const { catalogId } = useParams();
   const [subMenuCatalog, setSubMenuCatalog] = useState(initialState);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -67,6 +67,7 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               <MenuItem
                 key={catalog.id}
                 onMouseEnter={subMenuCatalogHandler({
+                  id: catalog.id,
                   title: catalog.title,
                   subMenu: catalog.subcategories,
                 })}
@@ -100,8 +101,8 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               </Grid>
               {subMenuCatalog.subMenu.map((catalog) => (
                 <Grid item xs={12} key={catalog.id}>
-                  <Link to={`${catalogId}/${catalog.id}`}>
-                    <MenuItem onClick={handleClose}>{catalog.title}</MenuItem>
+                  <Link to={`${subMenuCatalog.id}/${catalog.id}`}>
+                    <MenuItem onClick={closeHandler}>{catalog.title}</MenuItem>
                   </Link>
                 </Grid>
               ))}

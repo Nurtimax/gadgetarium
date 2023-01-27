@@ -14,7 +14,6 @@ const AppRoutes = () => {
       <Routes>
         <Route path={pathsInRoutes.main} element={<Layout />}>
           <Route index element={<Home />} />
-          <Route />
           <Route path={pathsInRoutes.aboutStore} element={<AboutStore />} />
           <Route
             path={`:${pathsInRoutes.phone}`}

@@ -4,8 +4,8 @@ const DropDown = ({
   children,
   open,
   handleClose,
-  vertical,
-  horizontal,
+  vertical = "bottom",
+  horizontal = "left",
   anchorEl,
   ...props
 }) => {
