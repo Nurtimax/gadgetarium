@@ -24,4 +24,8 @@ export { ReactComponent as HeartIcon } from "./icons/heart.svg";
 export { ReactComponent as ClockIcon } from "./icons/clock.svg";
 export { ReactComponent as EditIcon } from "./icons/edit.svg";
 export { ReactComponent as CashIcon } from "./icons/cash.svg";
+export { ReactComponent as PhoneIcon } from "./icons/mobile.svg";
+export { ReactComponent as ComputerIcon } from "./icons/computer.svg";
+export { ReactComponent as SmartWatchIcon } from "./icons/smartWatch.svg";
+export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arrowRight.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
