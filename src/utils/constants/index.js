@@ -428,7 +428,7 @@ export const pathsInRoutes = {
   ADMIN: "/admin",
   main: "/",
   aboutStore: "/about",
-  phone: "phone",
+  phone: "catalogId",
   cart: "cart",
   compatisonProduct: "comparison",
   like: "like",

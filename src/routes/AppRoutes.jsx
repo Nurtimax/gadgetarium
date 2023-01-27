@@ -17,19 +17,18 @@ const AppRoutes = () => {
           <Route />
           <Route path={pathsInRoutes.aboutStore} element={<AboutStore />} />
           <Route
-            path={pathsInRoutes.phone}
+            path={`:${pathsInRoutes.phone}`}
             element={
               <>
                 <h1>Cмартфоны</h1>
                 <Outlet />
               </>
             }
-          >
-            <Route
-              path={`:${pathsInRoutes.phone}_id`}
-              element={<h1>Galaxy S21 5G</h1>}
-            />
-          </Route>
+          />
+          <Route
+            path={`:${pathsInRoutes.phone}/:${pathsInRoutes.phone}_id`}
+            element={<h1>Galaxy S21 5G</h1>}
+          />
           <Route
             path={pathsInRoutes.cart}
             element={
