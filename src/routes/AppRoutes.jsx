@@ -17,12 +17,7 @@ const AppRoutes = () => {
           <Route path={pathsInRoutes.aboutStore} element={<AboutStore />} />
           <Route
             path={`:${pathsInRoutes.phone}`}
-            element={
-              <>
-                <h1>Cмартфоны</h1>
-                <Outlet />
-              </>
-            }
+            element={<h1>Cмартфоны</h1>}
           />
           <Route
             path={`:${pathsInRoutes.phone}/:${pathsInRoutes.phone}_id`}
