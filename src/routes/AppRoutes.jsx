@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AboutStore from "../containers/about-store/AboutStore";
 import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
@@ -25,18 +25,12 @@ const AppRoutes = () => {
           />
           <Route
             path={pathsInRoutes.cart}
-            element={
-              <>
-                <h1>Товары в корзине</h1>
-                <Outlet />
-              </>
-            }
-          >
-            <Route
-              path={`${pathsInRoutes.cart}-item`}
-              element={<h1>Оформление заказа</h1>}
-            />
-          </Route>
+            element={<h1>Товары в корзине</h1>}
+          />
+          <Route
+            path={`${pathsInRoutes.cart}/:${pathsInRoutes.cart}_id`}
+            element={<h1>Оформление заказа</h1>}
+          />
           <Route
             path={pathsInRoutes.compatisonProduct}
             element={<h1>Сравнение товаров</h1>}
