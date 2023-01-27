@@ -117,7 +117,6 @@ export default AboutStore;
 const BoxMain = styled("div")`
   width: 100%;
   max-width: 1424px;
-  margin: 0 auto;
   margin-top: 30px;
   margin-bottom: 119.63px;
 `;
@@ -135,8 +134,7 @@ const TitleAboutStore = styled(Typography)`
 `;
 
 const SliderContainer = styled("div")`
-  width: 100%;
-  height: 330px;
+  width: 100vw;
   .slide {
     transform: scale(0.9);
     transition: 0.5;
@@ -151,7 +149,10 @@ const SliderContainer = styled("div")`
   }
 
   .slick-slide {
-    width: 700px;
+    width: 60vw;
+  }
+  .slick-center {
+    width: 60vw;
   }
 `;
 
