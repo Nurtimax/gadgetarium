@@ -1,9 +1,9 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import Modal from "../components/UI/Modal";
 
-const ProtectedRoute = ({ component, isLogin, fallbackPath }) => {
+const ProtectedRoute = ({ component, isLogin }) => {
   if (isLogin) {
-    return <Navigate to={fallbackPath} />;
+    return <Modal />;
   }
   return component;
 };
