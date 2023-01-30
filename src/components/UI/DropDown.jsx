@@ -4,8 +4,8 @@ const DropDown = ({
   children,
   open,
   handleClose,
-  vertical,
-  horizontal,
+  vertical = "bottom",
+  horizontal = "left",
   anchorEl,
   ...props
 }) => {
@@ -19,11 +19,8 @@ const DropDown = ({
         horizontal,
       }}
       anchorEl={anchorEl}
-<<<<<<< HEAD
       disablePortal
-=======
       autoFocus={false}
->>>>>>> development
       {...props}
     >
       {children}
