@@ -7,12 +7,22 @@ import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions
 import Home from "../containers/home";
 import Layout from "../layout";
 import { PATHSINROUTES } from "../utils/constants";
+import PrivateRole from "./PrivateRole";
 
 const AppRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path={PATHSINROUTES.main} element={<Layout />}>
+        <Route
+          path={PATHSINROUTES.main}
+          element={
+            <PrivateRole
+              RouteComponent={<Layout />}
+              roles={["admin"]}
+              fallbackPath="admin"
+            />
+          }
+        >
           <Route index element={<Home />} />
           <Route path={PATHSINROUTES.aboutStore} element={<AboutStore />} />
           <Route
