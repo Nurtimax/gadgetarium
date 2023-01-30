@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import UserBreadcrumbs from "../components/breadcrumbs/UserBreadCrumbs";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
@@ -13,6 +14,7 @@ const Layout = ({ role = "admin" }) => {
   return (
     <StyledLayoutWrapper>
       {roleResult ? <AdminHeader /> : <UserHeader />}
+      {!roleResult ? <UserBreadcrumbs /> : <></>}
       <main>
         <Outlet />
       </main>
