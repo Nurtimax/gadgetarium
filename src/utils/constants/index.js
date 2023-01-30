@@ -424,7 +424,7 @@ export const dataAboutStore = {
   ],
 };
 
-export const pathsInRoutes = {
+export const PATHSINROUTES = {
   ADMIN: "/admin",
   main: "/",
   aboutStore: "/about",

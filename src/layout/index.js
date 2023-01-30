@@ -5,9 +5,8 @@ import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
 
-const Layout = () => {
+const Layout = ({ role = "admin" }) => {
   const location = useLocation();
-  const role = "admin";
 
   const roleResult = location.pathname.split("/").includes(role);
 
