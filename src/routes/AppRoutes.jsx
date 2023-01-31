@@ -5,6 +5,7 @@ import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
 import Home from "../containers/home";
+import SignIn from "../containers/sign-in/SignIn";
 import Layout from "../layout";
 import { PATHSINROUTES } from "../utils/constants";
 import PrivateRole from "./PrivateRole";
@@ -68,7 +69,7 @@ const AppRoutes = () => {
             />
           </Route>
         </Route>
-        <Route path={PATHSINROUTES.signIn} element={<h1>Sign In</h1>} />
+        <Route path={`/${PATHSINROUTES.signIn}`} element={<SignIn />} />
         <Route path={PATHSINROUTES.signUp} element={<h1>Sign up</h1>} />
         <Route path={PATHSINROUTES.notFound} element={<h1>Not found</h1>} />
       </Routes>

@@ -17,6 +17,7 @@
     "@tiptap/extension-underline": "^2.0.0-beta.209",
     "@tiptap/react": "^2.0.0-beta.209",
     "@tiptap/starter-kit": "^2.0.0-beta.209",
+    "formik": "^2.2.9",
     "html-react-parser": "^3.0.8",
     "jodit-react": "^1.3.32",
     "notistack": "^2.0.8",
@@ -30,7 +31,8 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zod": "^3.20.2"
   },
   "scripts": {
     "start": "react-scripts start",
