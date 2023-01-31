@@ -426,6 +426,8 @@ export const dataAboutStore = {
 
 export const PATHSINROUTES = {
   ADMIN: "/admin",
+  ADMINPRODUCT: "product",
+  ADMINITEMDETAIL: "item_details",
   main: "/",
   aboutStore: "/about",
   phone: "catalogId",
@@ -444,3 +446,22 @@ export const PATHSINROUTES = {
   signUp: "/sign-up",
   notFound: "/*",
 };
+
+export const DUMMY_PRODUCT_DATA = [
+  {
+    id: 1,
+    theme: "iphone",
+  },
+  {
+    id: 2,
+    theme: "sumsung",
+  },
+  {
+    id: 3,
+    theme: "huawei",
+  },
+  {
+    id: 4,
+    theme: "redmi",
+  },
+];

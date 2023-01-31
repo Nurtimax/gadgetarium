@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import AdminBreadcrumbs from "../components/breadcrumbs/AdminBreadCrumbs";
 import UserBreadcrumbs from "../components/breadcrumbs/UserBreadCrumbs";
+import { DUMMY_PRODUCT_DATA } from "../utils/constants";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
@@ -12,13 +14,17 @@ const Layout = ({ role = "admin" }) => {
   const roleResult = location.pathname.split("/").includes(role);
 
   return (
-    <StyledLayoutWrapper>
+    <StyledLayoutWrapper className={!roleResult ? "flex" : ""}>
       {roleResult ? <AdminHeader /> : <UserHeader />}
-      {!roleResult ? <UserBreadcrumbs /> : <></>}
+      {!roleResult ? (
+        <UserBreadcrumbs />
+      ) : (
+        <AdminBreadcrumbs items={DUMMY_PRODUCT_DATA} />
+      )}
       <main>
         <Outlet />
       </main>
-      <Footer />
+      {!roleResult && <Footer />}
     </StyledLayoutWrapper>
   );
 };
@@ -26,7 +32,6 @@ const Layout = ({ role = "admin" }) => {
 export default Layout;
 
 const StyledLayoutWrapper = styled(Box)(() => ({
-  display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   height: "100vh",
@@ -35,6 +40,6 @@ const StyledLayoutWrapper = styled(Box)(() => ({
     padding: "0 0 11rem",
   },
   "& .admin_stop": {
-    padding: "0 0 4rem",
+    padding: "0 0 6rem",
   },
 }));

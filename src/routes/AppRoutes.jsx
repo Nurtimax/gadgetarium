@@ -61,6 +61,14 @@ const AppRoutes = () => {
           </Route>
           <Route path={PATHSINROUTES.ADMIN} element={<h1>Admin</h1>}>
             <Route path={PATHSINROUTES.goods} element={<h1>Goods</h1>} />
+            <Route
+              path={`${PATHSINROUTES.goods}/:${PATHSINROUTES.ADMINPRODUCT}`}
+              element={<h1>Admin Product</h1>}
+            />
+            <Route
+              path={`${PATHSINROUTES.goods}/${PATHSINROUTES.ADMINITEMDETAIL}`}
+              element={<h1>Admin Item details</h1>}
+            />
             <Route path={PATHSINROUTES.orders} element={<h1>Orders</h1>} />
             <Route
               path={PATHSINROUTES.reviewsRating}
