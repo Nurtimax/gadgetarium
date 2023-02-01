@@ -424,14 +424,18 @@ export const dataAboutStore = {
   ],
 };
 
-export const PATHSINROUTES = {
+export const ROUTES = {
   ADMIN: "/admin",
-  ADMINPRODUCT: "product",
   ADMINITEMDETAIL: "item_details",
+  addproduct: "add-product",
+  settingPriceQuantityItem: "setting-price-quantity-item",
+  descriptionOverview: "description-overview",
   main: "/",
   aboutStore: "/about",
-  phone: "catalogId",
+  phone: ":catalogItem",
+  product: ":product",
   cart: "cart",
+  checkout: "checkout",
   compatisonProduct: "comparison",
   like: "like",
   delivery: "delivery",
@@ -445,6 +449,7 @@ export const PATHSINROUTES = {
   signIn: "/sign-in",
   signUp: "/sign-up",
   notFound: "/*",
+  profile: "profile",
 };
 
 export const DUMMY_PRODUCT_DATA = [
