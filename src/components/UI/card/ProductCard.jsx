@@ -47,104 +47,74 @@ const ProductCard = (props) => {
   };
 
   return (
-    <Grid container>
-      <Grid item>
-        <Card sx={{ width: "300px", height: "500px" }}>
-          <CardActions>
-            <Grid container justifyContent="space-between" alignItems="center">
-              {sortState(sort)}
+    <StyledProductCard>
+      <CardActions>
+        <Grid className="between" container>
+          {sortState(sort)}
 
-              <Grid display="flex" gap="16px" alignItems="center">
-                {comporation ? (
-                  <>
-                    <ComporativePinkIcon
-                      onClick={onChangeComporation}
-                      cursor="pointer"
-                      title="Удалить из сравнения"
-                    />
-                  </>
-                ) : (
-                  <Comporation
-                    onClick={onChangeComporation}
-                    cursor="pointer"
-                    title="Добавить к сравнению"
-                  />
-                )}
+          <Grid gap="16px" className="flex">
+            {comporation ? (
+              <>
+                <ComporativePinkIcon
+                  onClick={onChangeComporation}
+                  cursor="pointer"
+                  title="Удалить из сравнения"
+                />
+              </>
+            ) : (
+              <Comporation
+                onClick={onChangeComporation}
+                cursor="pointer"
+                title="Добавить к сравнению"
+              />
+            )}
 
-                {like ? (
-                  <HeartActiveIcon
-                    onClick={onChangeLike}
-                    cursor="pointer"
-                    title="Удалить из избранного"
-                  />
-                ) : (
-                  <Favorites
-                    onClick={onChangeLike}
-                    width="22px"
-                    title="Добавить в избранное"
-                    cursor="pointer"
-                  />
-                )}
-              </Grid>
-            </Grid>
-          </CardActions>
-          <CardMedia
-            sx={{ height: 236, width: 180, margin: "0 auto" }}
-            image={img}
-            title={title}
-          />
-          <CardContent>
-            <Typography component="div" color="#2FC509">
-              В наличии ({quantity})
-            </Typography>
+            {like ? (
+              <HeartActiveIcon
+                onClick={onChangeLike}
+                cursor="pointer"
+                title="Удалить из избранного"
+              />
+            ) : (
+              <Favorites
+                onClick={onChangeLike}
+                width="22px"
+                title="Добавить в избранное"
+                cursor="pointer"
+              />
+            )}
+          </Grid>
+        </Grid>
+      </CardActions>
+      <CardMedia_Styled image={img} title={title} />
+      <CardContent>
+        <Typography component="div" color="#2FC509">
+          В наличии ({quantity})
+        </Typography>
 
-            <StyletTitle variant="h6" color="black" title={title}>
-              {title}
-            </StyletTitle>
-            <Typography
-              variant="p"
-              color="grey"
-              display="flex"
-              fontSize="12px"
-              alignItems="center"
-              margin="8px  0 16px 0"
-            >
-              Рейтинг
-              <Rating name="size-small" size="small" defaultValue={rating} />(
-              {rating})
-            </Typography>
+        <StyletTitle variant="h6" color="black" title={title}>
+          {title}
+        </StyletTitle>
+        <Typography variant="p" className="flex">
+          Рейтинг
+          <Rating size="small" defaultValue={rating} />({rating})
+        </Typography>
 
-            <CardActions>
-              <Grid
-                container
-                justifyContent="space-between"
-                alignItems="center"
-                marginTop="20px"
-              >
-                <Box>
-                  <Typography variant="h4" fontSize="18px">
-                    {newprice} c
-                  </Typography>
-                  {sort !== "NEW" ? (
-                    <Typography
-                      variant="p"
-                      color="#909CB5"
-                      fontSize="16px"
-                      style={{ textDecoration: "line-through" }}
-                    >
-                      {price} c
-                    </Typography>
-                  ) : null}
-                </Box>
-                <IconButton title="Добавить в карзину" icon={<CartIcon />}>
-                  В карзину
-                </IconButton>
-              </Grid>
-            </CardActions>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
+        <CardActions>
+          <Grid container className="flex between">
+            <Box>
+              <Typography variant="h4" fontSize="18px">
+                {newprice} c
+              </Typography>
+              {sort !== "NEW" ? <Styled_Price>{price} c</Styled_Price> : null}
+            </Box>
+            <IconButton title="Добавить в карзину" icon={<CartIcon />}>
+              В карзину
+            </IconButton>
+          </Grid>
+        </CardActions>
+      </CardContent>
+    </StyledProductCard>
   );
 };
 
@@ -170,4 +140,21 @@ const Discount_Styled = styled("div")(() => ({
   justifyContent: "center",
   alignItems: "center",
   fontSize: "12px",
+}));
+
+const StyledProductCard = styled(Card)(() => ({
+  width: "300px",
+  "&:hover": {
+    boxShadow: "0 0 10px rgba(0,0,0,0.6)",
+  },
+}));
+const CardMedia_Styled = styled(CardMedia)(() => ({
+  width: "180px",
+  height: "236px",
+  margin: "0 auto",
+}));
+const Styled_Price = styled("p")(() => ({
+  color: "#909CB5",
+  fontSize: "16px",
+  textDecoration: "line-through",
 }));
