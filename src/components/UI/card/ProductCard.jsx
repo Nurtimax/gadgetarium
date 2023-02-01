@@ -13,17 +13,15 @@ import {
 import IconButton from "../IconButton";
 import {
   CartIcon,
-  Discount,
   Favorites,
   Comporation,
-  // FavoritesRed,
   Like,
   New,
   ComporativePinkIcon,
   HeartActiveIcon,
 } from "../../../assets";
 const ProductCard = (props) => {
-  const { title, price, img, sort } = props;
+  const { title, price, img, sort, newprice, quantity, discount } = props;
   const [rating, setRating] = useState(null);
   const [like, setLike] = useState(false);
   const [comporation, setComporation] = useState(false);
@@ -41,7 +39,7 @@ const ProductCard = (props) => {
       case "NEW":
         return <New title="Новинки" />;
       case "DISCOUNT":
-        return <Discount title="Акции" />;
+        return <Discount_Styled title="Акции">-{discount}%</Discount_Styled>;
       case "LIKE":
         return <Like title="Рекемендуем" />;
 
@@ -97,7 +95,7 @@ const ProductCard = (props) => {
           />
           <CardContent>
             <Typography component="div" color="#2FC509">
-              В наличии (14)
+              В наличии ({quantity})
             </Typography>
 
             <StyletTitle variant="h6" color="black">
@@ -118,7 +116,7 @@ const ProductCard = (props) => {
                 name="size-small"
                 size="small"
               />
-              (56)
+              ({rating})
             </Typography>
 
             <CardActions>
@@ -130,7 +128,7 @@ const ProductCard = (props) => {
               >
                 <Box>
                   <Typography variant="h4" fontSize="18px">
-                    {price} c
+                    {newprice} c
                   </Typography>
                   {sort !== "NEW" ? (
                     <Typography
@@ -139,7 +137,7 @@ const ProductCard = (props) => {
                       fontSize="16px"
                       style={{ textDecoration: "line-through" }}
                     >
-                      109900 c
+                      {price} c
                     </Typography>
                   ) : null}
                 </Box>
@@ -165,4 +163,16 @@ const StyletTitle = styled("h1")(() => ({
   display: "-webkit-box ",
   WebkitLineClamp: 2,
   WebkitBoxOrient: "vertical",
+}));
+const Discount_Styled = styled("div")(() => ({
+  color: "white",
+  width: "36px",
+  height: "36px",
+  fontWeight: "900",
+  borderRadius: "50%",
+  background: "red",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "12px",
 }));

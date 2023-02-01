@@ -68,7 +68,7 @@ const AboutStore = () => {
               key={index}
               className={index === slideIndex ? "slide slide-active" : "slide"}
             >
-              <Image src={item} alt="photos" />
+              <Image src={item} />
             </div>
           ))}
         </Slider>
@@ -151,14 +151,27 @@ const SliderContainer = styled("div")`
   .slick-slide {
     width: 60vw;
   }
+
   .slick-center {
     width: 60vw;
   }
+
+  .slick-slider {
+    height: 50vh;
+  }
+
+  .slick-list {
+    height: 50vh;
+  }
 `;
 
-const Image = styled("img")`
+const Image = styled("div")`
   width: 100%;
-  height: 350px;
+  height: 50vh;
+  background-image: url(${({ src }) => src});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const ContainerText = styled("div")`
