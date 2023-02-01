@@ -21,8 +21,8 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 const ProductCard = (props) => {
-  const { title, price, img, sort, newprice, quantity, discount } = props;
-  const [rating, setRating] = useState(null);
+  const { title, price, img, sort, newprice, quantity, discount, rating } =
+    props;
   const [like, setLike] = useState(false);
   const [comporation, setComporation] = useState(false);
   const onChangeComporation = () => {
@@ -31,9 +31,7 @@ const ProductCard = (props) => {
   const onChangeLike = () => {
     setLike(!like);
   };
-  const onChangeRating = (e, newRating) => {
-    setRating(newRating);
-  };
+
   const sortState = (props) => {
     switch (props) {
       case "NEW":
@@ -58,11 +56,13 @@ const ProductCard = (props) => {
 
               <Grid display="flex" gap="16px" alignItems="center">
                 {comporation ? (
-                  <ComporativePinkIcon
-                    onClick={onChangeComporation}
-                    cursor="pointer"
-                    title="Удалить из сравнения"
-                  />
+                  <>
+                    <ComporativePinkIcon
+                      onClick={onChangeComporation}
+                      cursor="pointer"
+                      title="Удалить из сравнения"
+                    />
+                  </>
                 ) : (
                   <Comporation
                     onClick={onChangeComporation}
@@ -81,8 +81,8 @@ const ProductCard = (props) => {
                   <Favorites
                     onClick={onChangeLike}
                     width="22px"
-                    cursor="pointer"
                     title="Добавить в избранное"
+                    cursor="pointer"
                   />
                 )}
               </Grid>
@@ -98,7 +98,7 @@ const ProductCard = (props) => {
               В наличии ({quantity})
             </Typography>
 
-            <StyletTitle variant="h6" color="black">
+            <StyletTitle variant="h6" color="black" title={title}>
               {title}
             </StyletTitle>
             <Typography
@@ -110,13 +110,8 @@ const ProductCard = (props) => {
               margin="8px  0 16px 0"
             >
               Рейтинг
-              <Rating
-                value={rating}
-                onChange={onChangeRating}
-                name="size-small"
-                size="small"
-              />
-              ({rating})
+              <Rating name="size-small" size="small" defaultValue={rating} />(
+              {rating})
             </Typography>
 
             <CardActions>

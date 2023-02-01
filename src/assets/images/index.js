@@ -34,5 +34,6 @@ export const product = [
     price: 109000,
     quantity: 7,
     discount: 10,
+    rating: 56,
   },
 ];
