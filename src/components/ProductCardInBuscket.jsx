@@ -6,20 +6,16 @@ import {
   CardMedia,
   Checkbox,
   Container,
+  Rating,
   styled,
   Typography,
 } from "@mui/material";
 import image from "../assets/images/productImageInBuscket.png";
-import {
-  DeleteIconInCart,
-  HeartActiveIcon,
-  HeartIcon,
-  StarIcon,
-} from "../assets";
-import { useState } from "react";
+import { DeleteIconInCart, HeartActiveIcon, HeartIcon } from "../assets";
+import useCounter from "../hooks/useCounter";
 
 const ProductCardInBuscket = () => {
-  const [count, setCount] = useState(1);
+  const [count, plus, minus] = useCounter(1, 0, 42, 0);
 
   return (
     <Container>
@@ -37,14 +33,17 @@ const ProductCardInBuscket = () => {
               <NameProduct variant="h5" component="h1">
                 Samsung Galaxy S21 128gb синий <br /> 9(MLP3RU)
               </NameProduct>
+              <BoxRating>
+                <TextRating variant="h5" component="h1">
+                  Рейтинг
+                </TextRating>
 
-              <TextRating variant="h5" component="h1">
-                Рейтинг <StarIcon />
-                <StarIcon />
-                <StarIcon />
-                <StarIcon />
-                <StarIcon /> (138)
-              </TextRating>
+                <Rating value={5} />
+
+                <TextRating variant="h5" component="h1">
+                  (138)
+                </TextRating>
+              </BoxRating>
 
               <TextInStock variant="h5" component="h1">
                 В наличии (42шт)
@@ -58,20 +57,13 @@ const ProductCardInBuscket = () => {
             <div>
               <BoxCounterAndPrice>
                 <BoxCounter>
-                  <ButtonCounter
-                    onClick={() => setCount(count - 1)}
-                    disabled={count === 0}
-                  >
-                    -
-                  </ButtonCounter>
+                  <ButtonCounter onClick={minus}>-</ButtonCounter>
 
                   <TextCount variant="h5" component="h1">
                     {count}
                   </TextCount>
 
-                  <ButtonCounter onClick={() => setCount(count + 1)}>
-                    +
-                  </ButtonCounter>
+                  <ButtonCounter onClick={plus}>+</ButtonCounter>
                 </BoxCounter>
 
                 <TextPrice variant="h5" component="h1">
@@ -153,15 +145,22 @@ const NameProduct = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.dark,
 }));
 
-const TextRating = styled(Typography)(({ theme }) => ({
+const BoxRating = styled("div")(() => ({
   paddingTop: "8px",
+  display: "flex",
+  alignItems: "center",
+  gap: "4px",
+  "& .MuiSvgIcon-root": {
+    width: "0.7em",
+    height: "0.7em",
+  },
+}));
+
+const TextRating = styled(Typography)(({ theme }) => ({
   fontFamily: "Inter",
   fontWeight: "500",
   fontSize: "12px",
   color: theme.palette.grey[900],
-  display: "flex",
-  alignItems: "center",
-  gap: "3px",
 }));
 
 const TextInStock = styled(Typography)(({ theme }) => ({
@@ -196,6 +195,7 @@ const ButtonCounter = styled("button")(({ theme }) => ({
   width: "28px",
   height: "28px",
   borderRadius: "50px",
+  cursor: "pointer",
 }));
 
 const TextCount = styled(Typography)(({ theme }) => ({
