@@ -4,7 +4,7 @@ import { catalogMenu_FAKE_DATA } from "../../../utils/constants";
 const UserCatalogBreadcrumbs = () => {
   const { catalogItem } = useParams();
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(
-    (catalog) => catalog.id === +catalogItem
+    (catalog) => catalog.id === Number(catalogItem)
   );
   return <span>{findedCatalogItem?.title}</span>;
 };

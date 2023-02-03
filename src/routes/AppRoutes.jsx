@@ -14,7 +14,7 @@ const AppRoutes = () => {
     <>
       <Routes>
         <Route
-          path={ROUTES.main}
+          path={ROUTES.MAIN}
           element={
             <PrivateRole
               RouteComponent={<Layout role="user" />}
@@ -34,7 +34,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.aboutStore}
+            path={ROUTES.ABOUTSTORE}
             element={
               <PrivateRole
                 RouteComponent={<AboutStore />}
@@ -44,7 +44,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={`item/${ROUTES.phone}`}
+            path={`item/${ROUTES.PHONE}`}
             element={
               <PrivateRole
                 RouteComponent={<h1>Cмартфоны</h1>}
@@ -54,7 +54,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={`item/${ROUTES.phone}/${ROUTES.product}`}
+            path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
             element={
               <PrivateRole
                 RouteComponent={<h1>Galaxy S21 5G</h1>}
@@ -64,7 +64,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.cart}
+            path={ROUTES.CART}
             element={
               <PrivateRole
                 RouteComponent={<h1>Товары в корзине</h1>}
@@ -74,7 +74,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.checkout}
+            path={ROUTES.CHECKOUT}
             element={
               <PrivateRole
                 RouteComponent={<h1>Оформление заказа</h1>}
@@ -84,7 +84,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.compatisonProduct}
+            path={ROUTES.COMPATISONPRODUCT}
             element={
               <PrivateRole
                 RouteComponent={<h1>comparative</h1>}
@@ -94,7 +94,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.like}
+            path={ROUTES.LIKE}
             element={
               <PrivateRole
                 RouteComponent={<h1>Like</h1>}
@@ -104,7 +104,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.delivery}
+            path={ROUTES.DELIVERY}
             element={
               <PrivateRole
                 RouteComponent={<Delivery />}
@@ -114,7 +114,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.fag}
+            path={ROUTES.FAG}
             element={
               <PrivateRole
                 RouteComponent={<FrequentlyAskedQuestions />}
@@ -124,7 +124,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path={ROUTES.contacts}
+            path={ROUTES.CONTACTS}
             element={
               <PrivateRole
                 RouteComponent={<Contacts />}
@@ -134,9 +134,9 @@ const AppRoutes = () => {
             }
           />
 
-          <Route path={ROUTES.vip}>
+          <Route path={ROUTES.VIP}>
             <Route
-              path={ROUTES.history}
+              path={ROUTES.HISTORY}
               element={
                 <PrivateRole
                   RouteComponent={<h1>History</h1>}
@@ -146,7 +146,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={ROUTES.profile}
+              path={ROUTES.PROFILE}
               element={
                 <PrivateRole
                   RouteComponent={<h1>Profile</h1>}
@@ -156,7 +156,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={ROUTES.like}
+              path={ROUTES.LIKE}
               element={
                 <PrivateRole
                   RouteComponent={<h1>like</h1>}
@@ -178,7 +178,7 @@ const AppRoutes = () => {
             }
           >
             <Route
-              path={ROUTES.goods}
+              path={ROUTES.GOODS}
               element={
                 <PrivateRole
                   RouteComponent={<h1>goods</h1>}
@@ -188,7 +188,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={`${ROUTES.goods}/${ROUTES.product}`}
+              path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
               element={
                 <PrivateRole
                   RouteComponent={<h1>Product</h1>}
@@ -198,7 +198,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={`${ROUTES.goods}/${ROUTES.ADMINITEMDETAIL}`}
+              path={`${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`}
               element={
                 <PrivateRole
                   RouteComponent={<h1>detail</h1>}
@@ -208,7 +208,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={ROUTES.orders}
+              path={ROUTES.ORDERS}
               element={
                 <PrivateRole
                   RouteComponent={<h1>Orders</h1>}
@@ -218,7 +218,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path={ROUTES.reviewsRating}
+              path={ROUTES.REVIEWSRATING}
               element={
                 <PrivateRole
                   RouteComponent={<h1>Revviews Rating</h1>}
@@ -229,9 +229,9 @@ const AppRoutes = () => {
             />
           </Route>
         </Route>
-        <Route path={ROUTES.signIn} element={<h1>Sign In</h1>} />
-        <Route path={ROUTES.signUp} element={<h1>Sign up</h1>} />
-        <Route path={ROUTES.notFound} element={<h1>Not found</h1>} />
+        <Route path={ROUTES.SIGNIN} element={<h1>Sign In</h1>} />
+        <Route path={ROUTES.SIGNUP} element={<h1>Sign up</h1>} />
+        <Route path={ROUTES.NOTFOUND} element={<h1>Not found</h1>} />
       </Routes>
     </>
   );
