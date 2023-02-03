@@ -1,21 +1,26 @@
 import { useState } from "react";
 
-const useCounter = (initialValue, resetValue, maxNumber, minNumber) => {
-  const [count, setCount] = useState(initialValue);
+const useCounter = (
+  initialValueCount,
+  resetValueCount,
+  maxNumberCount,
+  minNumberCount
+) => {
+  const [count, setCount] = useState(initialValueCount);
 
   const plusHandler = () => {
-    if (count === maxNumber) return;
+    if (count === maxNumberCount) return;
 
     setCount(count + 1);
   };
 
   const minusHandler = () => {
-    if (count === minNumber) return;
+    if (count === minNumberCount) return;
 
     setCount(count - 1);
   };
 
-  const resetHandler = () => setCount(resetValue);
+  const resetHandler = () => setCount(resetValueCount);
 
   return [count, plusHandler, minusHandler, resetHandler];
 };

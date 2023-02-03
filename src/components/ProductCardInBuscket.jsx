@@ -10,12 +10,29 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import image from "../assets/images/productImageInBuscket.png";
 import { DeleteIconInCart, HeartActiveIcon, HeartIcon } from "../assets";
 import useCounter from "../hooks/useCounter";
 
-const ProductCardInBuscket = () => {
-  const [count, plus, minus] = useCounter(1, 0, 42, 0);
+const ProductCardInBuscket = ({
+  nameProduct,
+  serialNumber,
+  ImageProductCardInBuscket,
+  gradeNumber,
+  rating,
+  inStock,
+  codeProduct,
+  initialValueCount,
+  resetValueCount,
+  maxNumberCount,
+  minNumberCount,
+  priceProduct,
+}) => {
+  const [count, plus, minus] = useCounter(
+    initialValueCount,
+    resetValueCount,
+    maxNumberCount,
+    minNumberCount
+  );
 
   return (
     <Container>
@@ -25,32 +42,37 @@ const ProductCardInBuscket = () => {
         <StyledCard>
           <StyledCardMedia
             component="img"
-            image={image}
+            image={ImageProductCardInBuscket}
             alt="product image in buscket"
           />
           <StyledCardContent>
             <div>
               <NameProduct variant="h5" component="h1">
-                Samsung Galaxy S21 128gb синий <br /> 9(MLP3RU)
+                {nameProduct}
               </NameProduct>
+
+              <NameProduct variant="h5" component="h1">
+                {serialNumber}
+              </NameProduct>
+
               <BoxRating>
                 <TextRating variant="h5" component="h1">
                   Рейтинг
                 </TextRating>
 
-                <Rating value={5} />
+                <Rating value={rating} />
 
                 <TextRating variant="h5" component="h1">
-                  (138)
+                  ({gradeNumber})
                 </TextRating>
               </BoxRating>
 
               <TextInStock variant="h5" component="h1">
-                В наличии (42шт)
+                В наличии ({inStock}шт)
               </TextInStock>
 
               <TextProductCode variant="h5" component="h1">
-                Код товара: 393478
+                Код товара: {codeProduct}
               </TextProductCode>
             </div>
 
@@ -67,7 +89,7 @@ const ProductCardInBuscket = () => {
                 </BoxCounter>
 
                 <TextPrice variant="h5" component="h1">
-                  104900c
+                  {priceProduct}c
                 </TextPrice>
               </BoxCounterAndPrice>
 
