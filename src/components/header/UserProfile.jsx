@@ -37,7 +37,6 @@ const UserProfile = () => {
 export default UserProfile;
 
 const StyledDropDown = styled(DropDown)(() => ({
-  position: "absolute",
   "& .drop_paper": {
     width: "200px",
   },
