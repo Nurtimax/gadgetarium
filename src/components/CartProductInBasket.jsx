@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Card,
@@ -11,90 +10,74 @@ import {
   Typography,
 } from "@mui/material";
 import { DeleteIconInCart, HeartActiveIcon, HeartIcon } from "../assets";
-import useCounter from "../hooks/useCounter";
+import { priceProductSeparate } from "../utils/helpers/general";
 
-const ProductCardInBuscket = ({
-  nameProduct,
-  serialNumber,
-  ImageProductCardInBuscket,
-  gradeNumber,
+const CartProductInBasket = ({
+  onFavorite,
+  onDelete,
+  name,
+  seriesNumber,
+  image,
+  reviewCount,
   rating,
-  inStock,
-  codeProduct,
-  initialValueCount,
-  resetValueCount,
-  maxNumberCount,
-  minNumberCount,
-  priceProduct,
+  availableCount,
+  code,
+  price,
+  onMinus,
+  onPlus,
+  count,
+  isMinusDisabled,
+  isPlusDisabled,
 }) => {
-  const [count, plus, minus] = useCounter(
-    initialValueCount,
-    resetValueCount,
-    maxNumberCount,
-    minNumberCount
-  );
+  const priceProduct = price * count;
 
   return (
     <Container>
       <StyledMainContainer>
-        <Checkbox color="secondary" defaultChecked />
-
         <StyledCard>
           <StyledCardMedia
             component="img"
-            image={ImageProductCardInBuscket}
-            alt="product image in buscket"
+            image={image}
+            alt="product image in basket"
           />
           <StyledCardContent>
             <div>
-              <NameProduct variant="h5" component="h1">
-                {nameProduct}
-              </NameProduct>
+              <NameProduct>{name}</NameProduct>
 
-              <NameProduct variant="h5" component="h1">
-                {serialNumber}
-              </NameProduct>
+              <NameProduct>{seriesNumber}</NameProduct>
 
               <BoxRating>
-                <TextRating variant="h5" component="h1">
-                  Рейтинг
-                </TextRating>
+                <TextRating>Рейтинг</TextRating>
 
-                <Rating value={rating} />
+                <Rating readOnly value={rating} />
 
-                <TextRating variant="h5" component="h1">
-                  ({gradeNumber})
-                </TextRating>
+                <TextRating>({reviewCount})</TextRating>
               </BoxRating>
 
-              <TextInStock variant="h5" component="h1">
-                В наличии ({inStock}шт)
-              </TextInStock>
+              <TextInStock>В наличии ({availableCount}шт)</TextInStock>
 
-              <TextProductCode variant="h5" component="h1">
-                Код товара: {codeProduct}
-              </TextProductCode>
+              <TextProductCode>Код товара: {code}</TextProductCode>
             </div>
 
             <div>
               <BoxCounterAndPrice>
                 <BoxCounter>
-                  <ButtonCounter onClick={minus}>-</ButtonCounter>
+                  <ButtonCounter onClick={onMinus} disabled={isMinusDisabled}>
+                    -
+                  </ButtonCounter>
 
-                  <TextCount variant="h5" component="h1">
-                    {count}
-                  </TextCount>
+                  <TextCount>{count}</TextCount>
 
-                  <ButtonCounter onClick={plus}>+</ButtonCounter>
+                  <ButtonCounter onClick={onPlus} disabled={isPlusDisabled}>
+                    +
+                  </ButtonCounter>
                 </BoxCounter>
 
-                <TextPrice variant="h5" component="h1">
-                  {priceProduct}c
-                </TextPrice>
+                <TextPrice>{priceProductSeparate(priceProduct)}c</TextPrice>
               </BoxCounterAndPrice>
 
               <BoxIcons>
-                <IconsTexts variant="h5" component="h1">
+                <IconsTexts onClick={onFavorite}>
                   <Checkbox
                     icon={<IconHeart className="heart" />}
                     checkedIcon={<ActiveHeartIcon />}
@@ -102,7 +85,7 @@ const ProductCardInBuscket = ({
                   В избранное
                 </IconsTexts>
 
-                <IconsTexts variant="h5" component="h1">
+                <IconsTexts onClick={onDelete}>
                   <DeleteIconInCart />
                   Удалить
                 </IconsTexts>
@@ -115,7 +98,7 @@ const ProductCardInBuscket = ({
   );
 };
 
-export default ProductCardInBuscket;
+export default CartProductInBasket;
 
 const StyledMainContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -246,6 +229,7 @@ const BoxCounter = styled("div")(() => ({
 }));
 
 const IconsTexts = styled(Typography)(({ theme }) => ({
+  cursor: "pointer",
   fontFamily: "Inter",
   fontWeight: "400",
   fontSize: "14px",

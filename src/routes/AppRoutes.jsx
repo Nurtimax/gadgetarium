@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AboutStore from "../containers/about-store/AboutStore";
-import Cart from "../containers/cart/Cart";
 import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
@@ -34,7 +33,7 @@ const AppRoutes = () => {
             path={`:${PATHSINROUTES.phone}/:${PATHSINROUTES.phone}_id`}
             element={<h1>Galaxy S21 5G</h1>}
           />
-          <Route path={PATHSINROUTES.cart} element={<Cart />} />
+          <Route path={PATHSINROUTES.cart} element={<h1>Cart</h1>} />
           <Route
             path={`${PATHSINROUTES.cart}/:${PATHSINROUTES.cart}_id`}
             element={<h1>Оформление заказа</h1>}
