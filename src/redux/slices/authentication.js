@@ -45,6 +45,7 @@ export const fetchDataSignup = createAsyncThunk(
 
 const initialState = {
   data: {},
+  isLoading: false,
 };
 
 const authenticationSlice = createSlice({
@@ -58,6 +59,9 @@ const authenticationSlice = createSlice({
     authLogIn: (state, { payload }) => {
       state.data = payload;
     },
+    queryLoading: (state) => {
+      state.isLoading = true;
+    },
   },
   extraReducers: {
     [fetchDataSignin.fulfilled]: (state, action) => {
@@ -69,6 +73,7 @@ const authenticationSlice = createSlice({
         );
       }
       state.data = action.payload;
+      state.isLoading = !state.isLoading;
     },
     [fetchDataSignup.fulfilled]: (state, action) => {
       const { email, roleName, token } = action.payload;
@@ -79,6 +84,7 @@ const authenticationSlice = createSlice({
         );
       }
       state.data = action.payload;
+      state.isLoading = !state.isLoading;
     },
   },
 });

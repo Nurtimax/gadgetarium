@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 const emailRegex = "^[a-z0-9](.?[a-z0-9]){5,}@g(oogle)?mail.com$";
 
-export const LoginSchema = yup.object().shape({
+export const singUpValidateSchema = yup.object().shape({
   firstname: yup.string().min(2).max(25).required("имя обязательное поле"),
   lastname: yup.string().min(2).max(25).required("фамилия обязательное поле"),
   phoneNumber: yup
@@ -32,4 +32,18 @@ export const LoginSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Пароли должны совпадать")
     .required("Подтвердите пароль обязательное поле"),
+});
+
+export const singInValidateSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email()
+    .matches(emailRegex, "email address must be in the format ...@gmail.com")
+    .required("Email is required"),
+
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters long")
+    .max(100)
+    .required("Password is required"),
 });

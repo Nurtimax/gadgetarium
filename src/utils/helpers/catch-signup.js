@@ -1,6 +1,8 @@
 export const showError = (errors) => {
   let errorMessage = null;
-  if (errors?.firstname) {
+  if (Object.keys(errors).length > 1) {
+    errorMessage = "Пожалуйста заполните все поле";
+  } else if (errors?.firstname) {
     errorMessage = errors?.firstname;
   } else if (errors?.lastname) {
     errorMessage = errors?.lastname;

@@ -6,26 +6,10 @@ import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import Modal from "../../components/UI/Modal";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import useVisibility from "../../hooks/useVisibility";
 import { useDispatch } from "react-redux";
 import { fetchDataSignin } from "../../redux/slices/authentication";
-
-const emailRegex = "^[a-z0-9](.?[a-z0-9]){5,}@g(oogle)?mail.com$";
-
-const LoginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email()
-    .matches(emailRegex, "email address must be in the format ...@gmail.com")
-    .required("Email is required"),
-
-  password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters long")
-    .max(100)
-    .required("Password is required"),
-});
+import { singInValidateSchema } from "../../utils/helpers/validate";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -53,7 +37,7 @@ const SignIn = () => {
       password: "",
     },
     onSubmit,
-    validationSchema: LoginSchema,
+    validationSchema: singInValidateSchema,
     validateOnChange: false,
   });
 

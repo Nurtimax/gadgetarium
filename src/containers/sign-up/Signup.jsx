@@ -1,4 +1,4 @@
-import { Box, Grid, styled, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconClose, VisibilityOffIcon, VisibilityOnIcon } from "../../assets";
@@ -9,18 +9,24 @@ import { useFormik } from "formik";
 import ReactInputMask from "react-input-mask";
 import useVisibility from "../../hooks/useVisibility";
 import { showError } from "../../utils/helpers/catch-signup";
-import { LoginSchema } from "../../utils/helpers/validate";
-import { useDispatch } from "react-redux";
-import { fetchDataSignup } from "../../redux/slices/authentication";
+import { singUpValidateSchema } from "../../utils/helpers/validate";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ActionauthenticationSlice,
+  fetchDataSignup,
+} from "../../redux/slices/authentication";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useVisibility();
   const [showConfirmPassword, setShowConfirmPassword] = useVisibility();
 
+  const { isLoading } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (values, action) => {
+    dispatch(ActionauthenticationSlice.queryLoading());
     const phoneNumber = values.phoneNumber
       .split("-")
       .join("")
@@ -55,7 +61,7 @@ const SignUp = () => {
       confirmPassword: "",
     },
     onSubmit,
-    validationSchema: LoginSchema,
+    validationSchema: singUpValidateSchema,
     validateOnChange: false,
   });
 
@@ -83,7 +89,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 name="firstname"
                 type="text"
-                error={errors.firstname}
+                error={Boolean(errors.firstname)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,7 +99,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 name="lastname"
                 type="text"
-                error={errors.lastname}
+                error={Boolean(errors.lastname)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -113,7 +119,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 name="email"
                 type="email"
-                error={errors.email}
+                error={Boolean(errors.email)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,7 +129,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 name="password"
                 type={!showPassword ? "password" : "text"}
-                error={errors.password}
+                error={Boolean(errors.password)}
                 endAdornment={
                   <>
                     {!showPassword ? (
@@ -148,7 +154,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 name="confirmPassword"
                 type={!showConfirmPassword ? "password" : "text"}
-                error={errors.confirmPassword}
+                error={Boolean(errors.confirmPassword)}
                 endAdornment={
                   <>
                     {!showConfirmPassword ? (
@@ -172,7 +178,9 @@ const SignUp = () => {
               {showError(errors)}
             </Typography>
           )}
-          <StyledButton type="submit">Создать аккаунт</StyledButton>
+          <StyledButton type="submit">
+            {isLoading ? <CircularProgress size={30} /> : " Создать аккаунт"}
+          </StyledButton>
         </StyledForm>
         <Box className="change_login flex center gap">
           <Typography component="p" variant="body1">
