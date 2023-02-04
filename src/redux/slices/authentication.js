@@ -82,8 +82,8 @@ const authenticationSlice = createSlice({
           GADJEDTARIUM_LOGIN_INFO,
           JSON.stringify(action.payload)
         );
+        state.data = action.payload;
       }
-      state.data = action.payload;
       state.isLoading = !state.isLoading;
     },
   },

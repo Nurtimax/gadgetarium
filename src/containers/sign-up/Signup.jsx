@@ -51,19 +51,20 @@ const SignUp = () => {
     });
   };
 
-  const { handleChange, handleSubmit, values, errors } = useFormik({
-    initialValues: {
-      firstname: "",
-      lastname: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    },
-    onSubmit,
-    validationSchema: singUpValidateSchema,
-    validateOnChange: false,
-  });
+  const { handleChange, handleSubmit, values, errors, isSubmitting } =
+    useFormik({
+      initialValues: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: "",
+      },
+      onSubmit,
+      validationSchema: singUpValidateSchema,
+      validateOnChange: false,
+    });
 
   return (
     <StyledSignIn className="background_linear" onSubmit={handleSubmit}>
@@ -178,7 +179,7 @@ const SignUp = () => {
               {showError(errors)}
             </Typography>
           )}
-          <StyledButton type="submit">
+          <StyledButton type="submit" disabled={isSubmitting}>
             {isLoading ? <CircularProgress size={30} /> : " Создать аккаунт"}
           </StyledButton>
         </StyledForm>
