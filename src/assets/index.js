@@ -29,3 +29,6 @@ export { ReactComponent as ComputerIcon } from "./icons/computer.svg";
 export { ReactComponent as SmartWatchIcon } from "./icons/smartWatch.svg";
 export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arrowRight.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
+export { ReactComponent as VisaIcon } from "./icons/visa.svg";
+export { ReactComponent as ElCardIcon } from "./icons/elCard.svg";
+export { ReactComponent as MasterCard } from "./icons/masterCard.svg";

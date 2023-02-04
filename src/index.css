@@ -79,9 +79,18 @@ a {
   padding: 0 !important;
 }
 
-.gap {
+/* .gap {
   gap: 8px;
 }
 .gap2 {
   gap: 16px;
 }
+.MuiInputBase-root::before {
+  border: none !important;
+}
+.MuiInputBase-root::after {
+  border: none !important;
+}
+#expiryDate {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+} */
