@@ -44,9 +44,9 @@ export const userPages = [
 ];
 
 export const adminPage = [
-  { id: 22, theme: "Товары", to: "goods" },
-  { id: 23, theme: "Заказы", to: "orders" },
-  { id: 24, theme: "Отзывы и рейтинг", to: "reviews-rating" },
+  { id: 22, theme: "Товары", to: "admin/goods" },
+  { id: 23, theme: "Заказы", to: "admin/orders" },
+  { id: 24, theme: "Отзывы и рейтинг", to: "admin/reviews-rating" },
 ];
 
 export const iconsData = [
@@ -141,6 +141,7 @@ export const delivery = [
     text: " Предоплата не требуется",
   },
 ];
+
 export const paymentMethod = [
   {
     id: 1,
@@ -276,17 +277,18 @@ export const dataTables = [
 
 export const userProfileStatus_FAKE_DATA = {
   enter: [
-    { id: 1, title: "Войти", link: "" },
-    { id: 2, title: "Регистрация", link: "" },
+    { id: 1, title: "Войти", link: "sign-in" },
+    { id: 2, title: "Регистрация", link: "sign-up" },
   ],
   enteredLogIn: [
-    { id: 1, title: "История заказов", link: "" },
-    { id: 2, title: "Избранное", link: "" },
-    { id: 3, title: "Профиль", link: "" },
+    { id: 1, title: "История заказов", link: "/vip/history" },
+    { id: 2, title: "Избранное", link: "like" },
+    { id: 3, title: "Профиль", link: "profile" },
     { id: 4, title: "Выйти", link: "" },
   ],
   logIn: false,
 };
+
 export const TAB_ITEMS = [
   {
     id: 1,
@@ -420,4 +422,25 @@ export const dataAboutStore = {
       ),
     },
   ],
+};
+
+export const PATHSINROUTES = {
+  ADMIN: "/admin",
+  main: "/",
+  aboutStore: "/about",
+  phone: "catalogId",
+  cart: "cart",
+  compatisonProduct: "comparison",
+  like: "like",
+  delivery: "delivery",
+  fag: "fag",
+  contacts: "contacts",
+  vip: "/vip",
+  history: "history",
+  goods: "goods",
+  orders: "orders",
+  reviewsRating: "reviews-rating",
+  signIn: "/sign-in",
+  signUp: "/sign-up",
+  notFound: "/*",
 };

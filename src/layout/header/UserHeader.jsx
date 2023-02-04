@@ -16,9 +16,12 @@ import NavLinks from "../../components/header/NavLinks";
 import UserProfile from "../../components/header/UserProfile";
 import { userPages } from "../../utils/constants";
 import IconButton from "../../components/UI/IconButton";
+import Catalog from "../../components/catalog/Catalog";
+import useDropDown from "../../hooks/useDropDown";
 
 const UserHeader = () => {
   const [isScroll, setIsScroll] = useState(false);
+  const [anchorEl, setAnchorEl] = useDropDown();
 
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
@@ -63,11 +66,16 @@ const UserHeader = () => {
               </Grid>
               <Grid item xs={1.5} className="flex gap2">
                 <Box className="flexgrow flex height">
+                  <Catalog
+                    anchorElCatalog={anchorEl}
+                    handleCloseCatalog={setAnchorEl}
+                  />
                   <ButtonStyled
                     className="gap capitalize"
                     variant="contained"
                     color="secondary"
                     icon={<CatalogIcon />}
+                    onClick={setAnchorEl}
                   >
                     Каталог
                   </ButtonStyled>

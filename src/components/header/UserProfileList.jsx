@@ -9,7 +9,7 @@ const UserProfileList = () => {
     <>
       {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
         <Grid key={status.id} item xs={12}>
-          <Link to={status.title}>
+          <Link to={status.link}>
             <MenuItem>{status.title}</MenuItem>
           </Link>
         </Grid>

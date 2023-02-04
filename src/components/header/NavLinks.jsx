@@ -1,12 +1,20 @@
 import { Box, styled, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NavLinks = ({ page = [] }) => {
-  const [value, setValue] = useState(page[0].theme);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const params = page.find((item) => `/${item.to}` === location.pathname);
+  const tabsValue = params?.theme ? params.theme : page[0].theme;
+
+  const [value, setValue] = useState(tabsValue);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const params = page.find((item) => item.theme === newValue);
+    navigate(`${params.to}`);
   };
 
   return (

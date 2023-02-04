@@ -7,11 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRightWithoutColorIcon } from "../../assets";
 import { catalogMenu_FAKE_DATA } from "../../utils/constants";
 import DropDown from "../UI/DropDown";
 
 const initialState = {
+  id: "",
   title: "",
   subMenu: [],
 };
@@ -65,6 +67,7 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               <MenuItem
                 key={catalog.id}
                 onMouseEnter={subMenuCatalogHandler({
+                  id: catalog.id,
                   title: catalog.title,
                   subMenu: catalog.subcategories,
                 })}
@@ -75,13 +78,9 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
                 }
               >
                 <IconButton size="large">{catalog.icon}</IconButton>
-                <Typography
-                  variant="body1"
-                  component="span"
-                  className="flexgrow"
-                >
+                <Link to={`${catalog.id}`} className="flexgrow">
                   {catalog.title}
-                </Typography>
+                </Link>
                 <ArrowRightWithoutColorIcon />
               </MenuItem>
             ))}
@@ -102,11 +101,9 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               </Grid>
               {subMenuCatalog.subMenu.map((catalog) => (
                 <Grid item xs={12} key={catalog.id}>
-                  <MenuItem onClick={closeHandler}>
-                    <Typography variant="body1" component="span">
-                      {catalog.title}
-                    </Typography>
-                  </MenuItem>
+                  <Link to={`${subMenuCatalog.id}/${catalog.id}`}>
+                    <MenuItem onClick={closeHandler}>{catalog.title}</MenuItem>
+                  </Link>
                 </Grid>
               ))}
             </Grid>
@@ -134,13 +131,14 @@ const StyledDropDown = styled(DropDown)(({ theme }) => ({
   maxHeight: "62px",
   "& .paper": {
     top: "0 !important",
+    left: "85% !important",
     maxHeight: "300px",
     minWidth: "20.5rem",
     padding: "0 8px",
   },
   "& .subpaper": {
     zIndex: 0,
-    left: "130% !important",
+    left: "165% !important",
     maxHeight: "33rem",
     padding: "20px 18px",
     textAlign: "left",
