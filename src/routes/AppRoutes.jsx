@@ -5,6 +5,8 @@ import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
 import Home from "../containers/home";
+import SignIn from "../containers/sign-in/SignIn";
+import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
 import { ROUTES } from "../utils/constants";
 import PrivateRole from "./PrivateRole";
@@ -229,8 +231,8 @@ const AppRoutes = () => {
             />
           </Route>
         </Route>
-        <Route path={ROUTES.SIGNIN} element={<h1>Sign In</h1>} />
-        <Route path={ROUTES.SIGNUP} element={<h1>Sign up</h1>} />
+        <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
         <Route path={ROUTES.NOTFOUND} element={<h1>Not found</h1>} />
       </Routes>
     </>

@@ -1,10 +1,10 @@
 import { Container, styled, Typography } from "@mui/material";
 import AccordionComponents from "../../components/UI/AccordionComponents";
 import { title } from "../../utils/constants/listQuestions";
-import { useToggle } from "../../hooks/useToggle";
+import { useState } from "react";
 
 const FrequentlyAskedQuestions = () => {
-  const [expanded, setExpanded] = useToggle(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
