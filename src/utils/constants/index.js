@@ -430,7 +430,6 @@ export const ROUTES = {
   ADDPRODUCT: "add-product",
   settingPriceQuantityItem: "setting-price-quantity-item",
   SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
-  descriptionOverview: "description-overview",
   DESCRIPTIONOVERVIEW: "description-overview",
   MAIN: "/",
   ABOUTSTORE: "/about",

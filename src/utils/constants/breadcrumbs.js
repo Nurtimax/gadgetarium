@@ -4,11 +4,11 @@ import UserCatalogItemBreadcrumbs from "../../components/breadcrumbs/dynamic-det
 
 export const BREADCRUMBS = [
   {
-    path: ROUTES.main,
+    path: ROUTES.MAIN,
     breadcrumb: "Главная",
   },
   {
-    path: ROUTES.aboutStore,
+    path: ROUTES.ABOUTSTORE,
     breadcrumb: "О магазине",
   },
   {
@@ -16,51 +16,51 @@ export const BREADCRUMBS = [
     breadcrumb: null,
   },
   {
-    path: `item/${ROUTES.phone}`,
+    path: `item/${ROUTES.PHONE}`,
     breadcrumb: UserCatalogBreadcrumbs,
   },
   {
-    path: `item/${ROUTES.phone}/${ROUTES.product}`,
+    path: `item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`,
     breadcrumb: UserCatalogItemBreadcrumbs,
   },
   {
-    path: ROUTES.cart,
+    path: ROUTES.CART,
     breadcrumb: "Корзина",
   },
   {
-    path: ROUTES.checkout,
+    path: ROUTES.CHECKOUT,
     breadcrumb: "Оформление заказа",
   },
   {
-    path: ROUTES.compatisonProduct,
+    path: ROUTES.COMPATISONPRODUCT,
     breadcrumb: "comparison",
   },
   {
-    path: ROUTES.delivery,
+    path: ROUTES.DELIVERY,
     breadcrumb: "Доставка",
   },
   {
-    path: ROUTES.fag,
+    path: ROUTES.FAG,
     breadcrumb: "FAG",
   },
   {
-    path: ROUTES.contacts,
+    path: ROUTES.CONTACTS,
     breadcrumb: "Контакты",
   },
   {
-    path: ROUTES.vip,
+    path: ROUTES.VIP,
     breadcrumb: "Личный кабинет",
   },
   {
-    path: `${ROUTES.vip}/${ROUTES.history}`,
+    path: `${ROUTES.VIP}/${ROUTES.HISTORY}`,
     breadcrumb: "История заказов",
   },
   {
-    path: `${ROUTES.vip}/${ROUTES.like}`,
+    path: `${ROUTES.VIP}/${ROUTES.LIKE}`,
     breadcrumb: "Избранное",
   },
   {
-    path: `${ROUTES.vip}/${ROUTES.profile}`,
+    path: `${ROUTES.VIP}/${ROUTES.PROFILE}`,
     breadcrumb: "Учетная запись",
   },
   {
@@ -68,35 +68,35 @@ export const BREADCRUMBS = [
     breadcrumb: null,
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}`,
     breadcrumb: null,
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.orders}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}`,
     breadcrumb: null,
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.reviewsRating}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.REVIEWSRATING}`,
     breadcrumb: null,
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}/${ROUTES.product}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.PRODUCT}`,
     breadcrumb: null,
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}/${ROUTES.ADMINITEMDETAIL}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`,
     breadcrumb: "Детали товара",
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}/${ROUTES.addproduct}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`,
     breadcrumb: "Добавление товара",
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}/${ROUTES.settingPriceQuantityItem}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.SETTINGPRICEQUANTITYITEM}`,
     breadcrumb: "Установка цены и количества товара",
   },
   {
-    path: `${ROUTES.ADMIN}/${ROUTES.goods}/${ROUTES.descriptionOverview}`,
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.DESCRIPTIONOVERVIEW}`,
     breadcrumb: "Описание и обзор",
   },
 ];

@@ -3,7 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Breadcrumbs } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { BREADCRUMBS } from "../../utils/constants";
+import { BREADCRUMBS } from "../../utils/constants/breadcrumbs";
 
 const BreadCrumbs = () => {
   const breadcrumbs = useBreadcrumbs(BREADCRUMBS);
