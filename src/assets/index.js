@@ -31,3 +31,5 @@ export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arr
 export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as DeleteIconInCart } from "./icons/delete-icon-in-cart.svg";
 export { default as ImageProductCardInBuscket } from "./images/product-image-in-buscket.png";
+export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
+export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
