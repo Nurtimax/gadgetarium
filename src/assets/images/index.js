@@ -35,5 +35,6 @@ export const product = [
     quantity: 7,
     discount: 10,
     rating: 56,
+    status: "LIKE",
   },
 ];

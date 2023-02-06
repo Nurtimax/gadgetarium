@@ -9,7 +9,7 @@ const Home = () => {
       <Banner />
       <ContainerCard>
         {product.map((item) => (
-          <ProductCard key={item.id} {...item} sort="DISCOUNT" />
+          <ProductCard key={item.id} {...item} />
         ))}
       </ContainerCard>
     </Container>
