@@ -85,3 +85,11 @@ a {
 .gap2 {
   gap: 16px;
 }
+
+.column {
+  flex-direction: column;
+}
+
+.background_linear {
+  background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
+}

@@ -33,3 +33,5 @@ export { ReactComponent as Comporation } from "./icons/favoritesDefoult.svg";
 export { ReactComponent as Favorites } from "./icons/comporation.svg";
 export { ReactComponent as Like } from "./icons/like.svg";
 export { ReactComponent as New } from "./icons/new.svg";
+export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
+export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
