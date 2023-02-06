@@ -85,6 +85,7 @@ a {
 .gap2 {
   gap: 16px;
 }
+<<<<<<< HEAD
 .MuiInputBase-root::before {
   border: none !important;
 }
@@ -94,3 +95,13 @@ a {
 #expiryDate {
   border-bottom: 1px solid rgba(0, 0, 0, 0.42);
 } */
+=======
+
+.column {
+  flex-direction: column;
+}
+
+.background_linear {
+  background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
+}
+>>>>>>> development
