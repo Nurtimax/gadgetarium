@@ -1,4 +1,4 @@
-import { Box, Grid, styled, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconClose, VisibilityOffIcon, VisibilityOnIcon } from "../../assets";
@@ -7,7 +7,7 @@ import Input from "../../components/UI/input/Input";
 import Modal from "../../components/UI/Modal";
 import { useFormik } from "formik";
 import useVisibility from "../../hooks/useVisibility";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDataSignin } from "../../redux/slices/authentication";
 import { singInValidateSchema } from "../../utils/helpers/validate";
 
@@ -15,6 +15,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useVisibility();
   const [error, setError] = useState(null);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
@@ -107,7 +108,9 @@ const SignIn = () => {
               Неправильно указан Email и/или пароль
             </Typography>
           )}
-          <StyledButton type="submit">Войти</StyledButton>
+          <StyledButton type="submit">
+            {isLoading ? <CircularProgress size={30} /> : "Войти"}
+          </StyledButton>
         </StyledForm>
         <Box className="change_login flex center gap">
           <Typography component="p" variant="body1">

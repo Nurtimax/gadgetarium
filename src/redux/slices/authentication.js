@@ -59,9 +59,6 @@ const authenticationSlice = createSlice({
     authLogIn: (state, { payload }) => {
       state.data = payload;
     },
-    queryLoading: (state) => {
-      state.isLoading = true;
-    },
   },
   extraReducers: {
     [fetchDataSignin.fulfilled]: (state, action) => {
@@ -73,7 +70,13 @@ const authenticationSlice = createSlice({
         );
       }
       state.data = action.payload;
-      state.isLoading = !state.isLoading;
+      state.isLoading = false;
+    },
+    [fetchDataSignin.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [fetchDataSignin.pending]: (state) => {
+      state.isLoading = true;
     },
     [fetchDataSignup.fulfilled]: (state, action) => {
       const { email, roleName, token } = action.payload;
@@ -84,7 +87,13 @@ const authenticationSlice = createSlice({
         );
         state.data = action.payload;
       }
-      state.isLoading = !state.isLoading;
+      state.isLoading = false;
+    },
+    [fetchDataSignup.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [fetchDataSignup.pending]: (state) => {
+      state.isLoading = true;
     },
   },
 });

@@ -11,10 +11,7 @@ import useVisibility from "../../hooks/useVisibility";
 import { showError } from "../../utils/helpers/catch-signup";
 import { singUpValidateSchema } from "../../utils/helpers/validate";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ActionauthenticationSlice,
-  fetchDataSignup,
-} from "../../redux/slices/authentication";
+import { fetchDataSignup } from "../../redux/slices/authentication";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useVisibility();
@@ -26,7 +23,6 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, action) => {
-    dispatch(ActionauthenticationSlice.queryLoading());
     const phoneNumber = values.phoneNumber
       .split("-")
       .join("")
