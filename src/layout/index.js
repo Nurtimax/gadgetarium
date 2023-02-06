@@ -4,7 +4,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
-
 const Layout = ({ role = "admin" }) => {
   const location = useLocation();
 
