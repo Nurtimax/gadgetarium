@@ -29,3 +29,5 @@ export { ReactComponent as ComputerIcon } from "./icons/computer.svg";
 export { ReactComponent as SmartWatchIcon } from "./icons/smartWatch.svg";
 export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arrowRight.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
+export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
+export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
