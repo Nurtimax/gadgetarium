@@ -29,6 +29,8 @@ export { ReactComponent as ComputerIcon } from "./icons/computer.svg";
 export { ReactComponent as SmartWatchIcon } from "./icons/smartWatch.svg";
 export { ReactComponent as ArrowRightWithoutColorIcon } from "./icons/arrows/arrowRight.svg";
 export { ReactComponent as Logo } from "./icons/logo.svg";
+export { ReactComponent as DeleteIconInCart } from "./icons/delete-icon-in-cart.svg";
+export { default as ImageProductCardInBuscket } from "./images/product-image-in-buscket.png";
 export { ReactComponent as Comporation } from "./icons/favoritesDefoult.svg";
 export { ReactComponent as Favorites } from "./icons/comporation.svg";
 export { ReactComponent as Like } from "./icons/like.svg";
