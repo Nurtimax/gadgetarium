@@ -16,14 +16,16 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       <Banner />
-      <ContainerCard>
-        {product.map((item) => (
-          <ProductCard key={item.id} {...item} />
-        ))}
-      </ContainerCard>
-    </Container>
+      <Container>
+        <ContainerCard>
+          {product.map((item) => (
+            <ProductCard key={item.id} {...item} />
+          ))}
+        </ContainerCard>
+      </Container>
+    </>
   );
 };
 
