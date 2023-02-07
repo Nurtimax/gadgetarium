@@ -78,7 +78,11 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
                 }
               >
                 <IconButton size="large">{catalog.icon}</IconButton>
-                <Link to={`${catalog.id}`} className="flexgrow">
+                <Link
+                  to={`item/${catalog.id}`}
+                  className="flexgrow"
+                  onClick={closeHandler}
+                >
                   {catalog.title}
                 </Link>
                 <ArrowRightWithoutColorIcon />
@@ -101,7 +105,7 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               </Grid>
               {subMenuCatalog.subMenu.map((catalog) => (
                 <Grid item xs={12} key={catalog.id}>
-                  <Link to={`${subMenuCatalog.id}/${catalog.id}`}>
+                  <Link to={`item/${subMenuCatalog.id}/${catalog.id}`}>
                     <MenuItem onClick={closeHandler}>{catalog.title}</MenuItem>
                   </Link>
                 </Grid>
