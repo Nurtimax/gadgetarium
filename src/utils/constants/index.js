@@ -471,3 +471,31 @@ export const DUMMY_PRODUCT_DATA = [
     theme: "redmi",
   },
 ];
+
+export const TAB_ITEMS_ORDER = [
+  {
+    id: 1,
+    tabTitle: "в ожидании",
+    title: "В ожидании",
+  },
+  {
+    id: 2,
+    tabTitle: "в обработке",
+    title: "В обработке (5)",
+  },
+  {
+    id: 3,
+    tabTitle: "курьер в пути",
+    title: "Курьер в пути (3)",
+  },
+  {
+    id: 4,
+    tabTitle: "доставлены",
+    title: "Доставлены (6)",
+  },
+  {
+    id: 5,
+    tabTitle: "отменены",
+    title: "Отменены",
+  },
+];

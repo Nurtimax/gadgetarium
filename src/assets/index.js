@@ -37,3 +37,4 @@ export { ReactComponent as Like } from "./icons/like.svg";
 export { ReactComponent as New } from "./icons/new.svg";
 export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
 export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
+export { ReactComponent as DateIcon } from "./icons/date-icon.svg";
