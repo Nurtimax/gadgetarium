@@ -24,3 +24,17 @@ export const img_banner = [
     desctop: "со скидкой 20%",
   },
 ];
+export const product = [
+  {
+    id: 1,
+    title:
+      "iPhone 13 Pro Max, 1 ТБ, Небесно-голубой iPhone 14 Pro, 128 ГБ, Tемно-фиолетовый",
+    img: "https://img.swipe.bg/phones/original/iphone-13-pro-max-0igspc.jpg",
+    newprice: 100000,
+    price: 109000,
+    quantity: 7,
+    discount: 10,
+    rating: 56,
+    status: "LIKE",
+  },
+];
