@@ -6,6 +6,7 @@ import { product } from "../../assets/images";
 import { Container, styled } from "@mui/material";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication";
 import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
+import { fetchProduct } from "../../redux/slices/productSlice";
 
 const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(ActionauthenticationSlice.authLogIn(authSave));
+    dispatch(fetchProduct());
   }, []);
 
   return (
