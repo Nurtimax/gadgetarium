@@ -1,8 +1,8 @@
 import React from "react";
-import AppRoutes from "./routes/AppRoutes";
+import Orders from "./containers/orders/Orders";
 
 const App = () => {
-  return <AppRoutes />;
+  return <Orders />;
 };
 
 export default App;
