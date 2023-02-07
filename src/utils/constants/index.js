@@ -424,23 +424,50 @@ export const dataAboutStore = {
   ],
 };
 
-export const PATHSINROUTES = {
+export const ROUTES = {
   ADMIN: "/admin",
-  main: "/",
-  aboutStore: "/about",
-  phone: "catalogId",
-  cart: "cart",
-  compatisonProduct: "comparison",
-  like: "like",
-  delivery: "delivery",
-  fag: "fag",
-  contacts: "contacts",
-  vip: "/vip",
-  history: "history",
-  goods: "goods",
-  orders: "orders",
-  reviewsRating: "reviews-rating",
-  signIn: "/sign-in",
-  signUp: "/sign-up",
-  notFound: "/*",
+  ADMINITEMDETAIL: "item_details",
+  ADDPRODUCT: "add-product",
+  settingPriceQuantityItem: "setting-price-quantity-item",
+  SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
+  DESCRIPTIONOVERVIEW: "description-overview",
+  MAIN: "/",
+  ABOUTSTORE: "/about",
+  PHONE: ":catalogItem",
+  PRODUCT: ":product",
+  CART: "cart",
+  CHECKOUT: "checkout",
+  COMPATISONPRODUCT: "comparison",
+  LIKE: "like",
+  DELIVERY: "delivery",
+  FAG: "fag",
+  CONTACTS: "contacts",
+  VIP: "/vip",
+  HISTORY: "history",
+  GOODS: "goods",
+  ORDERS: "orders",
+  REVIEWSRATING: "reviews-rating",
+  SIGNIN: "/sign-in",
+  SIGNUP: "/sign-up",
+  NOTFOUND: "/*",
+  PROFILE: "profile",
 };
+
+export const DUMMY_PRODUCT_DATA = [
+  {
+    id: 1,
+    theme: "iphone",
+  },
+  {
+    id: 2,
+    theme: "sumsung",
+  },
+  {
+    id: 3,
+    theme: "huawei",
+  },
+  {
+    id: 4,
+    theme: "redmi",
+  },
+];

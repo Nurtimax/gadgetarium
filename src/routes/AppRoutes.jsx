@@ -8,7 +8,7 @@ import Home from "../containers/home";
 import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
-import { PATHSINROUTES } from "../utils/constants";
+import { ROUTES } from "../utils/constants";
 import PrivateRole from "./PrivateRole";
 
 const AppRoutes = () => {
@@ -16,60 +16,224 @@ const AppRoutes = () => {
     <>
       <Routes>
         <Route
-          path={PATHSINROUTES.main}
+          path={ROUTES.MAIN}
           element={
             <PrivateRole
-              RouteComponent={<Layout />}
+              RouteComponent={<Layout role="user" />}
               roles={["admin"]}
               fallbackPath="admin"
             />
           }
         >
-          <Route index element={<Home />} />
-          <Route path={PATHSINROUTES.aboutStore} element={<AboutStore />} />
           <Route
-            path={`:${PATHSINROUTES.phone}`}
-            element={<h1>Cмартфоны</h1>}
+            index
+            element={
+              <PrivateRole
+                RouteComponent={<Home />}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
           />
           <Route
-            path={`:${PATHSINROUTES.phone}/:${PATHSINROUTES.phone}_id`}
-            element={<h1>Galaxy S21 5G</h1>}
+            path={ROUTES.ABOUTSTORE}
+            element={
+              <PrivateRole
+                RouteComponent={<AboutStore />}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
           />
-          <Route path={PATHSINROUTES.cart} element={<h1>Cart</h1>} />
           <Route
-            path={`${PATHSINROUTES.cart}/:${PATHSINROUTES.cart}_id`}
-            element={<h1>Оформление заказа</h1>}
+            path={`item/${ROUTES.PHONE}`}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Cмартфоны</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
           />
           <Route
-            path={PATHSINROUTES.compatisonProduct}
-            element={<h1>Сравнение товаров</h1>}
+            path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Galaxy S21 5G</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
           />
-          <Route path={PATHSINROUTES.like} element={<h1>Избранное</h1>} />
-          <Route path={PATHSINROUTES.delivery} element={<Delivery />} />
           <Route
-            path={PATHSINROUTES.fag}
-            element={<FrequentlyAskedQuestions />}
+            path={ROUTES.CART}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Товары в корзине</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
           />
-          <Route path={PATHSINROUTES.contacts} element={<Contacts />} />
+          <Route
+            path={ROUTES.CHECKOUT}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Оформление заказа</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
+          <Route
+            path={ROUTES.COMPATISONPRODUCT}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>comparative</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
+          <Route
+            path={ROUTES.LIKE}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Like</h1>}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
+          <Route
+            path={ROUTES.DELIVERY}
+            element={
+              <PrivateRole
+                RouteComponent={<Delivery />}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
+          <Route
+            path={ROUTES.FAG}
+            element={
+              <PrivateRole
+                RouteComponent={<FrequentlyAskedQuestions />}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
+          <Route
+            path={ROUTES.CONTACTS}
+            element={
+              <PrivateRole
+                RouteComponent={<Contacts />}
+                roles={["admin"]}
+                fallbackPath="admin"
+              />
+            }
+          />
 
-          <Route path={PATHSINROUTES.vip}>
-            <Route path={PATHSINROUTES.history} element={<h1>History</h1>}>
-              История заказов
-            </Route>
+          <Route path={ROUTES.VIP}>
+            <Route
+              path={ROUTES.HISTORY}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>History</h1>}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                />
+              }
+            />
+            <Route
+              path={ROUTES.PROFILE}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>Profile</h1>}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                />
+              }
+            />
+            <Route
+              path={ROUTES.LIKE}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>like</h1>}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                />
+              }
+            />
             <Route />
           </Route>
-          <Route path={PATHSINROUTES.ADMIN} element={<h1>Admin</h1>}>
-            <Route path={PATHSINROUTES.goods} element={<h1>Goods</h1>} />
-            <Route path={PATHSINROUTES.orders} element={<h1>Orders</h1>} />
+          <Route
+            path={ROUTES.ADMIN}
+            element={
+              <PrivateRole
+                RouteComponent={<h1>Admin</h1>}
+                roles={["user"]}
+                fallbackPath="/"
+              />
+            }
+          >
             <Route
-              path={PATHSINROUTES.reviewsRating}
-              element={<h1>reviews-rating</h1>}
+              path={ROUTES.GOODS}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>goods</h1>}
+                  roles={["user"]}
+                  fallbackPath="/"
+                />
+              }
+            />
+            <Route
+              path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>Product</h1>}
+                  roles={["user"]}
+                  fallbackPath="/"
+                />
+              }
+            />
+            <Route
+              path={`${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>detail</h1>}
+                  roles={["user"]}
+                  fallbackPath="/"
+                />
+              }
+            />
+            <Route
+              path={ROUTES.ORDERS}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>Orders</h1>}
+                  roles={["user"]}
+                  fallbackPath="/"
+                />
+              }
+            />
+            <Route
+              path={ROUTES.REVIEWSRATING}
+              element={
+                <PrivateRole
+                  RouteComponent={<h1>Revviews Rating</h1>}
+                  roles={["user"]}
+                  fallbackPath="/"
+                />
+              }
             />
           </Route>
         </Route>
-        <Route path={`/${PATHSINROUTES.signIn}`} element={<SignIn />} />
-        <Route path={PATHSINROUTES.signUp} element={<SignUp />} />
-        <Route path={PATHSINROUTES.notFound} element={<h1>Not found</h1>} />
+        <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+        <Route path={ROUTES.NOTFOUND} element={<h1>Not found</h1>} />
       </Routes>
     </>
   );
