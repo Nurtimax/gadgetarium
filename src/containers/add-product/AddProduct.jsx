@@ -149,7 +149,12 @@ const AddProduct = () => {
                 >
                   {PRODUCTBRAND.map((catalog) => (
                     <StyledMenuItem key={catalog.id}>
-                      <IconButton size="small">{catalog.icon}</IconButton>
+                      <IconButton
+                        size="small"
+                        sx={{ width: "50px", height: "50px" }}
+                      >
+                        {catalog.icon}
+                      </IconButton>
                       {catalog.name}
                     </StyledMenuItem>
                   ))}
