@@ -35,10 +35,7 @@ const AppRoutes = () => {
             path={`:${PATHSINROUTES.phone}/:${PATHSINROUTES.phone}_id`}
             element={<h1>Galaxy S21 5G</h1>}
           />
-          <Route
-            path={PATHSINROUTES.cart}
-            element={<h1>Товары в корзине</h1>}
-          />
+          <Route path={PATHSINROUTES.cart} element={<h1>Cart</h1>} />
           <Route
             path={`${PATHSINROUTES.cart}/:${PATHSINROUTES.cart}_id`}
             element={<h1>Оформление заказа</h1>}
