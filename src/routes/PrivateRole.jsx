@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PrivateRole = ({
   RouteComponent,
@@ -8,11 +8,17 @@ const PrivateRole = ({
 }) => {
   const user = JSON.parse(localStorage.getItem("role"));
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdmin = location.pathname.split("/").includes(...roles);
 
   const { roleName } = user || {};
   useEffect(() => {
     if (roles.includes(roleName)) {
-      navigate(fallbackPath);
+      if (!isAdmin) {
+        navigate(fallbackPath);
+      } else {
+        navigate(location.pathname);
+      }
     }
   }, []);
 
