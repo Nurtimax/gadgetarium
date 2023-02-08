@@ -4,7 +4,7 @@ import { InputAdornment, styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import DateFnsUtils from "@date-io/date-fns";
 import { ru } from "date-fns/locale";
-import { DateIcon } from "../assets";
+import { DateIcon } from "../../assets";
 import { useState } from "react";
 
 export default function DatePicker({ date, setDate }) {

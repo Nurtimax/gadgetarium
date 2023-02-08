@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import { useState } from "react";
-import { TAB_ITEMS_ORDER } from "../utils/constants";
+import { TAB_ITEMS_ORDER } from "../../utils/constants";
 import DatePicker from "./DatePicker";
 
 const OrdersTabs = () => {
@@ -12,7 +12,7 @@ const OrdersTabs = () => {
   };
 
   return (
-    <>
+    <div>
       <Tabs>
         {TAB_ITEMS_ORDER.map((tab, i) => (
           <button
@@ -31,7 +31,7 @@ const OrdersTabs = () => {
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>{currentTab === `${tab.id}` && <p>{tab.title}</p>}</div>
       ))}
-    </>
+    </div>
   );
 };
 

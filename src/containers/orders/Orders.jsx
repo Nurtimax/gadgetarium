@@ -1,7 +1,8 @@
 import React from "react";
 import { Container, styled } from "@mui/material";
 import Search from "../../components/UI/Search";
-import OrdersTabs from "../../components/OrdersTabs";
+import OrdersTabs from "../../components/orders/OrdersTabs";
+import Infographic from "../../components/orders/Infographic";
 
 const Orders = () => {
   return (
@@ -13,12 +14,10 @@ const Orders = () => {
           width="559px"
         />
 
-        <div>
-          <OrdersTabs />
-        </div>
+        <OrdersTabs />
       </ContainerTabs>
 
-      <div>dfasdf</div>
+      <Infographic />
     </MainContainer>
   );
 };

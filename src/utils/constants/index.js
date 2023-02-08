@@ -499,3 +499,47 @@ export const TAB_ITEMS_ORDER = [
     title: "Отменены",
   },
 ];
+
+export const SECOND_TABS_DATA_ORDERS = [
+  {
+    id: "1",
+    title: "За день",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "120 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "100 500",
+    },
+  },
+
+  {
+    id: "2",
+    title: "За месяц",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "120 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "100 500",
+    },
+  },
+
+  {
+    id: "3",
+    title: "За год",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "120 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "100 500",
+    },
+  },
+];
