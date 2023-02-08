@@ -13,8 +13,12 @@ const Orders = () => {
           width="559px"
         />
 
-        <OrdersTabs />
+        <div>
+          <OrdersTabs />
+        </div>
       </ContainerTabs>
+
+      <div>dfasdf</div>
     </MainContainer>
   );
 };
@@ -23,6 +27,8 @@ export default Orders;
 
 const MainContainer = styled(Container)(() => ({
   padding: "40px 0  61.05px 0",
+  display: "flex",
+  gap: "86px",
 }));
 
 const ContainerTabs = styled("div")(() => ({

@@ -7,8 +7,7 @@ import { ru } from "date-fns/locale";
 import { DateIcon } from "../assets";
 import { useState } from "react";
 
-export default function DatePicker() {
-  const [date, setDate] = useState([null, null]);
+export default function DatePicker({ date, setDate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -32,7 +31,7 @@ export default function DatePicker() {
         }}
         PaperProps={{ classes: { root: "paper" } }}
         renderInput={(startProps, endProps) => (
-          <div>
+          <>
             <TextField
               {...startProps}
               onFocus={openCalendar}
@@ -56,7 +55,7 @@ export default function DatePicker() {
                 ),
               }}
             />
-          </div>
+          </>
         )}
         PopperProps={{
           anchorEl,
@@ -66,8 +65,16 @@ export default function DatePicker() {
   );
 }
 const StyledDateRangePicker = styled(DateRangePicker)(({ theme }) => ({
-  fontFamily: "Roboto",
-  marginTop: "30px",
+  padding: "20px 0 0 0 ",
+  display: "flex",
+  gap: "20px",
+
+  "& input": {
+    width: "100px",
+    padding: "0",
+    height: "37px",
+  },
+
   "& .MuiTypography-subtitle1": {
     textTransform: "capitalize",
   },
@@ -95,8 +102,4 @@ const StyledDateRangePicker = styled(DateRangePicker)(({ theme }) => ({
     {
       color: "#C4C4C4",
     },
-  "& .MuiInputBase-input.MuiOutlinedInput-input ": {
-    height: "1px",
-    width: "100px",
-  },
 }));

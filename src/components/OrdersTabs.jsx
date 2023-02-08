@@ -5,13 +5,14 @@ import DatePicker from "./DatePicker";
 
 const OrdersTabs = () => {
   const [currentTab, setCurrentTab] = useState("2");
+  const [date, setDate] = useState([null, null]);
 
   const handleTabClick = (e) => {
     setCurrentTab(e.target.id);
   };
 
   return (
-    <div>
+    <>
       <Tabs>
         {TAB_ITEMS_ORDER.map((tab, i) => (
           <button
@@ -25,16 +26,12 @@ const OrdersTabs = () => {
         ))}
       </Tabs>
 
-      <div>
-        <DatePicker />
-      </div>
+      <DatePicker date={date} setDate={setDate} />
 
-      <div>
-        {TAB_ITEMS_ORDER.map((tab, i) => (
-          <div key={i}>{currentTab === `${tab.id}` && <p>{tab.title}</p>}</div>
-        ))}
-      </div>
-    </div>
+      {TAB_ITEMS_ORDER.map((tab, i) => (
+        <div key={i}>{currentTab === `${tab.id}` && <p>{tab.title}</p>}</div>
+      ))}
+    </>
   );
 };
 
