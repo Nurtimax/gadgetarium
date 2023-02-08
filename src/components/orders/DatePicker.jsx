@@ -1,7 +1,6 @@
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-import { InputAdornment, styled } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { InputAdornment, InputBase, styled } from "@mui/material";
 import DateFnsUtils from "@date-io/date-fns";
 import { ru } from "date-fns/locale";
 import { DateIcon } from "../../assets";
@@ -21,42 +20,39 @@ export default function DatePicker({ date, setDate }) {
       <StyledDateRangePicker
         calendars={1}
         value={date}
-        startText="От"
-        endText="До"
-        LeftArrowButton
         open={isOpen}
         onClose={() => setIsOpen(false)}
         onChange={(nev) => {
           setDate(nev);
         }}
         PaperProps={{ classes: { root: "paper" } }}
-        renderInput={(startProps, endProps) => (
-          <>
-            <TextField
-              {...startProps}
-              onFocus={openCalendar}
-              InputProps={{
-                endAdornment: (
+        renderInput={({ inputProps, startProps }, endProps) => {
+          return (
+            <>
+              <InputBase
+                {...startProps}
+                onFocus={openCalendar}
+                inputProps={{ ...inputProps, placeholder: "От" }}
+                endAdornment={
                   <InputAdornment position="start">
                     <DateIcon />
                   </InputAdornment>
-                ),
-              }}
-            />
+                }
+              />
 
-            <TextField
-              onFocus={openCalendar}
-              {...endProps}
-              InputProps={{
-                endAdornment: (
+              <InputBase
+                {...endProps}
+                onFocus={openCalendar}
+                inputProps={{ ...inputProps, placeholder: "До" }}
+                endAdornment={
                   <InputAdornment position="start">
                     <DateIcon />
                   </InputAdornment>
-                ),
-              }}
-            />
-          </>
-        )}
+                }
+              />
+            </>
+          );
+        }}
         PopperProps={{
           anchorEl,
         }}
@@ -75,9 +71,11 @@ const StyledDateRangePicker = styled(DateRangePicker)(({ theme }) => ({
     height: "37px",
   },
 
-  "& .MuiTypography-subtitle1": {
-    textTransform: "capitalize",
-  },
+  // "& .MuiFormLabel-root": {
+  //   transform: "translate(14px, 65%) !important",
+  //   lineHeight: "1",
+  // },
+
   "& .MuiButtonBase-root.MuiPickersDay-root.Mui-selected": {
     background: theme.palette.secondary.main,
   },

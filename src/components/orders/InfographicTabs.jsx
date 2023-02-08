@@ -19,7 +19,7 @@ const InfographicTabs = () => {
 
   return (
     <MainContainer>
-      <Box sx={{ borderBottom: 2, borderColor: "#CDCDCD" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "#CDCDCD" }}>
         <Tabs value={value} onChange={handleChange}>
           {SECOND_TABS_DATA_ORDERS.map((item) => (
             <Tab classes={{ root: "tab" }} label={item.title} key={item.id} />
