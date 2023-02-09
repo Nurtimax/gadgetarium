@@ -77,7 +77,9 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
                     : ""
                 }
               >
-                <IconButton size="large">{catalog.icon}</IconButton>
+                <IconButton size="large" className="gadjet_icon">
+                  {catalog.icon}
+                </IconButton>
                 <Link
                   to={`item/${catalog.id}`}
                   className="flexgrow"
@@ -173,5 +175,9 @@ const StyledDropDown = styled(DropDown)(({ theme }) => ({
   },
   "& .MuiMenuItem-root": {
     padding: 0,
+  },
+  "& .gadjet_icon": {
+    width: "50px",
+    height: "50px",
   },
 }));

@@ -68,6 +68,7 @@ const ProductCard = (props) => {
         return null;
     }
   }, [comporation]);
+
   const onComponentLike = useMemo(() => {
     switch (like) {
       case true:
@@ -91,6 +92,7 @@ const ProductCard = (props) => {
         return null;
     }
   }, [like]);
+
   return (
     <StyledProductCard>
       <CardActions>

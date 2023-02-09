@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AboutStore from "../containers/about-store/AboutStore";
+import CatalogProducts from "../containers/catalog-products/CatalogProducts";
 import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
@@ -49,7 +50,7 @@ const AppRoutes = () => {
             path={`item/${ROUTES.PHONE}`}
             element={
               <PrivateRole
-                RouteComponent={<h1>Cмартфоны</h1>}
+                RouteComponent={<CatalogProducts />}
                 roles={["admin"]}
                 fallbackPath="admin"
               />
