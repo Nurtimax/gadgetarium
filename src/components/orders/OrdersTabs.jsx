@@ -1,8 +1,8 @@
 import { styled } from "@mui/material";
 import { useState } from "react";
 import { TAB_ITEMS_ORDER } from "../../utils/constants";
+import Table from "../Table";
 import DatePicker from "./DatePicker";
-import OrdersTable from "./OrdersTable";
 
 const OrdersTabs = () => {
   const [currentTab, setCurrentTab] = useState("2");
@@ -30,7 +30,7 @@ const OrdersTabs = () => {
       <DatePicker date={date} setDate={setDate} />
 
       {TAB_ITEMS_ORDER.map((tab, i) => (
-        <div key={i}>{currentTab === `${tab.id}` && <OrdersTable />}</div>
+        <div key={i}>{currentTab === `${tab.id}` && <Table />}</div>
       ))}
     </div>
   );

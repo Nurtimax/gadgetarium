@@ -1,5 +1,5 @@
-import { Checkbox, styled, TableBody, TableCell } from "@mui/material";
-import React, { useState } from "react";
+import { Checkbox, Grid, styled } from "@mui/material";
+import { useState } from "react";
 
 const TableItem = ({ obj }) => {
   const [state, setState] = useState(false);
@@ -10,33 +10,52 @@ const TableItem = ({ obj }) => {
       onMouseEnter={() => setState(true)}
       onMouseLeave={() => setState(false)}
     >
-      {state ? (
-        <TableCell>
-          <TableCheckbox />
-        </TableCell>
-      ) : (
-        <TableCell>{obj.id}</TableCell>
-      )}
-      {obj?.photo ? <img src={obj?.photo} alt="tablePhoto" /> : <p>fsdfsda</p>}
-      <TableCell>{obj.vendor}</TableCell>
-      <td>
-        <div>{obj.nameOfProduct.quantityProduct}</div>
-        <div>{obj.nameOfProduct.model}</div>
-      </td>
-      <td>
-        <div>{obj.createOfDate.date}</div>
-        <div>{obj.createOfDate.time}</div>
-      </td>
-      <TableCell>{obj.quantity}</TableCell>
-      <td>
-        <div>{obj.createOfDate.date}</div>
-        <div>{obj.createOfDate.time}</div>
-      </td>
-      <TableCell>{obj.currentPrice}</TableCell>
-      <td>
-        {obj.action.edit}
-        {obj.action.delete}
-      </td>
+      <Grid container>
+        {state ? (
+          <Grid item xs={0.64} style={{ padding: "10 0 0 17px" }}>
+            <TableCheckbox />
+          </Grid>
+        ) : (
+          <Grid item xs={0.64} style={{ padding: "10 0 0 17px" }}>
+            {obj.id}
+          </Grid>
+        )}
+        <Grid item xs={0.88}>
+          <img src={obj.photo} alt="tablePhoto" />
+        </Grid>
+
+        <Grid item xs={1.19}>
+          {obj.vendor}
+        </Grid>
+
+        <Grid item xs={2.38}>
+          <div>{obj.nameOfProduct.quantityProduct}</div>
+          <div>{obj.nameOfProduct.model}</div>
+        </Grid>
+
+        <Grid item xs={1.7}>
+          <div>{obj.createOfDate.date}</div>
+          <div>{obj.createOfDate.time}</div>
+        </Grid>
+
+        <Grid item xs={1.4}>
+          {obj.quantity}
+        </Grid>
+
+        <Grid item xs={1.4}>
+          <div>{obj.priceOfProduct.price}</div>
+          <div>{obj.priceOfProduct.discount}</div>
+        </Grid>
+
+        <Grid item xs={1.6}>
+          {obj.currentPrice}
+        </Grid>
+
+        <Grid item>
+          {obj.action.edit}
+          {obj.action.delete}
+        </Grid>
+      </Grid>
     </ContainerTableBodyList>
   );
 };
@@ -48,7 +67,7 @@ const TableCheckbox = styled(Checkbox)(() => ({
   height: "20px",
 }));
 
-const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
+const ContainerTableBodyList = styled("div")(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[600]}`,
   padding: "5px",
   display: "flex",
@@ -58,108 +77,63 @@ const ContainerTableBodyList = styled(TableBody)(({ theme }) => ({
     backgroundColor: theme.palette.grey[600],
   },
 
-  "& td:nth-of-type(1)": {
-    fontFamily: "Inter",
-    fontWeight: "400",
-    fontSize: "16px",
-    width: "20px",
-    height: "20px",
-    color: theme.palette.primary.dark,
-    border: "none",
-    paddingRight: "46px",
-  },
-
-  "& td:nth-of-type(2)": {
-    border: "none",
+  "& div:first-of-type": {
+    display: "flex",
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "16px",
     color: theme.palette.primary.dark,
-    paddingLeft: "42px",
   },
 
-  "& td:nth-of-type(3)": {
-    paddingLeft: "36px",
-    paddingTop: "17px",
+  "& div:nth-of-type(3)": {
+    paddingTop: "10px",
+  },
 
-    "& div:first-of-type": {
+  "& div:nth-of-type(4)": {
+    paddingTop: "10px",
+    "div:last-of-type": {
       fontFamily: "Inter",
-      fontWeight: "400",
-      fontSize: "16px",
-      color: theme.palette.primary.dark,
-    },
-
-    "& div:last-child": {
-      fontFamily: "Inter",
-      fontStyle: "normal",
       fontWeight: "400",
       fontSize: "14px",
-      lineHeight: "17px",
       color: theme.palette.grey[900],
     },
   },
 
-  "& td:nth-of-type(4)": {
-    paddingLeft: "70px",
-    paddingTop: "17px",
-
-    "& div:first-of-type": {
+  "& div:nth-of-type(5)": {
+    paddingTop: "10px",
+    "div:last-of-type": {
       fontFamily: "Inter",
-      fontWeight: "400",
-      fontSize: "16px",
-      color: theme.palette.primary.dark,
-    },
-
-    "& div:last-child": {
-      fontFamily: "Inter",
-      fontStyle: "normal",
       fontWeight: "400",
       fontSize: "14px",
-      lineHeight: "17px",
       color: theme.palette.grey[900],
     },
   },
 
-  "& td:nth-of-type(5)": {
-    paddingLeft: "89px",
-    fontFamily: "Inter",
-    fontWeight: "400",
-    fontSize: "16px",
-    border: "none",
-    color: theme.palette.primary.dark,
+  "& div:nth-of-type(6)": {
+    paddingTop: "10px",
   },
 
-  "& td:nth-of-type(6)": {
-    paddingLeft: "120px",
-    paddingTop: "17px",
-
-    "& div:first-of-type": {
-      fontFamily: "Inter",
-      fontWeight: "400",
-      fontSize: "16px",
+  "& div:nth-of-type(7)": {
+    paddingTop: "10px",
+    "div:first-of-type": {
       color: theme.palette.secondary.light,
     },
 
-    "& div:last-child": {
+    "div:last-of-type": {
       fontFamily: "Inter",
       fontWeight: "400",
-      fontSize: "16px",
+      fontSize: "14px",
       color: theme.palette.error.main,
     },
   },
 
-  "& td:nth-of-type(7)": {
-    paddingLeft: "75px",
-    fontFamily: "Inter",
-    fontWeight: "400",
-    fontSize: "16px",
-    border: "none",
+  "& div:nth-of-type(8)": {
+    paddingTop: "10px",
     color: theme.palette.secondary.light,
   },
 
-  "& td:nth-of-type(8)": {
-    paddingTop: "17px",
-    paddingLeft: "100px",
+  "& div:nth-of-type(9)": {
+    paddingTop: "10px",
     display: "flex",
     gap: "24.17px",
   },

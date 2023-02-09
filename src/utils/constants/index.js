@@ -543,3 +543,14 @@ export const SECOND_TABS_DATA_ORDERS = [
     },
   },
 ];
+
+export const OrdersTableHeaderTitle = [
+  "ID",
+  "ФИО",
+  "Номер/дата",
+  "Кол-во",
+  "Общая сумма",
+  "Оформление заказа",
+  "Статус",
+  "Действия",
+];

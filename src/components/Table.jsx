@@ -1,27 +1,26 @@
 import React from "react";
-import {
-  styled,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { Table as ProductTable } from "@mui/material";
+import { Grid, styled, Typography } from "@mui/material";
 import TableItem from "./TableItem";
 import { dataTables, titlesTables } from "../utils/constants";
+import { handleWidthItems } from "../utils/helpers/general";
 
 const Table = () => {
   return (
     <MainContainer>
+      <TextFounds>Найдено 250 заказов</TextFounds>
+
       <ContainerTable>
-        <TableHead>
+        <div>
           <ContainerTableRow>
-            {titlesTables.map((title) => (
-              <TitleTableCell key={title}>{title}</TitleTableCell>
-            ))}
+            <Grid container>
+              {titlesTables.map((title) => (
+                <Grid item xs={handleWidthItems(title)} key={title}>
+                  <TitleTableCell>{title}</TitleTableCell>
+                </Grid>
+              ))}
+            </Grid>
           </ContainerTableRow>
-        </TableHead>
+        </div>
 
         <ContainerTableBody>
           {dataTables.map((obj) => (
@@ -35,57 +34,36 @@ const Table = () => {
 
 export default Table;
 
-const MainContainer = styled(TableContainer)(() => ({
-  paddingTop: "16px",
-  display: "flex",
-  justifyContent: "center",
-  width: "100%",
+const TextFounds = styled(Typography)(({ theme }) => ({
+  paddingTop: "40px",
+  fontFamily: "Inter",
+  fontWeight: "400",
+  fontSize: "14px",
+  color: theme.palette.primary.light,
 }));
 
-const ContainerTable = styled(ProductTable)(() => ({
+const MainContainer = styled("div")(() => ({
+  display: "flex",
+  flexDirection: "column",
+}));
+
+const ContainerTable = styled("div")(() => ({
+  paddingTop: "16px",
   width: "1305px",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
 }));
 
-const ContainerTableRow = styled(TableRow)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+const ContainerTableRow = styled("div")(({ theme }) => ({
+  paddingLeft: "20px",
   height: "40px",
   display: "flex",
   alignItems: "center",
-  "& :nth-of-type(1)": {
-    paddingLeft: "20px",
-  },
-  "& :nth-of-type(2)": {
-    paddingLeft: "31px",
-  },
-  "& :nth-of-type(3)": {
-    paddingLeft: "67px",
-  },
-  "& :nth-of-type(4)": {
-    paddingLeft: "74px",
-  },
-  "& :nth-of-type(5)": {
-    paddingLeft: "65px",
-  },
-  "& :nth-of-type(6)": {
-    paddingLeft: "58px",
-  },
-  "& :nth-of-type(7)": {
-    paddingLeft: "90px",
-  },
-  "& :nth-of-type(8)": {
-    paddingLeft: "59px",
-  },
-  "& :nth-of-type(9)": {
-    paddingLeft: "72px",
-  },
+  backgroundColor: theme.palette.primary.light,
 }));
 
-const TitleTableCell = styled(TableCell)(({ theme }) => ({
-  padding: "0",
-  border: "none",
+const TitleTableCell = styled("div")(({ theme }) => ({
   fontFamily: "Inter",
   fontWeight: "600",
   fontSize: "14px",
@@ -93,7 +71,7 @@ const TitleTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
 }));
 
-const ContainerTableBody = styled(TableBody)(() => ({
+const ContainerTableBody = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "10px",
