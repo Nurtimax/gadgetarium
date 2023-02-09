@@ -5,6 +5,7 @@ import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
 import Home from "../containers/home";
+import OrderPage from "../containers/order-page/OrderPage";
 import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
@@ -79,7 +80,7 @@ const AppRoutes = () => {
             path={ROUTES.CHECKOUT}
             element={
               <PrivateRole
-                RouteComponent={<h1>Оформление заказа</h1>}
+                RouteComponent={<OrderPage />}
                 roles={["admin"]}
                 fallbackPath="admin"
               />

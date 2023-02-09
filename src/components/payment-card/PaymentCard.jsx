@@ -11,11 +11,8 @@ import {
 } from "@mui/material";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import { ElCardIcon, MasterCard, VisaIcon } from "../../assets";
-import Button from "../UI/button/Button";
-import { useFormik } from "formik";
-import { basicSchema } from "./schemas";
 
-const PaymentCard = () => {
+const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
   const {
     getCardNumberProps,
     getExpiryDateProps,
@@ -27,15 +24,6 @@ const PaymentCard = () => {
       emptyCardNumber: "Введите номер карты",
       invalidCardNumber: "Номер карты недействителен",
     },
-  });
-  const { values, handleChange, errors, touched, handleBlur } = useFormik({
-    initialValues: {
-      cardNumber: "",
-      expiryDate: "",
-      cvc: "",
-      userName: "",
-    },
-    validationSchema: basicSchema,
   });
 
   const inputStyled = {
@@ -79,7 +67,7 @@ const PaymentCard = () => {
                       focused: "focused",
                       disabled: "disabled",
                     }}
-                    value={values.cardNumber}
+                    value={values?.cardNumber}
                     onChange={handleChange}
                     className="number-input"
                     inputProps={{
@@ -122,7 +110,7 @@ const PaymentCard = () => {
                         placeholder: "",
                       }),
                     }}
-                    value={values.expiryDate}
+                    value={values?.expiryDate}
                     onChange={handleChange}
                   />
                 </FormControlStyled>
@@ -155,7 +143,7 @@ const PaymentCard = () => {
                     }}
                     className="cvc-input"
                     inputProps={{ ...getCVCProps(), placeholder: "" }}
-                    value={values.cvc}
+                    value={values?.cvc}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -179,12 +167,12 @@ const PaymentCard = () => {
                     disabled: "disabled",
                   }}
                   className="name-input"
-                  value={values.userName}
+                  value={values?.userName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {isTouched || (errors.userName && touched.userName) ? (
-                  <p className="error-name">{errors.userName}</p>
+                {isTouched || (errors?.userName && touched?.userName) ? (
+                  <p className="error-name">{errors?.userName}</p>
                 ) : (
                   ""
                 )}
@@ -193,7 +181,6 @@ const PaymentCard = () => {
           </Grid>
         </CardContentStyled>
       </Card>
-      <ButtonStyled>Продолжить</ButtonStyled>
     </BoxStyled>
   );
 };
@@ -295,17 +282,12 @@ const FormControlStyled = styled(FormControl)(() => ({
     "&:hover:not(.disabled):before": {
       borderBottom: "1px solid #CDCDCD ",
     },
+    "&.focused": {
+      backgroundColor: "#E8F0FD",
+      borderRadius: " 4px 4px 0px 0px",
+    },
   },
   "&.error-lable": {
     padding: "0.4em 0.6em",
   },
-}));
-const ButtonStyled = styled(Button)(() => ({
-  height: "44px",
-  width: "446px",
-  background: "#CB11AB",
-  color: "#FFFFFF !important",
-  fontFamily: "Inter",
-  fontWeight: "600",
-  fontSize: "16px",
 }));

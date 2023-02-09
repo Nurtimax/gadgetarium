@@ -37,3 +37,6 @@ export { ReactComponent as Like } from "./icons/like.svg";
 export { ReactComponent as New } from "./icons/new.svg";
 export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
 export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
+export { ReactComponent as ElCardIcon } from "./icons/elCard.svg";
+export { ReactComponent as MasterCard } from "./icons/masterCard.svg";
+export { ReactComponent as VisaIcon } from "./icons/visa.svg";
