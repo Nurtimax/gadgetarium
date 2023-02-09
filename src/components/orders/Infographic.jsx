@@ -21,7 +21,7 @@ const Infographic = () => {
           <OrderedPrice>
             34 562 <span>С</span>
           </OrderedPrice>
-          <OrderedAndBoughtText>Выкупили на сумму</OrderedAndBoughtText>
+          <OrderedAndBoughtText>Заказали на сумму</OrderedAndBoughtText>
           <CountOrdered>56 шт</CountOrdered>
         </div>
       </BoxPrices>

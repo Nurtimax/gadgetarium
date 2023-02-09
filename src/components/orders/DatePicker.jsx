@@ -43,7 +43,7 @@ export default function DatePicker({ date, setDate }) {
               <InputBase
                 {...endProps}
                 onFocus={openCalendar}
-                inputProps={{ ...inputProps, placeholder: "До" }}
+                inputProps={{ ...endProps.inputProps, placeholder: "До" }}
                 endAdornment={
                   <InputAdornment position="start">
                     <DateIcon />
@@ -66,15 +66,19 @@ const StyledDateRangePicker = styled(DateRangePicker)(({ theme }) => ({
   gap: "20px",
 
   "& input": {
-    width: "100px",
-    padding: "0",
-    height: "37px",
+    padding: "0 0 0 15px",
   },
 
-  // "& .MuiFormLabel-root": {
-  //   transform: "translate(14px, 65%) !important",
-  //   lineHeight: "1",
-  // },
+  "& .MuiInputBase-root": {
+    border: "1.3px solid #91969E",
+    width: "139px",
+    height: "36px",
+    borderRadius: "4px",
+  },
+
+  "& .MuiInputAdornment-root": {
+    marginRight: "20px",
+  },
 
   "& .MuiButtonBase-root.MuiPickersDay-root.Mui-selected": {
     background: theme.palette.secondary.main,

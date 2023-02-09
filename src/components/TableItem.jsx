@@ -17,7 +17,7 @@ const TableItem = ({ obj }) => {
       ) : (
         <TableCell>{obj.id}</TableCell>
       )}
-      <img src={obj.photo} alt="tablePhoto" />
+      {obj?.photo ? <img src={obj?.photo} alt="tablePhoto" /> : <p>fsdfsda</p>}
       <TableCell>{obj.vendor}</TableCell>
       <td>
         <div>{obj.nameOfProduct.quantityProduct}</div>
