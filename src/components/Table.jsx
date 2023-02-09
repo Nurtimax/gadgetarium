@@ -1,10 +1,9 @@
 import React from "react";
 import { Grid, styled, Typography } from "@mui/material";
 import TableItem from "./TableItem";
-import { dataTables, titlesTables } from "../utils/constants";
 import { handleWidthItems } from "../utils/helpers/general";
 
-const Table = () => {
+const Table = ({ titlesTable, dataTable }) => {
   return (
     <MainContainer>
       <TextFounds>Найдено 250 заказов</TextFounds>
@@ -13,7 +12,7 @@ const Table = () => {
         <div>
           <ContainerTableRow>
             <Grid container>
-              {titlesTables.map((title) => (
+              {titlesTable.map((title) => (
                 <Grid item xs={handleWidthItems(title)} key={title}>
                   <TitleTableCell>{title}</TitleTableCell>
                 </Grid>
@@ -23,7 +22,7 @@ const Table = () => {
         </div>
 
         <ContainerTableBody>
-          {dataTables.map((obj) => (
+          {dataTable.map((obj) => (
             <TableItem key={obj.id} obj={obj} />
           ))}
         </ContainerTableBody>

@@ -203,6 +203,7 @@ export const catalogMenu_FAKE_DATA = [
     ],
   },
 ];
+
 export const titlesTables = [
   "ID",
   "Фото",

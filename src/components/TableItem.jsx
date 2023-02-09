@@ -12,11 +12,11 @@ const TableItem = ({ obj }) => {
     >
       <Grid container>
         {state ? (
-          <Grid item xs={0.64} style={{ padding: "10 0 0 17px" }}>
+          <Grid item xs={0.64} style={{ padding: "10px 0 0 17px" }}>
             <TableCheckbox />
           </Grid>
         ) : (
-          <Grid item xs={0.64} style={{ padding: "10 0 0 17px" }}>
+          <Grid item xs={0.64} style={{ padding: "10px 0 0 17px" }}>
             {obj.id}
           </Grid>
         )}

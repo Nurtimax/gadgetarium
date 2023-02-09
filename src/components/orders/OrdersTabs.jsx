@@ -1,6 +1,10 @@
 import { styled } from "@mui/material";
 import { useState } from "react";
-import { TAB_ITEMS_ORDER } from "../../utils/constants";
+import {
+  dataTables,
+  TAB_ITEMS_ORDER,
+  titlesTables,
+} from "../../utils/constants";
 import Table from "../Table";
 import DatePicker from "./DatePicker";
 
@@ -30,7 +34,11 @@ const OrdersTabs = () => {
       <DatePicker date={date} setDate={setDate} />
 
       {TAB_ITEMS_ORDER.map((tab, i) => (
-        <div key={i}>{currentTab === `${tab.id}` && <Table />}</div>
+        <div key={i}>
+          {currentTab === `${tab.id}` && (
+            <Table titlesTable={titlesTables} dataTable={dataTables} />
+          )}
+        </div>
       ))}
     </div>
   );
