@@ -9,7 +9,7 @@ import Table from "../Table";
 import DatePicker from "./DatePicker";
 
 const OrdersTabs = () => {
-  const [currentTab, setCurrentTab] = useState("2");
+  const [currentTab, setCurrentTab] = useState("1");
   const [date, setDate] = useState([null, null]);
 
   const handleTabClick = (e) => {
@@ -36,7 +36,7 @@ const OrdersTabs = () => {
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
           {currentTab === `${tab.id}` && (
-            <Table titlesTable={titlesTables} dataTable={dataTables} />
+            <Table dataTable={dataTables} titlesTable={titlesTables} />
           )}
         </div>
       ))}

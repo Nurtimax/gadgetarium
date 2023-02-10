@@ -1,9 +1,12 @@
 import React from "react";
-import { Grid, styled, Typography } from "@mui/material";
+import { Grid, Pagination, Stack, styled, Typography } from "@mui/material";
 import TableItem from "./TableItem";
 import { handleWidthItems } from "../utils/helpers/general";
 
 const Table = ({ titlesTable, dataTable }) => {
+  // const getPaginationData = (type, page, selected) => {};
+  // const onChange = (_, page) => {};
+
   return (
     <MainContainer>
       <TextFounds>Найдено 250 заказов</TextFounds>
@@ -27,6 +30,15 @@ const Table = ({ titlesTable, dataTable }) => {
           ))}
         </ContainerTableBody>
       </ContainerTable>
+
+      <Stack>
+        <Pagination
+          count={10}
+          color="secondary"
+          // getItemAriaLabel={getPaginationData}
+          // onChange={onChange}
+        />
+      </Stack>
     </MainContainer>
   );
 };
@@ -44,6 +56,18 @@ const TextFounds = styled(Typography)(({ theme }) => ({
 const MainContainer = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
+
+  "& .MuiButtonBase-root": {
+    width: "22px",
+    height: "22px",
+    minWidth: "0",
+    padding: "0",
+  },
+
+  "& .MuiPagination-ul": {
+    paddingTop: "41px",
+    justifyContent: "center",
+  },
 }));
 
 const ContainerTable = styled("div")(() => ({

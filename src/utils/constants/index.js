@@ -555,3 +555,19 @@ export const OrdersTableHeaderTitle = [
   "Статус",
   "Действия",
 ];
+
+export const OrdersTableListData = [
+  {
+    id: 1,
+    username: "Айзат Жумагулова",
+    numberDate: {
+      number: "000000-455247",
+      date: "14:14",
+    },
+    quantity: "2 шт.",
+    allPrice: "90 000с",
+    oformlenieOrder: "Самовывоз",
+    status: "В обработке",
+    deleteIcon: <DeleteIcon />,
+  },
+];
