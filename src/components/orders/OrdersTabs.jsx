@@ -1,20 +1,22 @@
 import { styled } from "@mui/material";
 import { useState } from "react";
-import {
-  dataTables,
-  TAB_ITEMS_ORDER,
-  titlesTables,
-} from "../../utils/constants";
+import { TAB_ITEMS_ORDER } from "../../utils/constants";
 import Table from "../Table";
 import DatePicker from "./DatePicker";
+// import { useSearchParams } from "react-router-dom";
+// import OrderTable from "./OrderTable";
 
 const OrdersTabs = () => {
   const [currentTab, setCurrentTab] = useState("1");
   const [date, setDate] = useState([null, null]);
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleTabClick = (e) => {
     setCurrentTab(e.target.id);
+    // setSearchParams({ orderStatus: e.target.name });
   };
+
+  // const getOrderStatus = searchParams.get("orderStatus");
 
   return (
     <div>
@@ -23,6 +25,7 @@ const OrdersTabs = () => {
           <button
             key={i}
             id={tab.id}
+            name={tab.tabTitle}
             disabled={currentTab === `${tab.id}`}
             onClick={handleTabClick}
           >
@@ -36,7 +39,8 @@ const OrdersTabs = () => {
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
           {currentTab === `${tab.id}` && (
-            <Table dataTable={dataTables} titlesTable={titlesTables} />
+            // <OrderTable orderStatus={getOrderStatus} />
+            <Table />
           )}
         </div>
       ))}

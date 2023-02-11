@@ -476,27 +476,27 @@ export const DUMMY_PRODUCT_DATA = [
 export const TAB_ITEMS_ORDER = [
   {
     id: 1,
-    tabTitle: "в ожидании",
+    tabTitle: "WAITING",
     title: "В ожидании",
   },
   {
     id: 2,
-    tabTitle: "в обработке",
+    tabTitle: "ORDER_READY",
     title: "В обработке (5)",
   },
   {
     id: 3,
-    tabTitle: "курьер в пути",
+    tabTitle: "ON_THE_WAY",
     title: "Курьер в пути (3)",
   },
   {
     id: 4,
-    tabTitle: "доставлены",
+    tabTitle: "DELIVERED",
     title: "Доставлены (6)",
   },
   {
     id: 5,
-    tabTitle: "отменены",
+    tabTitle: "CANCEL",
     title: "Отменены",
   },
 ];
@@ -570,4 +570,33 @@ export const OrdersTableListData = [
     status: "В обработке",
     deleteIcon: <DeleteIcon />,
   },
+
+  {
+    id: 1,
+    username: "Айзат Жумагулова",
+    numberDate: {
+      number: "000000-455247",
+      date: "14:14",
+    },
+    quantity: "2 шт.",
+    allPrice: "90 000с",
+    oformlenieOrder: "Доставка",
+    status: "В обработке",
+    deleteIcon: <DeleteIcon />,
+  },
+];
+
+export const titlesOrderPopUpOne = [
+  "В ожидании",
+  "Готов к выдаче",
+  "Получен",
+  "Отменить",
+];
+
+export const titlesOrderPopUpTwo = [
+  "В ожидании",
+  "Готов к выдаче",
+  "Курьер в пути",
+  "Доставлен",
+  "Отменить",
 ];

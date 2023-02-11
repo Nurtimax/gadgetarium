@@ -24,3 +24,26 @@ export const handleWidthItems = (key) => {
       return false;
   }
 };
+
+export const handleWidthItemsOrders = (key) => {
+  switch (key) {
+    case "ID":
+      return 0.5;
+    case "ФИО":
+      return 1.7;
+    case "Номер/дата":
+      return 1.8;
+    case "Кол-во":
+      return 1.4;
+    case "Общая сумма":
+      return 1.9;
+    case "Оформление заказа":
+      return 2;
+    case "Статус":
+      return 1.8;
+    case "Действия":
+      return 0;
+    default:
+      return false;
+  }
+};

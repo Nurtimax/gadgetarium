@@ -41,3 +41,5 @@ export { ReactComponent as DateIcon } from "./icons/date-icon.svg";
 export { ReactComponent as ElCardIcon } from "./icons/elCard.svg";
 export { ReactComponent as MasterCard } from "./icons/masterCard.svg";
 export { ReactComponent as VisaIcon } from "./icons/visa.svg";
+export { ReactComponent as ArrowOrderIcon } from "./icons/arrows/arrow-order-list.svg";
+export { ReactComponent as ArrowOrderIconRotate } from "./icons/arrows/arrow-icon-rotate-order.svg";
