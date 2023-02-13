@@ -2,12 +2,12 @@ import React, { useMemo, useState } from "react";
 import {
   Grid,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   Rating,
   CardActions,
   Box,
+  // CardMedia,
   styled,
 } from "@mui/material";
 import IconButton from "../IconButton";
@@ -21,8 +21,17 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 const ProductCard = (props) => {
-  const { title, price, img, status, newprice, quantity, discount, rating } =
-    props;
+  const {
+    productName,
+    discountPrice,
+    productImage,
+    productStatus,
+    productPrice,
+    count,
+    // discount,
+    productRating,
+    countOfReview,
+  } = props;
   const [like, setLike] = useState(false);
   const [comporation, setComporation] = useState(false);
   const onChangeComporation = () => {
@@ -32,19 +41,23 @@ const ProductCard = (props) => {
     setLike(!like);
   };
 
+  const productSale = useMemo(() => {
+    return Math.round((discountPrice / productPrice) * 100) - 100;
+  });
+
   const sortStatus = useMemo(() => {
-    switch (status) {
+    switch (productStatus) {
       case "NEW":
         return <New title="Новинки" />;
       case "DISCOUNT":
-        return <Discount_Styled title="Акции">-{discount}%</Discount_Styled>;
-      case "LIKE":
+        return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
+      case "RECOMMENDATION":
         return <Like title="Рекемендуем" />;
 
       default:
         return <div></div>;
     }
-  }, [status]);
+  }, [productStatus]);
 
   const onComponentComporation = useMemo(() => {
     switch (comporation) {
@@ -102,27 +115,37 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      <CardMedia_Styled image={img} title={title} />
+      <CardMedia_Styled
+        src={productImage}
+        title={productName}
+        alt={productName}
+      />
       <CardContent className="carsContent">
         <Typography component="div" color="#2FC509">
-          В наличии ({quantity})
+          В наличии ({count})
         </Typography>
 
-        <StyletTitle variant="h6" color="black" title={title}>
-          {title}
+        <StyletTitle variant="h6" color="black" title={productName}>
+          {productName}
         </StyletTitle>
         <Typography variant="p" className="flex">
           Рейтинг
-          <Rating size="small" defaultValue={rating} />({rating})
+          <Rating size="small" defaultValue={productRating} />({countOfReview})
         </Typography>
-
         <CardActions>
           <Grid container className="flex between">
             <Box>
-              <Typography variant="h4" fontSize="18px">
-                {newprice} c
-              </Typography>
-              {status !== "NEW" ? <Styled_Price>{price} c</Styled_Price> : null}
+              {discountPrice > 0 ? (
+                <Typography variant="h4" fontSize="18px">
+                  {discountPrice} c
+                </Typography>
+              ) : (
+                <Typography>{productPrice} c</Typography>
+              )}
+
+              {discountPrice > 0 ? (
+                <Styled_Price>{productPrice} c</Styled_Price>
+              ) : null}
             </Box>
             <IconButton title="Добавить в карзину" icon={<CartIcon />}>
               В карзину
@@ -168,10 +191,14 @@ const StyledProductCard = styled(Card)(() => ({
     gridRowGap: "9px",
   },
 }));
-const CardMedia_Styled = styled(CardMedia)(() => ({
+const CardMedia_Styled = styled("img")(() => ({
   width: "180px",
   height: "236px",
   margin: "0 auto",
+  display: "flex",
+  justifyContent: "center",
+  aspectRatio: "5/3",
+  objectFit: "contain",
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",

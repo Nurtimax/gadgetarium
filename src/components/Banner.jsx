@@ -60,8 +60,11 @@ const WrapperStyled = styled("div")(() => ({
   },
 }));
 const StyledImg = styled("img")(() => ({
-  height: "500px",
+  height: "650px",
   width: "100%",
+  objectFit: "cover",
+  aspectRatio: "3/2",
+  mixBlendMode: "color-burn",
 }));
 
 const Styled_H3 = styled("h3")(() => ({
