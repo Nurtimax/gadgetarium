@@ -86,7 +86,7 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="discount"
-                      // disabled={discountsProducts.length !== 5}
+                      disabled={discountsProducts.length !== 5}
                     >
                       Показать ещё
                     </Button>
@@ -117,7 +117,6 @@ const Home = () => {
                     {newProducts?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <ProductCard {...item} />
-                        {/* <CircularProgress /> */}
                       </Grid>
                     ))}
                   </Grid>
@@ -126,7 +125,7 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="news"
-                      // disabled={newProducts.length !== 5}
+                      disabled={newProducts.length !== 5}
                     >
                       Показать ещё
                     </Button>
@@ -157,7 +156,6 @@ const Home = () => {
                     {recommendationProduct?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <ProductCard {...item} />
-                        {/* <CircularProgress /> */}
                       </Grid>
                     ))}
                   </Grid>
@@ -166,7 +164,7 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="recomendation"
-                      // disabled={newProducts.length !== 5}
+                      disabled={newProducts.length !== 5}
                     >
                       Показать ещё
                     </Button>
