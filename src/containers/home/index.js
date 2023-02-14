@@ -164,7 +164,7 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="recomendation"
-                      disabled={newProducts.length !== 5}
+                      disabled={recommendationProduct.length !== 5}
                     >
                       Показать ещё
                     </Button>
