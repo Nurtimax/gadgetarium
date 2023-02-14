@@ -1,22 +1,19 @@
 import { styled } from "@mui/material";
+import { useMemo } from "react";
 import { useState } from "react";
-import { TAB_ITEMS_ORDER } from "../../utils/constants";
+import { OrdersTableListData, TAB_ITEMS_ORDER } from "../../utils/constants";
+import { OrdersTableHeaderTitle } from "../../utils/constants/orderTable";
 import Table from "../Table";
 import DatePicker from "./DatePicker";
-// import { useSearchParams } from "react-router-dom";
-// import OrderTable from "./OrderTable";
 
 const OrdersTabs = () => {
+  const tableData = useMemo(() => OrdersTableListData, []);
   const [currentTab, setCurrentTab] = useState("1");
   const [date, setDate] = useState([null, null]);
-  // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleTabClick = (e) => {
     setCurrentTab(e.target.id);
-    // setSearchParams({ orderStatus: e.target.name });
   };
-
-  // const getOrderStatus = searchParams.get("orderStatus");
 
   return (
     <div>
@@ -39,8 +36,10 @@ const OrdersTabs = () => {
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
           {currentTab === `${tab.id}` && (
-            // <OrderTable orderStatus={getOrderStatus} />
-            <Table />
+            <StyledTable
+              tableHeaderTitle={OrdersTableHeaderTitle}
+              tableData={tableData}
+            />
           )}
         </div>
       ))}
@@ -49,6 +48,8 @@ const OrdersTabs = () => {
 };
 
 export default OrdersTabs;
+
+const StyledTable = styled(Table)(() => ({}));
 
 const Tabs = styled("div")(({ theme }) => ({
   display: "flex",

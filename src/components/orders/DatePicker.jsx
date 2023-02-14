@@ -35,7 +35,7 @@ export default function DatePicker({ date, setDate }) {
                 inputProps={{ ...inputProps, placeholder: "От" }}
                 endAdornment={
                   <InputAdornment position="start">
-                    <DateIcon />
+                    <StyledDateIcon onClick={openCalendar} />
                   </InputAdornment>
                 }
               />
@@ -46,7 +46,7 @@ export default function DatePicker({ date, setDate }) {
                 inputProps={{ ...endProps.inputProps, placeholder: "До" }}
                 endAdornment={
                   <InputAdornment position="start">
-                    <DateIcon />
+                    <StyledDateIcon onClick={openCalendar} />
                   </InputAdornment>
                 }
               />
@@ -60,6 +60,11 @@ export default function DatePicker({ date, setDate }) {
     </LocalizationProvider>
   );
 }
+
+const StyledDateIcon = styled(DateIcon)(() => ({
+  cursor: "pointer",
+}));
+
 const StyledDateRangePicker = styled(DateRangePicker)(({ theme }) => ({
   padding: "20px 0 0 0 ",
   display: "flex",

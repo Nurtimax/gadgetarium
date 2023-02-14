@@ -545,44 +545,31 @@ export const SECOND_TABS_DATA_ORDERS = [
   },
 ];
 
-export const OrdersTableHeaderTitle = [
-  "ID",
-  "ФИО",
-  "Номер/дата",
-  "Кол-во",
-  "Общая сумма",
-  "Оформление заказа",
-  "Статус",
-  "Действия",
-];
-
 export const OrdersTableListData = [
   {
     id: 1,
-    username: "Айзат Жумагулова",
-    numberDate: {
-      number: "000000-455247",
-      date: "14:14",
-    },
-    quantity: "2 шт.",
-    allPrice: "90 000с",
-    oformlenieOrder: "Самовывоз",
+    fullname: "Syimyk Ravshanbekov",
+    orderNumber: "466247",
+    dateOfOrder: "2021-09-13T18:20:03",
+    countOfProduct: 3,
+    totalSum: 217900,
+    totalDiscount: 2043870,
+    designOrder: "Самовывоз",
     status: "В обработке",
-    deleteIcon: <DeleteIcon />,
+    action: <DeleteIcon />,
   },
 
   {
     id: 1,
-    username: "Айзат Жумагулова",
-    numberDate: {
-      number: "000000-455247",
-      date: "14:14",
-    },
-    quantity: "2 шт.",
-    allPrice: "90 000с",
-    oformlenieOrder: "Доставка",
+    fullname: "Syimyk Ravshanbekov",
+    orderNumber: "466247",
+    dateOfOrder: "2021-09-13T18:20:03",
+    countOfProduct: 3,
+    totalSum: 217900,
+    totalDiscount: 204387,
+    designOrder: "Доставка",
     status: "В обработке",
-    deleteIcon: <DeleteIcon />,
+    action: <DeleteIcon />,
   },
 ];
 
