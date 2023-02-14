@@ -120,7 +120,7 @@ const ProductCard = (props) => {
         title={productName}
         alt={productName}
       />
-      <CardContent className="carsContent">
+      <CardContent tent className="carsContent">
         <Typography component="div" color="#2FC509">
           В наличии ({count})
         </Typography>
@@ -128,27 +128,28 @@ const ProductCard = (props) => {
         <StyletTitle variant="h6" color="black" title={productName}>
           {productName}
         </StyletTitle>
-        <Typography variant="p" className="flex">
+        <Typography variant="p" className="flex size14">
           Рейтинг
-          <Rating size="small" defaultValue={productRating} />({countOfReview})
+          <Rating defaultValue={productRating} readOnly />({countOfReview})
         </Typography>
         <CardActions>
-          <Grid container className="flex between">
-            <Box>
+          <Grid container className="flex between ">
+            <Box width="50px">
               {discountPrice > 0 ? (
-                <Typography variant="h4" fontSize="18px">
-                  {discountPrice} c
-                </Typography>
+                <Discount_Price>{discountPrice}c</Discount_Price>
               ) : (
-                <Typography>{productPrice} c</Typography>
+                <Discount_Price>{productPrice}c</Discount_Price>
               )}
 
               {discountPrice > 0 ? (
-                <Styled_Price>{productPrice} c</Styled_Price>
+                <Styled_Price>{productPrice}c</Styled_Price>
               ) : null}
             </Box>
-            <IconButton title="Добавить в карзину" icon={<CartIcon />}>
-              В карзину
+            <IconButton
+              title="Добавить в карзину"
+              icon={<CartIcon style={{ width: "16px" }} />}
+            >
+              В_карзину
             </IconButton>
           </Grid>
         </CardActions>
@@ -182,13 +183,13 @@ const Discount_Styled = styled("div")(() => ({
 }));
 
 const StyledProductCard = styled(Card)(() => ({
-  width: "300px",
+  width: "210px",
   "&:hover": {
     boxShadow: "0 0 10px rgba(0,0,0,0.6)",
   },
   "& .carsContent": {
     display: "grid",
-    gridRowGap: "9px",
+    gridRowGap: "5px",
   },
 }));
 const CardMedia_Styled = styled("img")(() => ({
@@ -197,11 +198,14 @@ const CardMedia_Styled = styled("img")(() => ({
   margin: "0 auto",
   display: "flex",
   justifyContent: "center",
-  aspectRatio: "5/3",
+  aspectRatio: "3/2",
   objectFit: "contain",
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "16px",
+  fontSize: "14px",
   textDecoration: "line-through",
+}));
+const Discount_Price = styled("h1")(() => ({
+  fontSize: "12px",
 }));

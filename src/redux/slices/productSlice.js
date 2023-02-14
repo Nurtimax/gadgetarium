@@ -5,7 +5,9 @@ const initialState = {
   newProducts: [],
   recommendationProduct: [],
   discountsProducts: [],
-  status: null,
+  newStatus: null,
+  disStatus: null,
+  recStatus: null,
   newError: null,
   discountError: null,
   recomenError: null,
@@ -66,39 +68,39 @@ const productSlice = createSlice({
   initialState,
   extraReducers: {
     [fetchNewProduct.pending]: (state) => {
-      state.status = "loading";
+      state.newStatus = "loading";
       state.newError = null;
     },
     [fetchNewProduct.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.newStatus = "fulfilled";
       state.newProducts = action.payload;
     },
     [fetchNewProduct.rejected]: (state, action) => {
-      state.tatus = "rejected";
+      state.newStatus = "rejected";
       state.newError = action.payload;
     },
     [fetchRecomendationProduct.pending]: (state) => {
-      state.status = "loading";
+      state.recStatus = "loading";
       state.recomenError = null;
     },
     [fetchRecomendationProduct.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.recStatus = "fulfilled";
       state.recommendationProduct = action.payload;
     },
     [fetchRecomendationProduct.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.recStatus = "rejected";
       state.recomenError = action.payload;
     },
     [fetchDiscountProduct.pending]: (state) => {
-      state.status = "loading";
+      state.disStatus = "loading";
       state.discountError = null;
     },
     [fetchDiscountProduct.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.disStatus = "fulfilled";
       state.discountsProducts = action.payload;
     },
     [fetchDiscountProduct.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.disStatus = "rejected";
       state.discountError = action.payload;
     },
   },

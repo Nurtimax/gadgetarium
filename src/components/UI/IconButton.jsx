@@ -18,12 +18,12 @@ const IconButton = ({ children, onClick, icon, fontSize, title, ...props }) => {
 export default IconButton;
 
 const ButtonStyled = styled(Button)(() => ({
-  width: "151px",
+  width: "110px",
   height: "45px",
   backgroundColor: "#E313BF",
   border: "none",
   color: "#fff",
-  fontSize: "14px",
+  fontSize: "12px",
   "&:hover": {
     border: "none",
     backgroundColor: "#CB11AB",
