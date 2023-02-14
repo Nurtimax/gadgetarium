@@ -37,7 +37,7 @@ export const postBrandThunkApi = createAsyncThunk(
   "addProductSlice/postBrandThunkApi",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("brands");
+      const response = await axiosInstance.post("brands", data);
       const result = response.data;
       return result;
     } catch (error) {
