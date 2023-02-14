@@ -8,8 +8,8 @@ import UserHeader from "./header/UserHeader";
 
 const Layout = ({ role }) => {
   return (
-    <StyledLayoutWrapper className={!role ? "flex" : ""}>
-      {role === "admin" ? <AdminHeader /> : <UserHeader />}
+    <StyledLayoutWrapper>
+      {role?.toLowerCase() === "admin" ? <AdminHeader /> : <UserHeader />}
       <Container>
         <StyledBreadcrumbsPosition className="flex">
           <BreadCrumbs />
@@ -18,7 +18,7 @@ const Layout = ({ role }) => {
       <main>
         <Outlet />
       </main>
-      {role === "admin" ? null : <Footer />}
+      {role?.toLowerCase() === "admin" ? null : <Footer />}
     </StyledLayoutWrapper>
   );
 };

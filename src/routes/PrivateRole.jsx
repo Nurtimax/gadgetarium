@@ -5,15 +5,18 @@ const PrivateRole = ({
   RouteComponent,
   roles = [],
   fallbackPath = "admin",
+  roleName,
 }) => {
-  const user = JSON.parse(localStorage.getItem("role"));
   const navigate = useNavigate();
   const location = useLocation();
   const isAdmin = location.pathname.split("/").includes(...roles);
 
-  const { roleName } = user || {};
   useEffect(() => {
-    if (roles.includes(roleName)) {
+    if (roleName) {
+      navigate("/");
+    }
+
+    if (roles.includes(roleName?.toLowerCase())) {
       if (!isAdmin) {
         navigate(fallbackPath);
       } else {

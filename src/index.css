@@ -35,6 +35,9 @@ code {
 .flex-end {
   justify-content: flex-end;
 }
+.flex-start {
+  justify-content: flex-start;
+}
 .pointer {
   cursor: pointer;
 }
@@ -64,10 +67,18 @@ code {
   align-items: center;
 }
 
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 .none {
   visibility: hidden;
   height: 0 !important;
