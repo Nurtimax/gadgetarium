@@ -47,10 +47,14 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchRecomendationProduct(size.recomendation));
     dispatch(fetchNewProduct(size.news));
+  }, [size.news]);
+  useEffect(() => {
     dispatch(fetchDiscountProduct(size.discount));
-  }, [size.discount, size.news, size.recomendation]);
+  }, [size.discount]);
+  useEffect(() => {
+    dispatch(fetchRecomendationProduct(size.recomendation));
+  }, [size.recomendation]);
 
   return (
     <>
@@ -63,7 +67,7 @@ const Home = () => {
             <Global_Card>
               {disStatus === "loading" ? (
                 <Global_Card>
-                  <Grid container spacing={2} sx={{ mt: -10 }}>
+                  <Grid container spacing={2} sx={{ mt: 5 }}>
                     {discountsProducts?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <Skeleton />
@@ -74,7 +78,7 @@ const Home = () => {
               ) : (
                 <>
                   <Typography variant="h4">Акции</Typography>
-                  <Grid container className="" spacing={2}>
+                  <Grid container className="" spacing={1}>
                     {discountsProducts?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <ProductCard {...item} productStatus="DISCOUNT" />
@@ -83,6 +87,8 @@ const Home = () => {
                   </Grid>
                   <Typography className="flex center gap" variant="div">
                     <Button
+                      width="30vh"
+                      height="5vh"
                       variant="outlined"
                       onClick={onClickSize}
                       id="discount"
@@ -113,7 +119,7 @@ const Home = () => {
               ) : (
                 <>
                   <Typography variant="h4">Новинки</Typography>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={1}>
                     {newProducts?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <ProductCard {...item} />
@@ -122,6 +128,8 @@ const Home = () => {
                   </Grid>
                   <Typography className="flex center" variant="div">
                     <Button
+                      width="30vh"
+                      height="5vh"
                       variant="outlined"
                       onClick={onClickSize}
                       id="news"
@@ -141,7 +149,7 @@ const Home = () => {
             <Global_Card>
               {recStatus === "loading" ? (
                 <Global_Card>
-                  <Grid container spacing={2} sx={{ mt: -10 }}>
+                  <Grid container spacing={2} sx={{ mt: 5 }}>
                     {recommendationProduct?.map((item) => (
                       <Grid item xs={2.4} key={item.productName}>
                         <Skeleton />
@@ -161,6 +169,8 @@ const Home = () => {
                   </Grid>
                   <Typography className="flex center" variant="div">
                     <Button
+                      width="30vh"
+                      height="5vh"
                       variant="outlined"
                       onClick={onClickSize}
                       id="recomendation"
@@ -184,10 +194,7 @@ const Container_Card = styled("div")(() => ({
   maxWidth: "100% ",
   display: "grid",
   gap: 120,
-  padding: "130px 0",
-  "& section:first-of-type": {
-    marginTop: "147px",
-  },
+  padding: "300px 0 130px 0",
 }));
 const Global_Card = styled("section")(() => ({
   display: "grid",
