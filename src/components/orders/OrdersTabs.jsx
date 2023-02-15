@@ -36,9 +36,11 @@ const OrdersTabs = () => {
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
           {currentTab === `${tab.id}` && (
-            <StyledTable
+            <Table
               tableHeaderTitle={OrdersTableHeaderTitle}
               tableData={tableData}
+              checked={true}
+              found={true}
             />
           )}
         </div>
@@ -49,8 +51,6 @@ const OrdersTabs = () => {
 
 export default OrdersTabs;
 
-const StyledTable = styled(Table)(() => ({}));
-
 const Tabs = styled("div")(({ theme }) => ({
   display: "flex",
   gap: "12px",
@@ -59,7 +59,6 @@ const Tabs = styled("div")(({ theme }) => ({
 
   "& button": {
     cursor: "pointer",
-    height: "36px",
     backgroundColor: theme.palette.grey[200],
     borderRadius: "4px",
     border: `1px solid ${theme.palette.grey[200]}`,
@@ -67,7 +66,7 @@ const Tabs = styled("div")(({ theme }) => ({
     fontWeight: "600",
     fontSize: "16px",
     color: theme.palette.primary.light,
-    padding: "0 20px",
+    padding: "8px 20px",
   },
 
   "& button:disabled": {

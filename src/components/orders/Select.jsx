@@ -11,6 +11,7 @@ import DropDown from "../UI/DropDown";
 const Select = ({ status, designOrder }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setValue] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -22,10 +23,16 @@ const Select = ({ status, designOrder }) => {
     setAnchorEl(e.currentTarget);
   };
 
+  const selectHandler = (e) => {
+    setValue(e.target.innerHTML);
+    setOpen(false);
+  };
+
   return (
     <div>
       <StyledTextStatus onClick={openPopUpHandler} variant="span">
-        {status} {open ? <ArrowOrderIconRotate /> : <ArrowOrderIcon />}
+        {value ? value : status}
+        {open ? <ArrowOrderIconRotate /> : <ArrowOrderIcon />}
       </StyledTextStatus>
 
       {open && (
@@ -37,8 +44,16 @@ const Select = ({ status, designOrder }) => {
           anchorEl={anchorEl}
         >
           {designOrder === "Самовывоз"
-            ? titlesOrderPopUpOne.map((text) => <li key={text}>{text}</li>)
-            : titlesOrderPopUpTwo.map((text, i) => <li key={i}>{text}</li>)}
+            ? titlesOrderPopUpOne.map((text) => (
+                <li onClick={selectHandler} key={text}>
+                  {text}
+                </li>
+              ))
+            : titlesOrderPopUpTwo.map((text, i) => (
+                <li onClick={selectHandler} key={i}>
+                  {text}
+                </li>
+              ))}
         </StyledDropDown>
       )}
     </div>
@@ -47,8 +62,12 @@ const Select = ({ status, designOrder }) => {
 
 export default Select;
 
-const StyledTextStatus = styled(Typography)(() => ({
+const StyledTextStatus = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
+  color: theme.palette.secondary.dark,
+  "& svg": {
+    marginLeft: "5px",
+  },
 }));
 
 const StyledDropDown = styled(DropDown)(({ theme }) => ({
@@ -56,21 +75,24 @@ const StyledDropDown = styled(DropDown)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "20px",
+    padding: "20px 40px 20px 20px",
   },
 
-  " ul": {
+  "& .MuiList-root": {
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
+    gap: "10px",
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "14px",
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.main,
     textAlign: "left",
 
     " li": {
       cursor: "pointer",
+    },
+    " li:hover": {
+      color: theme.palette.secondary.main,
     },
   },
 }));

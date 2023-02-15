@@ -15,13 +15,13 @@ const Delete = () => {
     setOpen(false);
   };
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <StyledDeleteIcon onClick={openModalWindow} />
       {open && (
         <StyledModal open={openModalWindow} handleClose={handleClose}>
-          <Typography className="flex center">
-            <div>Вы уверены, что хотите удалить товар</div>
-            <div>Айзат Жумагуловой?</div>
+          <Typography className="Box" variant="div">
+            <Typography>Вы уверены, что хотите удалить товар</Typography>
+            <Typography>Айзат Жумагуловой?</Typography>
           </Typography>
           <Box className="flex center gap2">
             <ButtonStyled
@@ -48,6 +48,10 @@ const StyledDeleteIcon = styled(DeleteIcon)(() => ({
 }));
 
 const StyledModal = styled(Modal)(() => ({
+  "& .MuiDialog-container": {
+    background: "rgba(0,0,0,0.2)",
+  },
+
   "& .MuiDialogContent-root": {
     display: "flex",
     flexDirection: "column",
@@ -55,14 +59,15 @@ const StyledModal = styled(Modal)(() => ({
     width: "458px",
   },
 
-  "& p": {
+  "& .Box": {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "18px",
     color: "#000000",
-    " div:last-of-type": {
+    " p:last-of-type": {
       fontWeight: "600",
     },
   },

@@ -3,7 +3,7 @@ import InfographicTabs from "./InfographicTabs";
 
 const Infographic = () => {
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <TitleInfographic>ИНФОГРАФИКА</TitleInfographic>
 
       <BoxPrices>

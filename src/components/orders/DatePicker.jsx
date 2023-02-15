@@ -31,6 +31,7 @@ export default function DatePicker({ date, setDate }) {
             <>
               <InputBase
                 {...startProps}
+                focused={isOpen.toString()}
                 onFocus={openCalendar}
                 inputProps={{ ...inputProps, placeholder: "От" }}
                 endAdornment={
@@ -42,6 +43,7 @@ export default function DatePicker({ date, setDate }) {
 
               <InputBase
                 {...endProps}
+                focused={isOpen.toString()}
                 onFocus={openCalendar}
                 inputProps={{ ...endProps.inputProps, placeholder: "До" }}
                 endAdornment={

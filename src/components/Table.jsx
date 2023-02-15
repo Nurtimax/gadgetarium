@@ -1,60 +1,139 @@
-import { Pagination, Stack, styled, Typography } from "@mui/material";
+import {
+  Pagination,
+  Stack,
+  styled,
+  Typography,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Checkbox,
+} from "@mui/material";
+import { default as MUITable } from "@mui/material/Table";
 import { useMemo } from "react";
 import { useTable } from "react-table";
+
+const defaultColumnProps = {
+  style: {
+    minWidth: 15,
+    flex: 1,
+  },
+};
 
 const Table = ({
   tableHeaderTitle,
   tableData,
   getPaginationData,
   onChange,
-  checked = true,
+  checked = false,
+  found = false,
 }) => {
   const columns = useMemo(() => tableHeaderTitle, []);
 
-  const tableInstance = useTable({
-    columns,
-    data: tableData,
-  });
+  const tableHooks = (hooks) => {
+    if (checked) {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            Header: "ID",
+            accessor: "id",
+            style: {
+              flex: 0.3,
+            },
+            Cell: ({ row }) => {
+              return (
+                <>
+                  <div className="checkbox">
+                    <Checkbox color="secondary" />
+                  </div>
+                  <div className="ID">{row.original.id}</div>
+                </>
+              );
+            },
+          },
+          ...columns,
+        ];
+      });
+    }
+  };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+    useTable(
+      {
+        columns,
+        data: tableData,
+        defaultColumn: defaultColumnProps,
+      },
+      tableHooks
+    );
 
   return (
     <MainContainer>
-      <Typography className="foundOrderText">Найдено 250 заказов</Typography>
-      <table {...getTableProps()} className="table">
-        <thead className="thead">
-          {headerGroups.map((headerGroup, i) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-              {headerGroup.headers.map((column, i) => (
-                <th {...column.getHeaderProps()} key={i}>
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+      {found ? (
+        <Typography className="foundOrderText">Найдено 250 заказов</Typography>
+      ) : (
+        ""
+      )}
 
-        <tbody {...getTableBodyProps()} className="tbody">
+      <MUITable {...getTableProps()}>
+        <TableHead>
+          {headerGroups.map((headerGroup, i) => (
+            <TableRow
+              {...headerGroup.getHeaderGroupProps({
+                style: {
+                  display: "flex",
+                  width: "100%",
+                },
+              })}
+              key={i}
+            >
+              {headerGroup.headers.map((column, i) => (
+                <TableCell
+                  {...column.getHeaderProps({
+                    style: { ...column.style },
+                  })}
+                  key={i}
+                >
+                  {column.render("Header")}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableHead>
+
+        <TableBody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <ListTable {...row.getRowProps()} key={i} checked={checked}>
+              <StyledTableRow
+                {...row.getRowProps({
+                  style: {
+                    display: "flex",
+                  },
+                })}
+                key={i}
+                checked={checked}
+              >
                 {row.cells.map((cell, i) => (
-                  <td
+                  <TableCell
                     {...cell.getCellProps({
-                      style: cell.column.style,
+                      style: {
+                        ...cell.column.style,
+                        ...cell.column.tdStyle,
+                      },
                     })}
                     key={i}
                   >
                     {cell.render("Cell")}
-                  </td>
+                  </TableCell>
                 ))}
-              </ListTable>
+              </StyledTableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </MUITable>
+
       <Stack>
         <Pagination
           count={10}
@@ -69,57 +148,73 @@ const Table = ({
 
 export default Table;
 
-const ListTable = styled("tr")(({ theme, checked }) => ({
-  padding: "19px 0 0 20px",
-  height: "74px",
+const StyledTableRow = styled(TableRow)(({ theme, checked }) => ({
+  padding: "20px",
   border: `1px solid ${theme.palette.grey[600]}`,
   borderRadius: "6px",
+  "& .checkbox": {
+    display: "none",
+  },
+
   "&:hover": {
     background: checked ? "rgba(144, 156, 181, 0.2)" : "",
+
+    "& .ID": {
+      display: "none",
+    },
+
+    "& .checkbox": {
+      display: "block",
+      padding: "0 0 15px 0",
+      "& .MuiCheckbox-root": {
+        padding: "0",
+      },
+    },
   },
 }));
 
-const MainContainer = styled("div")(({ theme }) => ({
-  "& .foundOrderText": {
-    paddingTop: "40px",
-    fontFamily: "Inter",
-    fontWeight: "400",
-    fontSize: "14px",
-    color: theme.palette.primary.light,
+const MainContainer = styled(TableContainer)(({ theme }) => ({
+  fontFamily: "Inter",
+  fontWeight: "400",
+  fontSize: "14px",
+  color: theme.palette.primary.light,
+
+  "& .MuiTypography-root": {
+    padding: "40px 0 16px",
   },
 
-  "& .table": {
-    paddingTop: "16px",
-    width: "1305px",
-    borderSpacing: "0",
-
-    "& .thead": {
+  "& .MuiTable-root": {
+    "& .MuiTableHead-root": {
       backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.contrastText,
-      height: "40px",
-      fontFamily: "Inter",
-      fontWeight: "600",
-      fontSize: "14px",
       display: "flex",
       alignItems: "center",
-      marginBottom: "10px",
+      padding: "12px 20px",
+      margin: "0 0 10px",
 
-      "& tr": {
-        display: "flex",
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-        padding: "0 20px",
+      "& .MuiTableRow-root": {
+        "& .MuiTableCell-root": {
+          color: theme.palette.primary.contrastText,
+          fontWeight: "600",
+          border: "none",
+          padding: "0",
+        },
       },
     },
 
-    "& .tbody": {
+    "& .MuiTableBody-root": {
       display: "grid",
       gap: "8px",
+
+      "& .MuiTableRow-root": {
+        "& .MuiTableCell-root": {
+          border: "none",
+          padding: "0",
+        },
+      },
     },
   },
 
-  "& .MuiButtonBase-root": {
+  "& .MuiPaginationItem-root.Mui-selected": {
     width: "22px",
     height: "22px",
     minWidth: "0",
