@@ -481,7 +481,7 @@ export const TAB_ITEMS_ORDER = [
   },
   {
     id: 2,
-    tabTitle: "ORDER_READY",
+    tabTitle: "IN_PROCESSING",
     title: "В обработке (5)",
   },
   {

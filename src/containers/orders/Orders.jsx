@@ -1,4 +1,3 @@
-import React from "react";
 import { styled } from "@mui/material";
 import Search from "../../components/UI/Search";
 import OrdersTabs from "../../components/orders/OrdersTabs";

@@ -6,9 +6,10 @@ import {
   titlesOrderPopUpOne,
   titlesOrderPopUpTwo,
 } from "../../utils/constants";
+import { checkInOrderStatus } from "../../utils/helpers/general";
 import DropDown from "../UI/DropDown";
 
-const Select = ({ status, designOrder }) => {
+const Select = ({ orderStatus, orderType }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState("");
@@ -31,7 +32,7 @@ const Select = ({ status, designOrder }) => {
   return (
     <div>
       <StyledTextStatus onClick={openPopUpHandler} variant="span">
-        {value ? value : status}
+        {value ? value : checkInOrderStatus(orderStatus)}
         {open ? <ArrowOrderIconRotate /> : <ArrowOrderIcon />}
       </StyledTextStatus>
 
@@ -43,7 +44,7 @@ const Select = ({ status, designOrder }) => {
           handleClose={handleClose}
           anchorEl={anchorEl}
         >
-          {designOrder === "Самовывоз"
+          {orderType === "Самовывоз"
             ? titlesOrderPopUpOne.map((text) => (
                 <li onClick={selectHandler} key={text}>
                   {text}

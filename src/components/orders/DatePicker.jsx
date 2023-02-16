@@ -16,7 +16,7 @@ export default function DatePicker({ date, setDate }) {
   };
 
   return (
-    <LocalizationProvider dateAdapter={DateFnsUtils} locale={ru}>
+    <LocalizationProvider dateAdapter={DateFnsUtils} adapterLocale={ru}>
       <StyledDateRangePicker
         calendars={1}
         value={date}

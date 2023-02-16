@@ -7,6 +7,7 @@ import Modal from "../UI/Modal";
 
 const Delete = () => {
   const [open, setOpen] = useState(false);
+
   const openModalWindow = () => {
     setOpen(true);
   };

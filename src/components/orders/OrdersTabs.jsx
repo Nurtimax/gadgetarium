@@ -1,19 +1,38 @@
+import React, { useMemo, useState, useEffect } from "react";
 import { styled } from "@mui/material";
-import { useMemo } from "react";
-import { useState } from "react";
-import { OrdersTableListData, TAB_ITEMS_ORDER } from "../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { TAB_ITEMS_ORDER } from "../../utils/constants";
 import { OrdersTableHeaderTitle } from "../../utils/constants/orderTable";
-import Table from "../Table";
+import { fetchOrderProductSlice } from "../../redux/slices/order-product";
 import DatePicker from "./DatePicker";
+import Table from "../Table";
 
 const OrdersTabs = () => {
-  const tableData = useMemo(() => OrdersTableListData, []);
-  const [currentTab, setCurrentTab] = useState("1");
+  const data = useSelector((state) => state.orderProduct.data);
+  console.log(data);
+  const tableData = useMemo(() => data, [data]);
+  const dispatch = useDispatch();
   const [date, setDate] = useState([null, null]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(1);
+  const orderStatus = searchParams.get("orderStatus");
 
   const handleTabClick = (e) => {
-    setCurrentTab(e.target.id);
+    setSearchParams({
+      orderStatus: e.target.name,
+    });
   };
+
+  useEffect(() => {
+    dispatch(
+      fetchOrderProductSlice({
+        orderStatus,
+        page,
+        size: 1,
+      })
+    );
+  }, [orderStatus, page]);
 
   return (
     <div>
@@ -23,7 +42,7 @@ const OrdersTabs = () => {
             key={i}
             id={tab.id}
             name={tab.tabTitle}
-            disabled={currentTab === `${tab.id}`}
+            disabled={orderStatus === `${tab.tabTitle}`}
             onClick={handleTabClick}
           >
             {tab.title}
@@ -35,12 +54,13 @@ const OrdersTabs = () => {
 
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
-          {currentTab === `${tab.id}` && (
+          {orderStatus === `${tab.tabTitle}` && (
             <Table
               tableHeaderTitle={OrdersTableHeaderTitle}
               tableData={tableData}
-              checked={true}
+              isMarked={true}
               found={true}
+              setPage={setPage}
             />
           )}
         </div>

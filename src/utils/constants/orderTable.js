@@ -1,11 +1,12 @@
 import { format } from "date-fns";
 import Delete from "../../components/orders/Delete";
 import Select from "../../components/orders/Select";
+import { checkInOrderType } from "../helpers/general";
 
 export const OrdersTableHeaderTitle = [
   {
     Header: "ФИО",
-    accessor: "fullname",
+    accessor: "fullName",
     style: {
       flex: 1.5,
     },
@@ -62,14 +63,17 @@ export const OrdersTableHeaderTitle = [
   },
   {
     Header: "Оформление заказа",
-    accessor: "designOrder",
+    accessor: "orderType",
     style: {
       flex: 2,
+    },
+    Cell: ({ row }) => {
+      return <div>{checkInOrderType(row.original.orderType)}</div>;
     },
   },
   {
     Header: "Статус",
-    accessor: "status",
+    accessor: "orderStatus",
     style: {
       flex: 1.4,
     },
@@ -79,9 +83,9 @@ export const OrdersTableHeaderTitle = [
   },
   {
     Header: "Действия",
-    accessor: "action",
-    Cell: ({ row }) => {
-      return <Delete {...row.original} />;
+    accessor: "totalDiscount",
+    Cell: () => {
+      return <Delete />;
     },
   },
 ];

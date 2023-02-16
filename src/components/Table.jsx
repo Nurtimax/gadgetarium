@@ -24,15 +24,14 @@ const defaultColumnProps = {
 const Table = ({
   tableHeaderTitle,
   tableData,
-  getPaginationData,
-  onChange,
-  checked = false,
+  isMarked = false,
   found = false,
+  setPage,
 }) => {
   const columns = useMemo(() => tableHeaderTitle, []);
 
   const tableHooks = (hooks) => {
-    if (checked) {
+    if (isMarked) {
       hooks.visibleColumns.push((columns) => {
         return [
           {
@@ -113,7 +112,7 @@ const Table = ({
                   },
                 })}
                 key={i}
-                checked={checked}
+                checked={isMarked}
               >
                 {row.cells.map((cell, i) => (
                   <TableCell
@@ -138,8 +137,7 @@ const Table = ({
         <Pagination
           count={10}
           color="secondary"
-          getItemAriaLabel={getPaginationData}
-          onChange={onChange}
+          onChange={(_, value) => setPage(value)}
         />
       </Stack>
     </MainContainer>
