@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import React, { useCallback } from "react";
 import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   ArrowDownIcon,
   DeleteIcon,
@@ -27,7 +27,7 @@ import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Modal from "../../UI/Modal";
 
-const Brand = ({ handleChange, values, errors }) => {
+const Brand = ({ handleChange, values, errors, Productbrand }) => {
   const [openModal, setOpenModal] = useVisibility();
 
   const dispatch = useDispatch();
@@ -51,19 +51,9 @@ const Brand = ({ handleChange, values, errors }) => {
     },
   });
 
-  const { Productbrand } = useSelector((state) => state.addProduct);
-
-  const findedPRODUCTBRAND = Productbrand.find(
-    (brand) => brand.id === Number(values?.brandId)
-  );
-
   useEffect(() => {
     dispatch(getBrandThunkApi());
   }, []);
-
-  const removeBrandImageHandler = () => {
-    setFieldValue("image", "");
-  };
 
   const onDrop = useCallback((acceptFiles) => {
     const file = acceptFiles[0];
@@ -75,6 +65,14 @@ const Brand = ({ handleChange, values, errors }) => {
   }, []);
 
   const { getInputProps, getRootProps } = useDropzone({ onDrop });
+
+  const findedPRODUCTBRAND = Productbrand?.find(
+    (brand) => brand.id === Number(values?.brandId)
+  );
+
+  const removeBrandImageHandler = () => {
+    setFieldValue("image", "");
+  };
 
   return (
     <>

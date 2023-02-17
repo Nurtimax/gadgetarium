@@ -12,6 +12,7 @@ import React from "react";
 import { useMemo } from "react";
 import { useCallback } from "react";
 import { CompactPicker } from "react-color";
+import { useSelector } from "react-redux";
 import {
   ArrowDownIcon,
   ChooseColorIcon,
@@ -43,6 +44,8 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
     });
 
   const getProductIdParam = searchParams.get("productId") || 0;
+
+  const { Productbrand } = useSelector((state) => state.addProduct);
 
   const addNewProduct = useCallback(() => {
     setFieldValue("subProductRequests", [
@@ -122,6 +125,10 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
     values.subProductRequests.splice(index, 1);
   };
 
+  if (Productbrand.message) {
+    return <h1>{Productbrand.message}</h1>;
+  }
+
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
@@ -140,7 +147,12 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
           />
         </Grid>
         <Grid item xs={3.5}>
-          <Brand handleChange={handleChange} values={values} errors={errors} />
+          <Brand
+            handleChange={handleChange}
+            values={values}
+            errors={errors}
+            Productbrand={Productbrand}
+          />
         </Grid>
         <Grid item xs={6}>
           <FormLabel required>Гарантия (месяцев)</FormLabel>
