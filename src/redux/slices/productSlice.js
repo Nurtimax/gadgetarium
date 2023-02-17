@@ -15,10 +15,16 @@ const initialState = {
 
 export const fetchDiscountProduct = createAsyncThunk(
   "productSlice/fetchDiscountProduct",
-  async (page, { rejectWithValue }) => {
+  async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/discountsProducts?page=1&size=${page}`
+        `${SWAGGER_API}/api/products/discountsProducts`,
+        {
+          params: {
+            page: 1,
+            size,
+          },
+        }
       );
       if (!status === 200) {
         throw new Error("Server orror");
@@ -32,13 +38,19 @@ export const fetchDiscountProduct = createAsyncThunk(
 
 export const fetchNewProduct = createAsyncThunk(
   "productSlice/fetchProduct",
-  async (page, { rejectWithValue }) => {
+  async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/newProducts?page=1&size=${page}`
+        `${SWAGGER_API}/api/products/newProducts`,
+        {
+          params: {
+            page: 1,
+            size,
+          },
+        }
       );
       if (!status === 200) {
-        throw new Error("Server orror");
+        throw new Error("Server error");
       }
       return data;
     } catch (error) {
@@ -48,10 +60,16 @@ export const fetchNewProduct = createAsyncThunk(
 );
 export const fetchRecomendationProduct = createAsyncThunk(
   "productSlice/fetchRecomendationProduct",
-  async (page, { rejectWithValue }) => {
+  async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/recommendationsProducts?page=1&size=${page}`
+        `${SWAGGER_API}/api/products/recommendationsProducts`,
+        {
+          params: {
+            page: 1,
+            size,
+          },
+        }
       );
       if (!status === 200) {
         throw new Error("Server orror");

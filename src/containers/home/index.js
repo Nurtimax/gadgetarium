@@ -59,6 +59,7 @@ const Home = () => {
   return (
     <>
       <Banner />
+
       <Container>
         <Container_Card>
           {discountError ? (
@@ -66,15 +67,15 @@ const Home = () => {
           ) : (
             <Global_Card>
               {disStatus === "loading" ? (
-                <Global_Card>
-                  <Grid container spacing={2} sx={{ mt: 5 }}>
-                    {discountsProducts?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
+                <SkeletonStyled>
+                  <Grid container spacing={2}>
+                    {discountsProducts?.map((_, i) => (
+                      <Grid item xs={2.4} key={i}>
                         <Skeleton />
                       </Grid>
                     ))}
                   </Grid>
-                </Global_Card>
+                </SkeletonStyled>
               ) : (
                 <>
                   <Typography variant="h4">Акции</Typography>
@@ -92,7 +93,6 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="discount"
-                      disabled={discountsProducts.length !== 5}
                     >
                       Показать ещё
                     </Button>
@@ -107,15 +107,15 @@ const Home = () => {
           ) : (
             <Global_Card>
               {newStatus === "loading" ? (
-                <Global_Card>
-                  <Grid container spacing={2} sx={{ mt: -10 }}>
-                    {newProducts?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
+                <SkeletonStyled>
+                  <Grid container spacing={2}>
+                    {newProducts?.map((_, i) => (
+                      <Grid item xs={2.4} key={i}>
                         <Skeleton />
                       </Grid>
                     ))}
                   </Grid>
-                </Global_Card>
+                </SkeletonStyled>
               ) : (
                 <>
                   <Typography variant="h4">Новинки</Typography>
@@ -133,7 +133,6 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="news"
-                      disabled={newProducts.length !== 5}
                     >
                       Показать ещё
                     </Button>
@@ -148,15 +147,15 @@ const Home = () => {
           ) : (
             <Global_Card>
               {recStatus === "loading" ? (
-                <Global_Card>
-                  <Grid container spacing={2} sx={{ mt: 5 }}>
-                    {recommendationProduct?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
+                <SkeletonStyled>
+                  <Grid container spacing={1}>
+                    {discountsProducts?.map((_, i) => (
+                      <Grid item xs={2.4} key={i}>
                         <Skeleton />
                       </Grid>
                     ))}
                   </Grid>
-                </Global_Card>
+                </SkeletonStyled>
               ) : (
                 <>
                   <Typography variant="h4">Рекемендуем</Typography>
@@ -174,7 +173,6 @@ const Home = () => {
                       variant="outlined"
                       onClick={onClickSize}
                       id="recomendation"
-                      disabled={recommendationProduct.length !== 5}
                     >
                       Показать ещё
                     </Button>
@@ -194,7 +192,7 @@ const Container_Card = styled("div")(() => ({
   maxWidth: "100% ",
   display: "grid",
   gap: 120,
-  padding: "300px 0 130px 0",
+  padding: "200px 0 130px 0",
 }));
 const Global_Card = styled("section")(() => ({
   display: "grid",
@@ -207,4 +205,9 @@ const Styled_Error = styled("h1")(() => ({
   justifyContent: "center",
   alignItems: "center",
   marginTop: "7%",
+}));
+
+const SkeletonStyled = styled("div")(() => ({
+  // display: "flex",
+  marginTop: "9%",
 }));

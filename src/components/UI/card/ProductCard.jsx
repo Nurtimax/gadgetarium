@@ -130,7 +130,7 @@ const ProductCard = (props) => {
       <Card_contend className="carsContent">
         <Styled_Count>В наличии ({count})</Styled_Count>
 
-        <StyletTitle variant="h6" color="black" title={productName}>
+        <StyletTitle color="black" title={productName}>
           {productName}
         </StyletTitle>
         <Typography variant="span" className="flex">
@@ -141,11 +141,11 @@ const ProductCard = (props) => {
           <Grid container className="flex between ">
             <Box width="30%" marginLeft="-10px">
               {discountPrice > 0 ? (
-                <Typography variant="h1" fontSize="2vh">
+                <Typography variant="h1" fontSize="0.7rem">
                   {discountPrice}c
                 </Typography>
               ) : (
-                <Typography variant="h1" fontSize="2vh">
+                <Typography variant="h1" fontSize="0.7rem">
                   {productPrice}c
                 </Typography>
               )}
@@ -158,7 +158,7 @@ const ProductCard = (props) => {
               width="70%"
               height="5vh"
               title="Добавить в карзину"
-              fontSize="1.7vh"
+              fontSize="0.5rem"
               icon={<CartIcon />}
             >
               В_карзину
@@ -174,11 +174,11 @@ export default React.memo(ProductCard);
 
 const Card_contend = styled(CardContent)(() => ({
   "& span": {
-    fontSize: "2.5vh",
+    fontSize: "0.7rem",
   },
 }));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "3vh",
+  fontSize: "0.9rem",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",
@@ -187,34 +187,37 @@ const StyletTitle = styled("h1")(() => ({
 }));
 const Discount_Styled = styled("div")(() => ({
   color: "white",
-  width: "3.5vh",
-  height: "3.5vh",
+  width: "4vh",
+  height: "4vh",
   fontWeight: "900",
   borderRadius: "50%",
   background: "red",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  fontSize: "1.5vh",
+  fontSize: "0.5rem",
 }));
 const Styled_Count = styled("p")(() => ({
-  fontSize: "2.5vh",
+  fontSize: "70%",
   color: "#2FC509",
 }));
 const StyledProductCard = styled(Card)(() => ({
-  width: "100%",
-  padding: "5px 0",
+  width: "35vh",
+  height: "100%",
+  // padding: "5px 0",
+  display: "grid",
+  gridRowGap: "1rem",
   "&:hover": {
     boxShadow: "0 0 10px rgba(0,0,0,0.6)",
   },
   "& .carsContent": {
     display: "grid",
-    gridRowGap: "1.5vh",
+    gridRowGap: "1vh",
   },
 }));
 const CardMedia_Styled = styled("img")(() => ({
   width: "60%",
-  height: "45%",
+  height: "100%",
   margin: "0 auto",
   display: "flex",
   justifyContent: "center",
@@ -223,6 +226,6 @@ const CardMedia_Styled = styled("img")(() => ({
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "2vh",
+  fontSize: "0.7rem",
   textDecoration: "line-through",
 }));
