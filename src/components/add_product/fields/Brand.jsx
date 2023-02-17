@@ -1,5 +1,6 @@
 import {
   Box,
+  FormLabel,
   IconButton,
   MenuItem,
   Select,
@@ -22,12 +23,11 @@ import {
   getBrandThunkApi,
   postBrandThunkApi,
 } from "../../../redux/slices/add-product";
-import { PRODUCTBRAND } from "../../../utils/constants/add-product";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Modal from "../../UI/Modal";
 
-const Brand = ({ handleChange, values }) => {
+const Brand = ({ handleChange, values, errors }) => {
   const [openModal, setOpenModal] = useVisibility();
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Brand = ({ handleChange, values }) => {
 
   const { Productbrand } = useSelector((state) => state.addProduct);
 
-  const findedPRODUCTBRAND = PRODUCTBRAND.find(
+  const findedPRODUCTBRAND = Productbrand.find(
     (brand) => brand.id === Number(values?.brandId)
   );
 
@@ -80,7 +80,7 @@ const Brand = ({ handleChange, values }) => {
     <>
       <StyledModal open={openModal} handleClose={setOpenModal}>
         <Typography component="h1" variant="h5" className="flex center">
-          Добавление бренда {brandValues.image.length}
+          Добавление бренда
         </Typography>
         <Box
           component="form"
@@ -148,30 +148,26 @@ const Brand = ({ handleChange, values }) => {
           </Box>
         </Box>
       </StyledModal>
-      <Typography component="p" variant="body1">
-        Бренд *
-      </Typography>
+      <FormLabel required>Бренд</FormLabel>
       <StyledSelect
         displayEmpty
         onChange={handleChange}
         value={values?.brandId}
         name="brandId"
-        IconComponent={() => <ArrowDownIcon width={23} height={23} />}
-        input={<Input />}
+        IconComponent={() => <ArrowDownIcon width={18} height={18} />}
+        input={<Input error={Boolean(errors.brandId)} />}
         startAdornment={
-          findedPRODUCTBRAND?.icon ? (
-            <IconButton size="small" className="brand_icons">
-              {findedPRODUCTBRAND.icon}
-            </IconButton>
+          findedPRODUCTBRAND?.image ? (
+            <img src={findedPRODUCTBRAND.image} className="brand_icons" />
           ) : (
-            <DownloadBannerIcon width={23} height={23} />
+            <DownloadBannerIcon width={18} height={18} />
           )
         }
         renderValue={() => (
           <>
-            {findedPRODUCTBRAND?.name ? (
+            {findedPRODUCTBRAND?.brandName ? (
               <Typography variant="body1" component="span">
-                {findedPRODUCTBRAND.name}
+                {findedPRODUCTBRAND.brandName}
               </Typography>
             ) : (
               <Typography
@@ -186,7 +182,7 @@ const Brand = ({ handleChange, values }) => {
         )}
       >
         {Productbrand?.map((catalog) => (
-          <StyledMenuItem key={catalog.brandName} value={catalog.brandName}>
+          <StyledMenuItem key={catalog.brandName} value={catalog.id}>
             <IconButton size="small" className="brand_icons">
               <img src={catalog?.image} alt="" />
             </IconButton>
@@ -200,6 +196,11 @@ const Brand = ({ handleChange, values }) => {
           </StyledButton>
         </StyledMenuItem>
       </StyledSelect>
+      {errors.brandId && (
+        <Typography component="p" variant="body2" color="error">
+          {errors.brandId}
+        </Typography>
+      )}
     </>
   );
 };
@@ -290,9 +291,20 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const StyledSelect = styled(Select)(() => ({
+  justifyContent: "space-between !important",
+  gap: "10px",
+  "& .MuiTypography-root": {
+    padding: "0 25px !important",
+  },
   "& .brand_icons svg": {
     width: "24px",
     height: "24px",
+  },
+  "& img": {
+    width: "20px",
+    height: "20px",
+    aspectRatio: "1/1",
+    objectFit: "contain",
   },
 }));
 

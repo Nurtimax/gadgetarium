@@ -3,12 +3,14 @@ import React, { useCallback } from "react";
 import { useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { DownloadBannerIcon } from "../../assets";
+import ShowUploadImage from "./ShowUploadImage";
 
 const UploadImages = ({
   setFieldValue,
   values,
   getProductIdParam,
   findedSubProductData,
+  errors,
 }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -33,7 +35,11 @@ const UploadImages = ({
     },
     [values.subProductRequests, findedSubProductData]
   );
-  const { getInputProps, getRootProps } = useDropzone({ onDrop });
+
+  const { getInputProps, getRootProps } = useDropzone({
+    onDrop,
+    accept: { "image/*": [] },
+  });
 
   const isSubProductData = useMemo(() => {
     if (findedSubProductData.images?.length === 0) {
@@ -42,29 +48,32 @@ const UploadImages = ({
     return false;
   });
 
+  const uploadImageError = useMemo(() => {
+    if (Array.isArray(errors.subProductRequests)) {
+      return errors.subProductRequests[Number(getProductIdParam)].images;
+    }
+    return null;
+  }, []);
+
   return (
     <>
       <Typography component="p" variant="body1">
         Добавьте фото
       </Typography>
-      <StyledUploadImages>
+      <StyledUploadImages className={`${uploadImageError ? "error" : ""}`}>
         <Grid
+          {...getRootProps()}
           container
-          className={`flex ${isSubProductData && "center"}`}
+          className={`flex center`}
           margin={0}
         >
+          <input {...getInputProps()} />
           {findedSubProductData.images?.length !== 10 && (
-            <Grid
-              {...getRootProps()}
-              item
-              xs={2}
-              className="flex center upload_icon"
-            >
-              <input {...getInputProps()} />
+            <Grid item xs={2} className="flex center upload_icon">
               <DownloadBannerIcon width={36} height={33} />
             </Grid>
           )}
-          {isSubProductData ? (
+          {isSubProductData && (
             <Grid item xs={11} className="upload_img">
               <Typography
                 component="div"
@@ -86,18 +95,23 @@ const UploadImages = ({
                 </Typography>
               </Typography>
             </Grid>
-          ) : (
-            <>
-              {findedSubProductData.images?.map((product_img) => (
-                <Grid item key={product_img} xs={2.1}>
-                  <StyledImg>
-                    <img src={product_img} alt="" />
-                  </StyledImg>
-                </Grid>
-              ))}
-            </>
           )}
         </Grid>
+        <Box
+          className={`flex function_icon scroll scroll_tab ${
+            findedSubProductData.images?.length === 10 ? "image_fullheight" : ""
+          }`}
+        >
+          {findedSubProductData.images?.map((product_img, index) => (
+            <ShowUploadImage
+              key={index}
+              product={product_img}
+              index={index}
+              values={values}
+              setFieldValue={setFieldValue}
+            />
+          ))}
+        </Box>
       </StyledUploadImages>
     </>
   );
@@ -113,6 +127,9 @@ const StyledUploadImages = styled(Box)(({ theme }) => ({
   borderRadius: "4px",
   padding: ".5rem",
   color: theme.palette.primary.dark,
+  "&.error": {
+    border: "1px dashed red",
+  },
   "& .upload_icon": {
     height: "75px",
     color: "inherit",
@@ -130,16 +147,18 @@ const StyledUploadImages = styled(Box)(({ theme }) => ({
   "& .MuiGrid-root": {
     padding: "0 !important",
   },
-}));
-
-const StyledImg = styled(Box)(() => ({
-  width: "66px",
-  height: "75px",
-  borderRadius: "4px",
-  "& img": {
+  "& .function_icon": {
+    width: "380px",
+    padding: "0 20px",
+    display: "flex",
+    gap: "1rem",
+    flexWrap: "wrap",
+    height: "110px",
+  },
+  "& .image_fullheight": {
     height: "100%",
-    aspectRatio: "4/5",
-    objectFit: "contain",
-    mixBlendMode: "color-burn",
+  },
+  "& .function_icon::-webkit-scrollbar": {
+    width: "30px",
   },
 }));

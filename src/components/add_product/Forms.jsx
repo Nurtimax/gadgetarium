@@ -1,13 +1,27 @@
-import { Box, Grid, MenuItem, Select, styled, Typography } from "@mui/material";
+import {
+  Box,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Select,
+  styled,
+  Typography,
+} from "@mui/material";
 import { useFormik } from "formik";
 import React from "react";
+import { useMemo } from "react";
 import { useCallback } from "react";
 import { CompactPicker } from "react-color";
-import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { ArrowDownIcon, ChooseColorIcon, PlusIcon } from "../../assets";
-import { addProductThunk } from "../../redux/slices/add-product";
-import { PRODUCT_INITIALSTATE } from "../../utils/constants/add-product";
+import {
+  ArrowDownIcon,
+  ChooseColorIcon,
+  DeleteIconInCart,
+  PlusIcon,
+} from "../../assets";
+import {
+  PRODUCT_INITIALSTATE,
+  PRODUCT_INITIALSTATESCHEMA,
+} from "../../utils/constants/add-product";
 import { CompactPickerColors } from "../../utils/constants/compact-picker";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
@@ -17,23 +31,25 @@ import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
 import UploadImages from "./UploadImages";
 
-const Forms = () => {
-  const dispatch = useDispatch();
-  const { values, handleChange, setFieldValue, handleSubmit } = useFormik({
-    initialValues: PRODUCT_INITIALSTATE,
-    onSubmit: (values) => {
-      dispatch(addProductThunk(values));
-    },
-  });
+const Forms = ({ getData, searchParams, setSearchParams }) => {
+  const { values, handleChange, setFieldValue, handleSubmit, errors } =
+    useFormik({
+      initialValues: PRODUCT_INITIALSTATE,
+      validationSchema: PRODUCT_INITIALSTATESCHEMA,
+      onSubmit: () => {
+        getData();
+      },
+      validateOnChange: false,
+    });
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const getProductIdParam = searchParams.get("productId") || 0;
 
   const addNewProduct = useCallback(() => {
     setFieldValue("subProductRequests", [
       ...values.subProductRequests,
       {
         price: 0,
-        countOfProduct: 0,
+        countOfProduct: 111,
         color: "",
         images: [],
         characteristics: {},
@@ -76,45 +92,86 @@ const Forms = () => {
     );
   };
 
-  const getProductIdParam = searchParams.get("productId");
+  const findedSubProductData = useMemo(() => {
+    if (
+      Array.isArray(values?.subProductRequests) &&
+      values?.subProductRequests.length > 0
+    ) {
+      return values?.subProductRequests[Number(getProductIdParam)];
+    }
+    return null;
+  }, [values, getProductIdParam]);
 
-  const findedSubProductData =
-    values.subProductRequests[Number(getProductIdParam)];
+  const color = findedSubProductData ? findedSubProductData.color : "";
+
+  const colorError = useMemo(() => {
+    if (Array.isArray(errors.subProductRequests)) {
+      return errors.subProductRequests[Number(getProductIdParam)].color;
+    }
+    return null;
+  }, [errors.subProductRequests]);
+
+  const imagesError = useMemo(() => {
+    if (Array.isArray(errors.subProductRequests)) {
+      return errors.subProductRequests[Number(getProductIdParam)].images;
+    }
+    return null;
+  }, [errors.subProductRequests]);
+
+  const removeProductCountHandler = (index) => () => {
+    values.subProductRequests.splice(index, 1);
+  };
 
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
         <Grid item xs={3.5}>
-          <Category handleChange={handleChange} values={values} />
+          <Category
+            handleChange={handleChange}
+            values={values}
+            errors={errors}
+          />
         </Grid>
         <Grid item xs={6}>
-          <SubCategory handleChange={handleChange} values={values} />
+          <SubCategory
+            handleChange={handleChange}
+            values={values}
+            errors={errors}
+          />
         </Grid>
         <Grid item xs={3.5}>
-          <Brand handleChange={handleChange} values={values} />
+          <Brand handleChange={handleChange} values={values} errors={errors} />
         </Grid>
         <Grid item xs={6}>
-          <Typography component="p" variant="body1">
-            Гарантия (месяцев) *
-          </Typography>
+          <FormLabel required>Гарантия (месяцев)</FormLabel>
           <StyledInput
             onChange={handleChange}
-            value={values.guarantee}
+            value={values?.guarantee}
             name="guarantee"
             type="number"
             placeholder="Введите гарантию товара"
+            error={Boolean(errors.guarantee)}
           />
+          {Boolean(errors.guarantee) && (
+            <Typography component="p" variant="body2" color="error">
+              {errors.guarantee}
+            </Typography>
+          )}
         </Grid>
         <Grid item xs={12}>
-          <Typography component="p" variant="body1">
-            Название товара *
-          </Typography>
+          <FormLabel required>Название товара</FormLabel>
           <StyledInput
             onChange={handleChange}
             values={values.productName}
             name="productName"
             placeholder="Введите название товара"
+            error={Boolean(errors.productName)}
           />
+          {Boolean(errors.productName) && (
+            <Typography component="p" variant="body2" color="error">
+              {errors.productName}
+            </Typography>
+          )}
         </Grid>
         {values.categoryId ? (
           values.subProductRequests.length !== 0 ? (
@@ -133,6 +190,15 @@ const Forms = () => {
                     onClick={chooseProductDataHandler}
                   >
                     Product {index + 1}
+                    {index !== 0 && (
+                      <Box
+                        component="span"
+                        className="icon_delete"
+                        onClick={removeProductCountHandler(index)}
+                      >
+                        <DeleteIconInCart width={12} height={12} />
+                      </Box>
+                    )}
                   </StyledButton>
                 ))}
                 <StyledButton
@@ -150,19 +216,15 @@ const Forms = () => {
                 <Select
                   displayEmpty
                   onChange={changeHandlerColor}
-                  value={findedSubProductData.color}
+                  value={color}
                   IconComponent={() => <ChooseColorIcon />}
-                  startAdornment={
-                    findedSubProductData.color && (
-                      <StyledChooseColor color={findedSubProductData.color} />
-                    )
-                  }
-                  input={<Input />}
+                  startAdornment={color && <StyledChooseColor color={color} />}
+                  input={<Input error={Boolean(colorError)} />}
                   renderValue={() => (
                     <>
-                      {findedSubProductData.color ? (
+                      {color ? (
                         <Typography variant="body1" component="span">
-                          {findedSubProductData.color}
+                          {color}
                         </Typography>
                       ) : (
                         <Typography
@@ -178,10 +240,15 @@ const Forms = () => {
                 >
                   <StyledCompactPicker
                     onChange={changeHandlerColor}
-                    color={findedSubProductData.color}
+                    color={color}
                     colors={CompactPickerColors}
                   />
                 </Select>
+                {colorError && (
+                  <Typography component="p" variant="body2" color="error">
+                    {colorError}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <PhoneLaptopTablet
@@ -190,6 +257,7 @@ const Forms = () => {
                   setFieldValue={setFieldValue}
                   findedSubProductData={findedSubProductData}
                   getProductIdParam={getProductIdParam}
+                  errors={errors}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -200,7 +268,7 @@ const Forms = () => {
                   displayEmpty
                   onChange={changeHandlerPrice}
                   value={findedSubProductData.price}
-                  IconComponent={() => <ArrowDownIcon width={23} height={23} />}
+                  IconComponent={() => <ArrowDownIcon width={18} height={18} />}
                   input={<Input />}
                   renderValue={() => (
                     <>
@@ -220,7 +288,7 @@ const Forms = () => {
                     </>
                   )}
                 >
-                  {[100000].map((catalog) => (
+                  {[100000, 120000].map((catalog) => (
                     <StyledMenuItem key={catalog} value={catalog}>
                       {catalog}
                     </StyledMenuItem>
@@ -234,7 +302,13 @@ const Forms = () => {
                   setFieldValue={setFieldValue}
                   findedSubProductData={findedSubProductData}
                   getProductIdParam={getProductIdParam}
+                  errors={errors}
                 />
+                {imagesError && (
+                  <Typography component="p" variant="body2" color="error">
+                    {imagesError}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={3.5} display="grid">
                 <StyledButton className="next_button" type="submit">
@@ -252,7 +326,7 @@ const Forms = () => {
 export default Forms;
 
 const StyledInput = styled(Input)(() => ({
-  padding: 0,
+  padding: "0 10px",
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -269,8 +343,27 @@ const StyledButton = styled(Button)(({ theme }) => ({
     height: "35px",
     color: `${theme.palette.grey[800]} !important`,
     borderColor: `${theme.palette.grey[800]} !important`,
+    position: "relative",
     "&:hover": {
       background: "none",
+    },
+    "& > .icon_delete": {
+      position: "absolute",
+      right: -10,
+      top: -10,
+      borderRadius: "50%",
+      border: "1px solid",
+      width: "20px",
+      height: "20px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      "&:hover": {
+        background: "#ccc",
+      },
+      "&:hover svg path": {
+        fill: "white",
+      },
     },
   },
   "&.product_button.selected_product": {
@@ -304,11 +397,19 @@ const StyledFormControl = styled(Box)(() => ({
     display: "flex",
     gap: "10px",
     alignItems: "center",
+    justifyContent: "flex-end",
+    position: "relative",
+    padding: "0 10px",
+    "& .MuiTypography-root": {
+      padding: "0 10px",
+    },
   },
   "& .MuiSelect-select": {
     padding: 0,
     display: "flex",
     alignItems: "center",
+    width: "90%",
+    position: "absolute",
   },
   "& .placeholder": {
     fontFamily: "Inter",
@@ -317,6 +418,12 @@ const StyledFormControl = styled(Box)(() => ({
     lineHeight: "19px",
 
     color: "#91969E",
+  },
+  "& .MuiFormLabel-asterisk": {
+    color: "red",
+  },
+  "& .MuiSvgIcon-root": {
+    display: "none",
   },
 }));
 const StyledCompactPicker = styled(CompactPicker)(() => ({

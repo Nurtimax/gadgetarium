@@ -1,30 +1,28 @@
-import { MenuItem, Select, styled, Typography } from "@mui/material";
+import { FormLabel, MenuItem, Select, styled, Typography } from "@mui/material";
 import React from "react";
 import { ArrowDownIcon } from "../../../assets";
 import { catalogMenu_FAKE_DATA } from "../../../utils/constants";
 import Input from "../../UI/input/Input";
 
-const Category = ({ values, handleChange }) => {
-  if (!values && !handleChange) {
-    return <h1>Loading...</h1>;
-  }
-
+const Category = ({ values, handleChange, errors }) => {
   const findedCategory = catalogMenu_FAKE_DATA.find(
     (category) => category.id === Number(values?.categoryId)
   );
 
   return (
     <>
-      <Typography component="p" variant="body1">
-        Выберите категорию *
-      </Typography>
+      <FormLabel required>Выберите категорию</FormLabel>
       <Select
+        className="pointer"
         value={values?.categoryId}
+        required
         onChange={handleChange}
         name="categoryId"
         displayEmpty
-        IconComponent={() => <ArrowDownIcon width={23} height={23} />}
-        input={<Input />}
+        endAdornment={
+          <ArrowDownIcon className="pointer" width={18} height={18} />
+        }
+        input={<Input error={Boolean(errors.categoryId)} />}
         placeholder="Выбрать"
         renderValue={() => (
           <>
@@ -50,6 +48,11 @@ const Category = ({ values, handleChange }) => {
           </StyledMenuItem>
         ))}
       </Select>
+      {errors.categoryId && (
+        <Typography component="p" variant="body2" color="error">
+          {errors.categoryId}
+        </Typography>
+      )}
     </>
   );
 };

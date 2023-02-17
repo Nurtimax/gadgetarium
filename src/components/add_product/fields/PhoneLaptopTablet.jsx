@@ -21,6 +21,7 @@ const PhoneLaptopTablet = ({
   setFieldValue,
   findedSubProductData,
   getProductIdParam,
+  errors,
 }) => {
   const changeCharacteristicsHandler = useCallback(
     (e) => {
@@ -44,8 +45,12 @@ const PhoneLaptopTablet = ({
     [values.subProductRequests, findedSubProductData.characteristics]
   );
 
+  if (!values) {
+    return null;
+  }
+
   const findedProduct = PRODUCT_FORMS_FIELDS.find(
-    (productform) => productform.id === values.categoryId
+    (productform) => productform.id === values?.categoryId
   );
 
   return (
@@ -60,9 +65,9 @@ const PhoneLaptopTablet = ({
               <Select
                 onChange={changeCharacteristicsHandler}
                 name={content.key}
-                value={findedSubProductData.characteristics[content.key]}
+                value={findedSubProductData.characteristics[content.key] || ""}
                 displayEmpty
-                IconComponent={() => <ArrowDownIcon width={23} height={23} />}
+                IconComponent={() => <ArrowDownIcon width={18} height={18} />}
                 input={<Input />}
                 renderValue={() => (
                   <>
@@ -96,7 +101,9 @@ const PhoneLaptopTablet = ({
                 <RadioGroup
                   onChange={changeCharacteristicsHandler}
                   name={content.key}
-                  value={findedSubProductData.characteristics[content.key]}
+                  value={
+                    findedSubProductData.characteristics[content.key] || ""
+                  }
                   row
                   classes={{ root: "radiogroup" }}
                 >
@@ -115,6 +122,11 @@ const PhoneLaptopTablet = ({
                   ))}
                 </RadioGroup>
               </StyledFormControl>
+              {errors[content.key] && (
+                <Typography component="p" variant="body2" color="error">
+                  {errors[content.key]}
+                </Typography>
+              )}
             </>
           )}
         </Grid>

@@ -47,11 +47,11 @@ const authenticationSlice = createSlice({
       state.data = initialState.data;
       localStorage.removeItem(GADJEDTARIUM_LOGIN_INFO);
     },
-    authLogIn: (state, { payload }) => {
-      state.data = payload;
+    authLogIn: (state, action) => {
+      state.data = action.payload;
     },
-    getUserData: (state, { payload }) => {
-      state.data = payload;
+    getUserData: (state, action) => {
+      state.data = action.payload;
     },
     exampleData(state) {
       return state;

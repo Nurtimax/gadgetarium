@@ -10,7 +10,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    dispatch(ActionauthenticationSlice.getUserData(authSave));
+    if (authSave) {
+      dispatch(ActionauthenticationSlice.getUserData(authSave));
+    }
   }, []);
 
   return <AppRoutes />;

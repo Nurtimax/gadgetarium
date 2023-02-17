@@ -1,10 +1,10 @@
-import { MenuItem, Select, styled, Typography } from "@mui/material";
+import { FormLabel, MenuItem, Select, styled, Typography } from "@mui/material";
 import React from "react";
 import { ArrowDownIcon } from "../../../assets";
 import { catalogMenu_FAKE_DATA } from "../../../utils/constants";
 import Input from "../../UI/input/Input";
 
-const SubCategory = ({ values, handleChange }) => {
+const SubCategory = ({ values, handleChange, errors }) => {
   const findedCategory = catalogMenu_FAKE_DATA.find(
     (category) => category.id === Number(values?.categoryId)
   );
@@ -14,16 +14,14 @@ const SubCategory = ({ values, handleChange }) => {
 
   return (
     <>
-      <Typography component="p" variant="body1">
-        Выберите подкатегорию *
-      </Typography>
+      <FormLabel required>Выберите подкатегорию</FormLabel>
       <Select
         displayEmpty
         value={values?.subCategoryId}
         onChange={handleChange}
         name="subCategoryId"
-        IconComponent={() => <ArrowDownIcon width={23} height={23} />}
-        input={<Input />}
+        IconComponent={() => <ArrowDownIcon width={18} height={18} />}
+        input={<Input error={Boolean(errors.subCategoryId)} />}
         placeholder="Выбрать"
         renderValue={() => (
           <>
@@ -49,6 +47,11 @@ const SubCategory = ({ values, handleChange }) => {
           </StyledMenuItem>
         ))}
       </Select>
+      {Boolean(errors.subCategoryId) && (
+        <Typography component="p" variant="body2" color="error">
+          {errors.subCategoryId}
+        </Typography>
+      )}
     </>
   );
 };

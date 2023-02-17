@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import { Container, styled } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import Forms from "../../components/add_product/Forms";
+import { useDispatch } from "react-redux";
+import { addProductThunk } from "../../redux/slices/add-product";
 
 const steps = [
   "Добавление товара",
@@ -19,8 +21,15 @@ const AddProduct = () => {
 
   const query = searchParams.get("stepper");
 
+  const dispatch = useDispatch();
+
   const changeParams = (stepper) => {
-    setSearchParams({ stepper });
+    setSearchParams(stepper);
+  };
+
+  const sendData = (value) => {
+    console.log(value);
+    dispatch(addProductThunk(value));
   };
 
   return (
@@ -35,7 +44,7 @@ const AddProduct = () => {
           {steps.map((label, index) => {
             return (
               <Step key={label} completed={false}>
-                <StepLabel onClick={() => changeParams(index)}>
+                <StepLabel onClick={() => changeParams({ stepper: index })}>
                   <Typography variant="body1" component="span">
                     {label}
                   </Typography>
@@ -44,7 +53,11 @@ const AddProduct = () => {
             );
           })}
         </Stepper>
-        <Forms />
+        <Forms
+          getData={sendData}
+          searchParams={searchParams}
+          setSearchParams={changeParams}
+        />
       </Container>
     </StyledAddProduct>
   );

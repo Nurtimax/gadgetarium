@@ -448,7 +448,6 @@ export const ROUTES = {
   ADMIN: "/admin",
   ADMINITEMDETAIL: "item_details",
   ADDPRODUCT: "add-product",
-  settingPriceQuantityItem: "setting-price-quantity-item",
   SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
   DESCRIPTIONOVERVIEW: "description-overview",
   MAIN: "/",

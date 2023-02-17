@@ -89,6 +89,16 @@ a {
   min-width: 0 !important;
   padding: 0 !important;
 }
+.scroll {
+  overflow: auto;
+}
+.scroll_tab::-webkit-scrollbar {
+  display: none;
+}
+
+.fullWidth {
+  width: 100%;
+}
 
 .gap {
   gap: 8px;
