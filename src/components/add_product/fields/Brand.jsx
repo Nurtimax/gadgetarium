@@ -44,7 +44,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
     },
     onSubmit: (values) => {
       dispatch(postBrandThunkApi(values)).then((res) => {
-        if (res.payload.name !== "AxiosError") {
+        if (!res.payload.message.includes(500)) {
           setOpenModal();
         }
       });
