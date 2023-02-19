@@ -37,8 +37,8 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
     useFormik({
       initialValues: PRODUCT_INITIALSTATE,
       validationSchema: PRODUCT_INITIALSTATESCHEMA,
-      onSubmit: () => {
-        getData();
+      onSubmit: (values) => {
+        getData(values);
       },
       validateOnChange: false,
     });

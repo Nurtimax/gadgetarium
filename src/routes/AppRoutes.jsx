@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AboutStore from "../containers/about-store/AboutStore";
 import AddProduct from "../containers/add-product/AddProduct";
 import Contacts from "../containers/contacts/Contacts";
@@ -201,8 +201,8 @@ const AppRoutes = () => {
             path={ROUTES.ADMIN}
             element={
               <PrivateRole
-                RouteComponent={<h1>Admin</h1>}
-                roles={["user"]}
+                RouteComponent={<Navigate to={ROUTES.GOODS} />}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -213,7 +213,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<h1>goods</h1>}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -224,7 +224,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<h1>Product</h1>}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -235,7 +235,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<h1>detail</h1>}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -246,7 +246,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<AddProduct />}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -257,7 +257,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<h1>Orders</h1>}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
@@ -268,7 +268,7 @@ const AppRoutes = () => {
             element={
               <PrivateRole
                 RouteComponent={<h1>Revviews Rating</h1>}
-                roles={["user"]}
+                roles={["Customer"]}
                 fallbackPath="/"
                 roleName={roleName}
               />
