@@ -176,24 +176,6 @@ export const catalogMenu_FAKE_DATA = [
   },
   {
     id: 2,
-    title: "Планшеты",
-    icon: <TabletMacIcon color="disabled" />,
-    subcategories: [
-      { id: 1, title: "Acer" },
-      { id: 2, title: "Asus" },
-      { id: 3, title: "Apple" },
-      { id: 4, title: "DELL" },
-      { id: 5, title: "Digma" },
-      { id: 6, title: "Huawei" },
-      { id: 7, title: "HONOR" },
-      { id: 8, title: "Lenovo" },
-      { id: 9, title: "HP" },
-      { id: 10, title: "MSI" },
-      { id: 11, title: "Xiaomi" },
-    ],
-  },
-  {
-    id: 3,
     title: "Ноутбуки",
     icon: <ComputerIcon />,
     subcategories: [
@@ -211,8 +193,26 @@ export const catalogMenu_FAKE_DATA = [
     ],
   },
   {
+    id: 3,
+    title: "Планшеты",
+    icon: <TabletMacIcon color="disabled" />,
+    subcategories: [
+      { id: 1, title: "Acer" },
+      { id: 2, title: "Asus" },
+      { id: 3, title: "Apple" },
+      { id: 4, title: "DELL" },
+      { id: 5, title: "Digma" },
+      { id: 6, title: "Huawei" },
+      { id: 7, title: "HONOR" },
+      { id: 8, title: "Lenovo" },
+      { id: 9, title: "HP" },
+      { id: 10, title: "MSI" },
+      { id: 11, title: "Xiaomi" },
+    ],
+  },
+  {
     id: 4,
-    title: "Смарт-часы и браслеты ",
+    title: "Смарт-часы и браслеты",
     icon: <SmartWatchIcon />,
     subcategories: [
       { id: 1, title: "Смарт-часы Apple Watch" },
@@ -514,4 +514,71 @@ export const ITEM_SORT = [
   { id: 3, title: "Рекомендуемые" },
   { id: 4, title: "По увеличению цены" },
   { id: 5, title: "По уменьшению цены" },
+];
+
+export const filterProducts = [
+  {
+    id: 1,
+    title: "Категория",
+    subtitle: [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 3, title: "Huawei" },
+      { id: 4, title: "Honor" },
+      { id: 5, title: "Xiaomi" },
+    ],
+  },
+  {
+    id: 2,
+    title: "Стоимость",
+    subtitle: [
+      { id: 1, title: "от 500" },
+      { id: 2, title: "до 250000" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Цвет",
+    subtitle: [
+      { id: 1, title: "Black " },
+      { id: 2, title: "Blue" },
+      { id: 3, title: "Gold " },
+      { id: 4, title: "Graphite " },
+      { id: 5, title: "Green" },
+      { id: 6, title: "Rose Gold" },
+      { id: 7, title: "Red" },
+      { id: 8, title: "Silver" },
+      { id: 9, title: "White" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Объем памяти (GB) ",
+    subtitle: [
+      { id: 1, title: "8" },
+      { id: 2, title: "16" },
+      { id: 3, title: "32" },
+      { id: 4, title: "64" },
+      { id: 5, title: "128" },
+      { id: 6, title: "256" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Объем оперативной памяти (GB)",
+    subtitle: [
+      { id: 1, title: "3" },
+      { id: 2, title: "4" },
+      { id: 3, title: "6" },
+      { id: 4, title: "8" },
+      { id: 5, title: "12" },
+    ],
+  },
+];
+
+export const chip_item = [
+  { id: 1, title: "Apple" },
+  { id: 1, title: "Graphite" },
+  { id: 1, title: "Apple" },
+  { id: 1, title: "Apple" },
 ];

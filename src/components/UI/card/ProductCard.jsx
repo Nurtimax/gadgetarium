@@ -21,8 +21,17 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 const ProductCard = (props) => {
-  const { title, price, img, status, newprice, quantity, discount, rating } =
-    props;
+  const {
+    title,
+    price,
+    img,
+    status,
+    newprice,
+    quantity,
+    discount,
+    rating,
+    ...rest
+  } = props;
   const [like, setLike] = useState(false);
   const [comporation, setComporation] = useState(false);
   const onChangeComporation = () => {
@@ -31,15 +40,21 @@ const ProductCard = (props) => {
   const onChangeLike = () => {
     setLike(!like);
   };
+  console.log(discount);
+  console.log(newprice);
 
   const sortStatus = useMemo(() => {
     switch (status) {
       case "NEW":
         return <New title="Новинки" />;
-      case "DISCOUNT":
-        return <Discount_Styled title="Акции">-{discount}%</Discount_Styled>;
+      case "RECOMMENDATION":
+        return (
+          <Discount_Styled title="Акции">
+            -{100 - Math.round((discount * 100) / price)}%
+          </Discount_Styled>
+        );
       case "LIKE":
-        return <Like title="Рекемендуем" />;
+        return <Like title="Рекомендуемые" />;
 
       default:
         return <div></div>;
@@ -94,7 +109,7 @@ const ProductCard = (props) => {
   }, [like]);
 
   return (
-    <StyledProductCard>
+    <StyledProductCard {...rest}>
       <CardActions>
         <Grid className="between" container>
           {sortStatus}
@@ -122,12 +137,14 @@ const ProductCard = (props) => {
           <Grid container className="flex between">
             <Box>
               <Typography variant="h4" fontSize="18px">
-                {newprice} c
+                {price} c
               </Typography>
-              {status !== "NEW" ? <Styled_Price>{price} c</Styled_Price> : null}
+              {status !== "NEW" ? (
+                <Styled_Price>{newprice} c</Styled_Price>
+              ) : null}
             </Box>
             <IconButton title="Добавить в карзину" icon={<CartIcon />}>
-              В карзину
+              В корзину
             </IconButton>
           </Grid>
         </CardActions>
