@@ -151,9 +151,9 @@ const ProductCard = (props) => {
               height="2.5vw"
               title="Добавить в карзину"
               fontSize="0.5rem"
-              icon={<CartIcon />}
+              icon={<CartIcon width="1.5vw" />}
             >
-              В_карзину
+              В корзину
             </IconButton>
           </Grid>
         </CardActions>
