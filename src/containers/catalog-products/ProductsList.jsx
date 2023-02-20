@@ -16,24 +16,15 @@ const ProductsList = ({ data, setSize, size }) => {
         paddingBottom: "20px",
       }}
     >
-      {/* <Grid container className="gap between"> */}
       {data.products?.map((item) => (
-        // <Grid  item xs={2.9} className="flex flex-end">
         <ProductCardStyled
-          key={item.productName}
-          img={item.productImage}
-          title={item.productName}
-          price={item.productPrice}
-          status={item.productStatus}
-          newprice={item.discountPrice}
-          quantity={item.count}
-          discount={item.discountPrice}
-          rating={item.productRating}
           {...item}
+          key={item.productName}
+          productStatus={
+            item.discountPrice > 0 ? "DISCOUNT" : item.productStatus
+          }
         />
-        // </Grid>
       ))}
-      {/* </Grid> */}
 
       {data.products?.length >= 12 ? (
         <Box
@@ -59,10 +50,27 @@ export default ProductsList;
 
 const ProductCardStyled = styled(ProductCard)(() => ({
   width: "227.5px !important",
-  aspectRatio: "0/1 !important",
-  objectFit: "contain !important",
+
   "& .css-1mwp0i7": {
-    width: "80% !important",
+    width: "80%",
   },
-  "& .css-1ixqkpz": { fontSize: "12px !important" },
+  "& .css-1ixqkpz": { fontSize: "12px" },
+  "& .css-1qqw7q9": {
+    fontFamily: "Inter",
+    fontWeight: "500",
+    fontSize: "16px",
+    lineHeight: "22px",
+    textTransform: "capitalize",
+  },
+  "& .MuiButtonBase-root": { fontSize: "14px" },
+  "& .MuiTypography-h1": {
+    fontSize: "14px",
+    fontWeight: "700",
+  },
+  "& .MuiTypography-span": {
+    fontFamily: "Inter",
+    fontWeight: "500",
+    fontSize: "12px",
+    color: " #909CB5",
+  },
 }));

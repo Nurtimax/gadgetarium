@@ -6,7 +6,6 @@ import {
 } from "../../utils/constants/fetch";
 
 const USER_INFO = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
-console.log(USER_INFO?.token);
 
 export const fetchDataCatalog = createAsyncThunk(
   "catalogSlice/fetchDataCatalog",
@@ -41,7 +40,6 @@ const catalogSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchDataCatalog.fulfilled]: (state, action) => {
-      console.log(action);
       state.data.products = action.payload.data;
       state.isLoading = false;
     },
@@ -52,7 +50,6 @@ const catalogSlice = createSlice({
     [fetchDataCatalog.rejected]: (state, action) => {
       state.errorMessage = action.payload;
       state.isLoading = false;
-      console.log(action.payload);
     },
   },
 });

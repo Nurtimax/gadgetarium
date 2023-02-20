@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
@@ -25,6 +26,7 @@ const CatalogProducts = () => {
   const { data, isLoading, errorMessage } = useSelector(
     (state) => state.catalog
   );
+
   const dispatch = useDispatch();
 
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(
@@ -93,33 +95,24 @@ const CatalogProducts = () => {
                 </Box>
               </Box>
             </Grid>
-
-            {/* <Box className="sort-container" onClick={setSortEl}>
-              <Typography
-                variant="body2"
-                component="span"
-                className="sort-text pointer"
-              >
-                Сортировать
-              </Typography>
-              <ArrowDownIcon />
-            </Box>
-            <Sort
-              anchorElCatalog={sortEL}
-              handleCloseCatalog={setSortEl}
-              setDiscountField={setDiscountField}
-              setSortField={setSortField}
-            /> */}
           </Box>
 
           {errorMessage ? (
-            <h1 style={{ color: "red" }}> Error :{errorMessage} </h1>
+            <Typography variant="body" component="h1" className="error">
+              Error :{errorMessage}
+            </Typography>
           ) : (
             ""
           )}
 
           {isLoading ? (
-            <h1>LOADING.......</h1>
+            <Box className="isLoading-style">
+              {[...new Array(8)].map((_, i) => (
+                <div key={i} className="circular-progress">
+                  <CircularProgress color="secondary" />
+                </div>
+              ))}
+            </Box>
           ) : (
             <ProductsList data={data} setSize={setSize} size={size} />
           )}
@@ -184,5 +177,19 @@ const ContainerStyled = styled(Container)(() => ({
     borderRadiuse: "0px",
     background: "#E8E8E8",
     border: "1px solid #CDCDCD",
+  },
+  "& .error": { color: "red" },
+  "& .isLoading-style": {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px",
+  },
+  "& .circular-progress": {
+    width: "227px",
+    height: "423px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));

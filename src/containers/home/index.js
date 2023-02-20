@@ -42,7 +42,6 @@ const Home = () => {
     discountError,
     recomenError,
   } = useSelector((store) => store.product);
-  console.log(discountsProducts.length, size.discount);
   useEffect(() => {
     dispatch(ActionauthenticationSlice.authLogIn(authSave));
   }, []);

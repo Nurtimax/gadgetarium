@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   Grid,
   Card,
@@ -29,19 +29,15 @@ const ProductCard = (props) => {
     count,
     productRating,
     countOfReview,
+    favorite,
+    compared,
     ...rest
   } = props;
-  const [like, setLike] = useState(false);
-  const [comporation, setComporation] = useState(false);
-  const onChangeComporation = () => {
-    setComporation((prev) => !prev);
-  };
-  const onChangeLike = () => {
-    setLike(!like);
-  };
+
   const productSale = useMemo(() => {
     return Math.round((discountPrice / productPrice) * 100) - 100;
   });
+
   const sortStatus = useMemo(() => {
     switch (productStatus) {
       case "NEW":
@@ -49,64 +45,54 @@ const ProductCard = (props) => {
       case "DISCOUNT":
         return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
       case "RECOMMENDATION":
-        return <Like width="2vw" height="2vw" title="Рекемендуем" />;
+        return <Like width="2vw" height="2vw" title="Рекoмендуем" />;
+
       default:
         return <div></div>;
     }
   }, [productStatus]);
+
   const onComponentComporation = useMemo(() => {
-    switch (comporation) {
-      case true:
-        return (
-          <ComporativePinkIcon
-            onClick={onChangeComporation}
-            cursor="pointer"
-            title="Добавить к сравнению"
-            width="3.5vh"
-            height="3.5vh"
-          />
-        );
-      case false:
-        return (
-          <Comporation
-            onClick={onChangeComporation}
-            cursor="pointer"
-            title="Удалить из сравнения"
-            width="3.5vh"
-            height="3.5vh"
-          />
-        );
-      default:
-        return null;
+    if (compared) {
+      return (
+        <ComporativePinkIcon
+          cursor="pointer"
+          title="Добавить к сравнению"
+          width="3.5vh"
+          height="3.5vh"
+        />
+      );
     }
-  }, [comporation]);
+    return (
+      <Comporation
+        cursor="pointer"
+        title="Удалить из сравнения"
+        width="3.5vh"
+        height="3.5vh"
+      />
+    );
+  }, [compared]);
 
   const onComponentLike = useMemo(() => {
-    switch (like) {
-      case true:
-        return (
-          <HeartActiveIcon
-            onClick={onChangeLike}
-            cursor="pointer"
-            title="Удалить из избранного"
-            width="3.5vh"
-            height="3.5vh"
-          />
-        );
-      case false:
-        return (
-          <Favorites
-            onClick={onChangeLike}
-            width="3.5vh"
-            height="3.5vh"
-            title="Добавить в избранное"
-            cursor="pointer"
-          />
-        );
-      default:
-        return null;
+    if (favorite) {
+      return (
+        <HeartActiveIcon
+          cursor="pointer"
+          title="Удалить из избранного"
+          width="3.5vh"
+          height="3.5vh"
+        />
+      );
     }
-  }, [like]);
+    return (
+      <Favorites
+        width="3.5vh"
+        height="3.5vh"
+        title="Добавить в избранное"
+        cursor="pointer"
+      />
+    );
+  }, [favorite]);
 
   return (
     <StyledProductCard {...rest}>

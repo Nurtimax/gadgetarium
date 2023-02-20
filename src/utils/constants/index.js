@@ -578,7 +578,7 @@ export const filterProducts = [
 
 export const chip_item = [
   { id: 1, title: "Apple" },
-  { id: 1, title: "Graphite" },
-  { id: 1, title: "Apple" },
-  { id: 1, title: "Apple" },
+  { id: 2, title: "Graphite" },
+  { id: 3, title: "Apple" },
+  { id: 4, title: "Apple" },
 ];
