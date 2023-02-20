@@ -12,9 +12,7 @@ import {
 } from "../../redux/slices/productSlice";
 import Button from "../../components/UI/button/Button";
 import Skeleton from "../../components/UI/card/Skeleton";
-
 const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
-
 const Home = () => {
   const [size, setSize] = useState({
     news: 5,
@@ -27,9 +25,7 @@ const Home = () => {
     },
     [size]
   );
-
   const dispatch = useDispatch();
-
   const {
     newProducts,
     recommendationProduct,
@@ -41,11 +37,9 @@ const Home = () => {
     discountError,
     recomenError,
   } = useSelector((store) => store.product);
-
   useEffect(() => {
     dispatch(ActionauthenticationSlice.authLogIn(authSave));
   }, []);
-
   useEffect(() => {
     dispatch(fetchNewProduct(size.news));
   }, [size.news]);
@@ -55,11 +49,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
-
   return (
     <>
       <Banner />
-
       <Container>
         <Container_Card>
           {discountError ? (
@@ -101,7 +93,6 @@ const Home = () => {
               )}
             </Global_Card>
           )}
-
           {newError ? (
             <Styled_Error>Error {newError}</Styled_Error>
           ) : (
@@ -141,7 +132,6 @@ const Home = () => {
               )}
             </Global_Card>
           )}
-
           {recomenError ? (
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
@@ -186,7 +176,6 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;
 const Container_Card = styled("div")(() => ({
   maxWidth: "100% ",
@@ -198,7 +187,6 @@ const Global_Card = styled("section")(() => ({
   display: "grid",
   gap: 40,
 }));
-
 const Styled_Error = styled("h1")(() => ({
   color: "red",
   display: "flex",
@@ -206,8 +194,6 @@ const Styled_Error = styled("h1")(() => ({
   alignItems: "center",
   marginTop: "7%",
 }));
-
 const SkeletonStyled = styled("div")(() => ({
-  // display: "flex",
-  marginTop: "9%",
+  marginTop: "10%",
 }));
