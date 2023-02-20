@@ -2,7 +2,13 @@ import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../components/Banner";
 import ProductCard from "../../components/UI/card/ProductCard";
-import { Container, Grid, styled, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  styled,
+  Typography,
+} from "@mui/material";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication";
 import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 import {
@@ -11,10 +17,7 @@ import {
   fetchDiscountProduct,
 } from "../../redux/slices/productSlice";
 import Button from "../../components/UI/button/Button";
-import Skeleton from "../../components/UI/card/Skeleton";
-
 const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
-
 const Home = () => {
   const [size, setSize] = useState({
     news: 5,
@@ -27,9 +30,7 @@ const Home = () => {
     },
     [size]
   );
-
   const dispatch = useDispatch();
-
   const {
     newProducts,
     recommendationProduct,
@@ -41,11 +42,10 @@ const Home = () => {
     discountError,
     recomenError,
   } = useSelector((store) => store.product);
-
+  console.log(discountsProducts.length, size.discount);
   useEffect(() => {
     dispatch(ActionauthenticationSlice.authLogIn(authSave));
   }, []);
-
   useEffect(() => {
     dispatch(fetchNewProduct(size.news));
   }, [size.news]);
@@ -55,50 +55,39 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
-
   return (
     <>
       <Banner />
-
       <Container>
         <Container_Card>
           {discountError ? (
             <Styled_Error>Error {discountError} </Styled_Error>
           ) : (
             <Global_Card>
-              {disStatus === "loading" ? (
-                <SkeletonStyled>
-                  <Grid container spacing={2}>
-                    {discountsProducts?.map((_, i) => (
-                      <Grid item xs={2.4} key={i}>
-                        <Skeleton />
-                      </Grid>
-                    ))}
+              <Typography variant="h4">Акции</Typography>
+              <Grid container className="" spacing={1}>
+                {discountsProducts?.map((item) => (
+                  <Grid item xs={2.4} key={item.productName}>
+                    <ProductCard {...item} productStatus="DISCOUNT" />
                   </Grid>
-                </SkeletonStyled>
-              ) : (
-                <>
-                  <Typography variant="h4">Акции</Typography>
-                  <Grid container className="" spacing={1}>
-                    {discountsProducts?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
-                        <ProductCard {...item} productStatus="DISCOUNT" />
-                      </Grid>
-                    ))}
-                  </Grid>
-                  <Typography className="flex center gap" variant="div">
-                    <Button
-                      width="30vh"
-                      height="5vh"
-                      variant="outlined"
-                      onClick={onClickSize}
-                      id="discount"
-                    >
-                      Показать ещё
-                    </Button>
-                  </Typography>
-                </>
-              )}
+                ))}
+              </Grid>
+              <Typography className="flex center gap" variant="div">
+                {disStatus === "loading" ? (
+                  <CircularProgress color="secondary" />
+                ) : (
+                  <Button
+                    width="30vh"
+                    height="5vh"
+                    variant="outlined"
+                    onClick={onClickSize}
+                    id="discount"
+                    disabled={discountsProducts.length !== size.discount}
+                  >
+                    Показать ещё
+                  </Button>
+                )}
+              </Typography>
             </Global_Card>
           )}
 
@@ -106,39 +95,30 @@ const Home = () => {
             <Styled_Error>Error {newError}</Styled_Error>
           ) : (
             <Global_Card>
-              {newStatus === "loading" ? (
-                <SkeletonStyled>
-                  <Grid container spacing={2}>
-                    {newProducts?.map((_, i) => (
-                      <Grid item xs={2.4} key={i}>
-                        <Skeleton />
-                      </Grid>
-                    ))}
+              <Typography variant="h4">Новинки</Typography>
+              <Grid container spacing={1}>
+                {newProducts?.map((item) => (
+                  <Grid item xs={2.4} key={item.productName}>
+                    <ProductCard {...item} />
                   </Grid>
-                </SkeletonStyled>
-              ) : (
-                <>
-                  <Typography variant="h4">Новинки</Typography>
-                  <Grid container spacing={1}>
-                    {newProducts?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
-                        <ProductCard {...item} />
-                      </Grid>
-                    ))}
-                  </Grid>
-                  <Typography className="flex center" variant="div">
-                    <Button
-                      width="30vh"
-                      height="5vh"
-                      variant="outlined"
-                      onClick={onClickSize}
-                      id="news"
-                    >
-                      Показать ещё
-                    </Button>
-                  </Typography>
-                </>
-              )}
+                ))}
+              </Grid>
+              <Typography className="flex center" variant="div">
+                {newStatus === "loading" ? (
+                  <CircularProgress color="secondary" />
+                ) : (
+                  <Button
+                    width="30vh"
+                    height="5vh"
+                    variant="outlined"
+                    onClick={onClickSize}
+                    id="news"
+                    disabled={newProducts.length !== size.news}
+                  >
+                    Показать ещё
+                  </Button>
+                )}
+              </Typography>
             </Global_Card>
           )}
 
@@ -146,39 +126,32 @@ const Home = () => {
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
             <Global_Card>
-              {recStatus === "loading" ? (
-                <SkeletonStyled>
-                  <Grid container spacing={1}>
-                    {discountsProducts?.map((_, i) => (
-                      <Grid item xs={2.4} key={i}>
-                        <Skeleton />
-                      </Grid>
-                    ))}
+              <Typography variant="h4">Рекемендуем</Typography>
+              <Grid container spacing={2}>
+                {recommendationProduct?.map((item) => (
+                  <Grid item xs={2.4} key={item.productName}>
+                    <ProductCard {...item} />
                   </Grid>
-                </SkeletonStyled>
-              ) : (
-                <>
-                  <Typography variant="h4">Рекемендуем</Typography>
-                  <Grid container spacing={2}>
-                    {recommendationProduct?.map((item) => (
-                      <Grid item xs={2.4} key={item.productName}>
-                        <ProductCard {...item} />
-                      </Grid>
-                    ))}
-                  </Grid>
-                  <Typography className="flex center" variant="div">
-                    <Button
-                      width="30vh"
-                      height="5vh"
-                      variant="outlined"
-                      onClick={onClickSize}
-                      id="recomendation"
-                    >
-                      Показать ещё
-                    </Button>
-                  </Typography>
-                </>
-              )}
+                ))}
+              </Grid>
+              <Typography className="flex center" variant="div">
+                {recStatus === "loading" ? (
+                  <CircularProgress color="secondary" />
+                ) : (
+                  <Button
+                    width="30vh"
+                    height="5vh"
+                    variant="outlined"
+                    onClick={onClickSize}
+                    id="recomendation"
+                    disabled={
+                      recommendationProduct.length !== size.recomendation
+                    }
+                  >
+                    Показать ещё
+                  </Button>
+                )}
+              </Typography>
             </Global_Card>
           )}
         </Container_Card>
@@ -186,7 +159,6 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;
 const Container_Card = styled("div")(() => ({
   maxWidth: "100% ",
@@ -198,16 +170,10 @@ const Global_Card = styled("section")(() => ({
   display: "grid",
   gap: 40,
 }));
-
 const Styled_Error = styled("h1")(() => ({
   color: "red",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   marginTop: "7%",
-}));
-
-const SkeletonStyled = styled("div")(() => ({
-  // display: "flex",
-  marginTop: "9%",
 }));
