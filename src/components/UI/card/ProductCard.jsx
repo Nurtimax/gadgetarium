@@ -7,7 +7,6 @@ import {
   Rating,
   CardActions,
   Box,
-  // CardMedia,
   styled,
 } from "@mui/material";
 import IconButton from "../IconButton";
@@ -28,7 +27,6 @@ const ProductCard = (props) => {
     productStatus,
     productPrice,
     count,
-    // discount,
     productRating,
     countOfReview,
   } = props;
@@ -40,25 +38,21 @@ const ProductCard = (props) => {
   const onChangeLike = () => {
     setLike(!like);
   };
-
   const productSale = useMemo(() => {
     return Math.round((discountPrice / productPrice) * 100) - 100;
   });
-
   const sortStatus = useMemo(() => {
     switch (productStatus) {
       case "NEW":
-        return <New width="3.5vh" height="3.5vh" title="Новинки" />;
+        return <New width="2vw" height="2vw" title="Новинки" />;
       case "DISCOUNT":
         return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
       case "RECOMMENDATION":
-        return <Like width="3.5vh" height="3.5vh" title="Рекемендуем" />;
-
+        return <Like width="2vw" height="2vw" title="Рекемендуем" />;
       default:
         return <div></div>;
     }
   }, [productStatus]);
-
   const onComponentComporation = useMemo(() => {
     switch (comporation) {
       case true:
@@ -129,39 +123,37 @@ const ProductCard = (props) => {
       />
       <Card_contend className="carsContent">
         <Styled_Count>В наличии ({count})</Styled_Count>
-
         <StyletTitle color="black" title={productName}>
           {productName}
         </StyletTitle>
-        <Typography variant="span" className="flex">
+        <Typography variant="span" className="flex size">
           Рейтинг
-          <Rating defaultValue={productRating} readOnly />({countOfReview})
+          <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
         <CardActions>
           <Grid container className="flex between ">
             <Box width="30%" marginLeft="-10px">
               {discountPrice > 0 ? (
-                <Typography variant="h1" fontSize="0.7rem">
+                <Typography variant="h1" fontSize="0.8rem">
                   {discountPrice}c
                 </Typography>
               ) : (
-                <Typography variant="h1" fontSize="0.7rem">
+                <Typography variant="h1" fontSize="0.8rem">
                   {productPrice}c
                 </Typography>
               )}
-
               {discountPrice > 0 ? (
                 <Styled_Price>{productPrice}c</Styled_Price>
               ) : null}
             </Box>
             <IconButton
               width="70%"
-              height="5vh"
+              height="2.5vw"
               title="Добавить в карзину"
               fontSize="0.5rem"
-              icon={<CartIcon />}
+              icon={<CartIcon width="1.5vw" />}
             >
-              В_карзину
+              В корзину
             </IconButton>
           </Grid>
         </CardActions>
@@ -169,16 +161,14 @@ const ProductCard = (props) => {
     </StyledProductCard>
   );
 };
-
 export default React.memo(ProductCard);
-
 const Card_contend = styled(CardContent)(() => ({
   "& span": {
-    fontSize: "0.7rem",
+    fontSize: "0.8rem",
   },
 }));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "0.9rem",
+  fontSize: "1rem",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",
@@ -187,8 +177,8 @@ const StyletTitle = styled("h1")(() => ({
 }));
 const Discount_Styled = styled("div")(() => ({
   color: "white",
-  width: "4vh",
-  height: "4vh",
+  width: "2vw",
+  height: "2vw",
   fontWeight: "900",
   borderRadius: "50%",
   background: "red",
@@ -202,9 +192,8 @@ const Styled_Count = styled("p")(() => ({
   color: "#2FC509",
 }));
 const StyledProductCard = styled(Card)(() => ({
-  width: "35vh",
+  width: "16.5vw",
   height: "100%",
-  // padding: "5px 0",
   display: "grid",
   gridRowGap: "1rem",
   "&:hover": {
