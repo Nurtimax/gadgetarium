@@ -2,12 +2,12 @@ import React, { useMemo, useState } from "react";
 import {
   Grid,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   Rating,
   CardActions,
   Box,
+  // CardMedia,
   styled,
 } from "@mui/material";
 import IconButton from "../IconButton";
@@ -21,8 +21,17 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 const ProductCard = (props) => {
-  const { title, price, img, status, newprice, quantity, discount, rating } =
-    props;
+  const {
+    productName,
+    discountPrice,
+    productImage,
+    productStatus,
+    productPrice,
+    count,
+    // discount,
+    productRating,
+    countOfReview,
+  } = props;
   const [like, setLike] = useState(false);
   const [comporation, setComporation] = useState(false);
   const onChangeComporation = () => {
@@ -32,19 +41,23 @@ const ProductCard = (props) => {
     setLike(!like);
   };
 
+  const productSale = useMemo(() => {
+    return Math.round((discountPrice / productPrice) * 100) - 100;
+  });
+
   const sortStatus = useMemo(() => {
-    switch (status) {
+    switch (productStatus) {
       case "NEW":
-        return <New title="Новинки" />;
+        return <New width="3.5vh" height="3.5vh" title="Новинки" />;
       case "DISCOUNT":
-        return <Discount_Styled title="Акции">-{discount}%</Discount_Styled>;
-      case "LIKE":
-        return <Like title="Рекемендуем" />;
+        return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
+      case "RECOMMENDATION":
+        return <Like width="3.5vh" height="3.5vh" title="Рекемендуем" />;
 
       default:
         return <div></div>;
     }
-  }, [status]);
+  }, [productStatus]);
 
   const onComponentComporation = useMemo(() => {
     switch (comporation) {
@@ -54,6 +67,8 @@ const ProductCard = (props) => {
             onClick={onChangeComporation}
             cursor="pointer"
             title="Добавить к сравнению"
+            width="3.5vh"
+            height="3.5vh"
           />
         );
       case false:
@@ -62,6 +77,8 @@ const ProductCard = (props) => {
             onClick={onChangeComporation}
             cursor="pointer"
             title="Удалить из сравнения"
+            width="3.5vh"
+            height="3.5vh"
           />
         );
       default:
@@ -76,13 +93,16 @@ const ProductCard = (props) => {
             onClick={onChangeLike}
             cursor="pointer"
             title="Удалить из избранного"
+            width="3.5vh"
+            height="3.5vh"
           />
         );
       case false:
         return (
           <Favorites
             onClick={onChangeLike}
-            width="22px"
+            width="3.5vh"
+            height="3.5vh"
             title="Добавить в избранное"
             cursor="pointer"
           />
@@ -102,79 +122,110 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      <CardMedia_Styled image={img} title={title} />
-      <CardContent className="carsContent">
-        <Typography component="div" color="#2FC509">
-          В наличии ({quantity})
-        </Typography>
+      <CardMedia_Styled
+        src={productImage}
+        title={productName}
+        alt={productName}
+      />
+      <Card_contend className="carsContent">
+        <Styled_Count>В наличии ({count})</Styled_Count>
 
-        <StyletTitle variant="h6" color="black" title={title}>
-          {title}
+        <StyletTitle color="black" title={productName}>
+          {productName}
         </StyletTitle>
-        <Typography variant="p" className="flex">
+        <Typography variant="span" className="flex">
           Рейтинг
-          <Rating size="small" defaultValue={rating} />({rating})
+          <Rating defaultValue={productRating} readOnly />({countOfReview})
         </Typography>
-
         <CardActions>
-          <Grid container className="flex between">
-            <Box>
-              <Typography variant="h4" fontSize="18px">
-                {newprice} c
-              </Typography>
-              {status !== "NEW" ? <Styled_Price>{price} c</Styled_Price> : null}
+          <Grid container className="flex between ">
+            <Box width="30%" marginLeft="-10px">
+              {discountPrice > 0 ? (
+                <Typography variant="h1" fontSize="0.7rem">
+                  {discountPrice}c
+                </Typography>
+              ) : (
+                <Typography variant="h1" fontSize="0.7rem">
+                  {productPrice}c
+                </Typography>
+              )}
+
+              {discountPrice > 0 ? (
+                <Styled_Price>{productPrice}c</Styled_Price>
+              ) : null}
             </Box>
-            <IconButton title="Добавить в карзину" icon={<CartIcon />}>
-              В карзину
+            <IconButton
+              width="70%"
+              height="5vh"
+              title="Добавить в карзину"
+              fontSize="0.5rem"
+              icon={<CartIcon />}
+            >
+              В_карзину
             </IconButton>
           </Grid>
         </CardActions>
-      </CardContent>
+      </Card_contend>
     </StyledProductCard>
   );
 };
 
 export default React.memo(ProductCard);
 
+const Card_contend = styled(CardContent)(() => ({
+  "& span": {
+    fontSize: "0.7rem",
+  },
+}));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "16px",
-  // fontWeight: 500,
+  fontSize: "0.9rem",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 1,
   WebkitBoxOrient: "vertical",
 }));
 const Discount_Styled = styled("div")(() => ({
   color: "white",
-  width: "36px",
-  height: "36px",
+  width: "4vh",
+  height: "4vh",
   fontWeight: "900",
   borderRadius: "50%",
   background: "red",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  fontSize: "12px",
+  fontSize: "0.5rem",
 }));
-
+const Styled_Count = styled("p")(() => ({
+  fontSize: "70%",
+  color: "#2FC509",
+}));
 const StyledProductCard = styled(Card)(() => ({
-  width: "300px",
+  width: "35vh",
+  height: "100%",
+  // padding: "5px 0",
+  display: "grid",
+  gridRowGap: "1rem",
   "&:hover": {
     boxShadow: "0 0 10px rgba(0,0,0,0.6)",
   },
   "& .carsContent": {
     display: "grid",
-    gridRowGap: "9px",
+    gridRowGap: "1vh",
   },
 }));
-const CardMedia_Styled = styled(CardMedia)(() => ({
-  width: "180px",
-  height: "236px",
+const CardMedia_Styled = styled("img")(() => ({
+  width: "60%",
+  height: "100%",
   margin: "0 auto",
+  display: "flex",
+  justifyContent: "center",
+  aspectRatio: "1/1",
+  objectFit: "contain",
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "16px",
+  fontSize: "0.7rem",
   textDecoration: "line-through",
 }));
