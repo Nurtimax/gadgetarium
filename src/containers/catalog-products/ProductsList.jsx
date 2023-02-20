@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import React, { useCallback } from "react";
 import Button from "../../components/UI/button/Button";
 import ProductCard from "../../components/UI/card/ProductCard";
@@ -16,8 +16,10 @@ const ProductsList = ({ data, setSize, size }) => {
         paddingBottom: "20px",
       }}
     >
+      {/* <Grid container className="gap between"> */}
       {data.products?.map((item) => (
-        <ProductCard
+        // <Grid  item xs={2.9} className="flex flex-end">
+        <ProductCardStyled
           key={item.productName}
           img={item.productImage}
           title={item.productName}
@@ -29,7 +31,10 @@ const ProductsList = ({ data, setSize, size }) => {
           rating={item.productRating}
           {...item}
         />
+        // </Grid>
       ))}
+      {/* </Grid> */}
+
       {data.products?.length >= 12 ? (
         <Box
           style={{
@@ -51,3 +56,13 @@ const ProductsList = ({ data, setSize, size }) => {
 };
 
 export default ProductsList;
+
+const ProductCardStyled = styled(ProductCard)(() => ({
+  width: "227.5px !important",
+  aspectRatio: "0/1 !important",
+  objectFit: "contain !important",
+  "& .css-1mwp0i7": {
+    width: "80% !important",
+  },
+  "& .css-1ixqkpz": { fontSize: "12px !important" },
+}));

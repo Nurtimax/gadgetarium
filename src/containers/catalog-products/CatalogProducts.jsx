@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Container, styled, Typography, Box, Button } from "@mui/material";
+import {
+  Container,
+  styled,
+  Typography,
+  Box,
+  Button,
+  Grid,
+} from "@mui/material";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
 import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
@@ -70,8 +77,24 @@ const CatalogProducts = () => {
                 ))}
               </div>
             </Box>
+            <Grid item xs={1.5} className="flex gap2">
+              <Box className="flexgrow flex height" onClick={setSortEl}>
+                <Sort
+                  anchorElCatalog={sortEL}
+                  handleCloseCatalog={setSortEl}
+                  setDiscountField={setDiscountField}
+                  setSortField={setSortField}
+                />
+                <Box className="sort-container" onClick={setSortEl}>
+                  <Typography className="gap capitalize sort-text  pointer">
+                    Сортировать
+                  </Typography>
+                  <ArrowDownIcon />
+                </Box>
+              </Box>
+            </Grid>
 
-            <Box className="sort-container" onClick={setSortEl}>
+            {/* <Box className="sort-container" onClick={setSortEl}>
               <Typography
                 variant="body2"
                 component="span"
@@ -86,7 +109,7 @@ const CatalogProducts = () => {
               handleCloseCatalog={setSortEl}
               setDiscountField={setDiscountField}
               setSortField={setSortField}
-            />
+            /> */}
           </Box>
 
           {errorMessage ? (
@@ -111,7 +134,6 @@ export default CatalogProducts;
 const Svg = styled(DeleteIconInCart)(() => ({
   path: {
     fill: "black",
-    width: "50px",
   },
 }));
 const ContainerStyled = styled(Container)(() => ({
@@ -127,7 +149,7 @@ const ContainerStyled = styled(Container)(() => ({
   "& .general-box": {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
+    gap: "34px",
     paddingTop: "40px",
   },
   "& .filter-box": { width: "351px" },
@@ -136,7 +158,9 @@ const ContainerStyled = styled(Container)(() => ({
     display: "flex",
     justifyContent: "center",
   },
-  "& .product-container": { width: "1230px" },
+  "& .product-container": {
+    width: "1240px",
+  },
   "& .chip-and-sort": {
     display: "flex",
     justifyContent: "space-between",

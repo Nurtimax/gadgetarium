@@ -114,8 +114,8 @@ const StyledDropDown = styled(DropDown)(() => ({
   width: "10rem",
   maxHeight: "62px",
   "& .paper": {
-    top: "37px !important",
-    left: "1020px !important",
+    top: "22px !important",
+    left: "-90px !important",
     minHeight: "206px",
     minWidth: "220px",
     padding: "4px 8px",
@@ -123,13 +123,13 @@ const StyledDropDown = styled(DropDown)(() => ({
   },
   "& .subpaper": {
     zIndex: 0,
-    left: "685px !important",
+    left: "-265% !important",
     minWidth: "140px",
     display: "flex",
     justifyContent: "center",
     minHeight: "150px",
     textAlign: "center",
-    borderRadius: "0px 4px 4px 0px",
+    borderRadius: "4px 0px 0px 4px",
   },
   "& .MuiBackdrop-root": {
     position: "relative",
