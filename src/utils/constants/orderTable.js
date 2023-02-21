@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import Delete from "../../components/orders/Delete";
 import Select from "../../components/orders/Select";
 import { checkInOrderType } from "../helpers/general";
@@ -9,6 +10,13 @@ export const OrdersTableHeaderTitle = [
     accessor: "fullName",
     style: {
       flex: 1.5,
+    },
+    Cell: ({ row }) => {
+      return (
+        <div>
+          <Link to={String(row.original.id)}>{row.original.fullName}</Link>
+        </div>
+      );
     },
   },
   {
@@ -31,7 +39,7 @@ export const OrdersTableHeaderTitle = [
               color: "#909CB5",
             }}
           >
-            {format(new Date(row.original.dateOfOrder), "dd/MM/yyyy")}
+            {format(new Date(row.original.dateOfOrder), "yyyy-MM-dd")}
           </p>
         </div>
       );

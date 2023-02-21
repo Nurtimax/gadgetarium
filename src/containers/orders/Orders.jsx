@@ -2,8 +2,13 @@ import { styled } from "@mui/material";
 import Search from "../../components/UI/Search";
 import OrdersTabs from "../../components/orders/OrdersTabs";
 import Infographic from "../../components/orders/Infographic";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
 
 const Orders = () => {
+  const [text, setText] = useState("");
+  const [value] = useDebounce(text, 1000);
+
   return (
     <MainContainer>
       <ContainerTabs>
@@ -11,9 +16,11 @@ const Orders = () => {
           showBackground={true}
           placeholder="Поиск по артикулу или ..."
           width="559px"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
 
-        <OrdersTabs />
+        <OrdersTabs valueInputSearch={value} />
       </ContainerTabs>
 
       <Infographic />

@@ -482,17 +482,17 @@ export const TAB_ITEMS_ORDER = [
   {
     id: 2,
     tabTitle: "IN_PROCESSING",
-    title: "В обработке (5)",
+    title: "В обработке",
   },
   {
     id: 3,
     tabTitle: "ON_THE_WAY",
-    title: "Курьер в пути (3)",
+    title: "Курьер в пути",
   },
   {
     id: 4,
     tabTitle: "DELIVERED",
-    title: "Доставлены (6)",
+    title: "Доставлены",
   },
   {
     id: 5,
@@ -574,16 +574,16 @@ export const OrdersTableListData = [
 ];
 
 export const titlesOrderPopUpOne = [
-  "В ожидании",
-  "Готов к выдаче",
-  "Получен",
-  "Отменить",
+  { text: "В ожидании", tab: "WAITING" },
+  { text: "Готов к выдаче", tab: "IN_PROCESSING" },
+  { text: "Получен", tab: "DELIVERED" },
+  { text: "Отменить", tab: "CANCEL" },
 ];
 
 export const titlesOrderPopUpTwo = [
-  "В ожидании",
-  "Готов к выдаче",
-  "Курьер в пути",
-  "Доставлен",
-  "Отменить",
+  { text: "В ожидании", tab: "WAITING" },
+  { text: "Готов к выдаче", tab: "IN_PROCESSING" },
+  { text: "Курьер в пути", tab: "ON_THE_WAY" },
+  { text: "Доставлен", tab: "DELIVERED" },
+  { text: "Отменить", tab: "CANCEL" },
 ];

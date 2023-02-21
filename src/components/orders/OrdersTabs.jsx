@@ -1,38 +1,53 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { TAB_ITEMS_ORDER } from "../../utils/constants";
 import { OrdersTableHeaderTitle } from "../../utils/constants/orderTable";
 import { fetchOrderProductSlice } from "../../redux/slices/order-product";
+import { format } from "date-fns";
 import DatePicker from "./DatePicker";
 import Table from "../Table";
+import { checkTabName } from "../../utils/helpers/general";
+import { useDebounce } from "use-debounce";
 
-const OrdersTabs = () => {
-  const data = useSelector((state) => state.orderProduct.data);
-  console.log(data);
-  const tableData = useMemo(() => data, [data]);
-  const dispatch = useDispatch();
-  const [date, setDate] = useState([null, null]);
+const OrdersTabs = ({ valueInputSearch }) => {
+  const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
+    (state) => state.orderProduct.data
+  );
+  const tableData = useMemo(() => orderResponses, [orderResponses]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(1);
   const orderStatus = searchParams.get("orderStatus");
+  const [date, setDate] = useState([null, null]);
+  const [value] = useDebounce(date, 1000);
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
 
   const handleTabClick = (e) => {
     setSearchParams({
       orderStatus: e.target.name,
     });
+    setDate([null, null]);
+    setPage(1);
   };
 
+  const getData = {
+    orderStatus,
+    page: page || 1,
+    size: 7,
+  };
+
+  const startDate = format(new Date(value[0]), "yyyy-MM-dd");
+  const endDate = format(new Date(value[1]), "yyyy-MM-dd");
+
+  startDate === "1970-01-01" ? null : (getData.startDate = startDate);
+  endDate === "1970-01-01" ? null : (getData.endDate = endDate);
+  valueInputSearch ? (getData.keyWord = valueInputSearch) : null;
+
   useEffect(() => {
-    dispatch(
-      fetchOrderProductSlice({
-        orderStatus,
-        page,
-        size: 1,
-      })
-    );
-  }, [orderStatus, page]);
+    dispatch(fetchOrderProductSlice(getData));
+    setSearchParams({ orderStatus: orderStatus });
+  }, [orderStatus, page, valueInputSearch, value]);
 
   return (
     <div>
@@ -40,12 +55,11 @@ const OrdersTabs = () => {
         {TAB_ITEMS_ORDER.map((tab, i) => (
           <button
             key={i}
-            id={tab.id}
             name={tab.tabTitle}
             disabled={orderStatus === `${tab.tabTitle}`}
             onClick={handleTabClick}
           >
-            {tab.title}
+            {tab.title} {checkTabName(tab.title, orderStatusAndSize || {})}
           </button>
         ))}
       </Tabs>
@@ -57,10 +71,11 @@ const OrdersTabs = () => {
           {orderStatus === `${tab.tabTitle}` && (
             <Table
               tableHeaderTitle={OrdersTableHeaderTitle}
-              tableData={tableData}
+              data={tableData}
               isMarked={true}
               found={true}
               setPage={setPage}
+              countOfOrders={countOfOrders}
             />
           )}
         </div>

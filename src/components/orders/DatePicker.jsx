@@ -23,7 +23,12 @@ export default function DatePicker({ date, setDate }) {
         open={isOpen}
         onClose={() => setIsOpen(false)}
         onChange={(nev) => {
-          setDate(nev);
+          if (
+            !String(nev[0]).includes("Invalid Date") &&
+            !String(nev[1]).includes("Invalid Date")
+          ) {
+            setDate(nev);
+          }
         }}
         PaperProps={{ classes: { root: "paper" } }}
         renderInput={({ inputProps, startProps }, endProps) => {
@@ -33,7 +38,10 @@ export default function DatePicker({ date, setDate }) {
                 {...startProps}
                 focused={isOpen.toString()}
                 onFocus={openCalendar}
-                inputProps={{ ...inputProps, placeholder: "От" }}
+                inputProps={{
+                  ...inputProps,
+                  placeholder: "От",
+                }}
                 endAdornment={
                   <InputAdornment position="start">
                     <StyledDateIcon onClick={openCalendar} />
@@ -43,8 +51,8 @@ export default function DatePicker({ date, setDate }) {
 
               <InputBase
                 {...endProps}
-                focused={isOpen.toString()}
                 onFocus={openCalendar}
+                focused={isOpen.toString()}
                 inputProps={{ ...endProps.inputProps, placeholder: "До" }}
                 endAdornment={
                   <InputAdornment position="start">

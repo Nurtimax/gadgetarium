@@ -26,8 +26,25 @@ const fetchOrderProductSlice = createAsyncThunk(
   }
 );
 
+const fetchOrderProductById = createAsyncThunk(
+  "orderProductSlice/fetchOrderProductById",
+  async (data) => {
+    try {
+      const response = await axios.get(`${SWAGGER_API}/api/orders/${data.id}`, {
+        headers: {
+          Authorization: `Bearer ${authRole.token}`,
+        },
+        params: data.params,
+      });
+      return response;
+    } catch (error) {
+      throw new Error();
+    }
+  }
+);
+
 const initialState = {
-  data: [],
+  data: {},
 };
 
 const orderProductSlice = createSlice({
@@ -36,10 +53,14 @@ const orderProductSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchOrderProductSlice.fulfilled]: (state, action) => {
-      state.data = action.payload.orderResponses;
+      state.data = action.payload;
+    },
+
+    [fetchOrderProductById.fulfilled]: (state, action) => {
+      console.log(action);
     },
   },
 });
 
 export const ActionOrderProduct = orderProductSlice.actions;
-export { orderProductSlice, fetchOrderProductSlice };
+export { orderProductSlice, fetchOrderProductSlice, fetchOrderProductById };

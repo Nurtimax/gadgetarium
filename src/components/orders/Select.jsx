@@ -39,20 +39,20 @@ const Select = ({ orderStatus, orderType }) => {
       {open && (
         <StyledDropDown
           vertical="top"
-          horizontal="center"
+          horizontal="right"
           open={open}
           handleClose={handleClose}
           anchorEl={anchorEl}
         >
-          {orderType === "Самовывоз"
-            ? titlesOrderPopUpOne.map((text) => (
-                <li onClick={selectHandler} key={text}>
-                  {text}
+          {orderType === "PICKUP"
+            ? titlesOrderPopUpOne.map((item, i) => (
+                <li onClick={selectHandler} key={i}>
+                  {item.text}
                 </li>
               ))
-            : titlesOrderPopUpTwo.map((text, i) => (
+            : titlesOrderPopUpTwo.map((item, i) => (
                 <li onClick={selectHandler} key={i}>
-                  {text}
+                  {item.text}
                 </li>
               ))}
         </StyledDropDown>

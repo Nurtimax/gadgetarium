@@ -33,3 +33,20 @@ export const checkInOrderStatus = (key) => {
       return "";
   }
 };
+
+export const checkTabName = (key, size) => {
+  switch (key) {
+    case "В ожидании":
+      return size.WAITING ? `(${size.WAITING})` : "";
+    case "В обработке":
+      return size.IN_PROCESSING ? `(${size.IN_PROCESSING})` : "";
+    case "Курьер в пути":
+      return size.ON_THE_WAY ? `(${size.ON_THE_WAY})` : "";
+    case "Доставлены":
+      return size.DELIVERED ? `(${size.DELIVERED})` : "";
+    case "Отменены":
+      return size.CANCEL ? `(${size.CANCEL})` : "";
+    default:
+      return "";
+  }
+};

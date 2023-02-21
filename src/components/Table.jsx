@@ -23,12 +23,14 @@ const defaultColumnProps = {
 
 const Table = ({
   tableHeaderTitle,
-  tableData,
+  data,
   isMarked = false,
   found = false,
   setPage,
+  countOfOrders,
 }) => {
   const columns = useMemo(() => tableHeaderTitle, []);
+  const dataTable = data || [];
 
   const tableHooks = (hooks) => {
     if (isMarked) {
@@ -61,7 +63,7 @@ const Table = ({
     useTable(
       {
         columns,
-        data: tableData,
+        data: dataTable,
         defaultColumn: defaultColumnProps,
       },
       tableHooks
@@ -70,10 +72,10 @@ const Table = ({
   return (
     <MainContainer>
       {found ? (
-        <Typography className="foundOrderText">Найдено 250 заказов</Typography>
-      ) : (
-        ""
-      )}
+        <Typography className="foundOrderText">
+          Найдено {countOfOrders} заказов
+        </Typography>
+      ) : null}
 
       <MUITable {...getTableProps()}>
         <TableHead>
@@ -150,6 +152,7 @@ const StyledTableRow = styled(TableRow)(({ theme, checked }) => ({
   padding: "20px",
   border: `1px solid ${theme.palette.grey[600]}`,
   borderRadius: "6px",
+
   "& .checkbox": {
     display: "none",
   },
