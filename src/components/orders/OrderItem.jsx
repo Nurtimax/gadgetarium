@@ -1,21 +1,30 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchOrderProductById } from "../../redux/slices/order-product";
+import { getOrderProductsById } from "../../redux/slices/orders-slice";
+import { priceProductSeparate } from "../../utils/helpers/general";
 
 const OrderItem = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
+  const {
+    totalSum,
+    totalDiscount,
+    productName,
+    orderNumber,
+    countOfProduct,
+    discount,
+  } = useSelector((state) => state.orderProduct.dataByID);
 
   useEffect(() => {
-    dispatch(fetchOrderProductById({ id: orderId, params: { orderId } }));
+    dispatch(getOrderProductsById({ orderId }));
   }, []);
 
   return (
     <StyledMainContainer>
       <Typography className="paymant-text">
-        Оплата заказа 000000-455247
+        Оплата заказа {orderNumber}
       </Typography>
 
       <Box className="container">
@@ -25,23 +34,29 @@ const OrderItem = () => {
               <Typography className="li">Наименование:</Typography>
               <Typography className="li">Кол-во товара:</Typography>
               <Typography className="li">Общая сумма заказа:</Typography>
-              <Typography className="li discount">Скидка: 15%</Typography>
+              <Typography className="li discount">
+                Скидка: {discount}%
+              </Typography>
               <Typography className="li">Сумма скидки:</Typography>
             </Box>
 
             <Box className="ul-box">
+              <Typography className="li-value">{productName}</Typography>
+              <Typography className="li-value">{countOfProduct}шт</Typography>
               <Typography className="li-value">
-                Samsung Galaxy S21 128gb синий 9(MLP3RU)
+                {priceProductSeparate(Number(String(totalSum)))} с
               </Typography>
-              <Typography className="li-value">1шт</Typography>
-              <Typography className="li-value">60 000 с</Typography>
-              <Typography className="li-value-last">9 000 с</Typography>
+              <Typography className="li-value-last">
+                {priceProductSeparate(Number(String(totalDiscount)))} с
+              </Typography>
             </Box>
           </Box>
 
           <Box className="total-box">
             <Typography className="li">Итого:</Typography>
-            <Typography className="li-value"> 51 000 с</Typography>
+            <Typography className="li-value">
+              {priceProductSeparate(Number(String(totalSum)))} с
+            </Typography>
           </Box>
         </Box>
 

@@ -92,8 +92,8 @@ export const OrdersTableHeaderTitle = [
   {
     Header: "Действия",
     accessor: "totalDiscount",
-    Cell: () => {
-      return <Delete />;
+    Cell: ({ row }) => {
+      return <Delete {...row.original} />;
     },
   },
 ];

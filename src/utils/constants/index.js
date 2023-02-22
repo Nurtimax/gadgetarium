@@ -522,11 +522,11 @@ export const SECOND_TABS_DATA_ORDERS = [
     titlePanel: "Доставлено товаров на сумму",
     currentDuring: {
       text: "Текущий период",
-      price: "120 000",
+      price: "190 000",
     },
     previousDuring: {
       text: "Предыдущий период",
-      price: "100 500",
+      price: "150 500",
     },
   },
 
@@ -536,11 +536,11 @@ export const SECOND_TABS_DATA_ORDERS = [
     titlePanel: "Доставлено товаров на сумму",
     currentDuring: {
       text: "Текущий период",
-      price: "120 000",
+      price: "130 000",
     },
     previousDuring: {
       text: "Предыдущий период",
-      price: "100 500",
+      price: "110 500",
     },
   },
 ];

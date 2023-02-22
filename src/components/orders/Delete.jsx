@@ -1,12 +1,22 @@
 import { Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { DeleteIcon } from "../../assets";
+import { deleteOrderProducts } from "../../redux/slices/orders-slice";
 import Button from "../UI/button/Button";
 import Modal from "../UI/Modal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Delete = () => {
+const Delete = ({ fullName, id }) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const currentStatus = searchParams.get("orderStatus");
+  const notify = () => toast("Order successfully deleted!");
+  const currentPage = searchParams.get("page_index");
 
   const openModalWindow = () => {
     setOpen(true);
@@ -15,6 +25,19 @@ const Delete = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const deleteOrder = () => {
+    notify();
+    handleClose();
+    dispatch(
+      deleteOrderProducts({
+        id,
+        currentStatus,
+        currentPage,
+      })
+    );
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <StyledDeleteIcon onClick={openModalWindow} />
@@ -22,7 +45,7 @@ const Delete = () => {
         <StyledModal open={openModalWindow} handleClose={handleClose}>
           <Typography className="Box" variant="div">
             <Typography>Вы уверены, что хотите удалить товар</Typography>
-            <Typography>Айзат Жумагуловой?</Typography>
+            <Typography>{fullName}?</Typography>
           </Typography>
           <Box className="flex center gap2">
             <ButtonStyled
@@ -32,7 +55,11 @@ const Delete = () => {
             >
               Отменить
             </ButtonStyled>
-            <ButtonStyled variant="contained" className="logout_button">
+            <ButtonStyled
+              variant="contained"
+              className="logout_button"
+              onClick={deleteOrder}
+            >
               Удалить
             </ButtonStyled>
           </Box>

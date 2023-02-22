@@ -1,6 +1,4 @@
 import {
-  Pagination,
-  Stack,
   styled,
   Typography,
   TableContainer,
@@ -26,7 +24,6 @@ const Table = ({
   data,
   isMarked = false,
   found = false,
-  setPage,
   countOfOrders,
 }) => {
   const columns = useMemo(() => tableHeaderTitle, []);
@@ -134,14 +131,6 @@ const Table = ({
           })}
         </TableBody>
       </MUITable>
-
-      <Stack>
-        <Pagination
-          count={10}
-          color="secondary"
-          onChange={(_, value) => setPage(value)}
-        />
-      </Stack>
     </MainContainer>
   );
 };
@@ -213,17 +202,5 @@ const MainContainer = styled(TableContainer)(({ theme }) => ({
         },
       },
     },
-  },
-
-  "& .MuiPaginationItem-root.Mui-selected": {
-    width: "22px",
-    height: "22px",
-    minWidth: "0",
-    padding: "0",
-  },
-
-  "& .MuiPagination-ul": {
-    paddingTop: "41px",
-    justifyContent: "center",
   },
 }));

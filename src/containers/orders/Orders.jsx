@@ -4,27 +4,31 @@ import OrdersTabs from "../../components/orders/OrdersTabs";
 import Infographic from "../../components/orders/Infographic";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
+import { ToastContainer } from "react-toastify";
 
 const Orders = () => {
   const [text, setText] = useState("");
   const [value] = useDebounce(text, 1000);
 
   return (
-    <MainContainer>
-      <ContainerTabs>
-        <Search
-          showBackground={true}
-          placeholder="Поиск по артикулу или ..."
-          width="559px"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+    <>
+      <ToastContainer autoClose={1000} className="toastify" />
+      <MainContainer>
+        <ContainerTabs>
+          <Search
+            showBackground={true}
+            placeholder="Поиск по артикулу или ..."
+            width="559px"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
 
-        <OrdersTabs valueInputSearch={value} />
-      </ContainerTabs>
+          <OrdersTabs valueInputSearch={value} />
+        </ContainerTabs>
 
-      <Infographic />
-    </MainContainer>
+        <Infographic />
+      </MainContainer>
+    </>
   );
 };
 

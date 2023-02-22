@@ -36,6 +36,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-table": "^7.8.0",
+    "react-toastify": "^9.1.1",
     "slick-carousel": "^1.8.1",
     "use-debounce": "^9.0.3",
     "use-react-router-breadcrumbs": "^4.0.1",

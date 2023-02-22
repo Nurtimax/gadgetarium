@@ -1,7 +1,9 @@
-import { styled, Typography } from "@mui/material";
-import React from "react";
+import { MenuItem, styled, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { ArrowOrderIcon, ArrowOrderIconRotate } from "../../assets";
+import { updateOrderProducts } from "../../redux/slices/orders-slice";
 import {
   titlesOrderPopUpOne,
   titlesOrderPopUpTwo,
@@ -9,10 +11,14 @@ import {
 import { checkInOrderStatus } from "../../utils/helpers/general";
 import DropDown from "../UI/DropDown";
 
-const Select = ({ orderStatus, orderType }) => {
-  const [open, setOpen] = useState(false);
+const Select = ({ orderStatus, orderType, id }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [value, setValue] = useState("");
+  const [searchParams] = useSearchParams();
+  const currentStatus = searchParams.get("orderStatus");
+  const currentPage = searchParams.get("page_index");
+
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
@@ -25,14 +31,24 @@ const Select = ({ orderStatus, orderType }) => {
   };
 
   const selectHandler = (e) => {
-    setValue(e.target.innerHTML);
     setOpen(false);
+    dispatch(
+      updateOrderProducts({
+        id,
+        orderStatus: e.target.id,
+        currentStatus,
+        currentPage,
+      })
+    );
   };
+
+  const renderedMenuItems =
+    orderType === "PICKUP" ? titlesOrderPopUpOne : titlesOrderPopUpTwo;
 
   return (
     <div>
       <StyledTextStatus onClick={openPopUpHandler} variant="span">
-        {value ? value : checkInOrderStatus(orderStatus)}
+        {checkInOrderStatus(orderStatus)}
         {open ? <ArrowOrderIconRotate /> : <ArrowOrderIcon />}
       </StyledTextStatus>
 
@@ -44,17 +60,11 @@ const Select = ({ orderStatus, orderType }) => {
           handleClose={handleClose}
           anchorEl={anchorEl}
         >
-          {orderType === "PICKUP"
-            ? titlesOrderPopUpOne.map((item, i) => (
-                <li onClick={selectHandler} key={i}>
-                  {item.text}
-                </li>
-              ))
-            : titlesOrderPopUpTwo.map((item, i) => (
-                <li onClick={selectHandler} key={i}>
-                  {item.text}
-                </li>
-              ))}
+          {renderedMenuItems.map((item, i) => (
+            <MenuItem onClick={selectHandler} id={item.tab} key={i}>
+              {item.text}
+            </MenuItem>
+          ))}
         </StyledDropDown>
       )}
     </div>
@@ -95,5 +105,9 @@ const StyledDropDown = styled(DropDown)(({ theme }) => ({
     " li:hover": {
       color: theme.palette.secondary.main,
     },
+  },
+
+  "& .MuiMenuItem-root": {
+    padding: "0",
   },
 }));

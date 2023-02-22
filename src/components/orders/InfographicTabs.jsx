@@ -3,6 +3,7 @@ import Tab from "@mui/material/Tab";
 import { useState } from "react";
 import { SECOND_TABS_DATA_ORDERS } from "../../utils/constants";
 import { Box, styled, Typography } from "@mui/material";
+import { priceProductSeparate } from "../../utils/helpers/general";
 
 const TabPanel = ({ children, value, index, ...other }) => (
   <div hidden={value !== index} {...other}>
@@ -10,8 +11,26 @@ const TabPanel = ({ children, value, index, ...other }) => (
   </div>
 );
 
-const InfographicTabs = () => {
+const InfographicTabs = ({ data }) => {
   const [value, setValue] = useState(0);
+  const dataTabs = data || {};
+  const currentPrice =
+    value === 0
+      ? dataTabs.currentPeriodPerDay || 0
+      : value === 1
+      ? dataTabs.currentPeriodPerMonth || 0
+      : value === 2
+      ? dataTabs.currentPeriodPerYear || 0
+      : 0;
+
+  const previousPrice =
+    value === 0
+      ? dataTabs.previousPeriodPerDay || 0
+      : value === 1
+      ? dataTabs.previousPeriodPerMonth || 0
+      : value === 2
+      ? dataTabs.previousPeriodPerYear || 0
+      : 0;
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -30,24 +49,28 @@ const InfographicTabs = () => {
       {SECOND_TABS_DATA_ORDERS.map((item, i) => (
         <TabPanel value={value} index={i} key={item.id}>
           <ContainerTabPanel>
-            <TitleTabPanel>{item.titlePanel}</TitleTabPanel>
+            <TitleTabPanel>Доставлено товаров на сумму</TitleTabPanel>
             <div className="boxPrice">
               <div>
                 <CurrentPrice>
-                  {item.currentDuring.price}
-                  <span> c</span>
+                  <span>
+                    {priceProductSeparate(Number(String(currentPrice)))}
+                  </span>
+                  <span className="c">c</span>
                 </CurrentPrice>
 
-                <CurrentDuring>{item.currentDuring.text}</CurrentDuring>
+                <CurrentDuring>Текущий период</CurrentDuring>
               </div>
 
               <div>
                 <PreviousPrice>
-                  {item.previousDuring.price}
-                  <span> c</span>
+                  <span>
+                    {priceProductSeparate(Number(String(previousPrice)))}
+                  </span>
+                  <span className="c">c</span>
                 </PreviousPrice>
 
-                <PreviousDuring>{item.previousDuring.text}</PreviousDuring>
+                <PreviousDuring>Предыдущий период</PreviousDuring>
               </div>
             </div>
           </ContainerTabPanel>
@@ -108,8 +131,10 @@ const CurrentPrice = styled(Typography)(({ theme }) => ({
   fontWeight: "600",
   fontSize: "24px",
   color: theme.palette.success.main,
+  display: "flex",
+  gap: "7px",
 
-  "& span": {
+  "& .c": {
     textDecorationLine: "underline",
   },
 }));
@@ -119,8 +144,10 @@ const PreviousPrice = styled(Typography)(({ theme }) => ({
   fontWeight: "600",
   fontSize: "16px",
   color: theme.palette.success.main,
+  display: "flex",
+  gap: "7px",
 
-  "& span": {
+  "& .c": {
     textDecorationLine: "underline",
   },
 }));
