@@ -117,17 +117,6 @@ const PhoneLaptopTablet = ({
                   classes={{ root: "radiogroup" }}
                 >
                   {content.values.map((value) => (
-                    // <FormControlLabel
-                    //   key={value}
-                    //   value={value}
-                    //   control={
-                    //     <Radio
-                    //       size="small"
-                    //       classes={{ checked: "radio_checked" }}
-                    //     />
-                    //   }
-                    //   label={value}
-                    // />
                     <FormControlLabel
                       key={value}
                       value={value}
@@ -187,6 +176,7 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
     width: "20px",
     height: "20px",
+    display: "block",
   },
   "& .radio_checked .MuiSvgIcon-root": {
     fill: theme.palette.secondary.main,
@@ -198,5 +188,13 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   },
   "&.MuiFormControl-root": {
     display: "grid",
+  },
+  "& .MuiButtonBase-root": {
+    padding: 0,
+  },
+  "& .MuiFormControlLabel-root": {
+    display: "flex",
+    gap: 6,
+    margin: 0,
   },
 }));

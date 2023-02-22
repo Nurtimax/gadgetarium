@@ -66,6 +66,10 @@ code {
   display: flex;
   align-items: center;
 }
+.evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
 
 .text-center {
   text-align: center;
@@ -110,7 +114,9 @@ a {
 .column {
   flex-direction: column;
 }
-
+.size14 {
+  font-size: 14px;
+}
 .background_linear {
   background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
 }

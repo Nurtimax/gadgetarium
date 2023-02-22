@@ -1,50 +1,17 @@
 import { Box, styled } from "@mui/material";
-import React, { useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { DeleteIcon, EditIcon } from "../../assets";
 
-const ShowUploadImage = ({
-  setFieldValue,
-  values,
-  product,
-  index,
-  removeImageHandler,
-}) => {
-  const editImageOnDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        setFieldValue(
-          "subProductRequests",
-          values.subProductRequests.map((subproduct) => {
-            const imageIndex =
-              dropZoneRef.current.attributes.getNamedItem("name").value;
-
-            const imageId =
-              dropZoneRef.current.attributes.getNamedItem("id").value;
-
-            subproduct.images.splice(
-              imageId === "first" ? 0 : Number(imageIndex),
-              1,
-              reader.result
-            );
-            return subproduct;
-          })
-        );
-      };
-      reader.readAsDataURL(file);
-    },
-    [values.subProductRequests]
-  );
+const ShowUploadImage = ({ product, removeImageHandler, editImageHandler }) => {
+  const editImageOnDrop = (acceptFiles) => {
+    editImageHandler(acceptFiles, product);
+  };
 
   const {
     getInputProps: editGetInputProps,
     getRootProps: editGetRootProps,
     open,
   } = useDropzone({ onDrop: editImageOnDrop });
-
-  const dropZoneRef = useRef(null);
 
   return (
     <StyledImg>
@@ -56,13 +23,7 @@ const ShowUploadImage = ({
         />
         <EditIcon className="icon edit_icon" onClick={open} />
       </Box>
-      <Box
-        {...editGetInputProps({
-          name: index,
-          id: index === 0 ? "first" : "",
-        })}
-        ref={dropZoneRef}
-      >
+      <Box {...editGetInputProps()}>
         <input {...editGetRootProps()} />
       </Box>
     </StyledImg>

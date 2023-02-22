@@ -7,6 +7,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useCallback } from "react";
 import { useEffect } from "react";
@@ -18,19 +19,18 @@ import {
   DownloadBannerIcon,
   PlusIcon,
 } from "../../../assets";
-import useMutation from "../../../hooks/useMutation";
 import useVisibility from "../../../hooks/useVisibility";
 import {
   getBrandThunkApi,
   postBrandThunkApi,
 } from "../../../redux/slices/add-product";
+import { SWAGGER_API } from "../../../utils/constants/fetch";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Modal from "../../UI/Modal";
 
 const Brand = ({ handleChange, values, errors, Productbrand }) => {
   const [openModal, setOpenModal] = useVisibility();
-  const [{ data, isLoading }, getBrandImagelinkHandler] = useMutation();
 
   const dispatch = useDispatch();
 
@@ -58,24 +58,33 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
     dispatch(getBrandThunkApi());
   }, []);
 
-  const onDrop = useCallback(
-    (acceptFiles) => {
-      getBrandImagelinkHandler(acceptFiles);
-      if (data) {
-        setFieldValue("image", data.link);
-      }
-    },
-    [data]
-  );
+  const getBrandLinkHandler = async (file) => {
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file[0]);
+    axios({
+      method: "POST",
+      url: `${SWAGGER_API}file`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        setFieldValue("image", response.data.link);
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+
+  const onDrop = useCallback((acceptFiles) => {
+    getBrandLinkHandler(acceptFiles);
+  }, []);
 
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
-    accept: { "image/png": [".png"], "text/html": [".html", ".htm"] },
+    accept: {
+      "image/*": [".png", ".jpeg"],
+    },
   });
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
 
   const findedPRODUCTBRAND = Productbrand?.find(
     (brand) => brand.id === Number(values?.brandId)

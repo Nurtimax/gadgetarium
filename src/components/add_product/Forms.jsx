@@ -180,8 +180,14 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
         {values.categoryId ? (
           values.subProductRequests.length !== 0 ? (
             <>
-              <Grid item xs={12} display="flex" gap="10px">
-                <Box className="scroll padding flex gap2">
+              <Grid item xs={12} className="flex">
+                <Box
+                  className={`scroll scroll_tab flex gap2 products ${
+                    values.subProductRequests.length > 10
+                      ? "product_width_limit"
+                      : ""
+                  }`}
+                >
                   {values.subProductRequests.map((subProduct, index) => (
                     <StyledButton
                       key={index}
@@ -332,6 +338,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   "&.product_button": {
     padding: ".5rem",
     width: "107px",
+    minWidth: "105px",
     height: "35px",
     color: `${theme.palette.grey[800]} !important`,
     borderColor: `${theme.palette.grey[800]} !important`,
@@ -416,6 +423,12 @@ const StyledFormControl = styled(Box)(() => ({
   },
   "& .MuiSvgIcon-root": {
     display: "none",
+  },
+  "& .products": {
+    padding: ".6rem",
+  },
+  "& .products.product_width_limit": {
+    width: "70vw",
   },
 }));
 const StyledCompactPicker = styled(CompactPicker)(() => ({

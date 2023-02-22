@@ -1,8 +1,10 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
+import axios from "axios";
 import React, { useCallback, useMemo } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DownloadBannerIcon } from "../../assets";
-import useMutation from "../../hooks/useMutation";
+import { SWAGGER_API } from "../../utils/constants/fetch";
 import ShowUploadImage from "./ShowUploadImage";
 
 const UploadImages = ({
@@ -12,28 +14,76 @@ const UploadImages = ({
   findedSubProductData,
   errors,
 }) => {
-  const [{ data, error }, getProductImageHandler] = useMutation();
+  const [error, setError] = useState(null);
 
-  const onDrop = useCallback(
-    (file) => {
-      getProductImageHandler(file);
-      if (data) {
+  const getImageLinkHandler = async (file) => {
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file[0]);
+    axios({
+      method: "POST",
+      url: `${SWAGGER_API}file`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
         setFieldValue(
           "subProductRequests",
           values.subProductRequests.map((subproduct, index) => {
             if (index === Number(getProductIdParam)) {
               const newData = {
                 ...subproduct,
-                images: [...subproduct.images, data.link],
+                images: [...subproduct.images, response.data.link],
               };
               return newData;
             }
             return subproduct;
           })
         );
-      }
+      })
+      .catch((error) => {
+        setError(error?.message || "Something is wrong");
+      });
+  };
+
+  const editImageHandler = useCallback(
+    async (file, product) => {
+      const bodyFormData = new FormData();
+      bodyFormData.append("file", file[0]);
+      axios({
+        method: "POST",
+        url: `${SWAGGER_API}file`,
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then((response) => {
+          setFieldValue(
+            "subProductRequests",
+            values.subProductRequests.map((subproduct, index) => {
+              if (index === Number(getProductIdParam)) {
+                const result = subproduct.images.map((image) => {
+                  if (product === image) {
+                    return response.data.link;
+                  }
+                  return image;
+                });
+                return { ...subproduct, images: result };
+              }
+              return subproduct;
+            })
+          );
+        })
+        .catch((error) => {
+          setError(error?.message || "Something is wrong");
+        });
     },
-    [values.subProductRequests, data]
+    [values.subProductRequests]
+  );
+
+  const onDrop = useCallback(
+    (file) => {
+      getImageLinkHandler(file);
+    },
+    [values.subProductRequests]
   );
 
   const { getInputProps, getRootProps } = useDropzone({
@@ -126,10 +176,11 @@ const UploadImages = ({
             <ShowUploadImage
               key={index}
               product={product_img}
-              index={index}
+              removeImageHandler={removeImageHandler}
+              setError={setError}
               values={values}
               setFieldValue={setFieldValue}
-              removeImageHandler={removeImageHandler}
+              editImageHandler={editImageHandler}
             />
           ))}
         </Box>

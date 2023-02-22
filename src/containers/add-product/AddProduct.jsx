@@ -28,7 +28,6 @@ const AddProduct = () => {
   };
 
   const sendData = (value) => {
-    console.log(value);
     dispatch(addProductThunk(value));
   };
 
