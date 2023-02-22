@@ -18,6 +18,7 @@ import {
   DownloadBannerIcon,
   PlusIcon,
 } from "../../../assets";
+import useMutation from "../../../hooks/useMutation";
 import useVisibility from "../../../hooks/useVisibility";
 import {
   getBrandThunkApi,
@@ -29,6 +30,7 @@ import Modal from "../../UI/Modal";
 
 const Brand = ({ handleChange, values, errors, Productbrand }) => {
   const [openModal, setOpenModal] = useVisibility();
+  const [{ data, isLoading }, getBrandImagelinkHandler] = useMutation();
 
   const dispatch = useDispatch();
 
@@ -46,6 +48,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
       dispatch(postBrandThunkApi(values)).then((res) => {
         if (!res.payload.message.includes(500)) {
           setOpenModal();
+          dispatch(getBrandThunkApi());
         }
       });
     },
@@ -55,16 +58,24 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
     dispatch(getBrandThunkApi());
   }, []);
 
-  const onDrop = useCallback((acceptFiles) => {
-    const file = acceptFiles[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      setFieldValue("image", fileReader.result);
-    };
-    fileReader.readAsDataURL(file);
-  }, []);
+  const onDrop = useCallback(
+    (acceptFiles) => {
+      getBrandImagelinkHandler(acceptFiles);
+      if (data) {
+        setFieldValue("image", data.link);
+      }
+    },
+    [data]
+  );
 
-  const { getInputProps, getRootProps } = useDropzone({ onDrop });
+  const { getInputProps, getRootProps } = useDropzone({
+    onDrop,
+    accept: { "image/png": [".png"], "text/html": [".html", ".htm"] },
+  });
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   const findedPRODUCTBRAND = Productbrand?.find(
     (brand) => brand.id === Number(values?.brandId)
@@ -180,7 +191,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
         )}
       >
         {Productbrand?.map((catalog) => (
-          <StyledMenuItem key={catalog.brandName} value={catalog.id}>
+          <StyledMenuItem key={catalog.id} value={catalog.id}>
             <IconButton size="small" className="brand_icons">
               <img src={catalog?.image} alt="" />
             </IconButton>

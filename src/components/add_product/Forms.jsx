@@ -30,7 +30,6 @@ import Brand from "./fields/Brand";
 import Category from "./fields/Category";
 import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
-import UploadImages from "./UploadImages";
 
 const Forms = ({ getData, searchParams, setSearchParams }) => {
   const { values, handleChange, setFieldValue, handleSubmit, errors } =
@@ -114,13 +113,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
     return null;
   }, [errors.subProductRequests]);
 
-  const imagesError = useMemo(() => {
-    if (Array.isArray(errors.subProductRequests)) {
-      return errors.subProductRequests[Number(getProductIdParam)].images;
-    }
-    return null;
-  }, [errors.subProductRequests]);
-
   const removeProductCountHandler = (index) => () => {
     values.subProductRequests.splice(index, 1);
   };
@@ -132,7 +124,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
-        <Grid item xs={3.5}>
+        <Grid item xl={3.5} lg={6}>
           <Category
             handleChange={handleChange}
             values={values}
@@ -146,7 +138,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
             errors={errors}
           />
         </Grid>
-        <Grid item xs={3.5}>
+        <Grid item xl={3.5} lg={6}>
           <Brand
             handleChange={handleChange}
             values={values}
@@ -189,30 +181,32 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
           values.subProductRequests.length !== 0 ? (
             <>
               <Grid item xs={12} display="flex" gap="10px">
-                {values.subProductRequests.map((subProduct, index) => (
-                  <StyledButton
-                    key={index}
-                    variant="outlined"
-                    className={`product_button ${
-                      index === Number(getProductIdParam)
-                        ? "selected_product"
-                        : ""
-                    }`}
-                    id={index}
-                    onClick={chooseProductDataHandler}
-                  >
-                    Product {index + 1}
-                    {index !== 0 && (
-                      <Box
-                        component="span"
-                        className="icon_delete"
-                        onClick={removeProductCountHandler(index)}
-                      >
-                        <DeleteIconInCart width={12} height={12} />
-                      </Box>
-                    )}
-                  </StyledButton>
-                ))}
+                <Box className="scroll padding flex gap2">
+                  {values.subProductRequests.map((subProduct, index) => (
+                    <StyledButton
+                      key={index}
+                      variant="outlined"
+                      className={`product_button ${
+                        index === Number(getProductIdParam)
+                          ? "selected_product"
+                          : ""
+                      }`}
+                      id={index}
+                      onClick={chooseProductDataHandler}
+                    >
+                      Product {index + 1}
+                      {index !== 0 && (
+                        <Box
+                          component="span"
+                          className="icon_delete"
+                          onClick={removeProductCountHandler(index)}
+                        >
+                          <DeleteIconInCart width={12} height={12} />
+                        </Box>
+                      )}
+                    </StyledButton>
+                  ))}
+                </Box>
                 <StyledButton
                   className="create_product"
                   variant="text"
@@ -307,21 +301,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                   ))}
                 </Select>
               </Grid>
-              <Grid item xs={11}>
-                <UploadImages
-                  handleChange={handleChange}
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  findedSubProductData={findedSubProductData}
-                  getProductIdParam={getProductIdParam}
-                  errors={errors}
-                />
-                {imagesError && (
-                  <Typography component="p" variant="body2" color="error">
-                    {imagesError}
-                  </Typography>
-                )}
-              </Grid>
+
               <Grid item xs={3.5} display="grid">
                 <StyledButton className="next_button" type="submit">
                   Далее

@@ -3,7 +3,13 @@ import React, { useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { DeleteIcon, EditIcon } from "../../assets";
 
-const ShowUploadImage = ({ setFieldValue, values, product, index }) => {
+const ShowUploadImage = ({
+  setFieldValue,
+  values,
+  product,
+  index,
+  removeImageHandler,
+}) => {
   const editImageOnDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -40,23 +46,13 @@ const ShowUploadImage = ({ setFieldValue, values, product, index }) => {
 
   const dropZoneRef = useRef(null);
 
-  const removeImageHandler = (item) => () => {
-    setFieldValue(
-      "subProductRequests",
-      values.subProductRequests.map((subproduct) => {
-        const itemIndex = subproduct.images.indexOf(item);
-        subproduct.images.splice(itemIndex, 1);
-        return subproduct;
-      })
-    );
-  };
   return (
     <StyledImg>
       <img src={product} alt="" />
       <Box className="change_image gap">
         <DeleteIcon
           className="icon delete_icon"
-          onClick={removeImageHandler(product)}
+          onClick={() => removeImageHandler(product)}
         />
         <EditIcon className="icon edit_icon" onClick={open} />
       </Box>

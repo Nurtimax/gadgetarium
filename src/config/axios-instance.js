@@ -1,7 +1,5 @@
 import axios from "axios";
-// import { ActionauthenticationSlice } from "../redux/slices/authentication";
 import { SWAGGER_API } from "../utils/constants/fetch";
-// import { store } from "../redux";
 
 const headers = {
   "Content-Type": "application/json",

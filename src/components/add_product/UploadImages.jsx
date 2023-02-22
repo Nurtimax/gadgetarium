@@ -1,8 +1,8 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
-import React, { useCallback } from "react";
-import { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { DownloadBannerIcon } from "../../assets";
+import useMutation from "../../hooks/useMutation";
 import ShowUploadImage from "./ShowUploadImage";
 
 const UploadImages = ({
@@ -12,33 +12,32 @@ const UploadImages = ({
   findedSubProductData,
   errors,
 }) => {
+  const [{ data, error }, getProductImageHandler] = useMutation();
+
   const onDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      const reader = new FileReader();
-      reader.onload = () => {
+    (file) => {
+      getProductImageHandler(file);
+      if (data) {
         setFieldValue(
           "subProductRequests",
           values.subProductRequests.map((subproduct, index) => {
             if (index === Number(getProductIdParam)) {
               const newData = {
                 ...subproduct,
-                images: [...findedSubProductData.images, reader.result],
+                images: [...subproduct.images, data.link],
               };
               return newData;
             }
             return subproduct;
           })
         );
-      };
-      reader.readAsDataURL(file);
+      }
     },
-    [values.subProductRequests, findedSubProductData]
+    [values.subProductRequests, data]
   );
 
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
-    accept: { "image/*": [] },
   });
 
   const isSubProductData = useMemo(() => {
@@ -55,12 +54,33 @@ const UploadImages = ({
     return null;
   }, []);
 
+  const removeImageHandler = (item) => {
+    setFieldValue(
+      "subProductRequests",
+      values.subProductRequests.map((subproduct, index) => {
+        if (Number(getProductIdParam) === index) {
+          const newSubProductImages = subproduct.images.filter(
+            (image) => image !== item
+          );
+          const newSubProductData = {
+            ...subproduct,
+            images: newSubProductImages,
+          };
+          return newSubProductData;
+        }
+        return subproduct;
+      })
+    );
+  };
+
   return (
     <>
       <Typography component="p" variant="body1">
         Добавьте фото
       </Typography>
-      <StyledUploadImages className={`${uploadImageError ? "error" : ""}`}>
+      <StyledUploadImages
+        className={`${uploadImageError || error ? "error" : ""}`}
+      >
         <Grid
           {...getRootProps()}
           container
@@ -102,17 +122,23 @@ const UploadImages = ({
             findedSubProductData.images?.length === 10 ? "image_fullheight" : ""
           }`}
         >
-          {findedSubProductData.images?.map((product_img, index) => (
+          {findedSubProductData?.images?.map((product_img, index) => (
             <ShowUploadImage
               key={index}
               product={product_img}
               index={index}
               values={values}
               setFieldValue={setFieldValue}
+              removeImageHandler={removeImageHandler}
             />
           ))}
         </Box>
       </StyledUploadImages>
+      {error && (
+        <Typography variant="body2" component="p" color="error">
+          {error}
+        </Typography>
+      )}
     </>
   );
 };

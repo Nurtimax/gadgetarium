@@ -10,11 +10,12 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { useCallback } from "react";
 import { ArrowDownIcon } from "../../../assets";
 import { PRODUCT_FORMS_FIELDS } from "../../../utils/constants/add-product";
 import Input from "../../UI/input/Input";
+import UploadImages from "../UploadImages";
 
 const PhoneLaptopTablet = ({
   values,
@@ -22,7 +23,15 @@ const PhoneLaptopTablet = ({
   findedSubProductData,
   getProductIdParam,
   errors,
+  handleChange,
 }) => {
+  const imagesError = useMemo(() => {
+    if (Array.isArray(errors.subProductRequests)) {
+      return errors.subProductRequests[Number(getProductIdParam)].images;
+    }
+    return null;
+  }, [errors.subProductRequests]);
+
   const changeCharacteristicsHandler = useCallback(
     (e) => {
       setFieldValue(
@@ -108,6 +117,17 @@ const PhoneLaptopTablet = ({
                   classes={{ root: "radiogroup" }}
                 >
                   {content.values.map((value) => (
+                    // <FormControlLabel
+                    //   key={value}
+                    //   value={value}
+                    //   control={
+                    //     <Radio
+                    //       size="small"
+                    //       classes={{ checked: "radio_checked" }}
+                    //     />
+                    //   }
+                    //   label={value}
+                    // />
                     <FormControlLabel
                       key={value}
                       value={value}
@@ -131,6 +151,21 @@ const PhoneLaptopTablet = ({
           )}
         </Grid>
       ))}
+      <Grid item xs={11}>
+        <UploadImages
+          handleChange={handleChange}
+          values={values}
+          setFieldValue={setFieldValue}
+          findedSubProductData={findedSubProductData}
+          getProductIdParam={getProductIdParam}
+          errors={errors}
+        />
+        {imagesError && (
+          <Typography component="p" variant="body2" color="error">
+            {imagesError}
+          </Typography>
+        )}
+      </Grid>
     </Grid>
   );
 };
