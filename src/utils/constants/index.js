@@ -19,6 +19,7 @@ import {
   WalletIcon,
 } from "../../assets";
 import ImageTable from "../../assets/images/imageTables.png";
+import TabletMacIcon from "@mui/icons-material/TabletMac";
 
 export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/laptop-pens-phone-note-with-blank-screen-on-table_155003-5339.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
@@ -175,7 +176,7 @@ export const catalogMenu_FAKE_DATA = [
   },
   {
     id: 2,
-    title: "Ноутбуки и планшеты ",
+    title: "Ноутбуки",
     icon: <ComputerIcon />,
     subcategories: [
       { id: 1, title: "Acer" },
@@ -193,7 +194,25 @@ export const catalogMenu_FAKE_DATA = [
   },
   {
     id: 3,
-    title: "Смарт-часы и браслеты ",
+    title: "Планшеты",
+    icon: <TabletMacIcon color="disabled" />,
+    subcategories: [
+      { id: 1, title: "Acer" },
+      { id: 2, title: "Asus" },
+      { id: 3, title: "Apple" },
+      { id: 4, title: "DELL" },
+      { id: 5, title: "Digma" },
+      { id: 6, title: "Huawei" },
+      { id: 7, title: "HONOR" },
+      { id: 8, title: "Lenovo" },
+      { id: 9, title: "HP" },
+      { id: 10, title: "MSI" },
+      { id: 11, title: "Xiaomi" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Смарт-часы и браслеты",
     icon: <SmartWatchIcon />,
     subcategories: [
       { id: 1, title: "Смарт-часы Apple Watch" },
@@ -203,6 +222,7 @@ export const catalogMenu_FAKE_DATA = [
     ],
   },
 ];
+
 export const titlesTables = [
   "ID",
   "Фото",
@@ -428,7 +448,6 @@ export const ROUTES = {
   ADMIN: "/admin",
   ADMINITEMDETAIL: "item_details",
   ADDPRODUCT: "add-product",
-  settingPriceQuantityItem: "setting-price-quantity-item",
   SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
   DESCRIPTIONOVERVIEW: "description-overview",
   MAIN: "/",

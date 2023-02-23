@@ -6,6 +6,9 @@ import Themes from "./components/UI/Themes";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux";
+import { injectStore } from "./config/axios-instance";
+
+injectStore(store);
 
 const root = createRoot(document.getElementById("root"));
 root.render(

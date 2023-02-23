@@ -10,14 +10,14 @@ const AdminHeader = () => {
       <AppBar position="fixed">
         <Container>
           <Toolbar className="padding flex">
-            <Grid container spacing={1} className="between">
-              <Grid item xs={2.5}>
+            <Grid container spacing={5} className="flex between">
+              <Grid item xl={2} lg={2} md={1.9}>
                 <Logo />
               </Grid>
-              <Grid item xs={5.5}>
+              <Grid item xl={5} lg={5} md={7.4} className="flex center">
                 <NavLinks page={adminPage} />
               </Grid>
-              <Grid item xs={3.5} className={`height flex `}>
+              <Grid item xl={3.6} lg={3} md={2} className="height flex">
                 <AdminProfile />
               </Grid>
             </Grid>

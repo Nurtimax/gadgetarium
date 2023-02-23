@@ -35,6 +35,9 @@ code {
 .flex-end {
   justify-content: flex-end;
 }
+.flex-start {
+  justify-content: flex-start;
+}
 .pointer {
   cursor: pointer;
 }
@@ -68,10 +71,18 @@ code {
   justify-content: space-evenly;
 }
 
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 .none {
   visibility: hidden;
   height: 0 !important;
@@ -81,6 +92,16 @@ a {
   min-height: 0 !important;
   min-width: 0 !important;
   padding: 0 !important;
+}
+.scroll {
+  overflow: auto;
+}
+.scroll_tab::-webkit-scrollbar {
+  display: none;
+}
+
+.fullWidth {
+  width: 100%;
 }
 
 .gap {

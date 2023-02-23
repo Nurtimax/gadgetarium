@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { SWAGGER_API } from "../../utils/constants/fetch";
+import axiosInstance from "../../config/axios-instance";
+
 const initialState = {
   newProducts: [],
   recommendationProduct: [],
@@ -17,8 +17,8 @@ export const fetchDiscountProduct = createAsyncThunk(
   "productSlice/fetchDiscountProduct",
   async (size, { rejectWithValue }) => {
     try {
-      const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/discountsProducts`,
+      const { data, status } = await axiosInstance.get(
+        `products/discountsProducts`,
         {
           params: {
             page: 1,
@@ -40,15 +40,12 @@ export const fetchNewProduct = createAsyncThunk(
   "productSlice/fetchProduct",
   async (size, { rejectWithValue }) => {
     try {
-      const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/newProducts`,
-        {
-          params: {
-            page: 1,
-            size,
-          },
-        }
-      );
+      const { data, status } = await axiosInstance.get(`products/newProducts`, {
+        params: {
+          page: 1,
+          size,
+        },
+      });
       if (!status === 200) {
         throw new Error("Server error");
       }
@@ -62,8 +59,8 @@ export const fetchRecomendationProduct = createAsyncThunk(
   "productSlice/fetchRecomendationProduct",
   async (size, { rejectWithValue }) => {
     try {
-      const { data, status } = await axios.get(
-        `${SWAGGER_API}/api/products/recommendationsProducts`,
+      const { data, status } = await axiosInstance.get(
+        `products/recommendationsProducts`,
         {
           params: {
             page: 1,
