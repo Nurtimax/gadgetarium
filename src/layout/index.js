@@ -12,7 +12,6 @@ const Layout = ({ role, authSave }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(authSave);
     if (authSave) {
       dispatch(ActionauthenticationSlice.getUserData(authSave));
     }
