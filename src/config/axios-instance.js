@@ -40,7 +40,6 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(response);
   },
   (error) => {
-    console.log(error, "response");
     if (error.response?.status === 500) {
       store.dispatch(ActionauthenticationSlice.authLogOut());
       // logout()
