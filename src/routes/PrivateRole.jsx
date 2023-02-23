@@ -12,8 +12,8 @@ const PrivateRole = ({
   const isAdmin = location.pathname.split("/").includes(...roles);
 
   useEffect(() => {
-    if (roleName) {
-      navigate("/");
+    if (!roleName) {
+      return navigate("/");
     }
 
     if (roles.includes(roleName?.toLowerCase())) {
@@ -23,7 +23,8 @@ const PrivateRole = ({
         navigate(location.pathname);
       }
     }
-  }, []);
+    return null;
+  }, [roleName, fallbackPath, isAdmin, roles]);
 
   return RouteComponent;
 };

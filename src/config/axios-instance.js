@@ -40,6 +40,7 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(response);
   },
   (error) => {
+    console.log(error, "response");
     if (error.response?.status === 500) {
       store.dispatch(ActionauthenticationSlice.authLogOut());
       // logout()
@@ -47,8 +48,12 @@ axiosInstance.interceptors.response.use(
       // reseeet redux state
       throw new Error("500 unauthorized");
     }
-    if (error?.name === "AxiosError") {
-      return "Something is wrong in server";
+    if (error.response?.status === 403) {
+      store.dispatch(ActionauthenticationSlice.authLogOut());
+      // logout()
+      // remove user from local storage
+      // reseeet redux state
+      throw new Error("500 unauthorized");
     }
     return Promise.reject(error);
   }
