@@ -10,8 +10,6 @@ const UserProfileList = () => {
   const { data } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(data);
-
   const isLogIn = useMemo(() => {
     return data?.roleName ? "enteredLogIn" : "enter";
   }, [data?.roleName]);

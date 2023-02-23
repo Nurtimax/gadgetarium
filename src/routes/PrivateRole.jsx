@@ -9,7 +9,9 @@ const PrivateRole = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isAdmin = location.pathname.split("/").includes(...roles);
+  const isAdmin = location.pathname
+    .split("/")
+    .includes(roleName?.toLowerCase());
 
   useEffect(() => {
     if (!roleName) {

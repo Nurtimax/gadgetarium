@@ -343,6 +343,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
     color: `${theme.palette.grey[800]} !important`,
     borderColor: `${theme.palette.grey[800]} !important`,
     position: "relative",
+    fontSize: "100%",
     "&:hover": {
       background: "none",
     },

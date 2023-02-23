@@ -48,7 +48,9 @@ const UserHeader = () => {
               <Grid item xl={2} lg={2} md={1.9}>
                 <Logo width="100%" height="100%" />
               </Grid>
-              <NavLinks page={userPages} />
+              <Grid item xl={6.5} lg={7.3} md={7.4} className="flex center">
+                <NavLinks page={userPages} />
+              </Grid>
               <Grid item xl={3} lg={2.7} md={2.6} className={`height flex `}>
                 <UserProfile />
               </Grid>

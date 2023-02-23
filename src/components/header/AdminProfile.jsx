@@ -105,9 +105,9 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   color: "white !important",
   borderRadius: "46px",
   fontWeight: 700,
-  fontSize: 16,
+  fontSize: "80%",
   padding: "10px 15px",
-  width: "190px",
+  width: "10rem",
   "&.logout_button": {
     background: theme.palette.secondary.main,
     borderRadius: 4,
