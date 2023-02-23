@@ -12,18 +12,11 @@ import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
 import { ROUTES } from "../utils/constants";
-import { GADJEDTARIUM_LOGIN_INFO } from "../utils/constants/fetch";
 import PrivateRole from "./PrivateRole";
-
-const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.data);
   const { roleName } = user || {};
-
-  if (authSave && !roleName) {
-    return null;
-  }
 
   return (
     <>
