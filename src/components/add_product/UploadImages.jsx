@@ -15,8 +15,10 @@ const UploadImages = ({
   errors,
 }) => {
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getImageLinkHandler = async (file) => {
+    setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
     axios({
@@ -39,14 +41,18 @@ const UploadImages = ({
             return subproduct;
           })
         );
+        setIsLoading(false);
       })
       .catch((error) => {
         setError(error?.message || "Something is wrong");
+        setIsLoading(false);
       });
   };
 
   const editImageHandler = useCallback(
     async (file, product) => {
+      setIsLoading(true);
+      removeImageHandler(product);
       const bodyFormData = new FormData();
       bodyFormData.append("file", file[0]);
       axios({
@@ -71,9 +77,11 @@ const UploadImages = ({
               return subproduct;
             })
           );
+          setIsLoading(false);
         })
         .catch((error) => {
           setError(error?.message || "Something is wrong");
+          setIsLoading(false);
         });
     },
     [values.subProductRequests]
@@ -105,23 +113,44 @@ const UploadImages = ({
   }, []);
 
   const removeImageHandler = (item) => {
-    setFieldValue(
-      "subProductRequests",
-      values.subProductRequests.map((subproduct, index) => {
-        if (Number(getProductIdParam) === index) {
-          const newSubProductImages = subproduct.images.filter(
-            (image) => image !== item
-          );
-          const newSubProductData = {
-            ...subproduct,
-            images: newSubProductImages,
-          };
-          return newSubProductData;
-        }
-        return subproduct;
+    setIsLoading(true);
+    axios({
+      method: "DELETE",
+      url: `${SWAGGER_API}file`,
+      data: {},
+      headers: { "Content-Type": "multipart/form-data" },
+      params: {
+        fileLink: item,
+      },
+    })
+      .then(() => {
+        setFieldValue(
+          "subProductRequests",
+          values.subProductRequests.map((subproduct, index) => {
+            if (Number(getProductIdParam) === index) {
+              const newSubProductImages = subproduct.images.filter(
+                (image) => image !== item
+              );
+              const newSubProductData = {
+                ...subproduct,
+                images: newSubProductImages,
+              };
+              return newSubProductData;
+            }
+            return subproduct;
+          })
+        );
+        setIsLoading(false);
       })
-    );
+      .catch((error) => {
+        setIsLoading(false);
+        return error;
+      });
   };
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>

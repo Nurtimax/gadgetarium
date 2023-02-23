@@ -16,7 +16,6 @@ import { useDispatch } from "react-redux";
 import Modal from "../UI/Modal";
 import useVisibility from "../../hooks/useVisibility";
 import { useNavigate } from "react-router-dom";
-// import { ROUTES } from "../../utils/constants";
 
 const AdminProfile = () => {
   const [anchorEl, toggleAnchorElHandler, open] = useDropDown();

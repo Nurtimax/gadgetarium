@@ -25,7 +25,7 @@ const NavLinks = ({ page = [], ...rest }) => {
         ? "Товары"
         : value
     );
-  }, [location.pathname]);
+  }, [location.pathname, value]);
 
   return (
     <Tabs

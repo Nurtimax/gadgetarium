@@ -4,17 +4,15 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import BreadCrumbs from "../components/breadcrumbs/Breadcrumbs";
 import { ActionauthenticationSlice } from "../redux/slices/authentication";
-import { GADJEDTARIUM_LOGIN_INFO } from "../utils/constants/fetch";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
 
-const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
-
-const Layout = ({ role }) => {
+const Layout = ({ role, authSave }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(authSave);
     if (authSave) {
       dispatch(ActionauthenticationSlice.getUserData(authSave));
     }

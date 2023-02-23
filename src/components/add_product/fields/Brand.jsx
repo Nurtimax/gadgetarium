@@ -90,8 +90,22 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
     (brand) => brand.id === Number(values?.brandId)
   );
 
-  const removeBrandImageHandler = () => {
-    setFieldValue("image", "");
+  const removeBrandImageHandler = (image) => {
+    axios({
+      method: "DELETE",
+      url: `${SWAGGER_API}file`,
+      data: {},
+      headers: { "Content-Type": "multipart/form-data" },
+      params: {
+        fileLink: image,
+      },
+    })
+      .then(() => {
+        setFieldValue("image", "");
+      })
+      .catch((error) => {
+        return error;
+      });
   };
 
   return (
@@ -111,7 +125,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
               <StyledButton
                 variant="outlined"
                 className="brand_button"
-                onClick={removeBrandImageHandler}
+                onClick={() => removeBrandImageHandler(brandValues.image)}
               >
                 <DeleteIcon />
               </StyledButton>
