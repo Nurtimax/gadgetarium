@@ -117,7 +117,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
     values.subProductRequests.splice(index, 1);
   };
 
-  if (Productbrand.message) {
+  if (Productbrand?.message) {
     return <h1>{Productbrand.message}</h1>;
   }
 

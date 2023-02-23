@@ -53,9 +53,6 @@ const authenticationSlice = createSlice({
     getUserData: (state, action) => {
       state.data = action.payload;
     },
-    exampleData(state) {
-      return state;
-    },
   },
   extraReducers: {
     [fetchDataSignin.fulfilled]: (state, action) => {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ActionauthenticationSlice } from "../redux/slices/authentication";
 import { SWAGGER_API } from "../utils/constants/fetch";
 
 const headers = {
@@ -40,11 +41,14 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 500) {
-      // store.dispatch(ActionauthenticationSlice.authLogOut());
+      store.dispatch(ActionauthenticationSlice.authLogOut());
       // logout()
       // remove user from local storage
       // reseeet redux state
       throw new Error("500 unauthorized");
+    }
+    if (error?.name === "AxiosError") {
+      return "Something is wrong in server";
     }
     return Promise.reject(error);
   }
