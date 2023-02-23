@@ -268,26 +268,8 @@ const AppRoutes = () => {
             }
           />
         </Route>
-        <Route
-          path={`/${ROUTES.SIGNIN}`}
-          element={
-            <PrivateRole
-              RouteComponent={<SignIn />}
-              roleName={roleName}
-              fallbackPath="/"
-            />
-          }
-        />
-        <Route
-          path={ROUTES.SIGNUP}
-          element={
-            <PrivateRole
-              RouteComponent={<SignUp />}
-              roleName={roleName}
-              fallbackPath="/"
-            />
-          }
-        />
+        <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
         <Route path={ROUTES.NOTFOUND} element={<h1>Not found</h1>} />
       </Routes>
     </>

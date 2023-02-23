@@ -1,8 +1,8 @@
-import { Box, styled, Tab, Tabs, Typography } from "@mui/material";
+import { Grid, styled, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const NavLinks = ({ page = [] }) => {
+const NavLinks = ({ page = [], ...rest }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,13 +18,14 @@ const NavLinks = ({ page = [] }) => {
   };
 
   return (
-    <Box className="flex center">
+    <StyledNavlinkGrid item xl={6.5} lg={7.3} md={7.4} className="flex center">
       <Tabs
+        {...rest}
         textColor="inherit"
         value={value}
         onChange={handleChange}
         indicatorColor="none"
-        classes={{ flexContainer: "gap" }}
+        classes={{ flexContainer: "gap", root: "navlink_tabs" }}
       >
         {page?.map((adminList) => (
           <TabStyled
@@ -40,7 +41,7 @@ const NavLinks = ({ page = [] }) => {
           />
         ))}
       </Tabs>
-    </Box>
+    </StyledNavlinkGrid>
   );
 };
 
@@ -50,5 +51,12 @@ const TabStyled = styled(Tab)(() => ({
   "&.Mui-selected": {
     background: "#f8f7f733",
     borderRadius: "3px",
+  },
+  "& .MuiButtonBase-root": {},
+}));
+
+const StyledNavlinkGrid = styled(Grid)(() => ({
+  "&.MuiGrid-grid-lg-5.3": {
+    padding: "10000px",
   },
 }));

@@ -13,7 +13,7 @@ const PrivateRole = ({
 
   useEffect(() => {
     if (!roleName) {
-      return navigate("/");
+      navigate("/");
     }
 
     if (roles.includes(roleName?.toLowerCase())) {
@@ -23,7 +23,6 @@ const PrivateRole = ({
         navigate(location.pathname);
       }
     }
-    return null;
   }, [roleName, fallbackPath, isAdmin, roles]);
 
   return RouteComponent;
