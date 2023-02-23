@@ -1,5 +1,5 @@
 import { Grid, styled, Tab, Tabs, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NavLinks = ({ page = [], ...rest }) => {
@@ -16,6 +16,10 @@ const NavLinks = ({ page = [], ...rest }) => {
     const params = page.find((item) => item.theme === newValue);
     navigate(`${params.to}`);
   };
+
+  useEffect(() => {
+    setValue(location.pathname === "/" ? "Главная" : value);
+  }, [location.pathname]);
 
   return (
     <StyledNavlinkGrid item xl={6.5} lg={7.3} md={7.4} className="flex center">

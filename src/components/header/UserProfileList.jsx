@@ -1,5 +1,6 @@
 import { Grid, MenuItem } from "@mui/material";
 import React from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication";
@@ -9,7 +10,11 @@ const UserProfileList = () => {
   const { data } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const isLogIn = data?.roleName ? "enteredLogIn" : "enter";
+  console.log(data);
+
+  const isLogIn = useMemo(() => {
+    return data?.roleName ? "enteredLogIn" : "enter";
+  }, [data?.roleName]);
 
   const logOutHandler = (title) => () => {
     if (title === "Выйти") {
