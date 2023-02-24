@@ -44,14 +44,14 @@ const UserHeader = () => {
       <AppBar position={isScroll ? "fixed" : "relative"}>
         <Container className={`${isScroll ? "none" : ""}`}>
           <Toolbar className="padding flex">
-            <Grid container spacing={1} className="between">
-              <Grid item xs={2.5}>
-                <Logo />
+            <Grid container spacing={1} className="flex between">
+              <Grid item xl={2} lg={2} md={1.9}>
+                <Logo width="100%" height="100%" />
               </Grid>
-              <Grid item xs={5.5}>
+              <Grid item xl={6.5} lg={7.3} md={7.4} className="flex center">
                 <NavLinks page={userPages} />
               </Grid>
-              <Grid item xs={3.5} className={`height flex `}>
+              <Grid item xl={3} lg={2.7} md={2.6} className={`height flex `}>
                 <UserProfile />
               </Grid>
             </Grid>
@@ -61,10 +61,15 @@ const UserHeader = () => {
         <Container>
           <Toolbar className="padding">
             <Grid container className="between flex gap">
-              <Grid item xs={2} className={`${!isScroll ? "none" : ""}`}>
+              <Grid
+                item
+                xl={2}
+                lg={2.5}
+                className={`${!isScroll ? "none" : ""}`}
+              >
                 <Logo />
               </Grid>
-              <Grid item xs={1.5} className="flex gap2">
+              <Grid item xl={1.5} lg={1.6} className="flex gap2">
                 <Box className="flexgrow flex height">
                   <Catalog
                     anchorElCatalog={anchorEl}
@@ -81,7 +86,7 @@ const UserHeader = () => {
                   </ButtonStyled>
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xl={6} lg={5} md={5.6}>
                 <SearchItem />
               </Grid>
               <Grid
@@ -91,7 +96,7 @@ const UserHeader = () => {
               >
                 <SocialIcons />
               </Grid>
-              <Grid item xs={2} className="flex flex-end">
+              <Grid item xl={2} lg={1.5} className="flex flex-end">
                 <FunctionalIcons />
               </Grid>
             </Grid>

@@ -21,14 +21,13 @@ const SignIn = () => {
 
   const onSubmit = (values, action) => {
     dispatch(fetchDataSignin(values)).then((res) => {
-      const { email, roleName, token } = res.payload;
-      if (email && roleName && token) {
+      const { payload } = res;
+      if (payload?.email && payload?.roleName && payload?.token) {
         action.resetForm();
-        setError(null);
         navigate("/");
-      } else {
-        setError(true);
+        setError(null);
       }
+      setError(true);
     });
   };
 

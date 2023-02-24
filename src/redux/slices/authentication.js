@@ -1,18 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import {
-  GADJEDTARIUM_LOGIN_INFO,
-  SWAGGER_API,
-} from "../../utils/constants/fetch";
+import axiosInstance from "../../config/axios-instance";
+import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 
 export const fetchDataSignin = createAsyncThunk(
   "authenticationSlice/fetchDataSignin",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${SWAGGER_API}/api/auth/login`,
-        params
-      );
+      const response = await axiosInstance.post(`auth/login`, params);
       const data = response.data;
       return data;
     } catch (error) {
@@ -28,10 +22,7 @@ export const fetchDataSignup = createAsyncThunk(
   "authenticationSlice/fetchDataSignup",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${SWAGGER_API}/api/auth/register`,
-        params
-      );
+      const response = await axiosInstance.post(`auth/register`, params);
       const data = response.data;
       return data;
     } catch (error) {
@@ -56,8 +47,11 @@ const authenticationSlice = createSlice({
       state.data = initialState.data;
       localStorage.removeItem(GADJEDTARIUM_LOGIN_INFO);
     },
-    authLogIn: (state, { payload }) => {
-      state.data = payload;
+    authLogIn: (state, action) => {
+      state.data = action.payload;
+    },
+    getUserData: (state, action) => {
+      state.data = action.payload;
     },
   },
   extraReducers: {
@@ -99,4 +93,5 @@ const authenticationSlice = createSlice({
 });
 
 export const ActionauthenticationSlice = authenticationSlice.actions;
-export { authenticationSlice };
+const reducerAuthenticationSlice = authenticationSlice.reducer;
+export default reducerAuthenticationSlice;
