@@ -10,6 +10,8 @@ const Sort = ({
   handleCloseCatalog,
   setSortField,
   setDiscountField,
+  sortField,
+  discountField,
 }) => {
   const [subMenuCatalog, setSubMenuCatalog] = useState([]);
   const [anchorEl, setAnchorEl] = useDropDown();
@@ -62,6 +64,12 @@ const Sort = ({
                   catalog?.subcategories ? catalog.subcategories : []
                 )}
                 onClick={clickSortHandler(catalog.title)}
+                className={
+                  sortField === catalog.title
+                    ? "selectedSortField"
+                    : "notSelectedField"
+                }
+                classes={{ root: "sort_dropdown" }}
               >
                 {catalog.title}
               </MenuItem>
@@ -84,7 +92,14 @@ const Sort = ({
                 </Grid>
                 {subMenuCatalog.map((catalog) => (
                   <Grid item xs={12} key={catalog.id}>
-                    <MenuItem onClick={clickSubSortHandler(catalog.title)}>
+                    <MenuItem
+                      className={
+                        discountField === catalog.title
+                          ? "selectedSortField"
+                          : ""
+                      }
+                      onClick={clickSubSortHandler(catalog.title)}
+                    >
                       {catalog.title}
                     </MenuItem>
                   </Grid>
@@ -133,5 +148,11 @@ const StyledDropDown = styled(DropDown)(() => ({
   },
   "& .MuiBackdrop-root": {
     position: "relative",
+  },
+  "& .selectedSortField": {
+    background: "#CB11AB",
+  },
+  "& .sort_dropdown": {
+    color: "black",
   },
 }));

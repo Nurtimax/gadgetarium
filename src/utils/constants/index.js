@@ -515,8 +515,7 @@ export const ITEM_SORT = [
   { id: 4, title: "По увеличению цены" },
   { id: 5, title: "По уменьшению цены" },
 ];
-
-export const filterProducts = [
+export const filterCategory = [
   {
     id: 1,
     title: "Категория",
@@ -528,14 +527,15 @@ export const filterProducts = [
       { id: 5, title: "Xiaomi" },
     ],
   },
+];
+export const filterPrice = [
   {
     id: 2,
     title: "Стоимость",
-    subtitle: [
-      { id: 1, title: "от 500" },
-      { id: 2, title: "до 250000" },
-    ],
   },
+];
+
+export const filterProducts = [
   {
     id: 3,
     title: "Цвет",

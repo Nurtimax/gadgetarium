@@ -1,9 +1,9 @@
-import { Box, styled } from "@mui/material";
+import { Box, CircularProgress, styled } from "@mui/material";
 import React, { useCallback } from "react";
 import Button from "../../components/UI/button/Button";
 import ProductCard from "../../components/UI/card/ProductCard";
 
-const ProductsList = ({ data, setSize, size }) => {
+const ProductsList = ({ data, setSize, size, isLoading }) => {
   const onClickSize = useCallback(() => {
     setSize(size + 12);
   }, [size]);
@@ -26,7 +26,7 @@ const ProductsList = ({ data, setSize, size }) => {
         />
       ))}
 
-      {data.products?.length >= 12 ? (
+      {isLoading ? (
         <Box
           style={{
             width: "100%",
@@ -35,12 +35,32 @@ const ProductsList = ({ data, setSize, size }) => {
             padding: "32px 0px",
           }}
         >
-          <Button onClick={onClickSize} height="43px" variant="outlined">
-            Показать ещё
-          </Button>
+          <CircularProgress color="secondary" />
         </Box>
       ) : (
-        ""
+        <>
+          {data.products?.length >= 12 ? (
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                padding: "32px 0px",
+              }}
+            >
+              <Button
+                onClick={onClickSize}
+                height="43px"
+                variant="outlined"
+                disabled={data.products.length !== size}
+              >
+                Показать ещё
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )}
+        </>
       )}
     </Box>
   );
@@ -62,7 +82,7 @@ const ProductCardStyled = styled(ProductCard)(() => ({
     lineHeight: "22px",
     textTransform: "capitalize",
   },
-  "& .MuiButtonBase-root": { fontSize: "14px" },
+  "& .MuiButtonBase-root": { fontSize: "80%" },
   "& .MuiTypography-h1": {
     fontSize: "14px",
     fontWeight: "700",

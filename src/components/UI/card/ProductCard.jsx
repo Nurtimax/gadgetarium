@@ -46,6 +46,15 @@ const ProductCard = (props) => {
         return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
       case "RECOMMENDATION":
         return <Like width="2vw" height="2vw" title="Рекoмендуем" />;
+      // case "DISCOUNT_RECOMMENDATION":
+      //   return (
+      //     <div style={{ display: "flex", gap: "5px" }}>
+      //       <Discount_Styled width="2vw" height="2vw">
+      //         {productSale}
+      //       </Discount_Styled>
+      //       <Like width="2vw" height="2vw" />
+      //     </div>
+      //   );
 
       default:
         return <div></div>;

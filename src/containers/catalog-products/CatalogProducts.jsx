@@ -8,7 +8,6 @@ import {
   Box,
   Button,
   Grid,
-  CircularProgress,
 } from "@mui/material";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
@@ -20,9 +19,10 @@ import ProductsList from "./ProductsList";
 
 const CatalogProducts = () => {
   const [sortEL, setSortEl] = useDropDown();
-  const [sortField, setSortField] = useState(null);
+  const [sortField = { sortField }, setSortField] = useState(null);
   const [discountField, setDiscountField] = useState(null);
   const { catalogItem } = useParams();
+  const [size, setSize] = useState(12);
   const { data, isLoading, errorMessage } = useSelector(
     (state) => state.catalog
   );
@@ -32,13 +32,11 @@ const CatalogProducts = () => {
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(
     (catalog) => catalog.id === Number(catalogItem)
   );
-  const [size, setSize] = useState(12);
 
   useEffect(() => {
     dispatch(
       fetchDataCatalog({
         categoryName: findedCatalogItem.title,
-        page: 1,
         fieldToSort: sortField,
         discountField: discountField,
         size: size,
@@ -86,6 +84,8 @@ const CatalogProducts = () => {
                   handleCloseCatalog={setSortEl}
                   setDiscountField={setDiscountField}
                   setSortField={setSortField}
+                  sortField={sortField}
+                  discountField={discountField}
                 />
                 <Box className="sort-container" onClick={setSortEl}>
                   <Typography className="gap capitalize sort-text  pointer">
@@ -105,17 +105,12 @@ const CatalogProducts = () => {
             ""
           )}
 
-          {isLoading ? (
-            <Box className="isLoading-style">
-              {[...new Array(8)].map((_, i) => (
-                <div key={i} className="circular-progress">
-                  <CircularProgress color="secondary" />
-                </div>
-              ))}
-            </Box>
-          ) : (
-            <ProductsList data={data} setSize={setSize} size={size} />
-          )}
+          <ProductsList
+            isLoading={isLoading}
+            data={data}
+            setSize={setSize}
+            size={size}
+          />
         </Box>
       </Box>
     </ContainerStyled>
@@ -179,17 +174,4 @@ const ContainerStyled = styled(Container)(() => ({
     border: "1px solid #CDCDCD",
   },
   "& .error": { color: "red" },
-  "& .isLoading-style": {
-    width: "100%",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "8px",
-  },
-  "& .circular-progress": {
-    width: "227px",
-    height: "423px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
 }));

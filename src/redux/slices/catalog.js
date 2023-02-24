@@ -38,19 +38,19 @@ const catalogSlice = createSlice({
   name: "catalogSlice",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchDataCatalog.fulfilled]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchDataCatalog.fulfilled, (state, action) => {
       state.data.products = action.payload.data;
       state.isLoading = false;
-    },
-    [fetchDataCatalog.pending]: (state) => {
+    });
+    builder.addCase(fetchDataCatalog.pending, (state) => {
       state.errorMessage = false;
       state.isLoading = true;
-    },
-    [fetchDataCatalog.rejected]: (state, action) => {
+    });
+    builder.addCase(fetchDataCatalog.rejected, (state, action) => {
       state.errorMessage = action.payload;
       state.isLoading = false;
-    },
+    });
   },
 });
 
