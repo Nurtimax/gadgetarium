@@ -47,7 +47,18 @@ const FilterProducts = () => {
     <FilterProductsStyled>
       <Paper classes={{ root: "paper" }}>
         <Container classes={{ root: "container" }}>
-          <Typography>Сбросить все фильтры</Typography>
+          <Typography
+            style={{
+              width: "291px",
+              height: "50px",
+              borderBottom: "1px solid #E8E8E8",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "15px",
+            }}
+          >
+            Сбросить все фильтры
+          </Typography>
           {filterCategory.map((category) => (
             <Accordion key={category.id} classes={{ root: "accordion" }}>
               <AccordionSummary
@@ -108,7 +119,6 @@ const FilterProducts = () => {
                     width: "351px",
                     display: "flex",
                     justifyContent: "space-around",
-                    // gap: "20px",
                     paddingBottom: "25px",
                   }}
                 >
@@ -199,7 +209,10 @@ const FilterProductsStyled = styled(Box)(() => ({
   "& .paper": {
     width: "351px",
   },
-  "& .container": { maxWidth: "95%", padding: "0px" },
+  "& .container": {
+    maxWidth: "95%",
+    padding: "0px",
+  },
   "& .accordion": {
     borderBottom: "1px solid #E8E8E8",
     borderRadius: "0px",
@@ -214,6 +227,7 @@ const FilterProductsStyled = styled(Box)(() => ({
     lineHeight: "19px",
   },
   "& .MuiCollapse-wrapperInner": { paddingBottom: "20px" },
+  "& .MuiPaper-root .MuiPaper-elevation ": { width: "291px" },
   "& .MuiAccordionDetails-root": { padding: "0px" },
   "& .MuiListItem-root": {
     padding: "0px 0px 0px 5px",

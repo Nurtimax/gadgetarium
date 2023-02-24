@@ -29,6 +29,7 @@ const Sort = ({
   const clickSubSortHandler = (value) => () => {
     setSortField("По акции");
     setDiscountField(value);
+    closeHandler();
   };
   const clickSortHandler = (value) => () => {
     if (value !== "По акции") {

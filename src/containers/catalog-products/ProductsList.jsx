@@ -3,10 +3,39 @@ import React, { useCallback } from "react";
 import Button from "../../components/UI/button/Button";
 import ProductCard from "../../components/UI/card/ProductCard";
 
-const ProductsList = ({ data, setSize, size, isLoading }) => {
+const ProductsList = ({
+  data,
+  setSize,
+  size,
+  isLoading,
+  sortField,
+  discountField,
+}) => {
   const onClickSize = useCallback(() => {
     setSize(size + 12);
   }, [size]);
+
+  const changeProductStatusHelper = (
+    sortedName,
+    discountSortedName,
+    discount,
+    status
+  ) => {
+    if (sortedName === "Новинки") {
+      return "NEW";
+    }
+    if (sortedName === "По акции") {
+      if (discountSortedName) return "DISCOUNT";
+    }
+    if (sortedName === "Рекомендуемые") {
+      return "RECOMMENDATION";
+    }
+    if (discount > 0) {
+      return "DISCOUNT";
+    }
+    return status;
+  };
+
   return (
     <Box
       style={{
@@ -20,9 +49,12 @@ const ProductsList = ({ data, setSize, size, isLoading }) => {
         <ProductCardStyled
           {...item}
           key={item.productName}
-          productStatus={
-            item.discountPrice > 0 ? "DISCOUNT" : item.productStatus
-          }
+          productStatus={changeProductStatusHelper(
+            sortField,
+            discountField,
+            item.discountPrice,
+            item.productStatus
+          )}
         />
       ))}
 
@@ -69,7 +101,7 @@ const ProductsList = ({ data, setSize, size, isLoading }) => {
 export default ProductsList;
 
 const ProductCardStyled = styled(ProductCard)(() => ({
-  width: "227.5px !important",
+  width: "246.5px !important",
 
   "& .css-1mwp0i7": {
     width: "80%",

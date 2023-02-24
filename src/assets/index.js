@@ -37,9 +37,6 @@ export { ReactComponent as Like } from "./icons/like.svg";
 export { ReactComponent as New } from "./icons/new.svg";
 export { ReactComponent as VisibilityOnIcon } from "./icons/visibilityOn.svg";
 export { ReactComponent as VisibilityOffIcon } from "./icons/visibilityOff.svg";
-<<<<<<< HEAD
-export { ReactComponent as ArrowDownIcon } from "./icons/arrows/arrowDownBold.svg";
-=======
 export { ReactComponent as ArrowDownIcon } from "./icons/arrows/arrowDown.svg";
 export { ReactComponent as DownloadBannerIcon } from "./icons/add-brand.svg";
 export { ReactComponent as PlusIcon } from "./icons/plus.svg";
@@ -49,7 +46,6 @@ export { ReactComponent as AppleIcon } from "./icons/brands/apple.svg";
 export { ReactComponent as HuaweiIcon } from "./icons/brands/huawei.svg";
 export { ReactComponent as HonorIcon } from "./icons/brands/honor.svg";
 export { ReactComponent as XiaomiIcon } from "./icons/brands/xiaomi.svg";
->>>>>>> development
 export { ReactComponent as ElCardIcon } from "./icons/elCard.svg";
 export { ReactComponent as MasterCard } from "./icons/masterCard.svg";
 export { ReactComponent as VisaIcon } from "./icons/visa.svg";

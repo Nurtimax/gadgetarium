@@ -19,7 +19,7 @@ import ProductsList from "./ProductsList";
 
 const CatalogProducts = () => {
   const [sortEL, setSortEl] = useDropDown();
-  const [sortField = { sortField }, setSortField] = useState(null);
+  const [sortField, setSortField] = useState(null);
   const [discountField, setDiscountField] = useState(null);
   const { catalogItem } = useParams();
   const [size, setSize] = useState(12);
@@ -110,6 +110,8 @@ const CatalogProducts = () => {
             data={data}
             setSize={setSize}
             size={size}
+            sortField={sortField}
+            discountField={discountField}
           />
         </Box>
       </Box>

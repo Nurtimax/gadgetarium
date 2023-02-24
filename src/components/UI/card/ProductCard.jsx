@@ -19,6 +19,7 @@ import {
   ComporativePinkIcon,
   HeartActiveIcon,
 } from "../../../assets";
+import { priceProductSeparate } from "../../../utils/helpers/general";
 const ProductCard = (props) => {
   const {
     productName,
@@ -46,15 +47,6 @@ const ProductCard = (props) => {
         return <Discount_Styled title="Акции">{productSale}%</Discount_Styled>;
       case "RECOMMENDATION":
         return <Like width="2vw" height="2vw" title="Рекoмендуем" />;
-      // case "DISCOUNT_RECOMMENDATION":
-      //   return (
-      //     <div style={{ display: "flex", gap: "5px" }}>
-      //       <Discount_Styled width="2vw" height="2vw">
-      //         {productSale}
-      //       </Discount_Styled>
-      //       <Like width="2vw" height="2vw" />
-      //     </div>
-      //   );
 
       default:
         return <div></div>;
@@ -133,15 +125,17 @@ const ProductCard = (props) => {
             <Box width="30%" marginLeft="-10px">
               {discountPrice > 0 ? (
                 <Typography variant="h1" fontSize="0.8rem">
-                  {discountPrice}c
+                  {priceProductSeparate(Number(String(discountPrice || 0)))}c
                 </Typography>
               ) : (
                 <Typography variant="h1" fontSize="0.8rem">
-                  {productPrice}c
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
                 </Typography>
               )}
               {discountPrice > 0 ? (
-                <Styled_Price>{productPrice}c</Styled_Price>
+                <Styled_Price>
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
+                </Styled_Price>
               ) : null}
             </Box>
             <IconButton

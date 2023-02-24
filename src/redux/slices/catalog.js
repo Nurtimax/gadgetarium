@@ -1,21 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import {
-  GADJEDTARIUM_LOGIN_INFO,
-  SWAGGER_API,
-} from "../../utils/constants/fetch";
-
-const USER_INFO = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
+import axiosInstance from "../../config/axios-instance";
 
 export const fetchDataCatalog = createAsyncThunk(
   "catalogSlice/fetchDataCatalog",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${SWAGGER_API}/api/products/catalog`, {
+      const response = await axiosInstance.get(`products/catalog`, {
         params,
-        headers: {
-          Authorization: `Bearer ${USER_INFO?.token}`,
-        },
       });
       if (!response.status === 200) {
         throw new Error("Server error");
