@@ -42,7 +42,7 @@ const OrdersTabs = ({ valueInputSearch }) => {
     return {
       orderStatus,
       page,
-      size: 7,
+      size: 70,
     };
   }, [orderStatus, page, valueInputSearch, value]);
 

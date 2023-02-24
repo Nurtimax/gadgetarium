@@ -40,7 +40,7 @@ const Themes = ({ children }) => {
         styleOverrides: {
           maxWidthLg: {
             "&.MuiContainer-maxWidthLg": {
-              maxWidth: "90%",
+              maxWidth: "95%",
             },
           },
           maxWidthMd: {

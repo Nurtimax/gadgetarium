@@ -19,6 +19,7 @@ const getOrderProducts = createAsyncThunk(
         },
         params,
       });
+
       return response.data;
     } catch (error) {
       throw new Error();
@@ -39,6 +40,7 @@ const getOrderProductsById = createAsyncThunk(
           params,
         }
       );
+
       return response.data;
     } catch (error) {
       throw new Error();
@@ -68,7 +70,7 @@ const updateOrderProducts = createAsyncThunk(
         getOrderProducts({
           orderStatus: currentStatus,
           page: currentPage || 1,
-          size: 7,
+          size: 70,
         })
       );
 
@@ -93,7 +95,7 @@ const deleteOrderProducts = createAsyncThunk(
         getOrderProducts({
           orderStatus: currentStatus,
           page: currentPage || 1,
-          size: 7,
+          size: 70,
         })
       );
 
@@ -113,6 +115,7 @@ const getOrderInforaphic = createAsyncThunk(
           Authorization: `Bearer ${authRole.token}`,
         },
       });
+
       return response.data;
     } catch (error) {
       throw new Error();

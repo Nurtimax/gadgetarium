@@ -66,11 +66,23 @@ code {
   display: flex;
   align-items: center;
 }
+.evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
 
 a {
   color: inherit;
   text-decoration: none;
 }
+
 .none {
   visibility: hidden;
   height: 0 !important;
@@ -80,6 +92,16 @@ a {
   min-height: 0 !important;
   min-width: 0 !important;
   padding: 0 !important;
+}
+.scroll {
+  overflow: auto;
+}
+.scroll_tab::-webkit-scrollbar {
+  display: none;
+}
+
+.fullWidth {
+  width: 100%;
 }
 
 .gap {
@@ -92,7 +114,9 @@ a {
 .column {
   flex-direction: column;
 }
-
+.size14 {
+  font-size: 14px;
+}
 .background_linear {
   background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
 }
