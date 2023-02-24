@@ -47,8 +47,12 @@ const Select = ({ orderStatus, orderType, id }) => {
 
   return (
     <div>
-      <StyledTextStatus onClick={openPopUpHandler} variant="span">
-        {checkInOrderStatus(orderStatus)}
+      <StyledTextStatus
+        onClick={openPopUpHandler}
+        variant="span"
+        title="Выбрать статус заказа"
+      >
+        {checkInOrderStatus(orderStatus || "Don't have")}
         {open ? <ArrowOrderIconRotate /> : <ArrowOrderIcon />}
       </StyledTextStatus>
 
@@ -62,7 +66,7 @@ const Select = ({ orderStatus, orderType, id }) => {
         >
           {renderedMenuItems.map((item, i) => (
             <MenuItem onClick={selectHandler} id={item.tab} key={i}>
-              {item.text}
+              {item.text || "Don't have"}
             </MenuItem>
           ))}
         </StyledDropDown>

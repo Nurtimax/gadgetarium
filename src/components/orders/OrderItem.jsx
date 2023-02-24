@@ -24,7 +24,7 @@ const OrderItem = () => {
   return (
     <StyledMainContainer>
       <Typography className="paymant-text">
-        Оплата заказа {orderNumber}
+        Оплата заказа {orderNumber || 0}
       </Typography>
 
       <Box className="container">
@@ -35,19 +35,23 @@ const OrderItem = () => {
               <Typography className="li">Кол-во товара:</Typography>
               <Typography className="li">Общая сумма заказа:</Typography>
               <Typography className="li discount">
-                Скидка: {discount}%
+                Скидка: {discount || 0}%
               </Typography>
               <Typography className="li">Сумма скидки:</Typography>
             </Box>
 
             <Box className="ul-box">
-              <Typography className="li-value">{productName}</Typography>
-              <Typography className="li-value">{countOfProduct}шт</Typography>
               <Typography className="li-value">
-                {priceProductSeparate(Number(String(totalSum)))} с
+                {productName || "Don't have"}
+              </Typography>
+              <Typography className="li-value">
+                {countOfProduct || 0}шт
+              </Typography>
+              <Typography className="li-value">
+                {priceProductSeparate(Number(String(totalSum || 0)))} с
               </Typography>
               <Typography className="li-value-last">
-                {priceProductSeparate(Number(String(totalDiscount)))} с
+                {priceProductSeparate(Number(String(totalDiscount || 0)))} с
               </Typography>
             </Box>
           </Box>
@@ -55,7 +59,7 @@ const OrderItem = () => {
           <Box className="total-box">
             <Typography className="li">Итого:</Typography>
             <Typography className="li-value">
-              {priceProductSeparate(Number(String(totalSum)))} с
+              {priceProductSeparate(Number(String(totalSum || 0)))} с
             </Typography>
           </Box>
         </Box>

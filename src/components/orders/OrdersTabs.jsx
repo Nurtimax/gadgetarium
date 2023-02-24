@@ -8,7 +8,11 @@ import { getOrderProducts } from "../../redux/slices/orders-slice";
 import { format } from "date-fns";
 import DatePicker from "./DatePicker";
 import Table from "../Table";
-import { checkTabName } from "../../utils/helpers/general";
+import {
+  checkTabName,
+  isPaginationCountHandler,
+  isPaginationHandler,
+} from "../../utils/helpers/general";
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
 
@@ -24,6 +28,8 @@ const OrdersTabs = ({ valueInputSearch }) => {
   const [date, setDate] = useState([null, null]);
   const [value] = useDebounce(date, 1000);
   const dispatch = useDispatch();
+
+  const isPagination = isPaginationHandler(orderStatus, orderStatusAndSize);
 
   const handleTabClick = (e) => {
     setSearchParams({
@@ -90,7 +96,11 @@ const OrdersTabs = ({ valueInputSearch }) => {
         </div>
       ))}
 
-      <Pagination />
+      {isPagination && (
+        <Pagination
+          count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
+        />
+      )}
     </div>
   );
 };

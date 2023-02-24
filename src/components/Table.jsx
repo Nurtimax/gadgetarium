@@ -11,6 +11,7 @@ import {
 import { default as MUITable } from "@mui/material/Table";
 import { useMemo } from "react";
 import { useTable } from "react-table";
+import { priceProductSeparate } from "../utils/helpers/general";
 
 const defaultColumnProps = {
   style: {
@@ -45,7 +46,9 @@ const Table = ({
                   <div className="checkbox">
                     <Checkbox color="secondary" />
                   </div>
-                  <div className="ID">{row.original.id}</div>
+                  <div className="ID">
+                    {priceProductSeparate(Number(String(row.original.id || 0)))}
+                  </div>
                 </>
               );
             },

@@ -40,12 +40,12 @@ const Delete = ({ fullName, id }) => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <StyledDeleteIcon onClick={openModalWindow} />
+      <StyledDeleteIcon onClick={openModalWindow} title="Удалить заказ" />
       {open && (
         <StyledModal open={openModalWindow} handleClose={handleClose}>
           <Typography className="Box" variant="div">
             <Typography>Вы уверены, что хотите удалить товар</Typography>
-            <Typography>{fullName}?</Typography>
+            <Typography>{fullName || "Don't have"}?</Typography>
           </Typography>
           <Box className="flex center gap2">
             <ButtonStyled
