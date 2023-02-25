@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux";
 import { injectStore } from "./config/axios-instance";
+import { ToastContainer } from "react-toastify";
 
 injectStore(store);
 
@@ -15,6 +16,7 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <Themes>
+        <ToastContainer autoClose={1000} className="toastify" />
         <App />
       </Themes>
     </Provider>

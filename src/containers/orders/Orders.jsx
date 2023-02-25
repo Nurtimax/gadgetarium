@@ -4,27 +4,27 @@ import OrdersTabs from "../../components/orders/OrdersTabs";
 import Infographic from "../../components/orders/Infographic";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
-import { ToastContainer } from "react-toastify";
 
 const Orders = () => {
-  const [text, setText] = useState("");
-  const [value] = useDebounce(text, 1000);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchTerm] = useDebounce(searchValue, 1000);
 
   return (
     <>
-      <ToastContainer autoClose={1000} className="toastify" />
-
       <MainContainer>
         <ContainerTabs>
           <Search
             showBackground={true}
             placeholder="Поиск по артикулу или ..."
             width="559px"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
 
-          <OrdersTabs valueInputSearch={value} setText={setText} />
+          <OrdersTabs
+            searchTerm={searchTerm}
+            onClearSearchTerm={() => setSearchValue("")}
+          />
         </ContainerTabs>
 
         <Infographic />

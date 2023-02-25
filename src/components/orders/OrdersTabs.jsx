@@ -16,49 +16,67 @@ import {
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
 
-const OrdersTabs = ({ valueInputSearch, setText }) => {
+const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
     (state) => state.orderProduct.data
   );
-  const data = orderResponses || [];
-  const tableData = useMemo(() => orderResponses, [orderResponses]);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const orderStatus = searchParams.get("orderStatus") || "WAITING";
   const page = searchParams.get("page_index") || 1;
-  const [date, setDate] = useState([null, null]);
-  const [value] = useDebounce(date, 1000);
+
+  const data = orderResponses || [];
+
+  const tableData = useMemo(() => orderResponses, [orderResponses]);
+
+  const [dates, setDates] = useState([null, null]);
+
+  const [value] = useDebounce(dates, 1000);
+
   const dispatch = useDispatch();
 
-  const isPagination = isPaginationHandler(orderStatus, orderStatusAndSize);
+  const isPaginationMounted = isPaginationHandler(
+    orderStatus,
+    orderStatusAndSize
+  );
 
   const handleTabClick = (e) => {
-    setSearchParams({
-      orderStatus: e.target.name,
-    });
-    setText("");
-    setDate([null, null]);
+    searchParams.set("orderStatus", e.target.name);
+    setSearchParams(searchParams);
+    onClearSearchTerm();
+    setDates([null, null]);
   };
 
-  const getData = useMemo(() => {
-    return {
+  const requestParams = useMemo(() => {
+    const params = {
       orderStatus,
       page,
       size: 7,
     };
-  }, [orderStatus, page, valueInputSearch, value]);
 
-  const startDate = format(new Date(value[0]), "yyyy-MM-dd");
-  const endDate = format(new Date(value[1]), "yyyy-MM-dd");
+    const startDate = format(new Date(value[0]), "yyyy-MM-dd");
+    const endDate = format(new Date(value[1]), "yyyy-MM-dd");
 
-  startDate === "1970-01-01" ? null : (getData.startDate = startDate);
-  endDate === "1970-01-01" ? null : (getData.endDate = endDate);
-  valueInputSearch ? (getData.keyWord = valueInputSearch) : null;
+    if (startDate !== "1970-01-01") {
+      params.startDate = startDate;
+    }
+    if (endDate !== "1970-01-01") {
+      params.endDate = endDate;
+    }
+    if (searchTerm) {
+      params.keyWord = searchTerm;
+    }
+    return params;
+  }, [orderStatus, page, searchTerm, value]);
 
   useEffect(() => {
-    dispatch(getOrderProducts(getData));
+    dispatch(getOrderProducts(requestParams));
+  }, [requestParams]);
+
+  useEffect(() => {
     searchParams.set("orderStatus", orderStatus);
     setSearchParams(searchParams);
-  }, [getData, orderStatus]);
+  }, [orderStatus]);
 
   return (
     <div>
@@ -75,7 +93,7 @@ const OrdersTabs = ({ valueInputSearch, setText }) => {
         ))}
       </Tabs>
 
-      <DatePicker date={date} setDate={setDate} />
+      <DatePicker date={dates} setDate={setDates} />
 
       {TAB_ITEMS_ORDER.map((tab, i) => (
         <div key={i}>
@@ -94,7 +112,7 @@ const OrdersTabs = ({ valueInputSearch, setText }) => {
         </div>
       ))}
 
-      {isPagination && (
+      {isPaginationMounted && (
         <Pagination
           count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
         />
