@@ -121,6 +121,6 @@ a {
   background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
 }
 
-.MuiPaper-root > div > div:first-child {
+.MuiPickersPopper-paper > div > div:first-child {
   display: none !important;
 }

@@ -13,6 +13,7 @@ const Orders = () => {
   return (
     <>
       <ToastContainer autoClose={1000} className="toastify" />
+
       <MainContainer>
         <ContainerTabs>
           <Search
@@ -23,7 +24,7 @@ const Orders = () => {
             onChange={(e) => setText(e.target.value)}
           />
 
-          <OrdersTabs valueInputSearch={value} />
+          <OrdersTabs valueInputSearch={value} setText={setText} />
         </ContainerTabs>
 
         <Infographic />

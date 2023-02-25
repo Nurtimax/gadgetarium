@@ -16,7 +16,7 @@ import {
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
 
-const OrdersTabs = ({ valueInputSearch }) => {
+const OrdersTabs = ({ valueInputSearch, setText }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
     (state) => state.orderProduct.data
   );
@@ -35,6 +35,7 @@ const OrdersTabs = ({ valueInputSearch }) => {
     setSearchParams({
       orderStatus: e.target.name,
     });
+    setText("");
     setDate([null, null]);
   };
 
@@ -42,7 +43,7 @@ const OrdersTabs = ({ valueInputSearch }) => {
     return {
       orderStatus,
       page,
-      size: 70,
+      size: 7,
     };
   }, [orderStatus, page, valueInputSearch, value]);
 
@@ -55,12 +56,9 @@ const OrdersTabs = ({ valueInputSearch }) => {
 
   useEffect(() => {
     dispatch(getOrderProducts(getData));
-  }, [getData, orderStatus]);
-
-  useEffect(() => {
     searchParams.set("orderStatus", orderStatus);
     setSearchParams(searchParams);
-  }, [orderStatus]);
+  }, [getData, orderStatus]);
 
   return (
     <div>
@@ -88,7 +86,7 @@ const OrdersTabs = ({ valueInputSearch }) => {
               <Table
                 tableHeaderTitle={OrdersTableHeaderTitle}
                 data={tableData}
-                isMarked={true}
+                isMarked={false}
                 found={true}
                 countOfOrders={countOfOrders}
               />

@@ -20,18 +20,12 @@ const defaultColumnProps = {
   },
 };
 
-const Table = ({
-  tableHeaderTitle,
-  data,
-  isMarked = false,
-  found = false,
-  countOfOrders,
-}) => {
+const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
   const columns = useMemo(() => tableHeaderTitle, []);
   const dataTable = data || [];
 
   const tableHooks = (hooks) => {
-    if (isMarked) {
+    if (isMarked === true) {
       hooks.visibleColumns.push((columns) => {
         return [
           {
@@ -50,6 +44,26 @@ const Table = ({
                     {priceProductSeparate(Number(String(row.original.id || 0)))}
                   </div>
                 </>
+              );
+            },
+          },
+          ...columns,
+        ];
+      });
+    } else if (isMarked === false) {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            Header: "ID",
+            accessor: "id",
+            style: {
+              flex: 0.3,
+            },
+            Cell: ({ row }) => {
+              return (
+                <div>
+                  {priceProductSeparate(Number(String(row.original.id || 0)))}
+                </div>
               );
             },
           },

@@ -56,7 +56,7 @@ const InfographicTabs = ({ data }) => {
             <div className="boxPrice">
               <div>
                 <CurrentPrice>
-                  <span>
+                  <span className="currentPrice">
                     {priceProductSeparate(Number(String(currentPrice)))}
                   </span>
                   <span className="c">c</span>
@@ -65,7 +65,7 @@ const InfographicTabs = ({ data }) => {
                 <CurrentDuring>Текущий период</CurrentDuring>
               </div>
 
-              <div>
+              <div className="previous">
                 <PreviousPrice>
                   <span>
                     {priceProductSeparate(Number(String(previousPrice)))}
@@ -114,10 +114,13 @@ const ContainerTabPanel = styled("div")(() => ({
   textAlign: "flex-start",
   padding: "14px",
 
+  "& .previous": {
+    alignSelf: "flex-end",
+  },
+
   "& .boxPrice": {
     display: "flex",
-    gap: "35px",
-    alignItems: "flex-end",
+    gap: "20px",
     paddingTop: "19px",
   },
 }));
@@ -136,6 +139,7 @@ const CurrentPrice = styled(Typography)(({ theme }) => ({
   color: theme.palette.success.main,
   display: "flex",
   gap: "7px",
+  width: "150px",
 
   "& .c": {
     textDecorationLine: "underline",
@@ -149,6 +153,7 @@ const PreviousPrice = styled(Typography)(({ theme }) => ({
   color: theme.palette.success.main,
   display: "flex",
   gap: "7px",
+  width: "150px",
 
   "& .c": {
     textDecorationLine: "underline",

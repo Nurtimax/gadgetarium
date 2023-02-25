@@ -1,7 +1,3 @@
-export const priceProductSeparate = (number) => {
-  return number.toFixed().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
-};
-
 export const checkInOrderType = (key) => {
   switch (key) {
     case "PICKUP":
@@ -11,6 +7,10 @@ export const checkInOrderType = (key) => {
     default:
       return "";
   }
+};
+
+export const priceProductSeparate = (number) => {
+  return number.toFixed().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
 };
 
 export const checkInOrderStatus = (key) => {

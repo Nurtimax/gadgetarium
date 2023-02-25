@@ -13,7 +13,7 @@ const getOrderProducts = createAsyncThunk(
   "orders/getOrderPrdoducts",
   async (params) => {
     try {
-      const response = await axios.get(`${SWAGGER_API}/api/orders`, {
+      const response = await axios.get(`${SWAGGER_API}adminOrders`, {
         headers: {
           Authorization: `Bearer ${authRole.token}`,
         },
@@ -32,7 +32,7 @@ const getOrderProductsById = createAsyncThunk(
   async (params) => {
     try {
       const response = await axios.get(
-        `${SWAGGER_API}/api/orders/${params.orderId}`,
+        `${SWAGGER_API}adminOrders/paymentInfo`,
         {
           headers: {
             Authorization: `Bearer ${authRole.token}`,
@@ -53,7 +53,7 @@ const updateOrderProducts = createAsyncThunk(
   async ({ id, orderStatus, currentStatus, currentPage }, { dispatch }) => {
     try {
       const response = await axios.put(
-        `${SWAGGER_API}/api/orders`,
+        `${SWAGGER_API}adminOrders`,
         {},
         {
           headers: {
@@ -70,7 +70,7 @@ const updateOrderProducts = createAsyncThunk(
         getOrderProducts({
           orderStatus: currentStatus,
           page: currentPage || 1,
-          size: 70,
+          size: 7,
         })
       );
 
@@ -85,9 +85,12 @@ const deleteOrderProducts = createAsyncThunk(
   "orders/deleteOrderProducts",
   async ({ id, currentStatus, currentPage }, { dispatch }) => {
     try {
-      const response = await axios.delete(`${SWAGGER_API}/api/orders/${id}`, {
+      const response = await axios.delete(`${SWAGGER_API}adminOrders`, {
         headers: {
           Authorization: `Bearer ${authRole.token}`,
+        },
+        params: {
+          id,
         },
       });
 
@@ -95,7 +98,7 @@ const deleteOrderProducts = createAsyncThunk(
         getOrderProducts({
           orderStatus: currentStatus,
           page: currentPage || 1,
-          size: 70,
+          size: 7,
         })
       );
 
@@ -110,7 +113,7 @@ const getOrderInforaphic = createAsyncThunk(
   "orders/getOrderInforaphic",
   async () => {
     try {
-      const response = await axios.get(`${SWAGGER_API}/api/products/inf`, {
+      const response = await axios.get(`${SWAGGER_API}adminProducts/inf`, {
         headers: {
           Authorization: `Bearer ${authRole.token}`,
         },

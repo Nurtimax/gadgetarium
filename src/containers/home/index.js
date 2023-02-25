@@ -68,8 +68,10 @@ const Home = () => {
             <Styled_Error>Error {discountError} </Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4">Акции</Typography>
-              <Grid container className="" spacing={1}>
+              <Typography variant="h4" id="Promotion">
+                Акции
+              </Typography>
+              <Grid container spacing={1}>
                 {discountsProducts?.map((item) => (
                   <Grid item xs={2.4} key={item.productName}>
                     <ProductCard {...item} productStatus="DISCOUNT" />
@@ -94,6 +96,8 @@ const Home = () => {
               </Typography>
             </Global_Card>
           )}
+
+          <p id="New"></p>
 
           {newError ? (
             <Styled_Error>Error {newError}</Styled_Error>
@@ -130,7 +134,9 @@ const Home = () => {
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4">Рекемендуем</Typography>
+              <Typography variant="h4" id="#Recomendation">
+                Рекомендуем
+              </Typography>
               <Grid container spacing={2}>
                 {recommendationProduct?.map((item) => (
                   <Grid item xs={2.4} key={item.productName}>

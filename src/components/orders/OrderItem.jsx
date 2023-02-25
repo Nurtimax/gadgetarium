@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOrderProductsById } from "../../redux/slices/orders-slice";
 import { priceProductSeparate } from "../../utils/helpers/general";
+import { checkInOrderStatus } from "../../utils/helpers/general";
 
 const OrderItem = () => {
   const { orderId } = useParams();
@@ -11,15 +12,21 @@ const OrderItem = () => {
   const {
     totalSum,
     totalDiscount,
-    productName,
+    productsName,
     orderNumber,
     countOfProduct,
     discount,
+    total,
+    address,
+    phoneNumber,
+    orderStatus,
   } = useSelector((state) => state.orderProduct.dataByID);
 
   useEffect(() => {
     dispatch(getOrderProductsById({ orderId }));
   }, []);
+
+  const products = productsName?.length ? productsName : ["Don't have"];
 
   return (
     <StyledMainContainer>
@@ -41,9 +48,14 @@ const OrderItem = () => {
             </Box>
 
             <Box className="ul-box">
-              <Typography className="li-value">
-                {productName || "Don't have"}
-              </Typography>
+              <Box className="box-name-product">
+                {products.map((name, i) => (
+                  <Typography className="li-value" key={i}>
+                    {name}
+                  </Typography>
+                ))}
+              </Box>
+
               <Typography className="li-value">
                 {countOfProduct || 0}шт
               </Typography>
@@ -59,25 +71,36 @@ const OrderItem = () => {
           <Box className="total-box">
             <Typography className="li">Итого:</Typography>
             <Typography className="li-value">
-              {priceProductSeparate(Number(String(totalSum || 0)))} с
+              {priceProductSeparate(Number(String(total || 0)))} с
             </Typography>
           </Box>
         </Box>
 
         <Box className="second">
           <Typography className="info-order">Информация о заказе</Typography>
+
           <Box className="order-number">
             <Typography className="li">Заказ №</Typography>
-            <Typography className="li-value">000000-455247</Typography>
+            <Typography className="li-value">{orderNumber || 0}</Typography>
           </Box>
+
+          <Box className="order-number">
+            <Typography className="li">Состояние:</Typography>
+            <Typography className="li-value">
+              {checkInOrderStatus(orderStatus)}
+            </Typography>
+          </Box>
+
           <Box>
             <Typography className="li">Контактный телефон:</Typography>
-            <Typography className="li-value">+996 (400) 00-00-00</Typography>
+            <Typography className="li-value">
+              +{priceProductSeparate(Number(String(phoneNumber || 0)))}
+            </Typography>
           </Box>
           <Box>
             <Typography className="li">Адрес доставки:</Typography>
             <Typography className="li-value">
-              г.Бишкек, Токтоналиева, 145/7 кв 24, дом 5
+              {address || "Don't have"}
             </Typography>
           </Box>
         </Box>
@@ -90,6 +113,15 @@ export default OrderItem;
 
 const StyledMainContainer = styled(Box)(({ theme }) => ({
   padding: "30px 100px",
+
+  "& .box-name-product": {
+    display: "flex",
+    gap: "7px",
+
+    "& .li-value:after": {
+      content: '","',
+    },
+  },
 
   "& .paymant-text": {
     paddingBottom: "20px",
