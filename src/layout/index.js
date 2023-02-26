@@ -17,6 +17,8 @@ const Layout = ({ role, authSave }) => {
     }
   }, [authSave, dispatch]);
 
+  console.log(role, authSave);
+
   return (
     <StyledLayoutWrapper>
       {role?.toLowerCase() === "admin" ? <AdminHeader /> : <UserHeader />}

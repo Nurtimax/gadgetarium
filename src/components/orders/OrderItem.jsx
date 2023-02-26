@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, Container, styled, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -111,9 +111,7 @@ const OrderItem = () => {
 
 export default OrderItem;
 
-const StyledMainContainer = styled(Box)(({ theme }) => ({
-  padding: "30px 100px",
-
+const StyledMainContainer = styled(Container)(({ theme }) => ({
   "& .box-name-product": {
     display: "flex",
     gap: "7px",
@@ -198,6 +196,7 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
     fontSize: "20px",
     color: theme.palette.primary.dark,
     borderBottom: `1px solid ${theme.palette.grey[600]}`,
+    width: "389px",
   },
 
   "& .order-number": {

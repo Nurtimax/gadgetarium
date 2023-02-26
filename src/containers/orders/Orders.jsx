@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Container, styled } from "@mui/material";
 import Search from "../../components/UI/Search";
 import OrdersTabs from "../../components/orders/OrdersTabs";
 import Infographic from "../../components/orders/Infographic";
@@ -35,8 +35,7 @@ const Orders = () => {
 
 export default Orders;
 
-const MainContainer = styled("div")(() => ({
-  padding: "40px 100px 65.7px",
+const MainContainer = styled(Container)(() => ({
   display: "flex",
   gap: "86px",
 }));
