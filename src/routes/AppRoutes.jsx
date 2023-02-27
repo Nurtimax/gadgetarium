@@ -1,25 +1,45 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Suspense, lazy, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AboutStore from "../containers/about-store/AboutStore";
-import AddProduct from "../containers/add-product/AddProduct";
-import Contacts from "../containers/contacts/Contacts";
-import Delivery from "../containers/delivery/Delivery";
-import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
-import Home from "../containers/home";
-import OrderPage from "../containers/order-page/OrderPage";
-import SignIn from "../containers/sign-in/SignIn";
-import SignUp from "../containers/sign-up/Signup";
-import Layout from "../layout";
+import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
+import { ActionauthenticationSlice } from "../redux/slices/authentication";
+// import AboutStore from "../containers/about-store/AboutStore";
+// import AddProduct from "../containers/add-product/AddProduct";
+// import Contacts from "../containers/contacts/Contacts";
+// import Delivery from "../containers/delivery/Delivery";
+// import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
+// import Home from "../containers/home";
+// import OrderPage from "../containers/order-page/OrderPage";
+// import SignIn from "../containers/sign-in/SignIn";
+// import SignUp from "../containers/sign-up/Signup";
+// import Layout from "../layout";
 import { ROUTES } from "../utils/constants";
 import { GADJEDTARIUM_LOGIN_INFO } from "../utils/constants/fetch";
 import PrivateRole from "./PrivateRole";
 
+const Layout = lazy(() => import("../layout"));
+const SignUp = lazy(() => import("../containers/sign-up/Signup"));
+const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
+const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
+const Home = lazy(() => import("../containers/home"));
+const Delivery = lazy(() => import("../containers/delivery/Delivery"));
+const Contacts = lazy(() => import("../containers/contacts/Contacts"));
+const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
+const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
+const FrequentlyAskedQuestions = lazy(() => {
+  return import("../containers/FAQ/FrequentlyAskedQuestions");
+});
 const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.data);
   const { roleName } = user || {};
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(ActionauthenticationSlice.getUserData(authSave || {}));
+  }, [dispatch, authSave]);
 
   return (
     <>
@@ -27,34 +47,40 @@ const AppRoutes = () => {
         <Route
           path={ROUTES.MAIN}
           element={
-            <PrivateRole
-              RouteComponent={<Layout role={roleName} authSave={authSave} />}
-              roles={["admin"]}
-              fallbackPath="admin"
-              roleName={roleName}
-            />
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <PrivateRole
+                RouteComponent={<Layout role={roleName} authSave={authSave} />}
+                roles={["admin"]}
+                fallbackPath="admin"
+                roleName={roleName}
+              />
+            </Suspense>
           }
         >
           <Route
             index
             element={
-              <PrivateRole
-                RouteComponent={<Home />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<Home />}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
             path={ROUTES.ABOUTSTORE}
             element={
-              <PrivateRole
-                RouteComponent={<AboutStore />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<AboutStore />}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
@@ -93,12 +119,14 @@ const AppRoutes = () => {
           <Route
             path={ROUTES.CHECKOUT}
             element={
-              <PrivateRole
-                RouteComponent={<OrderPage />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<OrderPage />}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
@@ -126,34 +154,40 @@ const AppRoutes = () => {
           <Route
             path={ROUTES.DELIVERY}
             element={
-              <PrivateRole
-                RouteComponent={<Delivery />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<Delivery />}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
             path={ROUTES.FAG}
             element={
-              <PrivateRole
-                RouteComponent={<FrequentlyAskedQuestions />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<FrequentlyAskedQuestions />}
+                  roles={["admin"]}
+                  fallbackPath="admin"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
             path={ROUTES.CONTACTS}
             element={
-              <PrivateRole
-                RouteComponent={<Contacts />}
-                roles={["admin"]}
-                fallbackPath="admin"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<Contacts />}
+                  roles={[""]}
+                  fallbackPath=""
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
 
@@ -240,12 +274,14 @@ const AppRoutes = () => {
           <Route
             path={`${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
             element={
-              <PrivateRole
-                RouteComponent={<AddProduct />}
-                roles={["Customer"]}
-                fallbackPath="/"
-                roleName={roleName}
-              />
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <PrivateRole
+                  RouteComponent={<AddProduct />}
+                  roles={["Customer"]}
+                  fallbackPath="/"
+                  roleName={roleName}
+                />
+              </Suspense>
             }
           />
           <Route
@@ -271,8 +307,22 @@ const AppRoutes = () => {
             }
           />
         </Route>
-        <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
-        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+        <Route
+          path={`/${ROUTES.SIGNIN}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <SignIn />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.SIGNUP}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <SignUp />
+            </Suspense>
+          }
+        />
         <Route path={ROUTES.NOTFOUND} element={<h1>Not found</h1>} />
       </Routes>
     </>

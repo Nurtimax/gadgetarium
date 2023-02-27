@@ -20,15 +20,22 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const onSubmit = (values, action) => {
-    dispatch(fetchDataSignin(values)).then((res) => {
-      const { payload } = res;
-      if (payload?.email && payload?.roleName && payload?.token) {
-        action.resetForm();
-        navigate("/");
-        setError(null);
-      }
-      setError(true);
-    });
+    dispatch(fetchDataSignin(values))
+      .then((res) => {
+        return res;
+      })
+      .then((data) => {
+        const { payload } = data;
+        if (payload?.email && payload?.roleName && payload?.token) {
+          if (data) {
+            action.resetForm();
+            navigate("/");
+            setError(null);
+          }
+        } else {
+          setError(true);
+        }
+      });
   };
 
   const { handleChange, handleSubmit, values, errors } = useFormik({

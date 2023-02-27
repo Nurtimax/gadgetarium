@@ -1,22 +1,11 @@
 import { Box, Container, styled } from "@mui/material";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import BreadCrumbs from "../components/breadcrumbs/Breadcrumbs";
-import { ActionauthenticationSlice } from "../redux/slices/authentication";
 import Footer from "./Footer/Footer";
 import AdminHeader from "./header/AdminHeader";
 import UserHeader from "./header/UserHeader";
 
-const Layout = ({ role, authSave }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (authSave) {
-      dispatch(ActionauthenticationSlice.getUserData(authSave));
-    }
-  }, [authSave, dispatch]);
-
+const Layout = ({ role }) => {
   return (
     <StyledLayoutWrapper>
       {role?.toLowerCase() === "admin" ? <AdminHeader /> : <UserHeader />}

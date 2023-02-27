@@ -1,4 +1,4 @@
-import { Box, Grid, styled, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useMemo } from "react";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const UploadImages = ({
     bodyFormData.append("file", file[0]);
     axios({
       method: "POST",
-      url: `${SWAGGER_API}file`,
+      url: "${SWAGGER_API}file",
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -111,7 +111,6 @@ const UploadImages = ({
     }
     return null;
   }, []);
-
   const removeImageHandler = (item) => {
     setIsLoading(true);
     axios({
@@ -148,10 +147,6 @@ const UploadImages = ({
       });
   };
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
-
   return (
     <>
       <Typography component="p" variant="body1">
@@ -160,12 +155,7 @@ const UploadImages = ({
       <StyledUploadImages
         className={`${uploadImageError || error ? "error" : ""}`}
       >
-        <Grid
-          {...getRootProps()}
-          container
-          className={`flex center`}
-          margin={0}
-        >
+        <Grid {...getRootProps()} container className="flex center" margin={0}>
           <input {...getInputProps()} />
           {findedSubProductData.images?.length !== 10 && (
             <Grid item xs={2} className="flex center upload_icon">
@@ -212,6 +202,9 @@ const UploadImages = ({
               editImageHandler={editImageHandler}
             />
           ))}
+          {findedSubProductData.images?.length !== 0 && isLoading && (
+            <CircularProgress size={30} color="grey" />
+          )}
         </Box>
       </StyledUploadImages>
       {error && (
@@ -224,7 +217,6 @@ const UploadImages = ({
 };
 
 export default UploadImages;
-
 const StyledUploadImages = styled(Box)(({ theme }) => ({
   width: "396px",
   height: "200px",

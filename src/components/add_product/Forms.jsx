@@ -2,7 +2,6 @@ import {
   Box,
   FormLabel,
   Grid,
-  MenuItem,
   Select,
   styled,
   Typography,
@@ -13,15 +12,11 @@ import { useMemo } from "react";
 import { useCallback } from "react";
 import { CompactPicker } from "react-color";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { ChooseColorIcon, DeleteIconInCart, PlusIcon } from "../../assets";
 import {
-  ArrowDownIcon,
-  ChooseColorIcon,
-  DeleteIconInCart,
-  PlusIcon,
-} from "../../assets";
-import {
-  PRODUCT_INITIALSTATE,
-  PRODUCT_INITIALSTATESCHEMA,
+  ADDPRODUCT_INITIALSTATE,
+  ADDPRODUCT_INITIALSTATESCHEMA,
 } from "../../utils/constants/add-product";
 import { CompactPickerColors } from "../../utils/constants/compact-picker";
 import Button from "../UI/button/Button";
@@ -31,11 +26,13 @@ import Category from "./fields/Category";
 import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
 
-const Forms = ({ getData, searchParams, setSearchParams }) => {
+const Forms = ({ getData }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { values, handleChange, setFieldValue, handleSubmit, errors } =
     useFormik({
-      initialValues: PRODUCT_INITIALSTATE,
-      validationSchema: PRODUCT_INITIALSTATESCHEMA,
+      initialValues: ADDPRODUCT_INITIALSTATE,
+      validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
       onSubmit: (values, action) => {
         getData(values);
         action.resetForm();
@@ -79,21 +76,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
       })
     );
   };
-  const changeHandlerPrice = (e) => {
-    setFieldValue(
-      "subProductRequests",
-      values.subProductRequests.map((subproduct, index) => {
-        if (index === Number(getProductIdParam)) {
-          const newData = {
-            ...subproduct,
-            price: e.target.value,
-          };
-          return newData;
-        }
-        return subproduct;
-      })
-    );
-  };
 
   const findedSubProductData = useMemo(() => {
     if (
@@ -121,7 +103,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
   if (Productbrand?.message) {
     return <h1>{Productbrand.message}</h1>;
   }
-
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
@@ -231,7 +212,9 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                   onChange={changeHandlerColor}
                   value={color}
                   IconComponent={() => <ChooseColorIcon />}
-                  startAdornment={color && <StyledChooseColor color={color} />}
+                  startAdornment={
+                    color && <StyledChooseColor color={color.toString()} />
+                  }
                   input={<Input error={Boolean(colorError)} />}
                   renderValue={() => (
                     <>
@@ -272,41 +255,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                   getProductIdParam={getProductIdParam}
                   errors={errors}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography component="p" variant="body1">
-                  price
-                </Typography>
-                <Select
-                  displayEmpty
-                  onChange={changeHandlerPrice}
-                  value={findedSubProductData.price}
-                  IconComponent={() => <ArrowDownIcon width={18} height={18} />}
-                  input={<Input />}
-                  renderValue={() => (
-                    <>
-                      {findedSubProductData.price ? (
-                        <Typography variant="body1" component="span">
-                          {findedSubProductData.price}
-                        </Typography>
-                      ) : (
-                        <Typography
-                          variant="body1"
-                          component="span"
-                          className="placeholder"
-                        >
-                          Price
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                >
-                  {[100000, 120000].map((catalog) => (
-                    <StyledMenuItem key={catalog} value={catalog}>
-                      {catalog}
-                    </StyledMenuItem>
-                  ))}
-                </Select>
               </Grid>
 
               <Grid item xs={3.5} display="grid">
@@ -417,7 +365,6 @@ const StyledFormControl = styled(Box)(() => ({
     fontWeight: 300,
     fontSize: "16px",
     lineHeight: "19px",
-
     color: "#91969E",
   },
   "& .MuiFormLabel-asterisk": {
@@ -462,15 +409,4 @@ const StyledChooseColor = styled(Box)(({ color }) => ({
   height: "28px",
   background: color,
   borderRadius: "inherit",
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  width: "97%",
-  margin: "0 auto",
-  color: "black",
-  "&.MuiMenuItem-root:hover": {
-    background: theme.palette.secondary.main,
-    borderRadius: "11px",
-    color: theme.palette.grey[200],
-  },
 }));

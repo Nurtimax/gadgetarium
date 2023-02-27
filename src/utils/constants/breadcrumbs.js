@@ -1,4 +1,5 @@
 import { ROUTES } from ".";
+import AdminAddProductBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/AdminAddProductBreadcrumbs";
 import UserCatalogBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogBreadcrumbs";
 import UserCatalogItemBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogItemBreadcrumbs";
 
@@ -12,7 +13,7 @@ export const BREADCRUMBS = [
     breadcrumb: "О магазине",
   },
   {
-    path: `item`,
+    path: "item",
     breadcrumb: null,
   },
   {
@@ -69,7 +70,7 @@ export const BREADCRUMBS = [
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}`,
-    breadcrumb: null,
+    breadcrumb: "Товары",
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}`,
@@ -89,7 +90,7 @@ export const BREADCRUMBS = [
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`,
-    breadcrumb: "Добавление товара",
+    breadcrumb: AdminAddProductBreadcrumbs,
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.SETTINGPRICEQUANTITYITEM}`,

@@ -44,11 +44,8 @@ const authenticationSlice = createSlice({
   initialState,
   reducers: {
     authLogOut: (state) => {
-      state.data = initialState.data;
+      state.data = {};
       localStorage.removeItem(GADJEDTARIUM_LOGIN_INFO);
-    },
-    authLogIn: (state, action) => {
-      state.data = action.payload;
     },
     getUserData: (state, action) => {
       state.data = action.payload;

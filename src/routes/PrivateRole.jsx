@@ -1,33 +1,34 @@
-import { useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const PrivateRole = ({
   RouteComponent,
   roles = [],
-  fallbackPath = "admin",
-  roleName,
+  fallbackPath,
+  roleName = "",
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isAdmin = location.pathname
-    .split("/")
-    .includes(roleName?.toLowerCase());
+
+  const isAdmin = useMemo(() => {
+    return location.pathname.split("/").includes(roleName?.toLowerCase());
+  }, [location.pathname, roleName]);
 
   useEffect(() => {
-    if (!roleName) {
+    if (roleName === "") {
       navigate("/");
-    }
-
-    if (roles.includes(roleName?.toLowerCase())) {
+    } else if (roles.includes(roleName?.toLowerCase())) {
       if (!isAdmin) {
         navigate(fallbackPath);
-      } else {
-        navigate(location.pathname);
       }
     }
-  }, [roleName, fallbackPath, isAdmin, roles]);
+  }, [navigate, roleName, roles, fallbackPath, isAdmin]);
 
-  return RouteComponent;
+  if (isAdmin || roles.includes(roleName?.toLowerCase())) {
+    return RouteComponent;
+  } else {
+    return null;
+  }
 };
 
 export default PrivateRole;
