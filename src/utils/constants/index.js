@@ -45,9 +45,9 @@ export const userPages = [
 ];
 
 export const adminPage = [
-  { id: 22, theme: "Товары", to: "admin/goods" },
-  { id: 23, theme: "Заказы", to: "admin/orders" },
-  { id: 24, theme: "Отзывы и рейтинг", to: "admin/reviews-rating" },
+  { id: 22, theme: "Товары", to: "goods" },
+  { id: 23, theme: "Заказы", to: "orders" },
+  { id: 24, theme: "Отзывы и рейтинг", to: "reviews-rating" },
 ];
 
 export const iconsData = [

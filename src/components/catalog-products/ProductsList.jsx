@@ -1,7 +1,7 @@
 import { Box, CircularProgress, styled } from "@mui/material";
 import React, { useCallback } from "react";
-import Button from "../../components/UI/button/Button";
-import ProductCard from "../../components/UI/card/ProductCard";
+import Button from "../UI/button/Button";
+import ProductCard from "../UI/card/ProductCard";
 
 const ProductsList = ({
   data,
@@ -48,7 +48,7 @@ const ProductsList = ({
       {data.products?.map((item) => (
         <ProductCardStyled
           {...item}
-          key={item.productName}
+          key={item.productId}
           productStatus={changeProductStatusHelper(
             sortField,
             discountField,

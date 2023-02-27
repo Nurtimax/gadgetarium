@@ -13,9 +13,9 @@ import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
 import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
 import { fetchDataCatalog } from "../../redux/slices/catalog";
-import Sort from "./Sort";
-import FilterProducts from "./FilterProducts";
-import ProductsList from "./ProductsList";
+import Sort from "../../components/catalog-products/Sort";
+import FilterProducts from "../../components/catalog-products/FilterProducts";
+import ProductsList from "../../components/catalog-products/ProductsList";
 
 const CatalogProducts = () => {
   const [sortEL, setSortEl] = useDropDown();
@@ -40,6 +40,8 @@ const CatalogProducts = () => {
         fieldToSort: sortField,
         discountField: discountField,
         size: size,
+        // subCategoryName: "Samsung",
+        // colors: ["Rose Gold"]
       })
     );
   }, [findedCatalogItem, sortField, discountField, size]);
@@ -52,9 +54,10 @@ const CatalogProducts = () => {
 
       <Box className="general-box">
         <Box className="filter-box">
-          <Typography style={{ height: "32px" }}>
+          <Typography style={{ height: "50px" }}>
             Найдено 167 Товаров
           </Typography>
+
           <Box className="filter-lists">
             <FilterProducts />
           </Box>
@@ -77,6 +80,7 @@ const CatalogProducts = () => {
                 ))}
               </div>
             </Box>
+
             <Grid item xs={1.5} className="flex gap2">
               <Box className="flexgrow flex height" onClick={setSortEl}>
                 <Sort
@@ -147,6 +151,7 @@ const ContainerStyled = styled(Container)(() => ({
     width: "351px",
     display: "flex",
     justifyContent: "center",
+    paddingBottom: "80px",
   },
   "& .product-container": {
     width: "1240px",

@@ -11,4 +11,8 @@ export const store = configureStore({
     addProduct: addProductSlice.reducer,
     product: productSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

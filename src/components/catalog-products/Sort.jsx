@@ -1,7 +1,7 @@
 import { Box, Grid, MenuItem, styled, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useCallback } from "react";
-import DropDown from "../../components/UI/DropDown";
+import DropDown from "../UI/DropDown";
 import useDropDown from "../../hooks/useDropDown";
 import { ITEM_SORT } from "../../utils/constants";
 
@@ -40,10 +40,10 @@ const Sort = ({
     }
   };
 
-  const closeHandler = () => {
+  const closeHandler = useCallback(() => {
     handleCloseCatalog();
     setAnchorEl();
-  };
+  }, [anchorElCatalog]);
 
   return (
     <StyledMenuCatalog onMouseLeave={closeHandler}>
@@ -66,9 +66,7 @@ const Sort = ({
                 )}
                 onClick={clickSortHandler(catalog.title)}
                 className={
-                  sortField === catalog.title
-                    ? "selectedSortField"
-                    : "notSelectedField"
+                  sortField === catalog.title ? "selectedSortField" : ""
                 }
                 classes={{ root: "sort_dropdown" }}
               >
@@ -137,6 +135,7 @@ const StyledDropDown = styled(DropDown)(() => ({
     padding: "4px 8px",
     display: "flex",
   },
+
   "& .subpaper": {
     zIndex: 0,
     left: "-265% !important",
@@ -150,10 +149,15 @@ const StyledDropDown = styled(DropDown)(() => ({
   "& .MuiBackdrop-root": {
     position: "relative",
   },
+
   "& .selectedSortField": {
     background: "#CB11AB",
-  },
-  "& .sort_dropdown": {
-    color: "black",
+    "&.MuiMenuItem-root": {
+      "&.selectedSortField": {
+        background: "#CB11AB",
+      },
+      color: "black !important",
+      ":hover": { background: "none", color: "#CB11AB !important" },
+    },
   },
 }));
