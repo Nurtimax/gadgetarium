@@ -22,6 +22,8 @@ const OrderItem = () => {
     orderStatus,
   } = useSelector((state) => state.orderProduct.dataByID);
 
+  const isLoading = useSelector((state) => state.orderProduct.isLoading);
+
   useEffect(() => {
     dispatch(getOrderProductsById({ orderId }));
   }, []);
@@ -30,81 +32,89 @@ const OrderItem = () => {
 
   return (
     <StyledMainContainer>
-      <Typography className="paymant-text">
-        Оплата заказа {orderNumber || 0}
-      </Typography>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <Typography className="paymant-text">
+            Оплата заказа {orderNumber || 0}
+          </Typography>
 
-      <Box className="container">
-        <Box className="first">
-          <Box className="first-child">
-            <Box className="ul-box">
-              <Typography className="li">Наименование:</Typography>
-              <Typography className="li">Кол-во товара:</Typography>
-              <Typography className="li">Общая сумма заказа:</Typography>
-              <Typography className="li discount">
-                Скидка: {discount || 0}%
-              </Typography>
-              <Typography className="li">Сумма скидки:</Typography>
-            </Box>
-
-            <Box className="ul-box">
-              <Box className="box-name-product">
-                {products.map((name, i) => (
-                  <Typography className="li-value" key={i}>
-                    {name}
+          <Box className="container">
+            <Box className="first">
+              <Box className="first-child">
+                <Box className="ul-box">
+                  <Typography className="li">Наименование:</Typography>
+                  <Typography className="li">Кол-во товара:</Typography>
+                  <Typography className="li">Общая сумма заказа:</Typography>
+                  <Typography className="li discount">
+                    Скидка: {discount || 0}%
                   </Typography>
-                ))}
+                  <Typography className="li">Сумма скидки:</Typography>
+                </Box>
+
+                <Box className="ul-box">
+                  <Box className="box-name-product">
+                    {products.map((name, i) => (
+                      <Typography className="li-value" key={i}>
+                        {name}
+                      </Typography>
+                    ))}
+                  </Box>
+
+                  <Typography className="li-value">
+                    {countOfProduct || 0}шт
+                  </Typography>
+                  <Typography className="li-value">
+                    {priceProductSeparate(Number(String(totalSum || 0)))} с
+                  </Typography>
+                  <Typography className="li-value-last">
+                    {priceProductSeparate(Number(String(totalDiscount || 0)))} с
+                  </Typography>
+                </Box>
               </Box>
 
-              <Typography className="li-value">
-                {countOfProduct || 0}шт
+              <Box className="total-box">
+                <Typography className="li">Итого:</Typography>
+                <Typography className="li-value">
+                  {priceProductSeparate(Number(String(total || 0)))} с
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box className="second">
+              <Typography className="info-order">
+                Информация о заказе
               </Typography>
-              <Typography className="li-value">
-                {priceProductSeparate(Number(String(totalSum || 0)))} с
-              </Typography>
-              <Typography className="li-value-last">
-                {priceProductSeparate(Number(String(totalDiscount || 0)))} с
-              </Typography>
+
+              <Box className="order-number">
+                <Typography className="li">Заказ №</Typography>
+                <Typography className="li-value">{orderNumber || 0}</Typography>
+              </Box>
+
+              <Box className="order-number">
+                <Typography className="li">Состояние:</Typography>
+                <Typography className="li-value">
+                  {checkInOrderStatus(orderStatus)}
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography className="li">Контактный телефон:</Typography>
+                <Typography className="li-value">
+                  +{priceProductSeparate(Number(String(phoneNumber || 0)))}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography className="li">Адрес доставки:</Typography>
+                <Typography className="li-value">
+                  {address || "Don't have"}
+                </Typography>
+              </Box>
             </Box>
           </Box>
-
-          <Box className="total-box">
-            <Typography className="li">Итого:</Typography>
-            <Typography className="li-value">
-              {priceProductSeparate(Number(String(total || 0)))} с
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box className="second">
-          <Typography className="info-order">Информация о заказе</Typography>
-
-          <Box className="order-number">
-            <Typography className="li">Заказ №</Typography>
-            <Typography className="li-value">{orderNumber || 0}</Typography>
-          </Box>
-
-          <Box className="order-number">
-            <Typography className="li">Состояние:</Typography>
-            <Typography className="li-value">
-              {checkInOrderStatus(orderStatus)}
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography className="li">Контактный телефон:</Typography>
-            <Typography className="li-value">
-              +{priceProductSeparate(Number(String(phoneNumber || 0)))}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography className="li">Адрес доставки:</Typography>
-            <Typography className="li-value">
-              {address || "Don't have"}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+        </>
+      )}
     </StyledMainContainer>
   );
 };

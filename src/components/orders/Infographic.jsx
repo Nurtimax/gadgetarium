@@ -8,6 +8,9 @@ import InfographicTabs from "./InfographicTabs";
 const Infographic = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.orderProduct.dataInfo);
+  const infoIsLoading = useSelector(
+    (state) => state.orderProduct.infoIsLoading
+  );
   const dataInfo = data || {};
 
   useEffect(() => {
@@ -18,33 +21,41 @@ const Infographic = () => {
     <div style={{ flex: 1 }}>
       <TitleInfographic>ИНФОГРАФИКА</TitleInfographic>
 
-      <BoxPrices>
-        <div>
-          <BoughtPrice>
-            {priceProductSeparate(Number(String(dataInfo.soldPrice || 0)))}
-            <span>С</span>
-          </BoughtPrice>
-          <OrderedAndBoughtText>Выкупили на сумму</OrderedAndBoughtText>
-          <CountBought>
-            {priceProductSeparate(Number(String(dataInfo.soldCount || 0)))} шт
-          </CountBought>
-        </div>
+      {infoIsLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <BoxPrices>
+            <div>
+              <BoughtPrice>
+                {priceProductSeparate(Number(String(dataInfo.soldPrice || 0)))}
+                <span>С</span>
+              </BoughtPrice>
+              <OrderedAndBoughtText>Выкупили на сумму</OrderedAndBoughtText>
+              <CountBought>
+                {priceProductSeparate(Number(String(dataInfo.soldCount || 0)))}{" "}
+                шт
+              </CountBought>
+            </div>
 
-        <Seperator />
+            <Seperator />
 
-        <div>
-          <OrderedPrice>
-            {priceProductSeparate(Number(String(dataInfo.orderPrice || 0)))}
-            <span>С</span>
-          </OrderedPrice>
-          <OrderedAndBoughtText>Заказали на сумму</OrderedAndBoughtText>
-          <CountOrdered>
-            {priceProductSeparate(Number(String(dataInfo.orderCount || 0)))} шт
-          </CountOrdered>
-        </div>
-      </BoxPrices>
+            <div>
+              <OrderedPrice>
+                {priceProductSeparate(Number(String(dataInfo.orderPrice || 0)))}
+                <span>С</span>
+              </OrderedPrice>
+              <OrderedAndBoughtText>Заказали на сумму</OrderedAndBoughtText>
+              <CountOrdered>
+                {priceProductSeparate(Number(String(dataInfo.orderCount || 0)))}{" "}
+                шт
+              </CountOrdered>
+            </div>
+          </BoxPrices>
 
-      <InfographicTabs data={dataInfo} />
+          <InfographicTabs data={dataInfo} />
+        </>
+      )}
     </div>
   );
 };

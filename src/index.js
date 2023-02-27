@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 injectStore(store);
 
 const root = createRoot(document.getElementById("root"));
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>

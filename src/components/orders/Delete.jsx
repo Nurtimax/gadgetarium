@@ -7,7 +7,6 @@ import { DeleteIcon } from "../../assets";
 import { deleteOrderProducts } from "../../redux/slices/orders-slice";
 import Button from "../UI/button/Button";
 import Modal from "../UI/Modal";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Delete = ({ fullName, id }) => {
@@ -15,7 +14,6 @@ const Delete = ({ fullName, id }) => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const currentStatus = searchParams.get("orderStatus");
-  const notify = () => toast("Order successfully deleted!");
   const currentPage = searchParams.get("page_index");
 
   const openModalWindow = () => {
@@ -27,8 +25,8 @@ const Delete = ({ fullName, id }) => {
   };
 
   const deleteOrder = () => {
-    notify();
     handleClose();
+
     dispatch(
       deleteOrderProducts({
         id,

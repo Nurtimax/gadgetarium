@@ -21,6 +21,8 @@ const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
     (state) => state.orderProduct.data
   );
 
+  const isLoading = useSelector((state) => state.orderProduct.isLoading);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const orderStatus = searchParams.get("orderStatus") || "WAITING";
   const page = searchParams.get("page_index") || 1;
@@ -100,6 +102,8 @@ const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
           {orderStatus === `${tab.tabTitle}` &&
             (data.length < 1 ? (
               <StyledNoOrdersText>No orders!</StyledNoOrdersText>
+            ) : isLoading ? (
+              <h1>Loading...</h1>
             ) : (
               <Table
                 tableHeaderTitle={OrdersTableHeaderTitle}

@@ -66,7 +66,7 @@ const Select = ({ orderStatus, orderType, id }) => {
         >
           {renderedMenuItems.map((item, i) => (
             <MenuItem onClick={selectHandler} id={item.tab} key={i}>
-              {item.text || "Don't have"}
+              {checkInOrderStatus(orderStatus) !== item.text ? item.text : ""}
             </MenuItem>
           ))}
         </StyledDropDown>

@@ -28,7 +28,7 @@ export const checkInOrderStatus = (key) => {
     case "DELIVERED":
       return "Доставлен";
     case "CANCEL":
-      return "Отменить";
+      return "Отменено";
     default:
       return "";
   }
