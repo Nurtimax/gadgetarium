@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import ProductDetails from "../components/productDetails/ProductDetails";
 import AboutStore from "../containers/about-store/AboutStore";
 import AddProduct from "../containers/add-product/AddProduct";
 import Contacts from "../containers/contacts/Contacts";
@@ -72,7 +73,7 @@ const AppRoutes = () => {
             path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
             element={
               <PrivateRole
-                RouteComponent={<h1>Galaxy S21 5G</h1>}
+                RouteComponent={<ProductDetails />}
                 roles={["admin"]}
                 fallbackPath="admin"
                 roleName={roleName}
