@@ -7,7 +7,7 @@ const useDropDown = () => {
 
   const setStateHandler = (e) => {
     if (!state) {
-      return setState(e.target);
+      return setState(e?.target);
     }
     return setState(null);
   };

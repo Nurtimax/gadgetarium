@@ -37,6 +37,7 @@ export const fetchDataSignup = createAsyncThunk(
 const initialState = {
   data: {},
   isLoading: false,
+  isAuthenticated: false,
 };
 
 const authenticationSlice = createSlice({
@@ -45,9 +46,12 @@ const authenticationSlice = createSlice({
   reducers: {
     authLogOut: (state) => {
       state.data = {};
+      state.isAuthenticated = false;
+      state.data = initialState.data;
       localStorage.removeItem(GADJEDTARIUM_LOGIN_INFO);
     },
     getUserData: (state, action) => {
+      state.isAuthenticated = true;
       state.data = action.payload;
     },
   },

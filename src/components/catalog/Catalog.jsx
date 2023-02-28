@@ -2,6 +2,7 @@ import {
   Box,
   Grid,
   IconButton,
+  Menu,
   MenuItem,
   styled,
   Typography,
@@ -10,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRightWithoutColorIcon } from "../../assets";
 import { catalogMenu_FAKE_DATA } from "../../utils/constants";
-import DropDown from "../UI/DropDown";
 
 const initialState = {
   id: "",
@@ -55,13 +55,15 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
       <Grid container className="grid_container">
         <Grid item xs={6}>
           <StyledDropDown
+            id="account-menu"
+            disablePortal
+            aria-controls="subcategory-menu"
             open={Boolean(anchorElCatalog)}
             anchorEl={anchorElCatalog}
-            handleClose={handleCloseCatalog}
-            PopoverClasses={{ paper: "paper" }}
+            onClose={handleCloseCatalog}
             classes={{ paper: "paper" }}
-            horizontal="right"
-            vertical="top"
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
           >
             {catalogMenu_FAKE_DATA.map((catalog) => (
               <MenuItem
@@ -77,7 +79,9 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
                     : ""
                 }
               >
-                <IconButton size="large">{catalog.icon}</IconButton>
+                <IconButton size="large" className="gadjet_icon">
+                  {catalog.icon}
+                </IconButton>
                 <Link
                   to={`item/${catalog.id}`}
                   className="flexgrow"
@@ -92,10 +96,15 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
         </Grid>
         <Grid item xs={6}>
           <StyledDropDown
+            disablePortal
+            id="subcategory-menu"
             open={open}
             anchorEl={anchorEl}
-            handleClose={handleClose}
+            onClose={handleClose}
             classes={{ paper: "subpaper" }}
+            marginThreshold={-230}
+            transformOrigin={{ horizontal: "left", vertical: "bottom" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -105,9 +114,11 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               </Grid>
               {subMenuCatalog.subMenu.map((catalog) => (
                 <Grid item xs={12} key={catalog.id}>
-                  <Link to={`item/${subMenuCatalog.id}/${catalog.id}`}>
-                    <MenuItem onClick={closeHandler}>{catalog.title}</MenuItem>
-                  </Link>
+                  <MenuItem onClick={() => closeHandler()}>
+                    <Link to={`item/${subMenuCatalog.id}/${catalog.id}`}>
+                      {catalog.title}
+                    </Link>
+                  </MenuItem>
                 </Grid>
               ))}
             </Grid>
@@ -120,38 +131,32 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
 export default Catalog;
 
 const StyledMenuCatalog = styled(Box)(() => ({
-  position: "absolute",
   "& .grid_container": {
-    position: "relative",
-    background: "red",
+    position: "absolute",
     display: "flex",
-    width: "390px",
+    width: "50%",
+    zIndex: 199,
   },
 }));
 
-const StyledDropDown = styled(DropDown)(({ theme }) => ({
-  position: "relative",
-  width: "10rem",
-  maxHeight: "62px",
-  "& .paper": {
-    top: "0 !important",
-    left: "85% !important",
-    maxHeight: "300px",
-    minWidth: "20.5rem",
-    padding: "0 8px",
-  },
-  "& .subpaper": {
-    zIndex: 0,
-    left: "165% !important",
-    maxHeight: "33rem",
-    padding: "20px 18px",
-    textAlign: "left",
-  },
+const StyledDropDown = styled(Menu)(({ theme }) => ({
   "& .MuiBackdrop-root": {
     position: "relative",
   },
   "& .flexgrow": {
     flexGrow: 1,
+  },
+  "& .paper": {
+    maxHeight: "300px",
+    maxWidth: "100%",
+    padding: "0 8px",
+    zIndex: 200,
+  },
+  "& .subpaper": {
+    maxHeight: "33rem",
+    padding: ".5rem",
+    textAlign: "left",
+    zIndex: 201,
   },
   "& .paper .MuiMenuItem-root:hover": {
     background: theme.palette.secondary.main,
@@ -173,5 +178,11 @@ const StyledDropDown = styled(DropDown)(({ theme }) => ({
   },
   "& .MuiMenuItem-root": {
     padding: 0,
+  },
+  "& .MuiPaper-root": {
+    position: "static",
+  },
+  "&.MuiPopover-root": {
+    position: "static",
   },
 }));
