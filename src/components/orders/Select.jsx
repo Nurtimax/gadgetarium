@@ -2,6 +2,7 @@ import { MenuItem, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ArrowOrderIcon, ArrowOrderIconRotate } from "../../assets";
 import { updateOrderProducts } from "../../redux/slices/orders-slice";
 import {
@@ -32,13 +33,21 @@ const Select = ({ orderStatus, orderType, id }) => {
 
   const selectHandler = (e) => {
     setOpen(false);
-    dispatch(
-      updateOrderProducts({
-        id,
-        orderStatus: e.target.id,
-        currentStatus,
-        currentPage,
-      })
+
+    toast.promise(
+      dispatch(
+        updateOrderProducts({
+          id,
+          orderStatus: e.target.id,
+          currentStatus,
+          currentPage,
+        })
+      ),
+      {
+        pending: "Pending",
+        success: "Updated",
+        error: "Error",
+      }
     );
   };
 

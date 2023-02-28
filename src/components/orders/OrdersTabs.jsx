@@ -15,8 +15,10 @@ import {
 } from "../../utils/helpers/general";
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
+import { useCallback } from "react";
 
-const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
+const OrdersTabs = ({ searchTerm }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
     (state) => state.orderProduct.data
   );
@@ -42,12 +44,10 @@ const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
     orderStatusAndSize
   );
 
-  const handleTabClick = (e) => {
+  const handleTabClick = useCallback((e) => {
     searchParams.set("orderStatus", e.target.name);
     setSearchParams(searchParams);
-    onClearSearchTerm();
-    setDates([null, null]);
-  };
+  });
 
   const requestParams = useMemo(() => {
     const params = {
@@ -72,54 +72,62 @@ const OrdersTabs = ({ searchTerm, onClearSearchTerm }) => {
   }, [orderStatus, page, searchTerm, value]);
 
   useEffect(() => {
-    dispatch(getOrderProducts(requestParams));
-  }, [requestParams]);
-
-  useEffect(() => {
     searchParams.set("orderStatus", orderStatus);
     setSearchParams(searchParams);
   }, [orderStatus]);
 
+  const request = useCallback(() => {
+    dispatch(getOrderProducts(requestParams));
+  }, [requestParams]);
+
+  useEffect(() => {
+    request();
+  }, [request]);
+
   return (
     <div>
-      <Tabs>
-        {TAB_ITEMS_ORDER.map((tab, i) => (
-          <button
-            key={i}
-            name={tab.tabTitle}
-            disabled={orderStatus === `${tab.tabTitle}`}
-            onClick={handleTabClick}
-          >
-            {tab.title} {checkTabName(tab.title, orderStatusAndSize || {})}
-          </button>
-        ))}
-      </Tabs>
-
-      <DatePicker date={dates} setDate={setDates} />
-
-      {TAB_ITEMS_ORDER.map((tab, i) => (
-        <div key={i}>
-          {orderStatus === `${tab.tabTitle}` &&
-            (data.length < 1 ? (
-              <StyledNoOrdersText>No orders!</StyledNoOrdersText>
-            ) : isLoading ? (
-              <h1>Loading...</h1>
-            ) : (
-              <Table
-                tableHeaderTitle={OrdersTableHeaderTitle}
-                data={tableData}
-                isMarked={false}
-                found={true}
-                countOfOrders={countOfOrders}
-              />
+      {isLoading ? (
+        <GadgetariumSpinnerLoading />
+      ) : (
+        <>
+          <Tabs>
+            {TAB_ITEMS_ORDER.map((tab, i) => (
+              <button
+                key={i}
+                name={tab.tabTitle}
+                disabled={orderStatus === `${tab.tabTitle}`}
+                onClick={handleTabClick}
+              >
+                {tab.title} {checkTabName(tab.title, orderStatusAndSize || {})}
+              </button>
             ))}
-        </div>
-      ))}
+          </Tabs>
 
-      {isPaginationMounted && (
-        <Pagination
-          count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
-        />
+          <DatePicker date={dates} setDate={setDates} />
+
+          {TAB_ITEMS_ORDER.map((tab, i) => (
+            <div key={i}>
+              {orderStatus === `${tab.tabTitle}` &&
+                (data.length < 1 ? (
+                  <StyledNoOrdersText>No orders!</StyledNoOrdersText>
+                ) : (
+                  <Table
+                    tableHeaderTitle={OrdersTableHeaderTitle}
+                    data={tableData}
+                    isMarked={false}
+                    found={true}
+                    countOfOrders={countOfOrders}
+                  />
+                ))}
+            </div>
+          ))}
+
+          {isPaginationMounted && (
+            <Pagination
+              count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
+            />
+          )}
+        </>
       )}
     </div>
   );

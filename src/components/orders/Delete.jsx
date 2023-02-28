@@ -8,6 +8,7 @@ import { deleteOrderProducts } from "../../redux/slices/orders-slice";
 import Button from "../UI/button/Button";
 import Modal from "../UI/Modal";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Delete = ({ fullName, id }) => {
   const [open, setOpen] = useState(false);
@@ -27,12 +28,19 @@ const Delete = ({ fullName, id }) => {
   const deleteOrder = () => {
     handleClose();
 
-    dispatch(
-      deleteOrderProducts({
-        id,
-        currentStatus,
-        currentPage,
-      })
+    toast.promise(
+      dispatch(
+        deleteOrderProducts({
+          id,
+          currentStatus,
+          currentPage,
+        })
+      ),
+      {
+        pending: "Pending",
+        success: "Deleted",
+        error: "Error",
+      }
     );
   };
 

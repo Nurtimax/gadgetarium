@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { getOrderProductsById } from "../../redux/slices/orders-slice";
 import { priceProductSeparate } from "../../utils/helpers/general";
 import { checkInOrderStatus } from "../../utils/helpers/general";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 
 const OrderItem = () => {
   const { orderId } = useParams();
@@ -33,7 +34,7 @@ const OrderItem = () => {
   return (
     <StyledMainContainer>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <GadgetariumSpinnerLoading />
       ) : (
         <>
           <Typography className="paymant-text">

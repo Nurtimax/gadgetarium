@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderInforaphic } from "../../redux/slices/orders-slice";
 import { priceProductSeparate } from "../../utils/helpers/general";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import InfographicTabs from "./InfographicTabs";
 
 const Infographic = () => {
@@ -22,7 +23,7 @@ const Infographic = () => {
       <TitleInfographic>ИНФОГРАФИКА</TitleInfographic>
 
       {infoIsLoading ? (
-        <h1>Loading...</h1>
+        <GadgetariumSpinnerLoading />
       ) : (
         <>
           <BoxPrices>

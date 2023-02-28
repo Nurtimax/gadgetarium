@@ -21,10 +21,7 @@ const Orders = () => {
             onChange={(e) => setSearchValue(e.target.value)}
           />
 
-          <OrdersTabs
-            searchTerm={searchTerm}
-            onClearSearchTerm={() => setSearchValue("")}
-          />
+          <OrdersTabs searchTerm={searchTerm} />
         </ContainerTabs>
 
         <Infographic />
@@ -38,6 +35,7 @@ export default Orders;
 const MainContainer = styled(Container)(() => ({
   display: "flex",
   gap: "86px",
+  paddingBottom: "64px",
 }));
 
 const ContainerTabs = styled("div")(() => ({
