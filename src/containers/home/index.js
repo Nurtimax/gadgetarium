@@ -9,15 +9,12 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { ActionauthenticationSlice } from "../../redux/slices/authentication";
-import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 import {
   fetchNewProduct,
   fetchRecomendationProduct,
   fetchDiscountProduct,
 } from "../../redux/slices/productSlice";
 import Button from "../../components/UI/button/Button";
-const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
 const Home = () => {
   const [size, setSize] = useState({
     news: 5,
@@ -42,19 +39,19 @@ const Home = () => {
     discountError,
     recomenError,
   } = useSelector((store) => store.product);
-  console.log(discountsProducts.length, size.discount);
-  useEffect(() => {
-    dispatch(ActionauthenticationSlice.authLogIn(authSave));
-  }, []);
+
   useEffect(() => {
     dispatch(fetchNewProduct(size.news));
   }, [size.news]);
+
   useEffect(() => {
     dispatch(fetchDiscountProduct(size.discount));
   }, [size.discount]);
+
   useEffect(() => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
+
   return (
     <>
       <Banner />
