@@ -9,15 +9,14 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { ActionauthenticationSlice } from "../../redux/slices/authentication";
-import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 import {
   fetchNewProduct,
   fetchRecomendationProduct,
   fetchDiscountProduct,
 } from "../../redux/slices/productSlice";
 import Button from "../../components/UI/button/Button";
-const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
+import { Navigate } from "react-router-dom";
+
 const Home = () => {
   const [size, setSize] = useState({
     news: 5,
@@ -32,20 +31,19 @@ const Home = () => {
   );
   const dispatch = useDispatch();
   const {
-    newProducts,
-    recommendationProduct,
-    discountsProducts,
-    newStatus,
-    disStatus,
-    recStatus,
-    newError,
-    discountError,
-    recomenError,
-  } = useSelector((store) => store.product);
-
-  useEffect(() => {
-    dispatch(ActionauthenticationSlice.authLogIn(authSave));
-  }, []);
+    product: {
+      newProducts,
+      recommendationProduct,
+      discountsProducts,
+      newStatus,
+      disStatus,
+      recStatus,
+      newError,
+      discountError,
+      recomenError,
+    },
+    auth,
+  } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(fetchNewProduct(size.news));
@@ -59,6 +57,10 @@ const Home = () => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
 
+  if (auth?.data?.roleName?.toLowerCase() === "admin") {
+    return <Navigate to="/admin" />;
+  }
+
   return (
     <>
       <Banner />
@@ -68,10 +70,8 @@ const Home = () => {
             <Styled_Error>Error {discountError} </Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4" id="Promotion">
-                Акции
-              </Typography>
-              <Grid container spacing={1}>
+              <Typography variant="h4">Акции</Typography>
+              <Grid container className="" spacing={1}>
                 {discountsProducts?.map((item) => (
                   <Grid item xs={2.4} key={item.productName}>
                     <ProductCard {...item} productStatus="DISCOUNT" />
@@ -96,8 +96,6 @@ const Home = () => {
               </Typography>
             </Global_Card>
           )}
-
-          <p id="New"></p>
 
           {newError ? (
             <Styled_Error>Error {newError}</Styled_Error>
@@ -134,9 +132,7 @@ const Home = () => {
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4" id="#Recomendation">
-                Рекомендуем
-              </Typography>
+              <Typography variant="h4">Рекемендуем</Typography>
               <Grid container spacing={2}>
                 {recommendationProduct?.map((item) => (
                   <Grid item xs={2.4} key={item.productName}>

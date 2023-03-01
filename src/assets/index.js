@@ -52,3 +52,4 @@ export { ReactComponent as MasterCard } from "./icons/masterCard.svg";
 export { ReactComponent as VisaIcon } from "./icons/visa.svg";
 export { ReactComponent as ArrowOrderIcon } from "./icons/arrows/arrow-order-list.svg";
 export { ReactComponent as ArrowOrderIconRotate } from "./icons/arrows/arrow-icon-rotate-order.svg";
+export { ReactComponent as ArrowUpIcon } from "./icons/arrows/arrowUp.svg";

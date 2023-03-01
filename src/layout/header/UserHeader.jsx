@@ -71,19 +71,20 @@ const UserHeader = () => {
               </Grid>
               <Grid item xl={1.5} lg={1.6} className="flex gap2">
                 <Box className="flexgrow flex height">
-                  <Catalog
-                    anchorElCatalog={anchorEl}
-                    handleCloseCatalog={setAnchorEl}
-                  />
                   <ButtonStyled
                     className="gap capitalize"
                     variant="contained"
                     color="secondary"
                     icon={<CatalogIcon />}
                     onClick={setAnchorEl}
+                    aria-controls="account-menu"
                   >
                     Каталог
                   </ButtonStyled>
+                  <Catalog
+                    anchorElCatalog={anchorEl}
+                    handleCloseCatalog={setAnchorEl}
+                  />
                 </Box>
               </Grid>
               <Grid item xl={6} lg={5} md={5.6}>

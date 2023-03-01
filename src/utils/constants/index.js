@@ -45,9 +45,9 @@ export const userPages = [
 ];
 
 export const adminPage = [
-  { id: 22, theme: "Товары", to: "admin/goods" },
-  { id: 23, theme: "Заказы", to: "admin/orders" },
-  { id: 24, theme: "Отзывы и рейтинг", to: "admin/reviews-rating" },
+  { id: 22, theme: "Товары", to: "goods" },
+  { id: 23, theme: "Заказы", to: "orders" },
+  { id: 24, theme: "Отзывы и рейтинг", to: "reviews-rating" },
 ];
 
 export const iconsData = [
@@ -604,4 +604,98 @@ export const titlesOrderPopUpTwo = [
   { text: "Курьер в пути", tab: "ON_THE_WAY" },
   { text: "Доставлен", tab: "DELIVERED" },
   { text: "Отменено", tab: "CANCEL" },
+];
+
+export const ITEM_SORT = [
+  { id: 1, title: "Новинки" },
+  {
+    id: 2,
+    title: "По акции",
+    subcategories: [
+      {
+        id: 1,
+        title: "Все акции",
+      },
+      {
+        id: 2,
+        title: "До 50%",
+      },
+      {
+        id: 3,
+        title: "Свыше 50%",
+      },
+    ],
+  },
+  { id: 3, title: "Рекомендуемые" },
+  { id: 4, title: "По увеличению цены" },
+  { id: 5, title: "По уменьшению цены" },
+];
+
+export const filterCategory = [
+  {
+    id: 1,
+    title: "Категория",
+    subtitle: [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 3, title: "Huawei" },
+      { id: 4, title: "Honor" },
+      { id: 5, title: "Xiaomi" },
+    ],
+  },
+];
+
+export const filterPrice = [
+  {
+    id: 2,
+    title: "Стоимость",
+  },
+];
+
+export const filterProducts = [
+  {
+    id: 3,
+    title: "Цвет",
+    subtitle: [
+      { id: 1, title: "Black " },
+      { id: 2, title: "Blue" },
+      { id: 3, title: "Gold " },
+      { id: 4, title: "Graphite " },
+      { id: 5, title: "Green" },
+      { id: 6, title: "Rose Gold" },
+      { id: 7, title: "Red" },
+      { id: 8, title: "Silver" },
+      { id: 9, title: "White" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Объем памяти (GB) ",
+    subtitle: [
+      { id: 1, title: "8" },
+      { id: 2, title: "16" },
+      { id: 3, title: "32" },
+      { id: 4, title: "64" },
+      { id: 5, title: "128" },
+      { id: 6, title: "256" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Объем оперативной памяти (GB)",
+    subtitle: [
+      { id: 1, title: "3" },
+      { id: 2, title: "4" },
+      { id: 3, title: "6" },
+      { id: 4, title: "8" },
+      { id: 5, title: "12" },
+    ],
+  },
+];
+
+export const chip_item = [
+  { id: 1, title: "Apple" },
+  { id: 2, title: "Graphite" },
+  { id: 3, title: "Apple" },
+  { id: 4, title: "Apple" },
 ];

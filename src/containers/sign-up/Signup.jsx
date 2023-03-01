@@ -42,7 +42,11 @@ const SignUp = () => {
       const { email, roleName, token } = res.payload;
       if (email && roleName && token) {
         action.resetForm();
-        navigate("/");
+        if (roleName === "Admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     });
   };
