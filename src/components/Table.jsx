@@ -1,100 +1,223 @@
-import React from "react";
 import {
   styled,
-  TableBody,
-  TableCell,
+  Typography,
   TableContainer,
   TableHead,
   TableRow,
+  TableCell,
+  TableBody,
+  Checkbox,
 } from "@mui/material";
-import { Table as ProductTable } from "@mui/material";
-import TableItem from "./TableItem";
-import { dataTables, titlesTables } from "../utils/constants";
+import { default as MUITable } from "@mui/material/Table";
+import { useMemo } from "react";
+import { useTable } from "react-table";
+import { priceProductSeparate } from "../utils/helpers/general";
 
-const Table = () => {
+const defaultColumnProps = {
+  style: {
+    minWidth: 15,
+    flex: 1,
+  },
+};
+
+const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
+  const columns = useMemo(() => tableHeaderTitle, []);
+  const dataTable = data || [];
+
+  const tableHooks = (hooks) => {
+    if (isMarked === true) {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            Header: "ID",
+            accessor: "id",
+            style: {
+              flex: 0.3,
+            },
+            Cell: ({ row }) => {
+              return (
+                <>
+                  <div className="checkbox">
+                    <Checkbox color="secondary" />
+                  </div>
+                  <div className="ID">
+                    {priceProductSeparate(Number(String(row.original.id || 0)))}
+                  </div>
+                </>
+              );
+            },
+          },
+          ...columns,
+        ];
+      });
+    } else if (isMarked === false) {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            Header: "ID",
+            accessor: "id",
+            style: {
+              flex: 0.3,
+            },
+            Cell: ({ row }) => {
+              return (
+                <div>
+                  {priceProductSeparate(Number(String(row.original.id || 0)))}
+                </div>
+              );
+            },
+          },
+          ...columns,
+        ];
+      });
+    }
+  };
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data: dataTable,
+        defaultColumn: defaultColumnProps,
+      },
+      tableHooks
+    );
+
   return (
     <MainContainer>
-      <ContainerTable>
+      {found ? (
+        <Typography className="foundOrderText">
+          Найдено {countOfOrders} заказов
+        </Typography>
+      ) : null}
+
+      <MUITable {...getTableProps()}>
         <TableHead>
-          <ContainerTableRow>
-            {titlesTables.map((title) => (
-              <TitleTableCell key={title}>{title}</TitleTableCell>
-            ))}
-          </ContainerTableRow>
+          {headerGroups.map((headerGroup, i) => (
+            <TableRow
+              {...headerGroup.getHeaderGroupProps({
+                style: {
+                  display: "flex",
+                  width: "100%",
+                },
+              })}
+              key={i}
+            >
+              {headerGroup.headers.map((column, i) => (
+                <TableCell
+                  {...column.getHeaderProps({
+                    style: { ...column.style },
+                  })}
+                  key={i}
+                >
+                  {column.render("Header")}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
         </TableHead>
 
-        <ContainerTableBody>
-          {dataTables.map((obj) => (
-            <TableItem key={obj.id} obj={obj} />
-          ))}
-        </ContainerTableBody>
-      </ContainerTable>
+        <TableBody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <StyledTableRow
+                {...row.getRowProps({
+                  style: {
+                    display: "flex",
+                  },
+                })}
+                key={i}
+                checked={isMarked}
+              >
+                {row.cells.map((cell, i) => (
+                  <TableCell
+                    {...cell.getCellProps({
+                      style: {
+                        ...cell.column.style,
+                        ...cell.column.tdStyle,
+                      },
+                    })}
+                    key={i}
+                  >
+                    {cell.render("Cell")}
+                  </TableCell>
+                ))}
+              </StyledTableRow>
+            );
+          })}
+        </TableBody>
+      </MUITable>
     </MainContainer>
   );
 };
 
 export default Table;
 
-const MainContainer = styled(TableContainer)(() => ({
-  paddingTop: "16px",
-  display: "flex",
-  justifyContent: "center",
-  width: "100%",
-}));
+const StyledTableRow = styled(TableRow)(({ theme, checked }) => ({
+  padding: "20px",
+  border: `1px solid ${theme.palette.grey[600]}`,
+  borderRadius: "6px",
 
-const ContainerTable = styled(ProductTable)(() => ({
-  width: "1305px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-}));
+  "& .checkbox": {
+    display: "none",
+  },
 
-const ContainerTableRow = styled(TableRow)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-  height: "40px",
-  display: "flex",
-  alignItems: "center",
-  "& :nth-of-type(1)": {
-    paddingLeft: "20px",
-  },
-  "& :nth-of-type(2)": {
-    paddingLeft: "31px",
-  },
-  "& :nth-of-type(3)": {
-    paddingLeft: "67px",
-  },
-  "& :nth-of-type(4)": {
-    paddingLeft: "74px",
-  },
-  "& :nth-of-type(5)": {
-    paddingLeft: "65px",
-  },
-  "& :nth-of-type(6)": {
-    paddingLeft: "58px",
-  },
-  "& :nth-of-type(7)": {
-    paddingLeft: "90px",
-  },
-  "& :nth-of-type(8)": {
-    paddingLeft: "59px",
-  },
-  "& :nth-of-type(9)": {
-    paddingLeft: "72px",
+  "&:hover": {
+    background: checked ? "rgba(144, 156, 181, 0.2)" : "",
+
+    "& .ID": {
+      display: "none",
+    },
+
+    "& .checkbox": {
+      display: "block",
+      padding: "0 0 15px 0",
+      "& .MuiCheckbox-root": {
+        padding: "0",
+      },
+    },
   },
 }));
 
-const TitleTableCell = styled(TableCell)(({ theme }) => ({
-  padding: "0",
-  border: "none",
+const MainContainer = styled(TableContainer)(({ theme }) => ({
   fontFamily: "Inter",
-  fontWeight: "600",
+  fontWeight: "400",
   fontSize: "14px",
-  letterSpacing: "1px",
-  color: theme.palette.primary.contrastText,
-}));
+  color: theme.palette.primary.light,
 
-const ContainerTableBody = styled(TableBody)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
+  "& .MuiTypography-root": {
+    padding: "40px 0 16px",
+  },
+
+  "& .MuiTable-root": {
+    "& .MuiTableHead-root": {
+      backgroundColor: theme.palette.primary.light,
+      display: "flex",
+      alignItems: "center",
+      padding: "12px 20px",
+      margin: "0 0 10px",
+
+      "& .MuiTableRow-root": {
+        "& .MuiTableCell-root": {
+          color: theme.palette.primary.contrastText,
+          fontWeight: "600",
+          border: "none",
+          padding: "0",
+        },
+      },
+    },
+
+    "& .MuiTableBody-root": {
+      display: "grid",
+      gap: "8px",
+
+      "& .MuiTableRow-root": {
+        "& .MuiTableCell-root": {
+          border: "none",
+          padding: "0",
+        },
+      },
+    },
+  },
 }));

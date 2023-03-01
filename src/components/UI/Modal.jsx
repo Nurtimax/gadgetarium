@@ -1,8 +1,14 @@
 import { Dialog, DialogContent, styled } from "@mui/material";
 import { IconClose } from "../../assets/index";
+
 const Modal = ({ children, open, handleClose, state, ...props }) => {
   return (
-    <Dialog open={open} onClose={handleClose} hideBackdrop={true} {...props}>
+    <Dialog
+      open={Boolean(open)}
+      onClose={handleClose}
+      hideBackdrop={true}
+      {...props}
+    >
       {state && (
         <ContainerIcon>
           <IconClose onClick={handleClose} />
