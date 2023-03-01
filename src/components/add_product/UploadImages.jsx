@@ -22,8 +22,8 @@ const UploadImages = ({
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
     axios({
-      method: "POST",
-      url: "${SWAGGER_API}file",
+      method: `POST`,
+      url: `${SWAGGER_API}file`,
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -42,6 +42,7 @@ const UploadImages = ({
           })
         );
         setIsLoading(false);
+        setError(null);
       })
       .catch((error) => {
         setError(error?.message || "Something is wrong");

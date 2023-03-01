@@ -5,58 +5,96 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import { Container, styled } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
 import Forms from "../../components/add_product/Forms";
-import { useDispatch } from "react-redux";
-import { addProductThunk } from "../../redux/slices/add-product";
-
-const steps = [
-  "Добавление товара",
-  "Установка цены и количества товара",
-  "Описание и обзор",
-];
+import { useFormik } from "formik";
+import {
+  PRODUCT_INITIALSTATE,
+  PRODUCT_INITIALSTATESCHEMA,
+} from "../../utils/constants/add-product";
+import PriceQuantity from "../../components/add_product/PriceQuantity";
+import DescriptionOverview from "../../components/add_product/DescriptionOverview";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const AddProduct = () => {
+  const [activeStep, setActiveStep] = React.useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { setValues, setFieldValue, values, handleChange } = useFormik({
+    initialValues: PRODUCT_INITIALSTATE,
+    validationSchema: PRODUCT_INITIALSTATESCHEMA,
+    onSubmit: (values, action) => {
+      console.log(values);
+      action.resetForm();
+    },
+    validateOnChange: false,
+  });
 
-  const query = searchParams.get("stepper");
-
-  const dispatch = useDispatch();
-
-  const changeParams = (stepper) => {
-    setSearchParams(stepper);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const sendData = (value) => {
-    dispatch(addProductThunk(value));
+    // dispatch(addProductThunk(value));
+    setValues((prevState) => ({ ...prevState, ...value }));
+    handleNext();
+    setSearchParams({ stepper: steps[activeStep].title });
   };
+
+  const steps = [
+    {
+      id: 1,
+      title: "Добавление товара",
+      link: "",
+      component: <Forms getData={sendData} handleNext={handleNext} />,
+    },
+    {
+      id: 2,
+      title: "Установка цены и количества товара",
+      link: "",
+      component: <PriceQuantity handleNext={handleNext} />,
+    },
+    {
+      id: 3,
+      title: "Описание и обзор",
+      link: "",
+      component: (
+        <DescriptionOverview
+          setFieldValue={setFieldValue}
+          values={values}
+          handleChange={handleChange}
+        />
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    setSearchParams({ stepper: steps[activeStep].title });
+  }, [activeStep]);
+
+  const stepper = searchParams.get("stepper");
 
   return (
     <StyledAddProduct>
       <Container>
         <Box className="add_item">
           <Typography component="h1" variant="h4">
-            Добавление товара
+            {stepper || steps[activeStep].title}
           </Typography>
         </Box>
-        <Stepper activeStep={Number(query)}>
-          {steps.map((label, index) => {
+        <Stepper activeStep={Number(activeStep)}>
+          {steps.map((label) => {
             return (
-              <Step key={label} completed={false}>
-                <StepLabel onClick={() => changeParams({ stepper: index })}>
+              <Step key={label.id} completed={false}>
+                <StepLabel>
                   <Typography variant="body1" component="span">
-                    {label}
+                    {label.title}
                   </Typography>
                 </StepLabel>
               </Step>
             );
           })}
         </Stepper>
-        <Forms
-          getData={sendData}
-          searchParams={searchParams}
-          setSearchParams={changeParams}
-        />
+        {steps[activeStep].component}
       </Container>
     </StyledAddProduct>
   );

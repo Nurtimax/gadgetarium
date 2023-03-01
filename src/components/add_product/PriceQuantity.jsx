@@ -14,6 +14,7 @@ const PriceQuantity = ({ handleNext }) => {
         <Grid item xs={10} className="setting_price_button">
           <StyledButton>Установить цену</StyledButton>
         </Grid>
+        <Grid item xs={12}></Grid>
         <Grid item xs={12} className="flex flex-end">
           <StyledButton className="next_button" onClick={handleNext}>
             Далее
