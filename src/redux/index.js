@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import addProductSlice from "./slices/add-product";
 import { productSlice } from "./slices/productSlice";
 import { ordersProduct } from "./slices/orders-slice";
+import { basketProducts } from "./slices/basket-slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     addProduct: addProductSlice.reducer,
     product: productSlice.reducer,
     orderProduct: ordersProduct.reducer,
+    basket: basketProducts.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
