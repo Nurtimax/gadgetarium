@@ -17,7 +17,9 @@ const StyledGadgetariumSpinnerLoading = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  position: "fixed",
+  position: "absolute",
+  top: "0",
+  left: "0",
   "& .border": {
     border: "2px solid #BA45C0",
     width: "65px",

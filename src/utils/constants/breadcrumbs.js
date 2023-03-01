@@ -1,4 +1,5 @@
 import { ROUTES } from ".";
+import AdminOrdersBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/AdminOrdersBreadcrumbs";
 import UserCatalogBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogBreadcrumbs";
 import UserCatalogItemBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogItemBreadcrumbs";
 
@@ -75,6 +76,11 @@ export const BREADCRUMBS = [
     path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}`,
     breadcrumb: null,
   },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}/:orderId`,
+    breadcrumb: AdminOrdersBreadcrumbs,
+  },
+
   {
     path: `${ROUTES.ADMIN}/${ROUTES.REVIEWSRATING}`,
     breadcrumb: null,

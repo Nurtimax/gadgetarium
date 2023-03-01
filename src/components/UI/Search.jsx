@@ -67,7 +67,7 @@ const OutlinedInputStyled = styled(OutlinedInput)(
       color: "black",
     },
     "&.showBackground": {
-      backgroundColor: "#FAFAFA",
+      backgroundColor: "white",
       fill: "#969696",
       color: "black",
       "& ::placeholder": {
