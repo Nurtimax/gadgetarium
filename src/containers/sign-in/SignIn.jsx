@@ -8,7 +8,10 @@ import Modal from "../../components/UI/Modal";
 import { useFormik } from "formik";
 import useVisibility from "../../hooks/useVisibility";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataSignin } from "../../redux/slices/authentication";
+import {
+  ActionauthenticationSlice,
+  fetchDataSignin,
+} from "../../redux/slices/authentication";
 import { singInValidateSchema } from "../../utils/helpers/validate";
 
 const SignIn = () => {
@@ -20,22 +23,23 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const onSubmit = (values, action) => {
-    dispatch(fetchDataSignin(values))
-      .then((res) => {
-        return res;
-      })
-      .then((data) => {
-        const { payload } = data;
-        if (payload?.email && payload?.roleName && payload?.token) {
-          if (data) {
-            action.resetForm();
+    dispatch(fetchDataSignin(values)).then((data) => {
+      const { payload } = data;
+      if (payload?.email && payload?.roleName && payload?.token) {
+        if (data) {
+          dispatch(ActionauthenticationSlice.getUserData(payload));
+          action.resetForm();
+          setError(null);
+          if (payload?.roleName === "Admin") {
+            navigate("/admin");
+          } else {
             navigate("/");
-            setError(null);
           }
-        } else {
-          setError(true);
         }
-      });
+      } else {
+        setError(true);
+      }
+    });
   };
 
   const { handleChange, handleSubmit, values, errors } = useFormik({

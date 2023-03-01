@@ -127,6 +127,7 @@ export const ADDPRODUCT_INITIALSTATESCHEMA = yup.object().shape({
     })
   ),
 });
+
 export const PRODUCT_FORMS_FIELDS = [
   {
     id: 1,
@@ -339,6 +340,23 @@ export const PRODUCT_FORMS_FIELDS = [
         type: "select",
       },
       {
+        id: 21,
+        name: "Материал корпуса",
+        key: "caseMaterial",
+        values: [
+          "Акриловый",
+          "Алюминий",
+          "Резина",
+          "Керамика",
+          "Пластик",
+          "Металл",
+          "Нержавейщая сталь",
+          "Стекло",
+        ],
+        choosePlaceholder: "Выберите материал корпуса",
+        type: "select",
+      },
+      {
         id: 3,
         name: "Диагональ дисплея (дюйм)",
         key: "screenDiagonalOfSmartWatch",
@@ -379,5 +397,72 @@ export const PRODUCT_FORMS_FIELDS = [
         type: "radio",
       },
     ],
+  },
+];
+
+export const OrdersTableHeaderTitle = [
+  {
+    Header: "ФИО",
+    accessor: "fullName",
+    style: {
+      flex: 1.5,
+    },
+    Cell: () => {
+      return <div title="Перейти к оплате"></div>;
+    },
+  },
+  {
+    Header: "Номер/дата",
+    accessor: "orderNumber",
+    style: {
+      flex: 1.2,
+    },
+    Cell: () => {
+      return <div></div>;
+    },
+  },
+  {
+    Header: "Кол-во",
+    accessor: "countOfProduct",
+    Cell: () => {
+      return <div></div>;
+    },
+  },
+  {
+    Header: "Общая сумма",
+    accessor: "totalSum",
+    style: {
+      flex: 1.5,
+    },
+    Cell: () => {
+      return <div></div>;
+    },
+  },
+  {
+    Header: "Оформление заказа",
+    accessor: "orderType",
+    style: {
+      flex: 2,
+    },
+    Cell: () => {
+      return <div></div>;
+    },
+  },
+  {
+    Header: "Статус",
+    accessor: "orderStatus",
+    style: {
+      flex: 1.4,
+    },
+    Cell: () => {
+      return <></>;
+    },
+  },
+  {
+    Header: "Действия",
+    accessor: "totalDiscount",
+    Cell: () => {
+      return <></>;
+    },
   },
 ];

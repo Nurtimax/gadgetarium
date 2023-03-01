@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 import AddProduct from "../containers/add-product/AddProduct";
 import AdminLayout from "../layout/admin";
 import { ROUTES } from "../utils/constants";
@@ -8,7 +8,16 @@ const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="" element={<AdminLayout />}>
-        <Route path="goods" element={<h1>goods</h1>} />
+        <Route index element={<Navigate to={ROUTES.GOODS} />} />
+        <Route
+          path="goods"
+          element={
+            <h1>
+              goods
+              <Link to="add-product">add product</Link>
+            </h1>
+          }
+        />
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
           element={<h1>Product</h1>}
