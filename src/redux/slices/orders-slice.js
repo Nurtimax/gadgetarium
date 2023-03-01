@@ -1,22 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import {
-  GADJEDTARIUM_LOGIN_INFO,
-  SWAGGER_API,
-} from "../../utils/constants/fetch";
-
-const authRole = JSON.parse(
-  localStorage.getItem(GADJEDTARIUM_LOGIN_INFO) || "{}"
-);
+import axiosInstance from "../../config/axios-instance";
 
 const getOrderProducts = createAsyncThunk(
   "orders/getOrderPrdoducts",
   async (params) => {
     try {
-      const response = await axios.get(`${SWAGGER_API}adminOrders`, {
-        headers: {
-          Authorization: `Bearer ${authRole.token}`,
-        },
+      const response = await axiosInstance.get(`adminOrders`, {
         params,
       });
 
@@ -31,15 +20,9 @@ const getOrderProductsById = createAsyncThunk(
   "orders/getOrderProductsById",
   async (params) => {
     try {
-      const response = await axios.get(
-        `${SWAGGER_API}adminOrders/paymentInfo`,
-        {
-          headers: {
-            Authorization: `Bearer ${authRole.token}`,
-          },
-          params,
-        }
-      );
+      const response = await axiosInstance.get(`adminOrders/paymentInfo`, {
+        params,
+      });
 
       return response.data;
     } catch (error) {
@@ -52,13 +35,10 @@ const updateOrderProducts = createAsyncThunk(
   "orders/updateOrderProducts",
   async ({ id, orderStatus, currentStatus, currentPage }, { dispatch }) => {
     try {
-      const response = await axios.put(
-        `${SWAGGER_API}adminOrders`,
+      const response = await axiosInstance.put(
+        `adminOrders`,
         {},
         {
-          headers: {
-            Authorization: `Bearer ${authRole.token}`,
-          },
           params: {
             id,
             orderStatus,
@@ -85,10 +65,7 @@ const deleteOrderProducts = createAsyncThunk(
   "orders/deleteOrderProducts",
   async ({ id, currentStatus, currentPage }, { dispatch }) => {
     try {
-      const response = await axios.delete(`${SWAGGER_API}adminOrders`, {
-        headers: {
-          Authorization: `Bearer ${authRole.token}`,
-        },
+      const response = await axiosInstance.delete(`adminOrders`, {
         params: {
           id,
         },
@@ -113,11 +90,7 @@ const getOrderInforaphic = createAsyncThunk(
   "orders/getOrderInforaphic",
   async () => {
     try {
-      const response = await axios.get(`${SWAGGER_API}adminProducts/inf`, {
-        headers: {
-          Authorization: `Bearer ${authRole.token}`,
-        },
-      });
+      const response = await axiosInstance.get(`adminProducts/inf`);
 
       return response.data;
     } catch (error) {
