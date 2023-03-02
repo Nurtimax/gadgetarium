@@ -11,11 +11,12 @@ import {
 } from "@mui/material";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
-import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
+import { catalogMenu_FAKE_DATA } from "../../utils/constants";
 import { fetchDataCatalog } from "../../redux/slices/catalog";
 import Sort from "../../components/catalog-products/Sort";
 import FilterProducts from "../../components/catalog-products/FilterProducts";
 import ProductsList from "../../components/catalog-products/ProductsList";
+import { chip_item } from "../../utils/constants/catalog-product-filter";
 
 const CatalogProducts = () => {
   const [sortEL, setSortEl] = useDropDown();
@@ -59,7 +60,7 @@ const CatalogProducts = () => {
           </Typography>
 
           <Box className="filter-lists">
-            <FilterProducts />
+            <FilterProductsStyled />
           </Box>
         </Box>
 
@@ -182,3 +183,5 @@ const ContainerStyled = styled(Container)(() => ({
   },
   "& .error": { color: "red" },
 }));
+
+const FilterProductsStyled = styled(FilterProducts)(() => ({}));
