@@ -1,24 +1,20 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ Component, role = [], fallbackPath = "/admin" }) => {
   const { data, isAuthenticated } = useSelector((state) => state.auth);
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    return navigate(location.pathname);
-  }, []);
-
   const { roleName } = data || {};
+  const checkRole = useMemo(() => {
+    return role.join().toLowerCase().split().includes(roleName?.toLowerCase());
+  }, [roleName, role]);
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
-  if (isAuthenticated && role.includes(roleName.toLowerCase())) {
+  if (isAuthenticated && !checkRole) {
     return <Navigate to={fallbackPath} replace />;
   }
 

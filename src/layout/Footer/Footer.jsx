@@ -3,6 +3,8 @@ import { Typography } from "@mui/material";
 import { ClockIcon, Logo, Phone, Message, Locotion } from "../../assets";
 import Input from "./../../components/UI/input/Input";
 import Button from "./../../components/UI/button/Button";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/constants";
 const Footer = () => {
   return (
     <FooterStyled>
@@ -11,19 +13,19 @@ const Footer = () => {
           <BoxBlock>
             <Box>
               <Typography variant="body1" component="p">
-                <Title> Каталог</Title>
+                <Title>Каталог</Title>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Смартфоны
+                <Link to="item/1">Смартфоны</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Ноутбуки и планшеты
+                <Link to="item/2">Ноутбуки</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Смарт-часы и браслеты
+                <Link to="item/3">Планшеты</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Аксессуары
+                <Link to="item/4">Смарт-часы и браслеты</Link>
               </Typography>
             </Box>
             <Box>
@@ -31,13 +33,13 @@ const Footer = () => {
                 <Title> Будь с нами </Title>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Акции
+                <a href="#Promotion">Акции</a>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Новинки
+                <a href="#New">Новинки</a>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Популярные котегории
+                <a href="#Recomendation">Популярные котегории</a>
               </Typography>
             </Box>
 
@@ -46,16 +48,16 @@ const Footer = () => {
                 <Title> Помощь и сервисы </Title>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                О магазине
+                <Link to={ROUTES.ABOUTSTORE}>О магазине</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Доставка
+                <Link to={ROUTES.DELIVERY}>Доставка</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                FAQ
+                <Link to={ROUTES.FAG}>FAQ</Link>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                Контакты
+                <Link to={ROUTES.CONTACTS}>Контакты</Link>
               </Typography>
             </Box>
           </BoxBlock>
@@ -78,19 +80,21 @@ const Footer = () => {
               <Typography component="li" variant="body1" color="inherit">
                 <Phone />
                 <Typography variant="body1" component="p">
-                  +996 (400) 00 00 00
+                  <a href="tel:+996703717797">+996 (400) 00 00 00</a>
                 </Typography>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
                 <Message />
                 <Typography variant="body1" component="p">
-                  Gadgetarium.kg
+                  <a href="sms:+996703717797">Gadgetarium.kg</a>
                 </Typography>
               </Typography>
               <div>
                 <Locotion />
                 <Typography component="li" variant="body1" color="inherit">
-                  г.Бишкек, ул. Гражданская 119{" "}
+                  <a href="https://2gis.kg/bishkek">
+                    г.Бишкек, ул. Гражданская 119
+                  </a>
                 </Typography>
               </div>
               <div>
