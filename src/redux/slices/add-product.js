@@ -52,12 +52,21 @@ export const postBrandThunkApi = createAsyncThunk(
 const initialState = {
   data: {},
   Productbrand: [],
+  editData: {
+    price: "1234",
+    count: "",
+    isChecked: "price",
+  },
 };
 
 const addProductSlice = createSlice({
   name: "addProductSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    editData: (state, action) => {
+      state.editData = { ...state.editData, ...action.payload };
+    },
+  },
   extraReducers: {
     [addProductThunk.fulfilled]: (state, action) => {
       const { email, roleName, token } = action.payload;

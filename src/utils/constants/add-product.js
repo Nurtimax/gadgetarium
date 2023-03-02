@@ -6,6 +6,11 @@ import {
   XiaomiIcon,
 } from "../../assets";
 import * as yup from "yup";
+import MemoryTableItem from "../../components/add_product/table/MemoryTableItem";
+import RamTableItem from "../../components/add_product/table/RamTableItem";
+import DateTableItem from "../../components/add_product/table/DateTableItem";
+import EditPriceTableIItem from "../../components/add_product/table/EditPriceTableIItem";
+import EditCountProduct from "../../components/add_product/table/EditCountProduct";
 
 export const PRODUCTBRAND = [
   { id: 1, icon: <SamsungIcon />, brandName: "Samsung" },
@@ -400,69 +405,95 @@ export const PRODUCT_FORMS_FIELDS = [
   },
 ];
 
-export const OrdersTableHeaderTitle = [
+const generalStyles = { padding: "20px" };
+
+export const ADD_PRODUCT_TABLE_HEADER_TITLE = [
   {
-    Header: "ФИО",
-    accessor: "fullName",
+    Header: "Бренд",
+    accessor: "brandId",
     style: {
-      flex: 1.5,
+      flex: 1.6,
     },
     Cell: () => {
-      return <div title="Перейти к оплате"></div>;
+      return (
+        <div title="Перейти к оплате" style={generalStyles}>
+          86896876
+        </div>
+      );
     },
   },
   {
-    Header: "Номер/дата",
-    accessor: "orderNumber",
+    Header: "Цвет",
+    accessor: "color",
     style: {
-      flex: 1.2,
+      flex: 1.6,
     },
-    Cell: () => {
-      return <div></div>;
+    Cell: ({ row }) => {
+      return <div style={generalStyles}>{row.original.color}</div>;
     },
   },
   {
-    Header: "Кол-во",
+    Header: "Объем памяти",
     accessor: "countOfProduct",
-    Cell: () => {
-      return <div></div>;
-    },
-  },
-  {
-    Header: "Общая сумма",
-    accessor: "totalSum",
     style: {
       flex: 1.5,
     },
     Cell: () => {
-      return <div></div>;
+      return <MemoryTableItem />;
     },
   },
   {
-    Header: "Оформление заказа",
-    accessor: "orderType",
+    Header: "Оперативная память",
+    accessor: "",
     style: {
-      flex: 2,
+      flex: 1.5,
     },
     Cell: () => {
-      return <div></div>;
+      return <RamTableItem />;
     },
   },
   {
-    Header: "Статус",
-    accessor: "orderStatus",
+    Header: "Кол-во SIM-карт",
+    accessor: "",
+    style: {
+      flex: 1.5,
+    },
+    Cell: ({ row }) => {
+      return (
+        <div style={generalStyles}>{row.original.characteristics.simCard}</div>
+      );
+    },
+  },
+  {
+    Header: "Дата выпуска",
+    accessor: "",
+    style: {
+      flex: 1.6,
+    },
+    Cell: () => {
+      return <DateTableItem />;
+    },
+  },
+  {
+    Header: "Кол-во товара",
+    accessor: "",
+    style: {
+      flex: 1.5,
+    },
+    Cell: ({ row }) => {
+      console.log(row, "count");
+      return <EditCountProduct count={row.original.countOfProduct} />;
+    },
+  },
+  {
+    Header: "Цена",
+    accessor: "price",
     style: {
       flex: 1.4,
     },
-    Cell: () => {
-      return <></>;
-    },
-  },
-  {
-    Header: "Действия",
-    accessor: "totalDiscount",
-    Cell: () => {
-      return <></>;
+    Cell: ({ row }) => {
+      console.log(row, "price");
+      return <EditPriceTableIItem />;
     },
   },
 ];

@@ -51,7 +51,14 @@ const AddProduct = () => {
       id: 2,
       title: "Установка цены и количества товара",
       link: "",
-      component: <PriceQuantity handleNext={handleNext} />,
+      component: (
+        <PriceQuantity
+          handleNext={handleNext}
+          tableData={values.subProductRequests}
+          setFieldValue={setFieldValue}
+          values={values}
+        />
+      ),
     },
     {
       id: 3,
