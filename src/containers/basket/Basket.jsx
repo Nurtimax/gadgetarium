@@ -1,45 +1,113 @@
 import { Box, Container, styled, Typography, Checkbox } from "@mui/material";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteIconBasket, HeartActiveIcon, HeartIcon } from "../../assets";
+import { toast } from "react-toastify";
+import { DeleteIconBasket, HeartIcon } from "../../assets";
 import BasketItem from "../../components/basket/BasketItem";
+import EmptyBasket from "../../components/basket/EmptyBasket";
+import GadgetariumSpinnerLoading from "../../components/GadgetariumSpinnerLoading";
 import Button from "../../components/UI/button/Button";
-import { getBasketProduct } from "../../redux/slices/basket-slice";
+import {
+  deleteProductBasket,
+  getBasketProduct,
+  postProductToFavorite,
+} from "../../redux/slices/basket-slice";
+import { priceProductSeparate } from "../../utils/helpers/general";
 
 const Basket = () => {
-  const data = useSelector((state) => state.basket.data);
+  const { data = [], isLoading } = useSelector((state) => state.basket);
 
   const dispatch = useDispatch();
+
+  const [allId, setAllId] = useState([]);
+  const [allChecked, setAllChecked] = useState(false);
+  const [sumOrderData, setSumOrderData] = useState([]);
+
+  useEffect(() => {
+    setSumOrderData(data);
+  }, [data]);
 
   useEffect(() => {
     dispatch(getBasketProduct());
   }, []);
 
+  const ID = data?.map((item) => {
+    return item.id;
+  });
+
+  const getIdProducts = () => {
+    if (allId.length < 1) {
+      setAllId(ID);
+
+      setAllChecked(true);
+    } else {
+      setAllId([]);
+
+      setAllChecked(false);
+    }
+  };
+
+  const onFavoriteAll = () => {
+    if (allId.length > 0) {
+      toast.promise(dispatch(postProductToFavorite(allId)), {
+        pending: "Pending",
+        success: "Favorite",
+        error: "Error",
+      });
+    } else {
+      alert("Выберите продукты!");
+    }
+  };
+
+  const onDeleteAll = () => {
+    if (allId.length > 0) {
+      toast.promise(dispatch(deleteProductBasket(allId)), {
+        pending: "Pending",
+        success: "Deleted",
+        error: "Error",
+      });
+    } else {
+      alert("Выберите продукты!");
+    }
+  };
+
+  const orderCount = sumOrderData?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.orderCount);
+  }, 0);
+
+  const price = sumOrderData?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.price);
+  }, 0);
+
+  const discount = sumOrderData?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.amountOfDiscount);
+  }, 0);
+
   return (
     <MainContainer>
       <Typography className="title">Товары в корзине</Typography>
-      {data === [] ? (
-        <p>No basket</p>
+      {isLoading ? (
+        <GadgetariumSpinnerLoading />
+      ) : data?.length < 1 ? (
+        <EmptyBasket />
       ) : (
         <>
           <Box className="action-box">
-            <Box className="action">
-              <Checkbox color="secondary" />
+            <Box className="action" onClick={getIdProducts}>
+              <Checkbox color="secondary" checked={allChecked} />
 
               <Typography>Отметить всё</Typography>
             </Box>
 
-            <Box className="action dlt">
+            <Box className="action dlt" onClick={onDeleteAll}>
               <DeleteIconBasket className="icon" />
 
               <Typography>Удалить</Typography>
             </Box>
 
-            <Box className="action">
-              <Checkbox
-                icon={<HeartIcon className="heart" />}
-                checkedIcon={<HeartActiveIcon className="active-heart" />}
-              />
+            <Box className="action dlt" onClick={onFavoriteAll}>
+              <HeartIcon className="heart" />
 
               <Typography>Переместить в избранное</Typography>
             </Box>
@@ -49,7 +117,13 @@ const Basket = () => {
             <Box className="product-container">
               {data?.map((item, i) => (
                 <Box key={i} className="product-box">
-                  <BasketItem {...item} />
+                  <BasketItem
+                    {...item}
+                    allChecked={allChecked}
+                    setAllId={setAllId}
+                    allId={allId}
+                    setSumOrderData={setSumOrderData}
+                  />
                 </Box>
               ))}
             </Box>
@@ -66,15 +140,25 @@ const Basket = () => {
                 </Box>
 
                 <Box>
-                  <Typography>3 шт.</Typography>
-                  <Typography className="discount">
-                    – 20 000 <span>c</span>
-                  </Typography>
-                  <Typography>
-                    220 900 <span>c</span>
+                  <Typography>{Math.round(orderCount || 0)} шт.</Typography>
+                  <span className="discount">
+                    <span>-</span>
+                    <span>
+                      {priceProductSeparate(
+                        Number(String(price / discount || 0))
+                      )}
+                    </span>
+                    <p>c</p>
+                  </span>
+                  <Typography className="sum">
+                    {priceProductSeparate(Number(String(price || 0)))}
+                    <span>c</span>
                   </Typography>
                   <Typography className="total">
-                    200 900 <span>c</span>
+                    {priceProductSeparate(
+                      Number(String(price - price / discount || 0))
+                    )}
+                    <span>c</span>
                   </Typography>
                 </Box>
               </Box>
@@ -122,6 +206,7 @@ const MainContainer = styled(Container)(({ theme }) => ({
   "& .action": {
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
   },
 
   "& .dlt": {
@@ -180,20 +265,30 @@ const MainContainer = styled(Container)(({ theme }) => ({
     textAlign: "right",
   },
 
-  "& span": {
-    textDecoration: "underline",
-  },
-
   "& .box-name": {
     textAlign: "left",
   },
 
   "& .discount": {
     color: theme.palette.error.main,
+    display: "flex",
+    gap: "5px",
+
+    "& p": {
+      textDecoration: "underline",
+    },
   },
 
   "& .total": {
     paddingTop: "7px",
     fontWeight: "600",
+    display: "flex",
+    gap: "5px",
+  },
+
+  "& .sum": {
+    paddingTop: "7px",
+    display: "flex",
+    gap: "5px",
   },
 }));

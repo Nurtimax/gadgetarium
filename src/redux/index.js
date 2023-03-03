@@ -1,7 +1,7 @@
 import reducerAuthenticationSlice from "./slices/authentication";
 import { configureStore } from "@reduxjs/toolkit";
 import addProductSlice from "./slices/add-product";
-import { productSlice } from "./slices/productSlice";
+import { productSlice } from "./slices/product-slice";
 import { ordersProduct } from "./slices/orders-slice";
 import { basketProducts } from "./slices/basket-slice";
 

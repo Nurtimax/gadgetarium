@@ -81,43 +81,53 @@ export const fetchRecomendationProduct = createAsyncThunk(
 const productSlice = createSlice({
   name: "productSlice",
   initialState,
-  extraReducers: {
-    [fetchNewProduct.pending]: (state) => {
-      state.newStatus = "loading";
-      state.newError = null;
-    },
-    [fetchNewProduct.fulfilled]: (state, action) => {
-      state.newStatus = "fulfilled";
-      state.newProducts = action.payload;
-    },
-    [fetchNewProduct.rejected]: (state, action) => {
-      state.newStatus = "rejected";
-      state.newError = action.payload;
-    },
-    [fetchRecomendationProduct.pending]: (state) => {
-      state.recStatus = "loading";
-      state.recomenError = null;
-    },
-    [fetchRecomendationProduct.fulfilled]: (state, action) => {
-      state.recStatus = "fulfilled";
-      state.recommendationProduct = action.payload;
-    },
-    [fetchRecomendationProduct.rejected]: (state, action) => {
-      state.recStatus = "rejected";
-      state.recomenError = action.payload;
-    },
-    [fetchDiscountProduct.pending]: (state) => {
-      state.disStatus = "loading";
-      state.discountError = null;
-    },
-    [fetchDiscountProduct.fulfilled]: (state, action) => {
-      state.disStatus = "fulfilled";
-      state.discountsProducts = action.payload;
-    },
-    [fetchDiscountProduct.rejected]: (state, action) => {
-      state.disStatus = "rejected";
-      state.discountError = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+
+      .addCase(fetchNewProduct.pending, (state) => {
+        state.newStatus = "loading";
+        state.newError = null;
+      })
+
+      .addCase(fetchNewProduct.fulfilled, (state, action) => {
+        state.newStatus = "fulfilled";
+        state.newProducts = action.payload;
+      })
+
+      .addCase(fetchNewProduct.rejected, (state, action) => {
+        state.newStatus = "rejected";
+        state.newError = action.payload;
+      })
+
+      .addCase(fetchRecomendationProduct.pending, (state) => {
+        state.recStatus = "loading";
+        state.recomenError = null;
+      })
+
+      .addCase(fetchRecomendationProduct.fulfilled, (state, action) => {
+        state.recStatus = "fulfilled";
+        state.recommendationProduct = action.payload;
+      })
+
+      .addCase(fetchRecomendationProduct.rejected, (state, action) => {
+        state.recStatus = "rejected";
+        state.recomenError = action.payload;
+      })
+
+      .addCase(fetchDiscountProduct.pending, (state) => {
+        state.disStatus = "loading";
+        state.discountError = null;
+      })
+
+      .addCase(fetchDiscountProduct.fulfilled, (state, action) => {
+        state.disStatus = "fulfilled";
+        state.discountsProducts = action.payload;
+      })
+
+      .addCase(fetchDiscountProduct.rejected, (state, action) => {
+        state.disStatus = "rejected";
+        state.discountError = action.payload;
+      });
   },
 });
 export const getAllProducts = productSlice.actions;

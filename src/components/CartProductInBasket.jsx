@@ -16,7 +16,6 @@ const CartProductInBasket = ({
   onFavorite,
   onDelete,
   name,
-  seriesNumber,
   image,
   reviewCount,
   rating,
@@ -28,6 +27,9 @@ const CartProductInBasket = ({
   count,
   isMinusDisabled,
   isPlusDisabled,
+  color,
+  memoryOfPhone,
+  id,
 }) => {
   const priceProduct = price * count;
 
@@ -40,11 +42,9 @@ const CartProductInBasket = ({
           alt="product image in basket"
         />
         <StyledCardContent>
-          <div>
-            <NameProduct>{name || "Don't have"}</NameProduct>
-
+          <Box>
             <NameProduct>
-              {priceProductSeparate(Number(String(seriesNumber || 0)))}
+              {name || "Don't have"} {memoryOfPhone}gb {color.toLowerCase()}
             </NameProduct>
 
             <BoxRating>
@@ -65,12 +65,15 @@ const CartProductInBasket = ({
             <TextProductCode>
               Код товара: {priceProductSeparate(Number(String(code || 0)))}
             </TextProductCode>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <BoxCounterAndPrice>
               <BoxCounter>
-                <ButtonCounter onClick={onMinus} disabled={isMinusDisabled}>
+                <ButtonCounter
+                  onClick={() => onMinus(id)}
+                  disabled={isMinusDisabled}
+                >
                   -
                 </ButtonCounter>
 
@@ -78,7 +81,10 @@ const CartProductInBasket = ({
                   {priceProductSeparate(Number(String(count || 0)))}
                 </TextCount>
 
-                <ButtonCounter onClick={onPlus} disabled={isPlusDisabled}>
+                <ButtonCounter
+                  onClick={() => onPlus(id)}
+                  disabled={isPlusDisabled}
+                >
                   +
                 </ButtonCounter>
               </BoxCounter>
@@ -102,7 +108,7 @@ const CartProductInBasket = ({
                 Удалить
               </IconsTexts>
             </BoxIcons>
-          </div>
+          </Box>
         </StyledCardContent>
       </StyledCard>
     </StyledMainContainer>
