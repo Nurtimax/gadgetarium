@@ -35,7 +35,7 @@ const ButtonStyled = styled(MuiButton)`
   width: ${(props) => (props.width ? props.width : "290px")};
   height: ${(props) => (props.height ? props.height : "")};
   white-space: nowrap;
-  font-size: 2vh;
+  font-size: 16px;
 
   &.MuiButton-contained {
     background: ${({ bgcolor }) => bgcolor || "#E20FBE"};

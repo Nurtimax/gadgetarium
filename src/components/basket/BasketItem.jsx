@@ -13,7 +13,6 @@ const BasketItem = ({
   rating,
   countOfReviews,
   vendorCode,
-  orderCount,
   price,
   countOfSubproduct,
   characteristics,
@@ -23,40 +22,32 @@ const BasketItem = ({
   id,
   setAllId,
   setSumOrderData,
+  productCount,
 }) => {
   const dispatch = useDispatch();
 
-  const [count, setCount] = useState(orderCount);
   const [check, setCheck] = useState(false);
 
   const onPlus = (id) => {
-    setCount((prev) => prev + 1);
-
     setSumOrderData((prev) =>
       prev.map((item) => {
         if (item.id === id) {
           return {
             ...item,
-            orderCount: orderCount + count,
+            productCount: item.productCount + 1,
           };
         }
 
         return item;
       })
     );
-
-    if (count === countOfSubproduct) {
-      alert("Больше нету!");
-    }
   };
 
   const onMinus = (id) => {
-    setCount((prev) => prev - 1);
-
     setSumOrderData((prev) =>
       prev.map((item) => {
         if (item.id === id) {
-          return { ...item, orderCount: count - 1 };
+          return { ...item, productCount: item.productCount - 1 };
         }
 
         return item;
@@ -111,19 +102,19 @@ const BasketItem = ({
         rating={rating}
         reviewCount={countOfReviews}
         code={vendorCode}
-        count={count}
         price={price}
         color={color}
         memoryOfPhone={characteristics.memoryOfPhone}
         availableCount={countOfSubproduct}
         onPlus={onPlus}
         onMinus={onMinus}
-        isMinusDisabled={count === 1}
-        isPlusDisabled={count === countOfSubproduct + 1}
+        isMinusDisabled={productCount === 1}
+        isPlusDisabled={productCount === countOfSubproduct}
         name={productName}
         onFavorite={onFavorite}
         onDelete={onDelete}
         id={id}
+        productCount={productCount}
       />
     </>
   );

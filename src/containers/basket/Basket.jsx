@@ -25,7 +25,7 @@ const Basket = () => {
   const [sumOrderData, setSumOrderData] = useState([]);
 
   useEffect(() => {
-    setSumOrderData(data);
+    setSumOrderData(data.map((product) => ({ ...product, productCount: 1 })));
   }, [data]);
 
   useEffect(() => {
@@ -76,13 +76,15 @@ const Basket = () => {
     return Number(acc) + Number(curr.orderCount);
   }, 0);
 
-  const price = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.price);
-  }, 0);
-
   const discount = sumOrderData?.reduce((acc, curr) => {
     return Number(acc) + Number(curr.amountOfDiscount);
   }, 0);
+
+  const price = sumOrderData.reduce((acc, current) => {
+    return acc + current.productCount * current.price;
+  }, 0);
+
+  console.log(discount);
 
   return (
     <MainContainer>
@@ -115,7 +117,7 @@ const Basket = () => {
 
           <Box className="container">
             <Box className="product-container">
-              {data?.map((item, i) => (
+              {sumOrderData?.map((item, i) => (
                 <Box key={i} className="product-box">
                   <BasketItem
                     {...item}

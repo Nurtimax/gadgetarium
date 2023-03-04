@@ -24,14 +24,14 @@ const CartProductInBasket = ({
   price,
   onMinus,
   onPlus,
-  count,
   isMinusDisabled,
   isPlusDisabled,
   color,
   memoryOfPhone,
   id,
+  productCount,
 }) => {
-  const priceProduct = price * count;
+  const priceProduct = price * productCount;
 
   return (
     <StyledMainContainer>
@@ -77,9 +77,7 @@ const CartProductInBasket = ({
                   -
                 </ButtonCounter>
 
-                <TextCount>
-                  {priceProductSeparate(Number(String(count || 0)))}
-                </TextCount>
+                <TextCount>{productCount}</TextCount>
 
                 <ButtonCounter
                   onClick={() => onPlus(id)}
