@@ -1,14 +1,12 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionAddProductSlice } from "../../redux/slices/add-product";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import AddProductTable from "./table";
 
-const PriceQuantity = ({ tableData }) => {
+const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
   const { editData } = useSelector((state) => state.addProduct);
 
   const [value, setValue] = useState(editData[editData.isChecked]);
@@ -30,24 +28,70 @@ const PriceQuantity = ({ tableData }) => {
       })
     );
 
-    // handleNext();
+    setFieldValue(
+      "subProductRequests",
+      values.subProductRequests.map((item, index) => {
+        if (index === Number(editData.id)) {
+          const newData = {
+            ...item,
+            [editData.isChecked]: value ? value : 1,
+          };
+          return newData;
+        }
+        return item;
+      })
+    );
   };
+
+  const nextStepperHandler = () => {
+    const emptyFieldsPrice = values.subProductRequests.map((product, index) => {
+      if (!Number(product.price)) {
+        return index;
+      }
+      return null;
+    });
+    const emptyFieldsCount = values.subProductRequests.map((product, index) => {
+      if (!Number(product.countOfProduct)) {
+        return index;
+      }
+      return null;
+    });
+
+    dispatch(
+      ActionAddProductSlice.editData({
+        errorPriceId: emptyFieldsPrice,
+        errorCountId: emptyFieldsCount,
+      })
+    );
+
+    if (emptyFieldsPrice.includes(null)) {
+      handleNext();
+    }
+  };
+
+  const findId = useMemo(() => {
+    return values.categoryId;
+  }, [values.categoryId]);
 
   return (
     <StyledPriceQuantity component="form" onSubmit={handleSubmit}>
       <Grid container spacing={2.5} className="flex">
         <Grid item>
           <Typography>Общая цена</Typography>
-          <StyledInput value={value} onChange={handleChange} />
+          <StyledInput value={value} onChange={handleChange} type="number" />
         </Grid>
         <Grid item xs={10} className="setting_price_button">
           <StyledButton type="submit">Установить цену</StyledButton>
         </Grid>
         <Grid item xs={12}>
-          <AddProductTable tableData={tableData} />
+          <AddProductTable tableData={tableData} id={findId} />
         </Grid>
         <Grid item xs={12} className="flex flex-end">
-          <StyledButton className="next_button" type="button">
+          <StyledButton
+            className="next_button"
+            type="button"
+            onClick={nextStepperHandler}
+          >
             Далее
           </StyledButton>
         </Grid>
