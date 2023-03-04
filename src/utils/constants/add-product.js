@@ -1,24 +1,9 @@
-import {
-  AppleIcon,
-  HonorIcon,
-  HuaweiIcon,
-  SamsungIcon,
-  XiaomiIcon,
-} from "../../assets";
 import * as yup from "yup";
-import MemoryTableItem from "../../components/add_product/table/MemoryTableItem";
-import RamTableItem from "../../components/add_product/table/RamTableItem";
 import DateTableItem from "../../components/add_product/table/DateTableItem";
 import EditPriceTableIItem from "../../components/add_product/table/EditPriceTableIItem";
 import EditCountProduct from "../../components/add_product/table/EditCountProduct";
-
-export const PRODUCTBRAND = [
-  { id: 1, icon: <SamsungIcon />, brandName: "Samsung" },
-  { id: 2, icon: <AppleIcon />, brandName: "Apple" },
-  { id: 3, icon: <HuaweiIcon />, brandName: "Huawei" },
-  { id: 4, icon: <HonorIcon />, brandName: "Honor" },
-  { id: 5, icon: <XiaomiIcon />, brandName: "Xiaomi" },
-];
+import BrandTableItem from "../../components/add_product/table/BrandTableItem";
+import ColorName from "../../components/add_product/fields/ColorName";
 
 export const PRODUCT_INITIALSTATE = {
   productName: "",
@@ -31,8 +16,8 @@ export const PRODUCT_INITIALSTATE = {
   subCategoryId: "",
   subProductRequests: [
     {
-      price: "",
-      countOfProduct: 222,
+      price: 0,
+      countOfProduct: 1,
       color: "",
       images: [],
       characteristics: {},
@@ -48,8 +33,8 @@ export const ADDPRODUCT_INITIALSTATE = {
   subCategoryId: "",
   subProductRequests: [
     {
-      price: "",
-      countOfProduct: 222,
+      price: 0,
+      countOfProduct: 1,
       color: "",
       images: [],
       characteristics: {},
@@ -121,7 +106,7 @@ export const ADDPRODUCT_INITIALSTATESCHEMA = yup.object().shape({
     .required("Подкатегория обязательное поле"),
   subProductRequests: yup.array().of(
     yup.object().shape({
-      countOfProduct: yup.number(),
+      countOfProduct: yup.number().required(),
       color: yup.string().required("Color is a required field"),
       images: yup
         .array()
@@ -405,73 +390,44 @@ export const PRODUCT_FORMS_FIELDS = [
   },
 ];
 
-const generalStyles = { padding: "20px" };
+const generalStyles = { padding: "28.5px" };
 
 export const ADD_PRODUCT_TABLE_HEADER_TITLE = [
   {
     Header: "Бренд",
     accessor: "brandId",
     style: {
-      flex: 1.6,
+      flex: 1,
     },
     Cell: () => {
-      return (
-        <div title="Перейти к оплате" style={generalStyles}>
-          86896876
-        </div>
-      );
+      return <BrandTableItem />;
     },
   },
   {
     Header: "Цвет",
     accessor: "color",
     style: {
-      flex: 1.6,
-    },
-    Cell: ({ row }) => {
-      return <div style={generalStyles}>{row.original.color}</div>;
-    },
-  },
-  {
-    Header: "Объем памяти",
-    accessor: "countOfProduct",
-    style: {
-      flex: 1.5,
-    },
-    Cell: () => {
-      return <MemoryTableItem />;
-    },
-  },
-  {
-    Header: "Оперативная память",
-    accessor: "",
-    style: {
-      flex: 1.5,
-    },
-    Cell: () => {
-      return <RamTableItem />;
-    },
-  },
-  {
-    Header: "Кол-во SIM-карт",
-    accessor: "",
-    style: {
       flex: 1.5,
     },
     Cell: ({ row }) => {
       return (
-        <div style={generalStyles}>{row.original.characteristics.simCard}</div>
+        <div style={generalStyles}>
+          <ColorName color={row.original.color} />
+        </div>
       );
     },
   },
+];
+
+export const ChangeValueTableData = [
   {
     Header: "Дата выпуска",
     accessor: "",
     style: {
-      flex: 1.6,
+      flex: 1.7,
     },
-    Cell: () => {
-      return <DateTableItem />;
+    Cell: ({ row }) => {
+      return <DateTableItem id={row.id} />;
     },
   },
   {
@@ -481,8 +437,9 @@ export const ADD_PRODUCT_TABLE_HEADER_TITLE = [
       flex: 1.5,
     },
     Cell: ({ row }) => {
-      console.log(row, "count");
-      return <EditCountProduct count={row.original.countOfProduct} />;
+      return (
+        <EditCountProduct count={row.original.countOfProduct} id={row.id} />
+      );
     },
   },
   {
@@ -492,8 +449,67 @@ export const ADD_PRODUCT_TABLE_HEADER_TITLE = [
       flex: 1.4,
     },
     Cell: ({ row }) => {
-      console.log(row, "price");
-      return <EditPriceTableIItem />;
+      return <EditPriceTableIItem id={row.id} price={row.original.price} />;
     },
+  },
+];
+
+export const tableReusibleItems = [
+  {
+    id: 1,
+    keys: [
+      { id: 1, key: "memoryOfPhone", name: "Объем памяти", flex: 1.5 },
+      { id: 2, key: "ramOfPhone", name: "Оперативная память", flex: 1.5 },
+      { id: 3, key: "simCard", name: "Кол-во SIM-карт", flex: 1.5 },
+    ],
+  },
+  {
+    id: 2,
+    keys: [
+      { id: 1, key: "laptopCPU", name: "Процессор ноутбука", flex: 1.5 },
+      {
+        id: 2,
+        key: "videoCardMemory",
+        name: "Объем видеопамяти (GB)",
+        flex: 2,
+      },
+      {
+        id: 3,
+        key: "ramOfLaptop",
+        name: "Объем оперативной памяти (GB)",
+        flex: 2,
+      },
+    ],
+  },
+  {
+    id: 3,
+    keys: [
+      { id: 1, key: "memoryOfTablet", name: "Объем памяти (GB)", flex: 1.5 },
+      {
+        id: 2,
+        key: "ramOfTablet",
+        name: "Объем оперативной памяти (GB)",
+        flex: 2,
+      },
+      {
+        id: 3,
+        key: "screenResolutionOfTablet",
+        name: "Разрешение экрана",
+        flex: 1.5,
+      },
+    ],
+  },
+  {
+    id: 4,
+    keys: [
+      { id: 1, key: "memoryOfWatch", name: "Объем памяти", flex: 1.5 },
+      {
+        id: 2,
+        key: "braceletMaterial",
+        name: "Материал браслета/ремешка",
+        flex: 2,
+      },
+      { id: 3, key: "caseShape", name: "Форма корпуса", flex: 1.5 },
+    ],
   },
 ];
