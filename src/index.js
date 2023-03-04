@@ -17,7 +17,7 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <Themes>
-        <ToastContainer autoClose={1000} className="toastify" />
+        <ToastContainer className="toastify" />
         <App />
       </Themes>
     </Provider>
