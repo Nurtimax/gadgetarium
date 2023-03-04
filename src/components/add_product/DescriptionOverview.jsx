@@ -2,15 +2,26 @@ import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useSelector } from "react-redux";
 import { DownloadVideoIcon } from "../../assets";
 import { SWAGGER_API } from "../../utils/constants/fetch";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import TextEditor from "../UI/TextEditor";
 
-const DescriptionOverview = ({ setFieldValue, values, handleChange }) => {
+const DescriptionOverview = ({
+  setFieldValue,
+  values,
+  handleChange,
+  handleSubmit,
+}) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { isLoading: isSendDataLoading } = useSelector(
+    (state) => state.addProduct
+  );
 
   const getImageLinkHandler = async (file) => {
     setIsLoading(true);
@@ -39,7 +50,8 @@ const DescriptionOverview = ({ setFieldValue, values, handleChange }) => {
   });
 
   return (
-    <StyledDescriptionOverview>
+    <StyledDescriptionOverview onSubmit={handleSubmit} component="form">
+      {isSendDataLoading && <GadgetariumSpinnerLoading />}
       <Grid container spacing={2.5}>
         <Grid item>
           <Typography>Загрузите видеообзор</Typography>
@@ -64,7 +76,10 @@ const DescriptionOverview = ({ setFieldValue, values, handleChange }) => {
                 )}
               </>
             }
-            placeholder="Вставьте документ в PDF файле"
+            placeholder={
+              values.pdf ? values.pdf : "Вставьте документ в PDF файле"
+            }
+            title={values.pdf}
           />
           {error && (
             <Typography variant="body2" component="p">
@@ -76,8 +91,12 @@ const DescriptionOverview = ({ setFieldValue, values, handleChange }) => {
           <TextEditor onChange={setFieldValue} values={values} />
         </Grid>
         <Grid item xs={6.365} className="flex gap2 flex-end">
-          <StyledButton className="cancel_button">Отменить</StyledButton>
-          <StyledButton className="add_button">Добавить</StyledButton>
+          <StyledButton className="cancel_button" type="submit">
+            Отменить
+          </StyledButton>
+          <StyledButton className="add_button" type="submit">
+            Добавить
+          </StyledButton>
         </Grid>
       </Grid>
     </StyledDescriptionOverview>
