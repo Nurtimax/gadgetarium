@@ -13,28 +13,44 @@ import {
 } from "../../utils/constants/add-product";
 import PriceQuantity from "../../components/add_product/PriceQuantity";
 import DescriptionOverview from "../../components/add_product/DescriptionOverview";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addProductThunk } from "../../redux/slices/add-product";
+import { ROUTES } from "../../utils/constants";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { setValues, setFieldValue, values, handleChange } = useFormik({
-    initialValues: PRODUCT_INITIALSTATE,
-    validationSchema: PRODUCT_INITIALSTATESCHEMA,
-    onSubmit: (values, action) => {
-      console.log(values);
-      action.resetForm();
-    },
-    validateOnChange: false,
-  });
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const { setValues, setFieldValue, values, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: PRODUCT_INITIALSTATE,
+      validationSchema: PRODUCT_INITIALSTATESCHEMA,
+      onSubmit: (values, action) => {
+        dispatch(addProductThunk(values))
+          .unwrap()
+          .then((response) => {
+            if (response.status === "ok") {
+              navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
+              toast.success(response.message, { autoClose: 2000 });
+            }
+          })
+          .catch((error) => toast.error(error.message));
+        action.resetForm();
+      },
+      validateOnChange: false,
+    });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const sendData = (value) => {
-    // dispatch(addProductThunk(value));
     setValues((prevState) => ({ ...prevState, ...value }));
     handleNext();
     setSearchParams({ stepper: steps[activeStep].title });
@@ -69,6 +85,7 @@ const AddProduct = () => {
           setFieldValue={setFieldValue}
           values={values}
           handleChange={handleChange}
+          handleSubmit={handleSubmit}
         />
       ),
     },
