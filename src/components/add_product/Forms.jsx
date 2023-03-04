@@ -11,9 +11,10 @@ import React from "react";
 import { useMemo } from "react";
 import { useCallback } from "react";
 import { CompactPicker } from "react-color";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { ChooseColorIcon, DeleteIconInCart, PlusIcon } from "../../assets";
+import { ActionAddProductSlice } from "../../redux/slices/add-product";
 import {
   ADDPRODUCT_INITIALSTATE,
   ADDPRODUCT_INITIALSTATESCHEMA,
@@ -23,11 +24,16 @@ import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import Brand from "./fields/Brand";
 import Category from "./fields/Category";
+import ColorName from "./fields/ColorName";
 import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
 
 const Forms = ({ getData }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const { editData } = useSelector((state) => state.addProduct);
+
+  const dispatch = useDispatch();
 
   const { values, handleChange, setFieldValue, handleSubmit, errors } =
     useFormik({
@@ -35,6 +41,11 @@ const Forms = ({ getData }) => {
       validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
       onSubmit: (values, action) => {
         getData(values);
+        dispatch(
+          ActionAddProductSlice.editData({
+            brand: values.brandId,
+          })
+        );
         action.resetForm();
       },
       validateOnChange: false,
@@ -49,12 +60,18 @@ const Forms = ({ getData }) => {
       ...values.subProductRequests,
       {
         price: 0,
-        countOfProduct: 111,
+        countOfProduct: 1,
         color: "",
         images: [],
         characteristics: {},
       },
     ]);
+    dispatch(
+      ActionAddProductSlice.editData({
+        date: [...editData.date, new Date()],
+        brand: values.brandId,
+      })
+    );
   }, [values.subProductRequests]);
 
   const chooseProductDataHandler = (e) => {
@@ -103,6 +120,7 @@ const Forms = ({ getData }) => {
   if (Productbrand?.message) {
     return <h1>{Productbrand.message}</h1>;
   }
+
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
@@ -220,7 +238,7 @@ const Forms = ({ getData }) => {
                     <>
                       {color ? (
                         <Typography variant="body1" component="span">
-                          {color}
+                          <ColorName color={color} />
                         </Typography>
                       ) : (
                         <Typography
