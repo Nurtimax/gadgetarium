@@ -91,7 +91,7 @@ const DescriptionOverview = ({
           <TextEditor onChange={setFieldValue} values={values} />
         </Grid>
         <Grid item xs={6.365} className="flex gap2 flex-end">
-          <StyledButton className="cancel_button" type="submit">
+          <StyledButton className="cancel_button" type="button">
             Отменить
           </StyledButton>
           <StyledButton className="add_button" type="submit">
