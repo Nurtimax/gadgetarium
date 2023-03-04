@@ -5,7 +5,7 @@ export const addProductThunk = createAsyncThunk(
   "addProductSlice/addProductThunk",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("products", data);
+      const response = await axiosInstance.post("adminProducts", data);
       const result = response.data;
       return result;
     } catch (error) {
@@ -52,10 +52,17 @@ export const postBrandThunkApi = createAsyncThunk(
 const initialState = {
   data: {},
   Productbrand: [],
+  isLoading: false,
   editData: {
-    price: "1234",
-    count: "",
+    price: "",
+    countOfProduct: "",
     isChecked: "price",
+    id: 0,
+    date: [new Date()],
+    brand: "",
+    errorMessage: null,
+    errorPriceId: [],
+    errorCountId: [],
   },
 };
 
@@ -67,17 +74,24 @@ const addProductSlice = createSlice({
       state.editData = { ...state.editData, ...action.payload };
     },
   },
-  extraReducers: {
-    [addProductThunk.fulfilled]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(addProductThunk.fulfilled, (state, action) => {
       const { email, roleName, token } = action.payload;
       if (email && roleName && token) {
         state.data = action.payload;
       }
       state.isLoading = false;
-    },
-    [getBrandThunkApi.fulfilled]: (state, action) => {
+    });
+    builder.addCase(addProductThunk.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addProductThunk.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(getBrandThunkApi.fulfilled, (state, action) => {
       state.Productbrand = action.payload;
-    },
+    });
   },
 });
 export const ActionAddProductSlice = addProductSlice.actions;
