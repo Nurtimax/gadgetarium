@@ -2,7 +2,7 @@ import { Box, Container, styled, Typography, Checkbox } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { DeleteIconBasket, HeartIcon } from "../../assets";
 import BasketItem from "../../components/basket/BasketItem";
 import EmptyBasket from "../../components/basket/EmptyBasket";
@@ -13,10 +13,12 @@ import {
   getBasketProduct,
   postProductToFavorite,
 } from "../../redux/slices/basket-slice";
+import { ROUTES } from "../../utils/constants/routes";
 import { priceProductSeparate } from "../../utils/helpers/general";
 
 const Basket = () => {
-  const { data = [], isLoading } = useSelector((state) => state.basket);
+  const { data, isLoading } = useSelector((state) => state.basket);
+  const DATA = data || [];
 
   const dispatch = useDispatch();
 
@@ -25,16 +27,23 @@ const Basket = () => {
   const [sumOrderData, setSumOrderData] = useState([]);
 
   useEffect(() => {
-    setSumOrderData(data.map((product) => ({ ...product, productCount: 1 })));
+    setSumOrderData(
+      DATA.length > 0
+        ? DATA?.map((product) => ({ ...product, productCount: 1 }))
+        : []
+    );
   }, [data]);
 
   useEffect(() => {
     dispatch(getBasketProduct());
   }, []);
 
-  const ID = data?.map((item) => {
-    return item.id;
-  });
+  const ID =
+    DATA.length > 0
+      ? DATA?.map((item) => {
+          return item.id;
+        })
+      : null;
 
   const getIdProducts = () => {
     if (allId.length < 1) {
@@ -50,11 +59,7 @@ const Basket = () => {
 
   const onFavoriteAll = () => {
     if (allId.length > 0) {
-      toast.promise(dispatch(postProductToFavorite(allId)), {
-        pending: "Pending",
-        success: "Favorite",
-        error: "Error",
-      });
+      dispatch(postProductToFavorite(allId));
     } else {
       alert("Выберите продукты!");
     }
@@ -62,11 +67,7 @@ const Basket = () => {
 
   const onDeleteAll = () => {
     if (allId.length > 0) {
-      toast.promise(dispatch(deleteProductBasket(allId)), {
-        pending: "Pending",
-        success: "Deleted",
-        error: "Error",
-      });
+      dispatch(deleteProductBasket(allId));
     } else {
       alert("Выберите продукты!");
     }
@@ -80,18 +81,16 @@ const Basket = () => {
     return Number(acc) + Number(curr.amountOfDiscount);
   }, 0);
 
-  const price = sumOrderData.reduce((acc, current) => {
+  const price = sumOrderData?.reduce((acc, current) => {
     return acc + current.productCount * current.price;
   }, 0);
-
-  console.log(discount);
 
   return (
     <MainContainer>
       <Typography className="title">Товары в корзине</Typography>
       {isLoading ? (
         <GadgetariumSpinnerLoading />
-      ) : data?.length < 1 ? (
+      ) : DATA?.length < 1 ? (
         <EmptyBasket />
       ) : (
         <>
@@ -165,7 +164,9 @@ const Basket = () => {
                 </Box>
               </Box>
 
-              <StyledButton>Перейти к оформлению</StyledButton>
+              <StyledButton>
+                <Link to={`/${ROUTES.ORDERING}`}>Перейти к оформлению</Link>
+              </StyledButton>
             </Box>
           </Box>
         </>

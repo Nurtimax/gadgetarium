@@ -1,4 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { ImageEmptyBasket } from "../../assets";
 import Button from "../UI/button/Button";
 
@@ -11,7 +12,9 @@ const EmptyBasket = () => {
         Но вы всегда можете ее наполнить
       </Typography>
 
-      <StyledButton>К покупкам</StyledButton>
+      <StyledButton>
+        <Link to="/">К покупкам</Link>
+      </StyledButton>
     </MainContainer>
   );
 };

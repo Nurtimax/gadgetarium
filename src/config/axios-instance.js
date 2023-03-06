@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ActionauthenticationSlice } from "../redux/slices/authentication";
+import { ActionauthenticationSlice } from "../redux/slices/authentication-slice";
 import { SWAGGER_API } from "../utils/constants/fetch";
 
 const headers = {

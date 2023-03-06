@@ -8,6 +8,7 @@ export const ROUTES = {
   ABOUTSTORE: "/about",
   PHONE: ":catalogItem",
   PRODUCT: ":product",
+  ORDERING: "ordering",
   CART: "cart",
   CHECKOUT: "checkout",
   COMPATISONPRODUCT: "comparison",

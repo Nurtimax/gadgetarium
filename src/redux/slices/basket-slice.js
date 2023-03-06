@@ -1,14 +1,36 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
 
+const postProductToBasket = createAsyncThunk(
+  "basket/postProductToBasket",
+  async (params, { dispatch }) => {
+    try {
+      const response = await axiosInstance.post(
+        "userBasket",
+        {},
+        {
+          params,
+        }
+      );
+
+      const result = await response.data;
+
+      dispatch(getBasketProduct());
+
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const getBasketProduct = createAsyncThunk(
   "basket/getOrderPrdoducts",
   async () => {
     try {
       const response = await axiosInstance.get("userBasket");
-      const result = await response.data;
 
-      return result;
+      return response;
     } catch (error) {
       return error;
     }
@@ -56,7 +78,7 @@ const basketProducts = createSlice({
     builder
 
       .addCase(getBasketProduct.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.data;
         state.isLoading = false;
       })
 
@@ -73,6 +95,7 @@ const basketProducts = createSlice({
 export const ActionBasket = basketProducts.actions;
 export {
   basketProducts,
+  postProductToBasket,
   getBasketProduct,
   postProductToFavorite,
   deleteProductBasket,

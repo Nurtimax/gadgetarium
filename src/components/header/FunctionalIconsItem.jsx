@@ -26,7 +26,7 @@ const FunctionalIconsItem = ({
         className={className}
         onClick={toggleHandler}
       >
-        <StyledBadge badgeContent={badgeContent.length} color={color}>
+        <StyledBadge badgeContent={badgeContent?.length} color={color}>
           {!state ? iconDefault : iconRemoveItem}
         </StyledBadge>
       </StyledTooltip>

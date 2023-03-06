@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import {
   deleteProductBasket,
   postProductToFavorite,
@@ -68,19 +67,11 @@ const BasketItem = ({
   };
 
   const onFavorite = () => {
-    toast.promise(dispatch(postProductToFavorite([id])), {
-      pending: "Pending",
-      success: "Fovorite",
-      error: "Error",
-    });
+    dispatch(postProductToFavorite([id]));
   };
 
   const onDelete = () => {
-    toast.promise(dispatch(deleteProductBasket([id])), {
-      pending: "Pending",
-      success: "Deleted",
-      error: "Error",
-    });
+    dispatch(deleteProductBasket([id]));
   };
 
   return (

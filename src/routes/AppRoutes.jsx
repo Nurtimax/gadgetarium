@@ -5,7 +5,7 @@ import AdminRoutes from "./AdminRoutes";
 import PrivateRoute from "./PrivateRoute";
 import { GADJEDTARIUM_LOGIN_INFO } from "../utils/constants/fetch";
 import { useDispatch } from "react-redux";
-import { ActionauthenticationSlice } from "../redux/slices/authentication";
+import { ActionauthenticationSlice } from "../redux/slices/authentication-slice";
 import { ROUTES } from "../utils/constants/routes";
 
 const autoAuthenticated = JSON.parse(

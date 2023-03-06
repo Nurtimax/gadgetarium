@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { priceProductSeparate } from "../../utils/helpers/general";
 import { IconClose } from "../../assets";
 import { deleteProductBasket } from "../../redux/slices/basket-slice";
-import { toast } from "react-toastify";
 import Button from "../UI/button/Button";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/constants/routes";
 
 const FunctionalIconsItemTooltipTitle = ({
   title,
@@ -14,16 +15,12 @@ const FunctionalIconsItemTooltipTitle = ({
   tooltip_title_compative_remove,
   tooltip_title_compative_add,
 }) => {
-  const { data } = useSelector((state) => state.basket);
+  const { data = [] } = useSelector((state) => state.basket);
 
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
-    toast.promise(dispatch(deleteProductBasket([id])), {
-      pending: "Pending",
-      success: "Deleted",
-      error: "Error",
-    });
+    dispatch(deleteProductBasket([id]));
   };
 
   const price = data?.reduce((acc, curr) => {
@@ -68,7 +65,9 @@ const FunctionalIconsItemTooltipTitle = ({
             ))}
 
             <Box className="box-total">
-              <StyledButton>Оформить заказ</StyledButton>
+              <StyledButton>
+                <Link to={`/${ROUTES.ORDERING}`}>Оформить заказ</Link>
+              </StyledButton>
               <Typography className="total-price">
                 Итого {priceProductSeparate(Number(String(price)))} с
               </Typography>
