@@ -58,18 +58,20 @@ const addProductSlice = createSlice({
   name: "addProductSlice",
   initialState,
   reducers: {},
-  extraReducers: {
-    [addProductThunk.fulfilled]: (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        state.data = action.payload;
-      }
-      state.isLoading = false;
-    },
-    [getBrandThunkApi.fulfilled]: (state, action) => {
-      state.Productbrand = action.payload;
-    },
-  },
+  extraReducers: (builder) =>
+    builder
+
+      .addCase(addProductThunk.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          state.data = action.payload;
+        }
+        state.isLoading = false;
+      })
+
+      .addCase(getBrandThunkApi.fulfilled, (state, action) => {
+        state.Productbrand = action.payload;
+      }),
 });
 export const ActionAddProductSlice = addProductSlice.actions;
 

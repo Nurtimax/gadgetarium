@@ -3,7 +3,7 @@ import React from "react";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ActionauthenticationSlice } from "../../redux/slices/authentication";
+import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
 const UserProfileList = () => {

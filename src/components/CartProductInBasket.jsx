@@ -4,19 +4,18 @@ import {
   CardContent,
   CardMedia,
   Checkbox,
-  Container,
   Rating,
   styled,
   Typography,
 } from "@mui/material";
 import { DeleteIconInCart, HeartActiveIcon, HeartIcon } from "../assets";
+import { notFoundImage } from "../utils/constants";
 import { priceProductSeparate } from "../utils/helpers/general";
 
 const CartProductInBasket = ({
   onFavorite,
   onDelete,
   name,
-  seriesNumber,
   image,
   reviewCount,
   rating,
@@ -25,76 +24,92 @@ const CartProductInBasket = ({
   price,
   onMinus,
   onPlus,
-  count,
   isMinusDisabled,
   isPlusDisabled,
+  color,
+  memoryOfPhone,
+  id,
+  productCount,
 }) => {
-  const priceProduct = price * count;
+  const priceProduct = price * productCount;
 
   return (
-    <Container>
-      <StyledMainContainer>
-        <StyledCard>
-          <StyledCardMedia
-            component="img"
-            image={image}
-            alt="product image in basket"
-          />
-          <StyledCardContent>
-            <div>
-              <NameProduct>{name}</NameProduct>
+    <StyledMainContainer>
+      <StyledCard>
+        <StyledCardMedia
+          component="img"
+          image={image || notFoundImage}
+          alt="product image in basket"
+        />
+        <StyledCardContent>
+          <Box>
+            <NameProduct>
+              {name || "Don't have"} {memoryOfPhone}gb {color.toLowerCase()}
+            </NameProduct>
 
-              <NameProduct>{seriesNumber}</NameProduct>
+            <BoxRating>
+              <TextRating>Рейтинг</TextRating>
 
-              <BoxRating>
-                <TextRating>Рейтинг</TextRating>
+              <Rating readOnly value={rating} />
 
-                <Rating readOnly value={rating} />
+              <TextRating>
+                ({priceProductSeparate(Number(String(reviewCount || 0)))})
+              </TextRating>
+            </BoxRating>
 
-                <TextRating>({reviewCount})</TextRating>
-              </BoxRating>
+            <TextInStock>
+              В наличии (
+              {priceProductSeparate(Number(String(availableCount || 0)))}шт)
+            </TextInStock>
 
-              <TextInStock>В наличии ({availableCount}шт)</TextInStock>
+            <TextProductCode>
+              Код товара: {priceProductSeparate(Number(String(code || 0)))}
+            </TextProductCode>
+          </Box>
 
-              <TextProductCode>Код товара: {code}</TextProductCode>
-            </div>
+          <Box>
+            <BoxCounterAndPrice>
+              <BoxCounter>
+                <ButtonCounter
+                  onClick={() => onMinus(id)}
+                  disabled={isMinusDisabled}
+                >
+                  -
+                </ButtonCounter>
 
-            <div>
-              <BoxCounterAndPrice>
-                <BoxCounter>
-                  <ButtonCounter onClick={onMinus} disabled={isMinusDisabled}>
-                    -
-                  </ButtonCounter>
+                <TextCount>{productCount}</TextCount>
 
-                  <TextCount>{count}</TextCount>
+                <ButtonCounter
+                  onClick={() => onPlus(id)}
+                  disabled={isPlusDisabled}
+                >
+                  +
+                </ButtonCounter>
+              </BoxCounter>
 
-                  <ButtonCounter onClick={onPlus} disabled={isPlusDisabled}>
-                    +
-                  </ButtonCounter>
-                </BoxCounter>
+              <TextPrice>
+                {priceProductSeparate(Number(String(priceProduct || 0)))}c
+              </TextPrice>
+            </BoxCounterAndPrice>
 
-                <TextPrice>{priceProductSeparate(priceProduct)}c</TextPrice>
-              </BoxCounterAndPrice>
+            <BoxIcons>
+              <IconsTexts onClick={onFavorite}>
+                <Checkbox
+                  icon={<IconHeart className="heart" />}
+                  checkedIcon={<ActiveHeartIcon />}
+                />
+                В избранное
+              </IconsTexts>
 
-              <BoxIcons>
-                <IconsTexts onClick={onFavorite}>
-                  <Checkbox
-                    icon={<IconHeart className="heart" />}
-                    checkedIcon={<ActiveHeartIcon />}
-                  />
-                  В избранное
-                </IconsTexts>
-
-                <IconsTexts onClick={onDelete}>
-                  <DeleteIconInCart />
-                  Удалить
-                </IconsTexts>
-              </BoxIcons>
-            </div>
-          </StyledCardContent>
-        </StyledCard>
-      </StyledMainContainer>
-    </Container>
+              <IconsTexts onClick={onDelete}>
+                <DeleteIconInCart />
+                Удалить
+              </IconsTexts>
+            </BoxIcons>
+          </Box>
+        </StyledCardContent>
+      </StyledCard>
+    </StyledMainContainer>
   );
 };
 
@@ -103,7 +118,6 @@ export default CartProductInBasket;
 const StyledMainContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: "24px",
-  width: "100%",
 
   "& .MuiButtonBase-root": {
     padding: "0",
@@ -119,9 +133,9 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
 
 const StyledCard = styled(Card)(({ theme }) => ({
   height: "170px",
-  width: "929px",
+  width: "100%",
   padding: "20px",
-  borderRadius: "0",
+  borderRadius: "5px",
   color: "none",
   boxShadow: "none",
   background: theme.palette.primary.contrastText,

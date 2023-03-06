@@ -1,7 +1,7 @@
-import { ROUTES } from ".";
 import AdminOrdersBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/AdminOrdersBreadcrumbs";
 import UserCatalogBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogBreadcrumbs";
 import UserCatalogItemBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogItemBreadcrumbs";
+import { ROUTES } from "./routes";
 
 export const BREADCRUMBS = [
   {

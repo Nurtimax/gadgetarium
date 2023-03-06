@@ -11,7 +11,7 @@ import useVisibility from "../../hooks/useVisibility";
 import { showError } from "../../utils/helpers/catch-signup";
 import { singUpValidateSchema } from "../../utils/helpers/validate";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataSignup } from "../../redux/slices/authentication";
+import { fetchDataSignup } from "../../redux/slices/authentication-slice";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useVisibility();

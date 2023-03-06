@@ -30,18 +30,21 @@ const catalogSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchDataCatalog.fulfilled, (state, action) => {
-      state.data.products = action.payload.data;
-      state.isLoading = false;
-    });
-    builder.addCase(fetchDataCatalog.pending, (state) => {
-      state.errorMessage = false;
-      state.isLoading = true;
-    });
-    builder.addCase(fetchDataCatalog.rejected, (state, action) => {
-      state.errorMessage = action.payload;
-      state.isLoading = false;
-    });
+    builder
+      .addCase(fetchDataCatalog.fulfilled, (state, action) => {
+        state.data.products = action.payload.data;
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataCatalog.pending, (state) => {
+        state.errorMessage = false;
+        state.isLoading = true;
+      })
+
+      .addCase(fetchDataCatalog.rejected, (state, action) => {
+        state.errorMessage = action.payload;
+        state.isLoading = false;
+      });
   },
 });
 
