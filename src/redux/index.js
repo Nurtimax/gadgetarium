@@ -1,5 +1,5 @@
-import reducerAuthenticationSlice from "./slices/authentication-slice";
 import { configureStore } from "@reduxjs/toolkit";
+import reducerAuthenticationSlice from "./slices/authentication-slice";
 import addProductSlice from "./slices/add-product-slice";
 import { productSlice } from "./slices/product-slice";
 import { ordersProduct } from "./slices/orders-slice";
