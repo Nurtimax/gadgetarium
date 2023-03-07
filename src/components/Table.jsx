@@ -87,7 +87,7 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
     );
 
   return (
-    <MainContainer marked={isMarked}>
+    <MainContainer marked={String(isMarked)}>
       {found ? (
         <Typography className="foundOrderText">
           Найдено {countOfOrders} заказов
@@ -216,7 +216,7 @@ const MainContainer = styled(TableContainer)(({ theme, marked }) => ({
       gap: "8px",
 
       "& .MuiTableRow-root": {
-        padding: marked === null ? 0 : "",
+        padding: marked === "null" ? 0 : "",
         "& .MuiTableCell-root": {
           border: "none",
           padding: "0",
