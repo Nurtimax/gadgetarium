@@ -7,19 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
-import { useMemo } from "react";
-import { useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { CompactPicker } from "react-color";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { ChooseColorIcon, DeleteIconInCart, PlusIcon } from "../../assets";
 import { ActionAddProductSlice } from "../../redux/slices/add-product";
-import {
-  ADDPRODUCT_INITIALSTATE,
-  ADDPRODUCT_INITIALSTATESCHEMA,
-} from "../../utils/constants/add-product";
+import { ADDPRODUCT_INITIALSTATE } from "../../utils/constants/add-product";
 import { CompactPickerColors } from "../../utils/constants/compact-picker";
+import {
+  addProductSchema,
+  catchErrorValidationHandler,
+  validationHandler,
+} from "../../utils/helpers/add-product-helper";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import Brand from "./fields/Brand";
@@ -30,30 +30,45 @@ import SubCategory from "./fields/SubCategory";
 
 const Forms = ({ getData }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const { editData } = useSelector((state) => state.addProduct);
+  const [keys, setKeys] = useState([]);
 
   const dispatch = useDispatch();
 
-  const { values, handleChange, setFieldValue, handleSubmit, errors } =
-    useFormik({
-      initialValues: ADDPRODUCT_INITIALSTATE,
-      validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
-      onSubmit: (values, action) => {
-        getData(values);
-        dispatch(
-          ActionAddProductSlice.editData({
-            brand: values.brandId,
-          })
-        );
-        action.resetForm();
-      },
-      validateOnChange: false,
-    });
+  const ADDPRODUCT_INITIALSTATESCHEMA = addProductSchema(keys);
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleSubmit,
+    errors,
+    setValues,
+  } = useFormik({
+    initialValues: ADDPRODUCT_INITIALSTATE,
+    validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
+    onSubmit: (values, action) => {
+      getData(values);
+      dispatch(
+        ActionAddProductSlice.editData({
+          brand: values.brandId,
+        })
+      );
+      action.resetForm();
+    },
+    validateOnChange: false,
+  });
 
   const getProductIdParam = searchParams.get("productId") || 0;
 
   const { Productbrand } = useSelector((state) => state.addProduct);
+
+  useEffect(() => {
+    validationHandler(values.categoryId, setKeys, setValues, values);
+  }, [values.categoryId]);
+
+  useEffect(() => {
+    catchErrorValidationHandler(errors);
+  }, [errors]);
 
   const addNewProduct = useCallback(() => {
     setFieldValue("subProductRequests", [
@@ -68,7 +83,6 @@ const Forms = ({ getData }) => {
     ]);
     dispatch(
       ActionAddProductSlice.editData({
-        date: [...editData.date, new Date()],
         brand: values.brandId,
       })
     );
@@ -162,7 +176,7 @@ const Forms = ({ getData }) => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={3.5}>
           <FormLabel required>Название товара</FormLabel>
           <StyledInput
             onChange={handleChange}
@@ -174,6 +188,22 @@ const Forms = ({ getData }) => {
           {Boolean(errors.productName) && (
             <Typography component="p" variant="body2" color="error">
               {errors.productName}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={6} display="flex" flexDirection="column">
+          <FormLabel required>Дата выпуска</FormLabel>
+          <StyledInput
+            onChange={handleChange}
+            value={values.dateOfIssue}
+            name="dateOfIssue"
+            placeholder="Введите название товара"
+            error={Boolean(errors.dateOfIssue)}
+            type="date"
+          />
+          {Boolean(errors.dateOfIssue) && (
+            <Typography component="p" variant="body2" color="error">
+              {errors.dateOfIssue}
             </Typography>
           )}
         </Grid>
@@ -290,9 +320,9 @@ const Forms = ({ getData }) => {
 
 export default Forms;
 
-const StyledInput = styled(Input)(() => ({
-  padding: "0 10px",
-}));
+const StyledInput = styled(Input)`
+  padding: 0 10px;
+`;
 
 const StyledButton = styled(Button)(({ theme }) => ({
   "&.next_button": {
