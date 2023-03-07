@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
+import { Box, Grid, styled, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -52,6 +52,7 @@ const DescriptionOverview = ({
   return (
     <StyledDescriptionOverview onSubmit={handleSubmit} component="form">
       {isSendDataLoading && <GadgetariumSpinnerLoading />}
+      {isLoading && <GadgetariumSpinnerLoading />}
       <Grid container spacing={2.5}>
         <Grid item>
           <Typography>Загрузите видеообзор</Typography>
@@ -67,21 +68,13 @@ const DescriptionOverview = ({
           <input {...getInputProps()} />
           <Typography>Загрузите документ PDF</Typography>
           <StyledInput
-            startAdornment={
-              <>
-                {isLoading ? (
-                  <CircularProgress size={30} color="grey" />
-                ) : (
-                  <DownloadVideoIcon />
-                )}
-              </>
-            }
+            startAdornment={<DownloadVideoIcon />}
             placeholder={
               values.pdf ? values.pdf : "Вставьте документ в PDF файле"
             }
             title={values.pdf}
           />
-          {error && (
+          {Boolean(error) && (
             <Typography variant="body2" component="p">
               {error}
             </Typography>
