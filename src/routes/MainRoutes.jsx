@@ -1,28 +1,69 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AboutStore from "../containers/about-store/AboutStore";
-import CatalogProducts from "../containers/catalog-products/CatalogProducts";
-import Contacts from "../containers/contacts/Contacts";
-import Delivery from "../containers/delivery/Delivery";
-import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
-import Home from "../containers/home";
-import OrderPage from "../containers/order-page/OrderPage";
-import SignIn from "../containers/sign-in/SignIn";
-import SignUp from "../containers/sign-up/Signup";
-import Layout from "../layout";
+import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import { ROUTES } from "../utils/constants";
 import PrivateRoute from "./PrivateRoute";
 
+const Layout = lazy(() => import("../layout"));
+const Home = lazy(() => import("../containers/home"));
+const Delivery = lazy(() => import("../containers/delivery/Delivery"));
+const Contacts = lazy(() => import("../containers/contacts/Contacts"));
+const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
+const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
+const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
+const SignUp = lazy(() => import("../containers/sign-up/Signup"));
+const CatalogProducts = lazy(() => {
+  return import("../containers/catalog-products/CatalogProducts");
+});
+const FrequentlyAskedQuestions = lazy(() => {
+  return import("../containers/FAQ/FrequentlyAskedQuestions");
+});
+
 const MainRoutes = () => {
+  const { auth } = useSelector((store) => store);
+
+  if (auth?.data?.roleName?.toLowerCase() === "admin") {
+    return <Navigate to="/admin" />;
+  }
+
   return (
     <Routes>
-      <Route path={ROUTES.MAIN} element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path={ROUTES.ABOUTSTORE} element={<AboutStore />} />
+      <Route
+        path={ROUTES.MAIN}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <Layout />
+          </Suspense>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.ABOUTSTORE}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <AboutStore />
+            </Suspense>
+          }
+        />
         <Route
           path={`item/${ROUTES.PHONE}`}
           element={
-            <PrivateRoute Component={<CatalogProducts />} role={["Customer"]} />
+            <PrivateRoute
+              Component={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <CatalogProducts />
+                </Suspense>
+              }
+              role={["Customer"]}
+            />
           }
         />
         <Route
@@ -35,12 +76,40 @@ const MainRoutes = () => {
           }
         />
         <Route path={ROUTES.CART} element={<h1>Товары в корзине</h1>} />
-        <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
+        <Route
+          path={ROUTES.CHECKOUT}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <OrderPage />
+            </Suspense>
+          }
+        />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
-        <Route path={ROUTES.DELIVERY} element={<Delivery />} />
-        <Route path={ROUTES.FAG} element={<FrequentlyAskedQuestions />} />
-        <Route path={ROUTES.CONTACTS} element={<Contacts />} />
+        <Route
+          path={ROUTES.DELIVERY}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Delivery />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.FAG}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <FrequentlyAskedQuestions />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.CONTACTS}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Contacts />
+            </Suspense>
+          }
+        />
 
         <Route path={ROUTES.VIP} element={<Navigate to={ROUTES.HISTORY} />}>
           <Route path={ROUTES.HISTORY} element={<h1>History</h1>} />
@@ -49,8 +118,22 @@ const MainRoutes = () => {
           <Route />
         </Route>
       </Route>
-      <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
-      <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+      <Route
+        path={`/${ROUTES.SIGNIN}`}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <SignIn />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.SIGNUP}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <SignUp />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };
