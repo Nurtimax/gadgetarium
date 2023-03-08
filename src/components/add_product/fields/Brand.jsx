@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useCallback } from "react";
-import { useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
 import {
@@ -25,12 +24,14 @@ import {
   postBrandThunkApi,
 } from "../../../redux/slices/add-product";
 import { SWAGGER_API } from "../../../utils/constants/fetch";
+import GadgetariumSpinnerLoading from "../../GadgetariumSpinnerLoading";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Modal from "../../UI/Modal";
 
 const Brand = ({ handleChange, values, errors, Productbrand }) => {
   const [openModal, setOpenModal] = useVisibility();
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -59,6 +60,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
   }, []);
 
   const getBrandLinkHandler = async (file) => {
+    setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
     axios({
@@ -73,6 +75,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
       .catch((error) => {
         return error;
       });
+    setIsLoading(false);
   };
 
   const onDrop = useCallback((acceptFiles) => {
@@ -91,6 +94,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
   );
 
   const removeBrandImageHandler = (image) => {
+    setIsLoading(true);
     axios({
       method: "DELETE",
       url: `${SWAGGER_API}file`,
@@ -106,10 +110,12 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
       .catch((error) => {
         return error;
       });
+    setIsLoading(false);
   };
 
   return (
     <>
+      {isLoading && <GadgetariumSpinnerLoading />}
       <StyledModal open={openModal} handleClose={setOpenModal}>
         <Typography component="h1" variant="h5" className="flex center">
           Добавление бренда
@@ -228,7 +234,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
           </StyledButton>
         </StyledMenuItem>
       </StyledSelect>
-      {errors.brandId && (
+      {Boolean(errors.brandId) && (
         <Typography component="p" variant="body2" color="error">
           {errors.brandId}
         </Typography>
