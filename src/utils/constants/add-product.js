@@ -40,6 +40,7 @@ export const ADDPRODUCT_INITIALSTATE = {
       characteristics: {},
     },
   ],
+  dateOfIssue: "",
 };
 
 export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
@@ -80,42 +81,7 @@ export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
       characteristics: yup.object(),
     })
   ),
-  pdf: yup.string(),
-});
-export const ADDPRODUCT_INITIALSTATESCHEMA = yup.object().shape({
-  productName: yup.string().required("Название товара — обязательное поле"),
-  guarantee: yup
-    .number()
-    .positive()
-    .integer()
-    .required("Гарантия (месяцев) - обязательное поле"),
-  brandId: yup
-    .number()
-    .positive()
-    .min(1, "Брент должен выбрать")
-    .required("Брент обязательное поле"),
-  categoryId: yup
-    .number()
-    .positive()
-    .min(1, "Категория должен выбрать")
-    .required("Категория обязательное поле"),
-  subCategoryId: yup
-    .number()
-    .positive()
-    .min(1, "Подкатегория должен выбрать")
-    .required("Подкатегория обязательное поле"),
-  subProductRequests: yup.array().of(
-    yup.object().shape({
-      countOfProduct: yup.number().required(),
-      color: yup.string().required("Color is a required field"),
-      images: yup
-        .array()
-        .min(2, "Поле изображений должно содержать как минимум 2 элемента")
-        .max(10, "Mаксимальное количество - 10 фото")
-        .of(yup.string().required()),
-      characteristics: yup.object(),
-    })
-  ),
+  pdf: yup.string().required(),
 });
 
 export const PRODUCT_FORMS_FIELDS = [
@@ -207,7 +173,6 @@ export const PRODUCT_FORMS_FIELDS = [
           "1280x800",
           "1366x768",
           "1600x900",
-          "1366x768",
           "1920x1080",
           "2160x1440",
           "2560x1600",
@@ -386,6 +351,132 @@ export const PRODUCT_FORMS_FIELDS = [
         choosePlaceholder: "",
         type: "radio",
       },
+    ],
+  },
+];
+
+export const PRODUCT_FORM_KEYS = [
+  {
+    id: 1,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfPhone",
+        required: "Объем памяти обязательное поле",
+      },
+      {
+        id: 2,
+        key: "ramOfPhone",
+        required: "Оперативная память обязательное поле",
+      },
+      { id: 3, key: "simCard", required: "Кол-во SIM-карт обязательное поле" },
+    ],
+  },
+  {
+    id: 2,
+    keys: [
+      {
+        id: 1,
+        key: "laptopCPU",
+        required: "Процессор ноутбука обязательное поле",
+      },
+      {
+        id: 2,
+        key: "videoCardMemory",
+        required: "Объем видеопамяти (GB) обязательное поле",
+      },
+      {
+        id: 3,
+        key: "ramOfLaptop",
+        required: "Объем оперативной памяти (GB) обязательное поле",
+      },
+      {
+        id: 4,
+        key: "screenDiagonalOfSmartWatch",
+        required: "Диагональ дисплея (дюйм) обязательное поле",
+      },
+      {
+        id: 5,
+        key: "screenResolutionOfLaptop",
+        required: "Разрешение экрана обязательное поле",
+      },
+      {
+        id: 6,
+        key: "appointmentOfLaptop",
+        required: "Назначение обязательное поле",
+      },
+    ],
+  },
+  {
+    id: 3,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfTablet",
+        required: "Объем памяти (GB) обязательное поле",
+      },
+      {
+        id: 2,
+        key: "ramOfTablet",
+        required: "Объем оперативной памяти (GB) обязательное поле",
+      },
+      {
+        id: 3,
+        key: "screenSizeOfTablet",
+        required: "Размер экрана (дюйм) обязательные поле",
+      },
+      {
+        id: 4,
+        key: "screenResolutionOfTablet",
+        required: "Разрешение экрана обязательное поле",
+      },
+      {
+        id: 5,
+        key: "screenDiagonalOfTablet",
+        required: "Диагональ экрана (дюйм) обязательное поле",
+      },
+      {
+        id: 6,
+        key: "batteryCapacity",
+        required: "Емкость аккумулятора планшета, мА/ч обязательное поле",
+      },
+    ],
+  },
+  {
+    id: 4,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfWatch",
+        required: "Объем памяти обязательное поле",
+      },
+      {
+        id: 2,
+        key: "braceletMaterial",
+        required: "Материал браслета/ремешка обязательное поле",
+      },
+      {
+        id: 3,
+        key: "caseMaterial",
+        required: "Материал корпуса обязательное поле",
+      },
+      {
+        id: 4,
+        key: "screenDiagonalOfSmartWatch",
+        required: "Диагональ дисплея (дюйм) обязательное поле",
+      },
+      { id: 5, key: "gender", required: "Пол обязательное поле" },
+      {
+        id: 6,
+        key: "waterProof",
+        required: "Водонепроницаемые обязательное поле",
+      },
+      {
+        id: 7,
+        key: "wirelessInterface",
+        required: "Беспроводные интерфейсы обязательное поле",
+      },
+      { id: 8, key: "caseShape", required: "Форма корпуса обязательное поле" },
     ],
   },
 ];
