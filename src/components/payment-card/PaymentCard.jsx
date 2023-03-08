@@ -171,7 +171,8 @@ const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {isTouched || (errors?.userName && touched?.userName) ? (
+                {isTouched ||
+                (Boolean(errors?.userName) && Boolean(touched?.userName)) ? (
                   <p className="error-name">{errors?.userName}</p>
                 ) : (
                   ""
