@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import PrivateRoute from "./PrivateRoute";
-import Basket from "../containers/basket/Basket";
 import { ROUTES } from "../utils/constants/routes";
 
 const Layout = lazy(() => import("../layout"));
-const Home = lazy(() => import("../containers/home"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Contacts = lazy(() => import("../containers/contacts/Contacts"));
+const Home = lazy(() => import("../containers/home"));
+const Basket = lazy(() => import("../containers/basket/Basket"));
 const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
 const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
 const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
@@ -76,7 +76,6 @@ const MainRoutes = () => {
             />
           }
         />
-        <Route path={ROUTES.CART} element={<h1>Товары в корзине</h1>} />
         <Route
           path={ROUTES.CHECKOUT}
           element={
@@ -85,7 +84,14 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
-        <Route path={ROUTES.CART} element={<Basket />} />
+        <Route
+          path={ROUTES.CART}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Basket />
+            </Suspense>
+          }
+        />
         <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
         <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
