@@ -7,7 +7,7 @@ const Input = forwardRef(({ value, onChange, error, ...props }, ref) => {
       {...props}
       value={value}
       onChange={onChange}
-      error={error}
+      error={Boolean(error)}
       classes={{ root: "input", focused: "focused", error: "error" }}
       ref={ref}
     />
