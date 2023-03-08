@@ -58,7 +58,7 @@ const initialState = {
     countOfProduct: "",
     isChecked: "price",
     id: 0,
-    date: [new Date()],
+    date: null,
     brand: "",
     errorMessage: null,
     errorPriceId: [],
