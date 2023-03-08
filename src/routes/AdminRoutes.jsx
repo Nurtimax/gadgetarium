@@ -1,22 +1,32 @@
-import React from "react";
-import { Link, Navigate, Route, Routes } from "react-router-dom";
-import AddProduct from "../containers/add-product/AddProduct";
-import Orders from "../containers/orders/Orders";
-import AdminLayout from "../layout/admin";
+import { lazy, Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import { ROUTES } from "../utils/constants";
+
+const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
+const Orders = lazy(() => import("../containers/orders/Orders"));
+const AdminLayout = lazy(() => import("../layout/admin"));
+const Goods = lazy(() => import("../containers/goods"));
+const ReviewRating = lazy(() => import("../containers/review-rating"));
 
 const AdminRoutes = () => {
   return (
     <Routes>
-      <Route path="" element={<AdminLayout />}>
+      <Route
+        path=""
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <AdminLayout />
+          </Suspense>
+        }
+      >
         <Route index element={<Navigate to={ROUTES.GOODS} />} />
         <Route
           path="goods"
           element={
-            <h1>
-              goods
-              <Link to="add-product">add product</Link>
-            </h1>
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Goods />
+            </Suspense>
           }
         />
         <Route
@@ -29,12 +39,27 @@ const AdminRoutes = () => {
         />
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
-          element={<AddProduct />}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <AddProduct />
+            </Suspense>
+          }
         />
-        <Route path={`${ROUTES.ORDERS}`} element={<Orders />} />
+        <Route
+          path={`${ROUTES.ORDERS}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Orders />
+            </Suspense>
+          }
+        />
         <Route
           path={`${ROUTES.REVIEWSRATING}`}
-          element={<h1>Revviews Rating</h1>}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <ReviewRating />
+            </Suspense>
+          }
         />
         <Route />
       </Route>
