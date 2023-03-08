@@ -1,16 +1,20 @@
 import { Box, styled, Typography } from "@mui/material";
 import { format } from "date-fns";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-const DateTableItem = ({ id }) => {
+const DateTableItem = () => {
   const { editData } = useSelector((state) => state.addProduct);
-  const date = format(editData.date[id], "dd.MM.yyyy");
-  const hour = format(editData.date[id], "HH:mm");
+  const date = useMemo(() => {
+    if (editData.date) {
+      return format(new Date(editData.date), "dd.MM.yyyy");
+    }
+    return null;
+  }, [editData.date]);
+
   return (
     <StyledDateTableItem>
       <Typography classes={{ root: "date_text" }}>{date}</Typography>
-      <Typography classes={{ root: "date_text" }}> {hour}</Typography>
     </StyledDateTableItem>
   );
 };
