@@ -41,6 +41,11 @@ const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
         return item;
       })
     );
+    dispatch(
+      ActionAddProductSlice.editData({
+        [editData.isChecked]: "",
+      })
+    );
   };
 
   const nextStepperHandler = () => {
@@ -123,7 +128,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: "1rem",
   color: "#FFFFFF !important",
   background: theme.palette.secondary.main,
-  "&:first-child": {
+  "&:first-of-type": {
     textTransform: "capitalize",
   },
   "&.next_button": {
