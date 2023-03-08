@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux";
 import { injectStore } from "./config/axios-instance";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 injectStore(store);
 
