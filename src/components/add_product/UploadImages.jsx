@@ -1,10 +1,11 @@
-import { Box, CircularProgress, Grid, styled, Typography } from "@mui/material";
+import { Box, Grid, styled, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useMemo } from "react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DownloadBannerIcon } from "../../assets";
 import { SWAGGER_API } from "../../utils/constants/fetch";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import ShowUploadImage from "./ShowUploadImage";
 
 const UploadImages = ({
@@ -13,6 +14,7 @@ const UploadImages = ({
   getProductIdParam,
   findedSubProductData,
   errors,
+  imagesError,
 }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -150,11 +152,16 @@ const UploadImages = ({
 
   return (
     <>
+      {isLoading && <GadgetariumSpinnerLoading />}
       <Typography component="p" variant="body1">
         Добавьте фото
       </Typography>
       <StyledUploadImages
-        className={`${uploadImageError || error ? "error" : ""}`}
+        className={`${
+          Boolean(uploadImageError) || Boolean(error) || Boolean(imagesError)
+            ? "error"
+            : ""
+        }`}
       >
         <Grid {...getRootProps()} container className="flex center" margin={0}>
           <input {...getInputProps()} />
@@ -203,12 +210,9 @@ const UploadImages = ({
               editImageHandler={editImageHandler}
             />
           ))}
-          {findedSubProductData.images?.length !== 0 && isLoading && (
-            <CircularProgress size={30} color="grey" />
-          )}
         </Box>
       </StyledUploadImages>
-      {error && (
+      {Boolean(error) && (
         <Typography variant="body2" component="p" color="error">
           {error}
         </Typography>
