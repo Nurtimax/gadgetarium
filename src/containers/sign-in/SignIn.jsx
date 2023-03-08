@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ActionauthenticationSlice,
   fetchDataSignin,
-} from "../../redux/slices/authentication";
+} from "../../redux/slices/authentication-slice";
 import { singInValidateSchema } from "../../utils/helpers/validate";
 
 const SignIn = () => {

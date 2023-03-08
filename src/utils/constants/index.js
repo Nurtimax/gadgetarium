@@ -20,6 +20,7 @@ import {
 } from "../../assets";
 import ImageTable from "../../assets/images/imageTables.png";
 import TabletMacIcon from "@mui/icons-material/TabletMac";
+import { ROUTES } from "./routes";
 
 export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/laptop-pens-phone-note-with-blank-screen-on-table_155003-5339.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
@@ -65,6 +66,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар добавлен в список сравнения!",
     transitionTitle: "Перейти к сравнению",
+    link: ROUTES.COMPATISONPRODUCT,
   },
   {
     id: 2,
@@ -80,6 +82,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар добавлен в избранное!",
     transitionTitle: "Перейти в избранное",
+    link: ROUTES.LIKE,
   },
   {
     id: 3,
@@ -96,6 +99,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар успешно добавлен в корзину!",
     transitionTitle: "Перейти в корзину",
+    link: ROUTES.CART,
   },
 ];
 
@@ -444,34 +448,6 @@ export const dataAboutStore = {
   ],
 };
 
-export const ROUTES = {
-  ADMIN: "/admin",
-  ADMINITEMDETAIL: "item_details",
-  ADDPRODUCT: "add-product",
-  SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
-  DESCRIPTIONOVERVIEW: "description-overview",
-  MAIN: "/",
-  ABOUTSTORE: "/about",
-  PHONE: ":catalogItem",
-  PRODUCT: ":product",
-  CART: "cart",
-  CHECKOUT: "checkout",
-  COMPATISONPRODUCT: "comparison",
-  LIKE: "like",
-  DELIVERY: "delivery",
-  FAG: "fag",
-  CONTACTS: "contacts",
-  VIP: "/vip",
-  HISTORY: "history",
-  GOODS: "goods",
-  ORDERS: "orders",
-  REVIEWSRATING: "reviews-rating",
-  SIGNIN: "/sign-in",
-  SIGNUP: "/sign-up",
-  NOTFOUND: "/*",
-  PROFILE: "profile",
-};
-
 export const DUMMY_PRODUCT_DATA = [
   {
     id: 1,
@@ -699,3 +675,6 @@ export const chip_item = [
   { id: 3, title: "Apple" },
   { id: 4, title: "Apple" },
 ];
+
+export const notFoundImage =
+  "https://us.123rf.com/450wm/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016/167492439-no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image.jpg?ver=6";

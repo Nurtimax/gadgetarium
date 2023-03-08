@@ -2,8 +2,9 @@ import React, { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
-import { ROUTES } from "../utils/constants";
 import PrivateRoute from "./PrivateRoute";
+import Basket from "../containers/basket/Basket";
+import { ROUTES } from "../utils/constants/routes";
 
 const Layout = lazy(() => import("../layout"));
 const Home = lazy(() => import("../containers/home"));
@@ -84,6 +85,9 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
+        <Route path={ROUTES.CART} element={<Basket />} />
+        <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+        <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
         <Route

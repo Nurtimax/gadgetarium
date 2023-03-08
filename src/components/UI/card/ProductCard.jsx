@@ -20,6 +20,9 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
+import { useDispatch, useSelector } from "react-redux";
+import { postProductToBasket } from "../../../redux/slices/basket-slice";
+
 const ProductCard = (props) => {
   const {
     productName,
@@ -32,8 +35,26 @@ const ProductCard = (props) => {
     countOfReview,
     favorite,
     compared,
+    productId,
     ...rest
   } = props;
+
+  const basketData = useSelector((state) => state.basket.data);
+
+  const dispatch = useDispatch();
+
+  const addBasketHandler = () => {
+    if (basketData?.some((item) => item.id === productId)) {
+      alert("Товар уже добавлен!");
+    } else {
+      dispatch(
+        postProductToBasket({
+          orderCount: count,
+          productId,
+        })
+      );
+    }
+  };
 
   const productSale = useMemo(() => {
     return Math.round((discountPrice / productPrice) * 100) - 100;
@@ -139,6 +160,7 @@ const ProductCard = (props) => {
               ) : null}
             </Box>
             <IconButton
+              onClick={addBasketHandler}
               width="70%"
               height="2.5vw"
               title="Добавить в карзину"

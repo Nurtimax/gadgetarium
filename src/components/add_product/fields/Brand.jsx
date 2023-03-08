@@ -22,7 +22,7 @@ import useVisibility from "../../../hooks/useVisibility";
 import {
   getBrandThunkApi,
   postBrandThunkApi,
-} from "../../../redux/slices/add-product";
+} from "../../../redux/slices/add-product-slice";
 import { SWAGGER_API } from "../../../utils/constants/fetch";
 import GadgetariumSpinnerLoading from "../../GadgetariumSpinnerLoading";
 import Button from "../../UI/button/Button";

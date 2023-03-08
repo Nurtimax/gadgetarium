@@ -12,7 +12,7 @@ import {
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
 import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
-import { fetchDataCatalog } from "../../redux/slices/catalog";
+import { fetchDataCatalog } from "../../redux/slices/catalog-slice";
 import Sort from "../../components/catalog-products/Sort";
 import FilterProducts from "../../components/catalog-products/FilterProducts";
 import ProductsList from "../../components/catalog-products/ProductsList";

@@ -16,9 +16,9 @@ import DescriptionOverview from "../../components/add_product/DescriptionOvervie
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addProductThunk } from "../../redux/slices/add-product";
-import { ROUTES } from "../../utils/constants";
 import { toast } from "react-toastify";
+import { addProductThunk } from "../../redux/slices/add-product-slice";
+import { ROUTES } from "../../utils/constants/routes";
 
 const AddProduct = () => {
   const [activeStep, setActiveStep] = React.useState(0);

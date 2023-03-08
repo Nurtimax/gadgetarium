@@ -11,7 +11,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Button from "../UI/button/Button";
 import DropDown from "../UI/DropDown";
 import useDropDown from "../../hooks/useDropDown";
-import { ActionauthenticationSlice } from "../../redux/slices/authentication";
+import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 import { useDispatch } from "react-redux";
 import Modal from "../UI/Modal";
 import useVisibility from "../../hooks/useVisibility";

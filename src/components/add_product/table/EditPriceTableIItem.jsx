@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActionAddProductSlice } from "../../../redux/slices/add-product";
+import { ActionAddProductSlice } from "../../../redux/slices/add-product-slice";
 
 const EditPriceTableIItem = ({ id, price }) => {
   const { editData } = useSelector((state) => state.addProduct);

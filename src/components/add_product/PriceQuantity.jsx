@@ -1,7 +1,7 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActionAddProductSlice } from "../../redux/slices/add-product";
+import { ActionAddProductSlice } from "../../redux/slices/add-product-slice";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import AddProductTable from "./table";

@@ -1,7 +1,9 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
-import { ROUTES } from "../utils/constants";
+import React from "react";
+import OrderItem from "../components/orders/OrderItem";
+import { ROUTES } from "../utils/constants/routes";
 
 const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
 const Orders = lazy(() => import("../containers/orders/Orders"));
@@ -37,6 +39,7 @@ const AdminRoutes = () => {
           path={`${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`}
           element={<h1>detail</h1>}
         />
+
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
           element={
@@ -53,6 +56,10 @@ const AdminRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route path={`${ROUTES.ORDERS}`} element={<Orders />} />
+        <Route path={`${ROUTES.ORDERS}/:orderId`} element={<OrderItem />} />
+
         <Route
           path={`${ROUTES.REVIEWSRATING}`}
           element={

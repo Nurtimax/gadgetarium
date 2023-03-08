@@ -12,7 +12,7 @@ import { CompactPicker } from "react-color";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { ChooseColorIcon, DeleteIconInCart, PlusIcon } from "../../assets";
-import { ActionAddProductSlice } from "../../redux/slices/add-product";
+import { ActionAddProductSlice } from "../../redux/slices/add-product-slice";
 import { ADDPRODUCT_INITIALSTATE } from "../../utils/constants/add-product";
 import { CompactPickerColors } from "../../utils/constants/compact-picker";
 import {
