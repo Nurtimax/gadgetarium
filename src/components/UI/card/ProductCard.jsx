@@ -22,6 +22,7 @@ import {
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { useDispatch, useSelector } from "react-redux";
 import { postProductToBasket } from "../../../redux/slices/basket-slice";
+import { toast } from "react-toastify";
 
 const ProductCard = (props) => {
   const {
@@ -52,7 +53,14 @@ const ProductCard = (props) => {
           orderCount: count,
           productId,
         })
-      );
+      )
+        .unwrap()
+        .then((originalPromiseResult) => {
+          toast.success(originalPromiseResult.message);
+        })
+        .catch((rejectedValueOrSerializedError) => {
+          toast.error(rejectedValueOrSerializedError.message);
+        });
     }
   };
 
