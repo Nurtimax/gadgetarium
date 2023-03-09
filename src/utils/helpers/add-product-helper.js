@@ -42,51 +42,37 @@ export const addProductSchema = (keys = []) => {
       .positive()
       .min(1, "Подкатегория должен выбрать")
       .required("Подкатегория обязательное поле"),
-    dateOfIssue: yup
-      .date()
-      .required("Дата выдачи обязательное поле")
-      .transform((value, originalValue) => {
-        const date = originalValue.split(".");
-        if (date.length !== 3) {
-          return null;
-        }
-        const year = parseInt(date[2], 10);
-        const month = parseInt(date[1], 10) - 1; // Month starts from 0
-        const day = parseInt(date[0], 10);
-        const parsedDate = new Date(year, month, day);
-        return isNaN(parsedDate) ? null : parsedDate;
-      })
-      .typeError("Date field must be a valid date in the format of DD.MM.YYYY"),
+    dateOfIssue: yup.date().required("Дата выдачи обязательное поле"),
+
     subProductRequests: yup.array().of(subProductSchema),
   });
   return ADDPRODUCT_INITIALSTATESCHEMA;
 };
 
-export const catchErrorValidationHandler = async (errors) => {
-  for (const key in errors) {
-    if (key === "subProductRequests") {
-      for (const index of errors[key]) {
-        for (const itemKey in index) {
-          if (itemKey === "characteristics") {
-            for (const characterictsKeys in index[itemKey]) {
-              toast.error(index[itemKey][characterictsKeys]);
+export const catchErrorValidationHandler = (errors) => {
+  if (Object.keys(errors).length > 3) {
+    toast.error("Пожалуйста, введите необходимое поле");
+  } else {
+    for (const key in errors) {
+      if (key === "subProductRequests") {
+        for (const index of errors[key]) {
+          for (const itemKey in index) {
+            if (itemKey === "characteristics") {
+              for (const characterictsKeys in index[itemKey]) {
+                toast.error(index[itemKey][characterictsKeys]);
+              }
             }
+            toast.error(index[itemKey]);
           }
-          toast.error(index[itemKey]);
         }
+      } else {
+        toast.error(errors[key]);
       }
-    } else {
-      toast.error(errors[key]);
     }
   }
 };
 
-export const validationHandler = async (
-  categoryId,
-  setKeys,
-  setValues,
-  values
-) => {
+export const validationHandler = (categoryId, setKeys, setValues, values) => {
   const findedCharacteristicsKeys = PRODUCT_FORM_KEYS.find(
     (product) => product.id === categoryId
   );
