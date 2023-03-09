@@ -47,3 +47,23 @@ export const singInValidateSchema = yup.object().shape({
     .max(100)
     .required("Password is required"),
 });
+
+export const orderingValidateSchema = yup.object().shape({
+  firstName: yup.string().required("Имя обязательное поле"),
+  lastName: yup.string().required("Фамилия обязательное поле"),
+
+  phoneNumber: yup
+    .string()
+    .max(19, "Номер телефона должен быть не более 13 символов")
+    .min(13)
+    .required("Номер телефона обязательное поле"),
+
+  email: yup
+    .string()
+    .email()
+    .matches(
+      emailRegex,
+      "Адрес электронной почты должен быть в формате ...@gmail.com"
+    )
+    .required("Электронная почта обязательное поле"),
+});

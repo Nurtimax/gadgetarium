@@ -17,3 +17,19 @@ export const showError = (errors) => {
   }
   return errorMessage;
 };
+
+export const showErrors = (errors) => {
+  let errorMessage = null;
+  if (Object.keys(errors).length > 1) {
+    errorMessage = "Пожалуйста заполните все поле";
+  } else if (errors?.firstName) {
+    errorMessage = errors?.firstName;
+  } else if (errors?.lastName) {
+    errorMessage = errors?.lastName;
+  } else if (errors?.phoneNumber) {
+    errorMessage = errors?.phoneNumber;
+  } else if (errors?.email) {
+    errorMessage = errors?.email;
+  }
+  return errorMessage;
+};

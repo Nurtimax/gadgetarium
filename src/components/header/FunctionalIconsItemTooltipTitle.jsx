@@ -45,29 +45,32 @@ const FunctionalIconsItemTooltipTitle = ({
           <Typography style={{ color: "red" }}>Empty products!</Typography>
         ) : (
           <StyledMainContainer>
-            {data?.map((item, i) => (
-              <Box key={i} className="item-box">
-                <img src={item.image} alt="photo" className="image" />
+            <Box className="box-product">
+              {data?.map((item, i) => (
+                <Box key={i} className="item-box">
+                  <img src={item.image} alt="photo" className="image" />
 
-                <span className="name">
-                  {item.productName} {item.characteristics.memoryOfPhone}gb
-                  <span>{item.color.toLowerCase()}</span>
-                </span>
+                  <span className="name">
+                    <p>{item.productName}</p>
+                    <p> {item.characteristics.memoryOfPhone}gb</p>
+                    <p>{item.color.toLowerCase()}</p>
+                  </span>
 
-                <span className="price">
-                  {priceProductSeparate(Number(String(item.price)))} c
-                </span>
+                  <span className="price">
+                    {priceProductSeparate(Number(String(item.price)))} c
+                  </span>
 
-                <span className="dlt">
-                  <IconClose onClick={() => deleteHandler(item.id)} />
-                </span>
-              </Box>
-            ))}
+                  <span className="dlt">
+                    <IconClose onClick={() => deleteHandler(item.id)} />
+                  </span>
+                </Box>
+              ))}
+            </Box>
 
             <Box className="box-total">
-              <StyledButton>
-                <Link to={`/${ROUTES.ORDERING}`}>Оформить заказ</Link>
-              </StyledButton>
+              <Link to={`${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                <StyledButton>Оформить заказ</StyledButton>
+              </Link>
               <Typography className="total-price">
                 Итого {priceProductSeparate(Number(String(price)))} с
               </Typography>
@@ -110,6 +113,14 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
   fontSize: "16px",
   color: theme.palette.primary.main,
 
+  "& .box-product": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    overflowY: "scroll",
+    height: "300px",
+  },
+
   "& .item-box": {
     paddingBottom: "7px",
     borderBottom: `1px solid #E8E8E8`,
@@ -124,6 +135,7 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
 
   "& .name": {
     display: "flex",
+    flexWrap: "wrap",
     gap: "4px",
     width: "255px",
   },

@@ -153,20 +153,20 @@ const Basket = () => {
                   </span>
                   <Typography className="sum">
                     {priceProductSeparate(Number(String(price || 0)))}
-                    <span>c</span>
+                    <p>c</p>
                   </Typography>
                   <Typography className="total">
                     {priceProductSeparate(
                       Number(String(price - price / discount || 0))
                     )}
-                    <span>c</span>
+                    <p>c</p>
                   </Typography>
                 </Box>
               </Box>
 
-              <StyledButton>
-                <Link to={`/${ROUTES.ORDERING}`}>Перейти к оформлению</Link>
-              </StyledButton>
+              <Link to={`/${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                <StyledButton>Перейти к оформлению</StyledButton>
+              </Link>
             </Box>
           </Box>
         </>
@@ -228,10 +228,9 @@ const MainContainer = styled(Container)(({ theme }) => ({
     width: "24px",
     height: "24px",
   },
-
   "& .container": {
     display: "flex",
-    gap: "104px",
+    justifyContent: "space-between",
     alignItems: "flex-start",
     paddingTop: "28px",
   },
@@ -287,11 +286,17 @@ const MainContainer = styled(Container)(({ theme }) => ({
     fontWeight: "600",
     display: "flex",
     gap: "5px",
+    "& p": {
+      textDecoration: "underline",
+    },
   },
 
   "& .sum": {
     paddingTop: "7px",
     display: "flex",
     gap: "5px",
+    "& p": {
+      textDecoration: "underline",
+    },
   },
 }));
