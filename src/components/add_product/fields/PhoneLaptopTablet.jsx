@@ -39,6 +39,13 @@ const PhoneLaptopTablet = ({
     return null;
   }, [errors.subProductRequests]);
 
+  const isCharacteristics = useMemo(() => {
+    if (characteristictsError?.characteristics) {
+      return characteristictsError?.characteristics;
+    }
+    return {};
+  }, []);
+
   const changeCharacteristicsHandler = useCallback(
     (e) => {
       setFieldValue(
@@ -84,17 +91,7 @@ const PhoneLaptopTablet = ({
                 value={findedSubProductData.characteristics[content.key] || ""}
                 displayEmpty
                 IconComponent={() => <ArrowDownIcon width={18} height={18} />}
-                input={
-                  <Input
-                    error={
-                      characteristictsError?.characteristics[content.key]
-                        ? Boolean(
-                            characteristictsError.characteristics[content.key]
-                          )
-                        : ""
-                    }
-                  />
-                }
+                input={<Input error={isCharacteristics[content.key]} />}
                 renderValue={() => (
                   <>
                     {findedSubProductData.characteristics[content.key] ? (
@@ -119,9 +116,9 @@ const PhoneLaptopTablet = ({
                   </StyledMenuItem>
                 ))}
               </Select>
-              {characteristictsError?.characteristics[content.key] && (
+              {isCharacteristics && (
                 <Typography component="p" variant="body2" color="error">
-                  {characteristictsError.characteristics[content.key]}
+                  {isCharacteristics[content.key]}
                 </Typography>
               )}
             </>
