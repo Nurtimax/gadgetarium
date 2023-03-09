@@ -44,7 +44,7 @@ const PhoneLaptopTablet = ({
       return characteristictsError?.characteristics;
     }
     return {};
-  }, []);
+  }, [characteristictsError?.characteristics]);
 
   const changeCharacteristicsHandler = useCallback(
     (e) => {
