@@ -32,12 +32,10 @@ const SignUp = () => {
       .join("");
 
     const registerData = {
-      firstname: values.firstname,
-      lastname: values.lastname,
-      email: values.email,
+      ...values,
       phoneNumber,
-      password: values.password,
     };
+
     dispatch(fetchDataSignup(registerData)).then((res) => {
       const { email, roleName, token } = res.payload;
       if (email && roleName && token) {
@@ -110,7 +108,7 @@ const SignUp = () => {
                 value={values.phoneNumber}
                 onChange={handleChange}
                 name="phoneNumber"
-                className={errors.phoneNumber && "error"}
+                className={errors.phoneNumber ? "error" : ""}
               />
             </Grid>
             <Grid item xs={12}>
