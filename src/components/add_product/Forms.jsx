@@ -70,6 +70,14 @@ const Forms = ({ getData }) => {
     catchErrorValidationHandler(errors);
   }, [errors]);
 
+  useEffect(() => {
+    dispatch(
+      ActionAddProductSlice.editData({
+        date: values.dateOfIssue,
+      })
+    );
+  }, [values.dateOfIssue]);
+
   const addNewProduct = useCallback(() => {
     setFieldValue("subProductRequests", [
       ...values.subProductRequests,
@@ -138,7 +146,7 @@ const Forms = ({ getData }) => {
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
-        <Grid item xl={3.5} lg={6}>
+        <Grid item xl={3.5} md={6} lg={4.3}>
           <Category
             handleChange={handleChange}
             values={values}
@@ -152,7 +160,7 @@ const Forms = ({ getData }) => {
             errors={errors}
           />
         </Grid>
-        <Grid item xl={3.5} lg={6}>
+        <Grid item xl={3.5} lg={4.3} md={6}>
           <Brand
             handleChange={handleChange}
             values={values}
@@ -176,7 +184,7 @@ const Forms = ({ getData }) => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={3.5}>
+        <Grid item xl={3.5} lg={4.3} md={6}>
           <FormLabel required>Название товара</FormLabel>
           <StyledInput
             onChange={handleChange}
