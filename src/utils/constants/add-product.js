@@ -151,7 +151,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 3,
         name: "Объем оперативной памяти (GB)",
-        key: "ramOfLaptop",
+        key: "ramLaptop",
         values: [2, 4, 6, 8, 16, 32, 36],
         choosePlaceholder: "Выберите оперативную память",
         type: "select",
@@ -159,7 +159,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 4,
         name: "Размер экрана (дюйм)",
-        key: "screenDiagonalOfSmartWatch",
+        key: "screenSizeLaptop",
         values: [11.6, 13.3, 14, 15, 15.6, 16, 16.1, 17.3],
         choosePlaceholder: "Выберите Диагональ дисплея (дюйм)",
         type: "select",
@@ -167,7 +167,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 5,
         name: "Разрешение экрана",
-        key: "screenResolutionOfLaptop",
+        key: "screenResolutionLaptop",
         values: [
           "1024x600",
           "1280x800",
@@ -185,7 +185,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 6,
         name: "Назначение",
-        key: "appointmentOfLaptop",
+        key: "appointmentLaptop",
         values: [
           "Для работы",
           "Мультимедийный",
@@ -387,22 +387,22 @@ export const PRODUCT_FORM_KEYS = [
       },
       {
         id: 3,
-        key: "ramOfLaptop",
+        key: "ramLaptop",
         required: "Объем оперативной памяти (GB) обязательное поле",
       },
       {
         id: 4,
-        key: "screenDiagonalOfSmartWatch",
-        required: "Диагональ дисплея (дюйм) обязательное поле",
+        key: "screenSizeLaptop",
+        required: "Размер экрана (дюйм) обязательное поле",
       },
       {
         id: 5,
-        key: "screenResolutionOfLaptop",
+        key: "screenResolutionLaptop",
         required: "Разрешение экрана обязательное поле",
       },
       {
         id: 6,
-        key: "appointmentOfLaptop",
+        key: "appointmentLaptop",
         required: "Назначение обязательное поле",
       },
     ],
@@ -566,7 +566,7 @@ export const tableReusibleItems = [
       },
       {
         id: 3,
-        key: "ramOfLaptop",
+        key: "ramLaptop",
         name: "Объем оперативной памяти (GB)",
         flex: 2,
       },
