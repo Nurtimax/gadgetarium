@@ -29,6 +29,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["basket"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
