@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axiosInstance from "../../config/axios-instance";
 import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 
@@ -26,6 +27,9 @@ export const fetchDataSignup = createAsyncThunk(
       const data = response.data;
       return data;
     } catch (error) {
+      if (error.response.data.message) {
+        toast.error(error.response.data.message);
+      }
       if (rejectWithValue) {
         return error;
       }
