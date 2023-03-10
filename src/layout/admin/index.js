@@ -1,13 +1,13 @@
 import { Box, Container, styled } from "@mui/material";
+import React from "react";
 import { Outlet } from "react-router-dom";
-import BreadCrumbs from "../components/breadcrumbs/Breadcrumbs";
-import Footer from "./Footer/Footer";
-import UserHeader from "./header/UserHeader";
+import BreadCrumbs from "../../components/breadcrumbs/Breadcrumbs";
+import AdminHeader from "../header/AdminHeader";
 
-const Layout = () => {
+const AdminLayout = () => {
   return (
-    <StyledLayoutWrapper>
-      <UserHeader />
+    <StyledAdminLayout>
+      <AdminHeader />
       <Container>
         <StyledBreadcrumbsPosition className="flex">
           <BreadCrumbs />
@@ -16,21 +16,17 @@ const Layout = () => {
       <main>
         <Outlet />
       </main>
-      <Footer />
-    </StyledLayoutWrapper>
+    </StyledAdminLayout>
   );
 };
 
-export default Layout;
+export default AdminLayout;
 
-const StyledLayoutWrapper = styled(Box)(() => ({
+const StyledAdminLayout = styled(Box)(() => ({
   flexDirection: "column",
   justifyContent: "space-between",
   height: "100vh",
   gap: "2rem",
-  "& .user_stop": {
-    padding: "0 0 11rem",
-  },
   "& .admin_stop": {
     padding: "0 0 6rem",
   },

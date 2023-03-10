@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import ProductDetails from "../components/productDetails/ProductDetails";
 import AboutStore from "../containers/about-store/AboutStore";
 import AddProduct from "../containers/add-product/AddProduct";
 import Contacts from "../containers/contacts/Contacts";
@@ -13,26 +12,21 @@ import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
 import { ROUTES } from "../utils/constants";
-import { GADJEDTARIUM_LOGIN_INFO } from "../utils/constants/fetch";
-import PrivateRole from "./PrivateRole";
-
-const authSave = JSON.parse(localStorage.getItem(GADJEDTARIUM_LOGIN_INFO));
+import AdminRoutes from "./AdminRoutes";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
-  const user = useSelector((state) => state.auth.data);
-  const { roleName } = user || {};
-
   return (
     <>
       <Routes>
+        <Route path="/*" element={<MainRoutes />} />
         <Route
-          path={ROUTES.MAIN}
+          path="/admin/*"
           element={
-            <PrivateRole
-              RouteComponent={<Layout role={roleName} authSave={authSave} />}
-              roles={["admin"]}
-              fallbackPath="admin"
-              roleName={roleName}
+            <PrivateRoute
+              Component={<AdminRoutes />}
+              role="admin"
+              fallbackPath="/"
             />
           }
         >
@@ -73,7 +67,7 @@ const AppRoutes = () => {
             path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
             element={
               <PrivateRole
-                RouteComponent={<ProductDetails />}
+                RouteComponent={<h1>Galaxy S21 5G</h1>}
                 roles={["admin"]}
                 fallbackPath="admin"
                 roleName={roleName}
