@@ -30,6 +30,8 @@ export const showErrors = (errors) => {
     errorMessage = errors?.phoneNumber;
   } else if (errors?.email) {
     errorMessage = errors?.email;
+  } else if (errors?.address) {
+    errorMessage = errors?.address;
   }
   return errorMessage;
 };

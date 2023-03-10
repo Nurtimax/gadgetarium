@@ -44,7 +44,7 @@ const FunctionalIconsItemTooltipTitle = ({
         {data?.length < 1 ? (
           <Typography style={{ color: "red" }}>Empty products!</Typography>
         ) : (
-          <StyledMainContainer>
+          <StyledMainContainer length={data?.length}>
             <Box className="box-product">
               {data?.map((item, i) => (
                 <Box key={i} className="item-box">
@@ -103,7 +103,7 @@ const Item = styled(Paper)(({ theme }) => ({
   width: "100%",
 }));
 
-const StyledMainContainer = styled(Box)(({ theme }) => ({
+const StyledMainContainer = styled(Box)(({ theme, length }) => ({
   padding: "30px 25.62px 20px 22px",
   display: "flex",
   flexDirection: "column",
@@ -117,8 +117,8 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     gap: "8px",
-    overflowY: "scroll",
-    height: "300px",
+    overflowY: length > 3 ? "scroll" : "auto",
+    height: length > 3 ? "300px" : "",
   },
 
   "& .item-box": {

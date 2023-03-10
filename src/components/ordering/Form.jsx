@@ -1,13 +1,18 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, FormLabel, styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { showErrors } from "../../utils/helpers/catch-signup";
-import { orderingValidateSchema } from "../../utils/helpers/validate";
+import {
+  orderingValidateSchema,
+  orderingValidateSchemaWithAdreess,
+} from "../../utils/helpers/validate";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 
 const Form = ({ handleNext, data, isChecked }) => {
+  const [schema, setSchema] = useState(orderingValidateSchema);
+
   const onSubmit = (values) => {
     handleNext();
 
@@ -38,12 +43,20 @@ const Form = ({ handleNext, data, isChecked }) => {
   } = useFormik({
     initialValues: {
       ...data,
-      address: "No address",
     },
-    validationSchema: orderingValidateSchema,
-    onSubmit,
+    validationSchema: schema,
     validateOnChange: false,
+    onSubmit,
   });
+
+  useEffect(() => {
+    if (isChecked) {
+      setSchema(orderingValidateSchemaWithAdreess);
+    }
+    return () => {
+      setSchema(orderingValidateSchema);
+    };
+  }, [isChecked]);
 
   useEffect(() => {
     setValues({
@@ -58,7 +71,9 @@ const Form = ({ handleNext, data, isChecked }) => {
 
       <Box className="form-box">
         <Box className="box-input">
-          <label htmlFor="firstName">Имя</label>
+          <FormLabel htmlFor="firstName" required>
+            Имя
+          </FormLabel>
           <StyledInput
             placeholder="Напишите ваше имя"
             type="text"
@@ -71,7 +86,9 @@ const Form = ({ handleNext, data, isChecked }) => {
         </Box>
 
         <Box className="box-input">
-          <label htmlFor="lastName">Фамилия</label>
+          <FormLabel required htmlFor="lastName">
+            Фамилия
+          </FormLabel>
           <StyledInput
             placeholder="Напишите вашу фамилию"
             type="text"
@@ -84,7 +101,9 @@ const Form = ({ handleNext, data, isChecked }) => {
         </Box>
 
         <Box className="box-input">
-          <label htmlFor="email">E-mail</label>
+          <FormLabel required htmlFor="email">
+            E-mail
+          </FormLabel>
           <StyledInput
             placeholder="Напишите ваш email"
             type="email"
@@ -97,7 +116,9 @@ const Form = ({ handleNext, data, isChecked }) => {
         </Box>
 
         <Box className="box-input">
-          <label htmlFor="phoneNumber">Телефон</label>
+          <FormLabel required htmlFor="phoneNumber">
+            Телефон
+          </FormLabel>
           <StyledInputMask
             mask="+996(999)99-99-99"
             placeholder="+996 (_ _ _) _ _  _ _  _ _"
@@ -109,7 +130,7 @@ const Form = ({ handleNext, data, isChecked }) => {
         </Box>
         {isChecked ? (
           <Box className="address-input">
-            <label htmlFor="address">Адрес доставки</label>
+            <FormLabel htmlFor="address">Адрес доставки</FormLabel>
             <StyledInput
               placeholder="ул.Московская 120, кв 4, дом 9"
               id="address"
@@ -123,6 +144,7 @@ const Form = ({ handleNext, data, isChecked }) => {
           ""
         )}
       </Box>
+
       {showErrors(errors) && (
         <Typography
           component="p"
@@ -143,8 +165,7 @@ const Form = ({ handleNext, data, isChecked }) => {
 export default Form;
 
 const MainContainer = styled("form")(() => ({
-  "& label:after": {
-    content: '" *"',
+  "& .MuiFormLabel-asterisk": {
     color: "red",
   },
 
