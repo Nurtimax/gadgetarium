@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  Container,
-  styled,
-  Typography,
-  Box,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Container, styled, Typography, Box, Button } from "@mui/material";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
 import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
@@ -81,7 +74,7 @@ const CatalogProducts = () => {
               </div>
             </Box>
 
-            <Grid item xs={1.5} className="flex gap2">
+            <Box className="flex gap2">
               <Box className="flexgrow flex height" onClick={setSortEl}>
                 <Sort
                   anchorElCatalog={sortEL}
@@ -98,7 +91,7 @@ const CatalogProducts = () => {
                   <ArrowDownIcon />
                 </Box>
               </Box>
-            </Grid>
+            </Box>
           </Box>
 
           {errorMessage ? (
