@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import catalogSlice from "./slices/catalog";
 import addProductSlice from "./slices/add-product";
 import { productSlice } from "./slices/productSlice";
+import productDetailsSlice from "./slices/product-details";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: reducerAuthenticationSlice,
     addProduct: addProductSlice.reducer,
     product: productSlice.reducer,
+    productDetails: productDetailsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
