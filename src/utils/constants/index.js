@@ -222,7 +222,11 @@ export const catalogMenu_FAKE_DATA = [
     ],
   },
 ];
+export const characteristicas = [
+  { id: 1, title: "Основные xарактеристики", panel: "panel1" },
 
+  { id: 2, title: "Память и процессор", panel: "panel2" },
+];
 export const titlesTables = [
   "ID",
   "Фото",
@@ -314,20 +318,17 @@ export const TAB_ITEMS = [
     id: 1,
     param: "description",
     label: "Описание",
-    Component: "Описание",
   },
   {
     id: 2,
     param: "characteristics",
     label: "Характеристики",
-    Component: "Характеристики",
   },
-  { id: 3, param: "reviews", label: "Отзывы", Component: "Отзывы" },
+  { id: 3, param: "reviews", label: "Отзывы" },
   {
     id: 4,
     param: "shipping-and-payment",
     label: "Доставка и оплата",
-    Component: "Доставка и оплата",
   },
 ];
 
