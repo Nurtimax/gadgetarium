@@ -8,7 +8,10 @@ import Modal from "../../components/UI/Modal";
 import { useFormik } from "formik";
 import useVisibility from "../../hooks/useVisibility";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataSignin } from "../../redux/slices/authentication";
+import {
+  ActionauthenticationSlice,
+  fetchDataSignin,
+} from "../../redux/slices/authentication-slice";
 import { singInValidateSchema } from "../../utils/helpers/validate";
 
 const SignIn = () => {
@@ -20,14 +23,22 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const onSubmit = (values, action) => {
-    dispatch(fetchDataSignin(values)).then((res) => {
-      const { payload } = res;
+    dispatch(fetchDataSignin(values)).then((data) => {
+      const { payload } = data;
       if (payload?.email && payload?.roleName && payload?.token) {
-        action.resetForm();
-        navigate("/");
-        setError(null);
+        if (data) {
+          dispatch(ActionauthenticationSlice.getUserData(payload));
+          action.resetForm();
+          setError(null);
+          if (payload?.roleName === "Admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
+        }
+      } else {
+        setError(true);
       }
-      setError(true);
     });
   };
 

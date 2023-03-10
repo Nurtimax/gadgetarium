@@ -54,41 +54,49 @@ const authenticationSlice = createSlice({
       state.data = action.payload;
     },
   },
-  extraReducers: {
-    [fetchDataSignin.fulfilled]: (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        localStorage.setItem(
-          GADJEDTARIUM_LOGIN_INFO,
-          JSON.stringify(action.payload)
-        );
-      }
-      state.data = action.payload;
-      state.isLoading = false;
-    },
-    [fetchDataSignin.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [fetchDataSignin.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [fetchDataSignup.fulfilled]: (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        localStorage.setItem(
-          GADJEDTARIUM_LOGIN_INFO,
-          JSON.stringify(action.payload)
-        );
+
+  extraReducers: (builder) => {
+    builder
+
+      .addCase(fetchDataSignin.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          localStorage.setItem(
+            GADJEDTARIUM_LOGIN_INFO,
+            JSON.stringify(action.payload)
+          );
+        }
         state.data = action.payload;
-      }
-      state.isLoading = false;
-    },
-    [fetchDataSignup.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [fetchDataSignup.pending]: (state) => {
-      state.isLoading = true;
-    },
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignin.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignin.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(fetchDataSignup.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          localStorage.setItem(
+            GADJEDTARIUM_LOGIN_INFO,
+            JSON.stringify(action.payload)
+          );
+          state.data = action.payload;
+        }
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignup.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignup.pending, (state) => {
+        state.isLoading = true;
+      });
   },
 });
 

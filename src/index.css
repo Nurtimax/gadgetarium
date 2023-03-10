@@ -131,3 +131,7 @@ a {
 .background_linear {
   background: linear-gradient(107.03deg, #6b0fa9 13.93%, #4d0eb8 94.5%);
 }
+
+.MuiPickersPopper-paper > div > div:first-child {
+  display: none !important;
+}

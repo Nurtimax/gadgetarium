@@ -11,7 +11,7 @@ import useVisibility from "../../hooks/useVisibility";
 import { showError } from "../../utils/helpers/catch-signup";
 import { singUpValidateSchema } from "../../utils/helpers/validate";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataSignup } from "../../redux/slices/authentication";
+import { fetchDataSignup } from "../../redux/slices/authentication-slice";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useVisibility();
@@ -42,7 +42,11 @@ const SignUp = () => {
       const { email, roleName, token } = res.payload;
       if (email && roleName && token) {
         action.resetForm();
-        navigate("/");
+        if (roleName === "Admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     });
   };

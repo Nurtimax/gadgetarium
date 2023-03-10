@@ -20,6 +20,7 @@ import {
 } from "../../assets";
 import ImageTable from "../../assets/images/imageTables.png";
 import TabletMacIcon from "@mui/icons-material/TabletMac";
+import { ROUTES } from "./routes";
 
 export const dataDigitalBestSeller = [
   "https://img.freepik.com/free-photo/laptop-pens-phone-note-with-blank-screen-on-table_155003-5339.jpg?size=626&ext=jpg&ga=GA1.1.1780412916.1673425944",
@@ -65,6 +66,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар добавлен в список сравнения!",
     transitionTitle: "Перейти к сравнению",
+    link: ROUTES.COMPATISONPRODUCT,
   },
   {
     id: 2,
@@ -80,6 +82,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар добавлен в избранное!",
     transitionTitle: "Перейти в избранное",
+    link: ROUTES.LIKE,
   },
   {
     id: 3,
@@ -96,6 +99,7 @@ export const iconsData = [
     focused: false,
     addedTitle: "Товар успешно добавлен в корзину!",
     transitionTitle: "Перейти в корзину",
+    link: ROUTES.CART,
   },
 ];
 
@@ -445,34 +449,6 @@ export const dataAboutStore = {
   ],
 };
 
-export const ROUTES = {
-  ADMIN: "/admin",
-  ADMINITEMDETAIL: "item_details",
-  ADDPRODUCT: "add-product",
-  SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
-  DESCRIPTIONOVERVIEW: "description-overview",
-  MAIN: "/",
-  ABOUTSTORE: "/about",
-  PHONE: ":catalogItem",
-  PRODUCT: ":product",
-  CART: "cart",
-  CHECKOUT: "checkout",
-  COMPATISONPRODUCT: "comparison",
-  LIKE: "like",
-  DELIVERY: "delivery",
-  FAG: "fag",
-  CONTACTS: "contacts",
-  VIP: "/vip",
-  HISTORY: "history",
-  GOODS: "goods",
-  ORDERS: "orders",
-  REVIEWSRATING: "reviews-rating",
-  SIGNIN: "/sign-in",
-  SIGNUP: "/sign-up",
-  NOTFOUND: "/*",
-  PROFILE: "profile",
-};
-
 export const DUMMY_PRODUCT_DATA = [
   {
     id: 1,
@@ -491,6 +467,122 @@ export const DUMMY_PRODUCT_DATA = [
     theme: "redmi",
   },
 ];
+
+export const TAB_ITEMS_ORDER = [
+  {
+    id: 1,
+    tabTitle: "WAITING",
+    title: "В ожидании",
+  },
+  {
+    id: 2,
+    tabTitle: "IN_PROCESSING",
+    title: "В обработке",
+  },
+  {
+    id: 3,
+    tabTitle: "ON_THE_WAY",
+    title: "Курьер в пути",
+  },
+  {
+    id: 4,
+    tabTitle: "DELIVERED",
+    title: "Доставлены",
+  },
+  {
+    id: 5,
+    tabTitle: "CANCEL",
+    title: "Отменены",
+  },
+];
+
+export const SECOND_TABS_DATA_ORDERS = [
+  {
+    id: "1",
+    title: "За день",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "120 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "100 500",
+    },
+  },
+
+  {
+    id: "2",
+    title: "За месяц",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "190 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "150 500",
+    },
+  },
+
+  {
+    id: "3",
+    title: "За год",
+    titlePanel: "Доставлено товаров на сумму",
+    currentDuring: {
+      text: "Текущий период",
+      price: "130 000",
+    },
+    previousDuring: {
+      text: "Предыдущий период",
+      price: "110 500",
+    },
+  },
+];
+
+export const OrdersTableListData = [
+  {
+    id: 1,
+    fullname: "Syimyk Ravshanbekov",
+    orderNumber: "466247",
+    dateOfOrder: "2021-09-13T18:20:03",
+    countOfProduct: 3,
+    totalSum: 217900,
+    totalDiscount: 2043870,
+    designOrder: "Самовывоз",
+    status: "В обработке",
+    action: <DeleteIcon />,
+  },
+
+  {
+    id: 1,
+    fullname: "Syimyk Ravshanbekov",
+    orderNumber: "466247",
+    dateOfOrder: "2021-09-13T18:20:03",
+    countOfProduct: 3,
+    totalSum: 217900,
+    totalDiscount: 204387,
+    designOrder: "Доставка",
+    status: "В обработке",
+    action: <DeleteIcon />,
+  },
+];
+
+export const titlesOrderPopUpOne = [
+  { text: "В ожидании", tab: "WAITING" },
+  { text: "Готов к выдаче", tab: "IN_PROCESSING" },
+  { text: "Получен", tab: "DELIVERED" },
+  { text: "Отменено", tab: "CANCEL" },
+];
+
+export const titlesOrderPopUpTwo = [
+  { text: "В ожидании", tab: "WAITING" },
+  { text: "Готов к выдаче", tab: "IN_PROCESSING" },
+  { text: "Курьер в пути", tab: "ON_THE_WAY" },
+  { text: "Доставлен", tab: "DELIVERED" },
+  { text: "Отменено", tab: "CANCEL" },
+];
+
 export const ITEM_SORT = [
   { id: 1, title: "Новинки" },
   {
@@ -515,6 +607,7 @@ export const ITEM_SORT = [
   { id: 4, title: "По увеличению цены" },
   { id: 5, title: "По уменьшению цены" },
 ];
+
 export const filterCategory = [
   {
     id: 1,
@@ -528,6 +621,7 @@ export const filterCategory = [
     ],
   },
 ];
+
 export const filterPrice = [
   {
     id: 2,
@@ -582,3 +676,6 @@ export const chip_item = [
   { id: 3, title: "Apple" },
   { id: 4, title: "Apple" },
 ];
+
+export const notFoundImage =
+  "https://us.123rf.com/450wm/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016/167492439-no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image.jpg?ver=6";

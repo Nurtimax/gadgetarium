@@ -1,8 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import OrderItem from "../components/orders/OrderItem";
 import AddProduct from "../containers/add-product/AddProduct";
+import Orders from "../containers/orders/Orders";
 import AdminLayout from "../layout/admin";
-import { ROUTES } from "../utils/constants";
+import { ROUTES } from "../utils/constants/routes";
+
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -16,11 +19,15 @@ const AdminRoutes = () => {
           path={`${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`}
           element={<h1>detail</h1>}
         />
+
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
           element={<AddProduct />}
         />
-        <Route path={`${ROUTES.ORDERS}`} element={<h1>Orders</h1>} />
+
+        <Route path={`${ROUTES.ORDERS}`} element={<Orders />} />
+        <Route path={`${ROUTES.ORDERS}/:orderId`} element={<OrderItem />} />
+
         <Route
           path={`${ROUTES.REVIEWSRATING}`}
           element={<h1>Revviews Rating</h1>}

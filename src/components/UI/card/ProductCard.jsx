@@ -21,6 +21,9 @@ import {
 } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { postProductToBasket } from "../../../redux/slices/basket-slice";
+
 const ProductCard = (props) => {
   const {
     productName,
@@ -37,6 +40,23 @@ const ProductCard = (props) => {
     categoryId,
     ...rest
   } = props;
+
+  const basketData = useSelector((state) => state.basket.data);
+
+  const dispatch = useDispatch();
+
+  const addBasketHandler = () => {
+    if (basketData?.some((item) => item.id === productId)) {
+      alert("Товар уже добавлен!");
+    } else {
+      dispatch(
+        postProductToBasket({
+          orderCount: count,
+          productId,
+        })
+      );
+    }
+  };
 
   const productSale = useMemo(() => {
     return Math.round((discountPrice / productPrice) * 100) - 100;
@@ -151,6 +171,34 @@ const ProductCard = (props) => {
           >
             В корзину
           </IconButton>
+          <Grid container className="flex between ">
+            <Box width="30%" marginLeft="-10px">
+              {discountPrice > 0 ? (
+                <Typography variant="h1" fontSize="0.8rem">
+                  {priceProductSeparate(Number(String(discountPrice || 0)))}c
+                </Typography>
+              ) : (
+                <Typography variant="h1" fontSize="0.8rem">
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
+                </Typography>
+              )}
+              {discountPrice > 0 ? (
+                <Styled_Price>
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
+                </Styled_Price>
+              ) : null}
+            </Box>
+            <IconButton
+              onClick={addBasketHandler}
+              width="70%"
+              height="2.5vw"
+              title="Добавить в карзину"
+              fontSize="0.5rem"
+              icon={<CartIcon width="1.5vw" />}
+            >
+              В корзину
+            </IconButton>
+          </Grid>
         </CardActions>
       </Card_contend>
     </StyledProductCard>
