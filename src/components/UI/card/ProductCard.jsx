@@ -20,6 +20,7 @@ import {
   HeartActiveIcon,
 } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
+import { Link } from "react-router-dom";
 const ProductCard = (props) => {
   const {
     productName,
@@ -32,6 +33,8 @@ const ProductCard = (props) => {
     countOfReview,
     favorite,
     compared,
+    productId,
+    categoryId,
     ...rest
   } = props;
 
@@ -49,7 +52,7 @@ const ProductCard = (props) => {
         return <Like width="2vw" height="2vw" title="Рекoмендуем" />;
 
       default:
-        return <div></div>;
+        return null;
     }
   }, [productStatus]);
 
@@ -100,17 +103,19 @@ const ProductCard = (props) => {
       <CardActions>
         <Grid className="between" container>
           {sortStatus}
-          <Grid className="flex gap2">
+          <Grid item className="flex gap2">
             {onComponentComporation}
             {onComponentLike}
           </Grid>
         </Grid>
       </CardActions>
-      <CardMedia_Styled
-        src={productImage}
-        title={productName}
-        alt={productName}
-      />
+      <Link to={`/item/${categoryId + 1}/${productId}/description`}>
+        <CardMedia_Styled
+          src={productImage}
+          title={productName}
+          alt={productName}
+        />
+      </Link>
       <Card_contend className="carsContent">
         <Styled_Count>В наличии ({count})</Styled_Count>
         <StyletTitle color="black" title={productName}>
@@ -121,33 +126,31 @@ const ProductCard = (props) => {
           <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
         <CardActions>
-          <Grid container className="flex between ">
-            <Box width="30%" marginLeft="-10px">
-              {discountPrice > 0 ? (
-                <Typography variant="h1" fontSize="0.8rem">
-                  {priceProductSeparate(Number(String(discountPrice || 0)))}c
-                </Typography>
-              ) : (
-                <Typography variant="h1" fontSize="0.8rem">
-                  {priceProductSeparate(Number(String(productPrice || 0)))}c
-                </Typography>
-              )}
-              {discountPrice > 0 ? (
-                <Styled_Price>
-                  {priceProductSeparate(Number(String(productPrice || 0)))}c
-                </Styled_Price>
-              ) : null}
-            </Box>
-            <IconButton
-              width="70%"
-              height="2.5vw"
-              title="Добавить в карзину"
-              fontSize="0.5rem"
-              icon={<CartIcon width="1.5vw" />}
-            >
-              В корзину
-            </IconButton>
-          </Grid>
+          <Box width="30%" marginLeft="-10px">
+            {discountPrice > 0 ? (
+              <Typography variant="h1" fontSize="0.8rem">
+                {priceProductSeparate(Number(String(discountPrice || 0)))}c
+              </Typography>
+            ) : (
+              <Typography variant="h1" fontSize="0.8rem">
+                {priceProductSeparate(Number(String(productPrice || 0)))}c
+              </Typography>
+            )}
+            {discountPrice > 0 ? (
+              <Styled_Price>
+                {priceProductSeparate(Number(String(productPrice || 0)))}c
+              </Styled_Price>
+            ) : null}
+          </Box>
+          <IconButton
+            width="70%"
+            height="2.5vw"
+            title="Добавить в карзину"
+            fontSize="0.5rem"
+            icon={<CartIcon width="1.5vw" />}
+          >
+            В корзину
+          </IconButton>
         </CardActions>
       </Card_contend>
     </StyledProductCard>
