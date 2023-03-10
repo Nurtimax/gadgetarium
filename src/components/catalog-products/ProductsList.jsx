@@ -45,7 +45,7 @@ const ProductsList = ({
         paddingBottom: "20px",
       }}
     >
-      {data.products?.map((item) => (
+      {data?.products.productCardResponses?.map((item) => (
         <ProductCardStyled
           {...item}
           key={item.productId}
