@@ -18,7 +18,8 @@ export const fetchDiscountProduct = createAsyncThunk(
   async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axiosInstance.get(
-        `products/discountsProducts`,
+        `products/discounts`,
+        // products/discounts
         {
           params: {
             page: 1,
@@ -60,7 +61,7 @@ export const fetchRecomendationProduct = createAsyncThunk(
   async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axiosInstance.get(
-        `products/recommendationsProducts`,
+        `products/recommendations`,
         {
           params: {
             page: 1,
