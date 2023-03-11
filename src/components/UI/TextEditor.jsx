@@ -74,7 +74,7 @@ const TextEditor = ({ onChange }) => {
     content: ``,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      onChange(html);
+      onChange({ key: "description", value: html });
     },
   });
 
