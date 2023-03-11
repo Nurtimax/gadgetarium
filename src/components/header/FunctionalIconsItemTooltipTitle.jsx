@@ -44,30 +44,33 @@ const FunctionalIconsItemTooltipTitle = ({
         {data?.length < 1 ? (
           <Typography style={{ color: "red" }}>Empty products!</Typography>
         ) : (
-          <StyledMainContainer>
-            {data?.map((item, i) => (
-              <Box key={i} className="item-box">
-                <img src={item.image} alt="photo" className="image" />
+          <StyledMainContainer length={data?.length}>
+            <Box className="box-product">
+              {data?.map((item, i) => (
+                <Box key={i} className="item-box">
+                  <img src={item.image} alt="photo" className="image" />
 
-                <span className="name">
-                  {item.productName} {item.characteristics.memoryOfPhone}gb
-                  <span>{item.color.toLowerCase()}</span>
-                </span>
+                  <span className="name">
+                    <p>{item.productName}</p>
+                    <p> {item.characteristics.memoryOfPhone}gb</p>
+                    <p>{item.color.toLowerCase()}</p>
+                  </span>
 
-                <span className="price">
-                  {priceProductSeparate(Number(String(item.price)))} c
-                </span>
+                  <span className="price">
+                    {priceProductSeparate(Number(String(item.price)))} c
+                  </span>
 
-                <span className="dlt">
-                  <IconClose onClick={() => deleteHandler(item.id)} />
-                </span>
-              </Box>
-            ))}
+                  <span className="dlt">
+                    <IconClose onClick={() => deleteHandler(item.id)} />
+                  </span>
+                </Box>
+              ))}
+            </Box>
 
             <Box className="box-total">
-              <StyledButton>
-                <Link to={`/${ROUTES.ORDERING}`}>Оформить заказ</Link>
-              </StyledButton>
+              <Link to={`${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                <StyledButton>Оформить заказ</StyledButton>
+              </Link>
               <Typography className="total-price">
                 Итого {priceProductSeparate(Number(String(price)))} с
               </Typography>
@@ -100,7 +103,7 @@ const Item = styled(Paper)(({ theme }) => ({
   width: "100%",
 }));
 
-const StyledMainContainer = styled(Box)(({ theme }) => ({
+const StyledMainContainer = styled(Box)(({ theme, length }) => ({
   padding: "30px 25.62px 20px 22px",
   display: "flex",
   flexDirection: "column",
@@ -109,6 +112,14 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
   fontWeight: "400",
   fontSize: "16px",
   color: theme.palette.primary.main,
+
+  "& .box-product": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    overflowY: length > 3 ? "scroll" : "auto",
+    height: length > 3 ? "300px" : "",
+  },
 
   "& .item-box": {
     paddingBottom: "7px",
@@ -124,6 +135,7 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
 
   "& .name": {
     display: "flex",
+    flexWrap: "wrap",
     gap: "4px",
     width: "255px",
   },

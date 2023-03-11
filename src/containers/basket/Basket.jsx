@@ -8,6 +8,7 @@ import BasketItem from "../../components/basket/BasketItem";
 import EmptyBasket from "../../components/basket/EmptyBasket";
 import GadgetariumSpinnerLoading from "../../components/GadgetariumSpinnerLoading";
 import Button from "../../components/UI/button/Button";
+import PopUp from "../../components/UI/PopUp";
 import {
   deleteProductBasket,
   getBasketProduct,
@@ -25,11 +26,16 @@ const Basket = () => {
   const [allId, setAllId] = useState([]);
   const [allChecked, setAllChecked] = useState(false);
   const [sumOrderData, setSumOrderData] = useState([]);
+  const [text, setText] = useState("");
+  const [dropDown, setDropDown] = useState(false);
 
   useEffect(() => {
     setSumOrderData(
       DATA.length > 0
-        ? DATA?.map((product) => ({ ...product, productCount: 1 }))
+        ? DATA?.map((product) => ({
+            ...product,
+            productCount: 1,
+          }))
         : []
     );
   }, [data]);
@@ -57,9 +63,16 @@ const Basket = () => {
     }
   };
 
+  const closeDropDown = () => {
+    setDropDown(false);
+  };
+
   const onFavoriteAll = () => {
     if (allId.length > 0) {
-      dispatch(postProductToFavorite(allId));
+      dispatch(postProductToFavorite(allId)).then(() => {
+        setText("Товары успешно добавлены в избранное!");
+        setDropDown(true);
+      });
     } else {
       alert("Выберите продукты!");
     }
@@ -74,7 +87,7 @@ const Basket = () => {
   };
 
   const orderCount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.orderCount);
+    return Number(acc) + Number(curr.orderCount) + curr.productCount;
   }, 0);
 
   const discount = sumOrderData?.reduce((acc, curr) => {
@@ -86,92 +99,106 @@ const Basket = () => {
   }, 0);
 
   return (
-    <MainContainer>
-      <Typography className="title">Товары в корзине</Typography>
-      {isLoading ? (
-        <GadgetariumSpinnerLoading />
-      ) : DATA?.length < 1 ? (
-        <EmptyBasket />
-      ) : (
-        <>
-          <Box className="action-box">
-            <Box className="action" onClick={getIdProducts}>
-              <Checkbox color="secondary" checked={allChecked} />
+    <>
+      <PopUp
+        open={dropDown}
+        handleClose={closeDropDown}
+        transitionTitle="Перейти в корзину"
+        addedTitle={text}
+        durationSnackbar={2000}
+        icon={true}
+        vertical="bottom"
+        horizontal="right"
+        to="/cart"
+      />
 
-              <Typography>Отметить всё</Typography>
-            </Box>
+      <MainContainer>
+        <Typography className="title">Товары в корзине</Typography>
+        {isLoading ? (
+          <GadgetariumSpinnerLoading />
+        ) : DATA?.length < 1 ? (
+          <EmptyBasket />
+        ) : (
+          <>
+            <Box className="action-box">
+              <Box className="action" onClick={getIdProducts}>
+                <Checkbox color="secondary" checked={allChecked} />
 
-            <Box className="action dlt" onClick={onDeleteAll}>
-              <DeleteIconBasket className="icon" />
-
-              <Typography>Удалить</Typography>
-            </Box>
-
-            <Box className="action dlt" onClick={onFavoriteAll}>
-              <HeartIcon className="heart" />
-
-              <Typography>Переместить в избранное</Typography>
-            </Box>
-          </Box>
-
-          <Box className="container">
-            <Box className="product-container">
-              {sumOrderData?.map((item, i) => (
-                <Box key={i} className="product-box">
-                  <BasketItem
-                    {...item}
-                    allChecked={allChecked}
-                    setAllId={setAllId}
-                    allId={allId}
-                    setSumOrderData={setSumOrderData}
-                  />
-                </Box>
-              ))}
-            </Box>
-
-            <Box className="sum-order-box">
-              <Typography className="title-sum">Сумма заказа</Typography>
-
-              <Box className="box-sum">
-                <Box className="box-name">
-                  <Typography>Количество товаров:</Typography>
-                  <Typography>Ваша скидка:</Typography>
-                  <Typography>Сумма:</Typography>
-                  <Typography className="total">Итого</Typography>
-                </Box>
-
-                <Box>
-                  <Typography>{Math.round(orderCount || 0)} шт.</Typography>
-                  <span className="discount">
-                    <span>-</span>
-                    <span>
-                      {priceProductSeparate(
-                        Number(String(price / discount || 0))
-                      )}
-                    </span>
-                    <p>c</p>
-                  </span>
-                  <Typography className="sum">
-                    {priceProductSeparate(Number(String(price || 0)))}
-                    <span>c</span>
-                  </Typography>
-                  <Typography className="total">
-                    {priceProductSeparate(
-                      Number(String(price - price / discount || 0))
-                    )}
-                    <span>c</span>
-                  </Typography>
-                </Box>
+                <Typography>Отметить всё</Typography>
               </Box>
 
-              <StyledButton>
-                <Link to={`/${ROUTES.ORDERING}`}>Перейти к оформлению</Link>
-              </StyledButton>
+              <Box className="action dlt" onClick={onDeleteAll}>
+                <DeleteIconBasket className="icon" />
+
+                <Typography>Удалить</Typography>
+              </Box>
+
+              <Box className="action dlt" onClick={onFavoriteAll}>
+                <HeartIcon className="heart" />
+
+                <Typography>Переместить в избранное</Typography>
+              </Box>
             </Box>
-          </Box>
-        </>
-      )}
-    </MainContainer>
+
+            <Box className="container">
+              <Box className="product-container">
+                {sumOrderData?.map((item, i) => (
+                  <Box key={i} className="product-box">
+                    <BasketItem
+                      {...item}
+                      allChecked={allChecked}
+                      setAllId={setAllId}
+                      allId={allId}
+                      setSumOrderData={setSumOrderData}
+                    />
+                  </Box>
+                ))}
+              </Box>
+
+              <Box className="sum-order-box">
+                <Typography className="title-sum">Сумма заказа</Typography>
+
+                <Box className="box-sum">
+                  <Box className="box-name">
+                    <Typography>Количество товаров:</Typography>
+                    <Typography>Ваша скидка:</Typography>
+                    <Typography>Сумма:</Typography>
+                    <Typography className="total">Итого</Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography>{Math.round(orderCount || 0)} шт.</Typography>
+                    <span className="discount">
+                      <span>-</span>
+                      <span>
+                        {priceProductSeparate(
+                          Number(String(price / discount || 0))
+                        )}
+                      </span>
+                      <p>c</p>
+                    </span>
+                    <Typography className="sum">
+                      {priceProductSeparate(Number(String(price || 0)))}
+                      <p>c</p>
+                    </Typography>
+                    <Typography className="total">
+                      {priceProductSeparate(
+                        Number(String(price - price / discount || 0))
+                      )}
+                      <p>c</p>
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Link to={`/${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                  <StyledButton>Перейти к оформлению</StyledButton>
+                </Link>
+              </Box>
+            </Box>
+          </>
+        )}
+      </MainContainer>
+    </>
   );
 };
 
@@ -228,10 +255,10 @@ const MainContainer = styled(Container)(({ theme }) => ({
     width: "24px",
     height: "24px",
   },
-
   "& .container": {
     display: "flex",
-    gap: "104px",
+    justifyContent: "space-between",
+    gap: "10px",
     alignItems: "flex-start",
     paddingTop: "28px",
   },
@@ -287,11 +314,17 @@ const MainContainer = styled(Container)(({ theme }) => ({
     fontWeight: "600",
     display: "flex",
     gap: "5px",
+    "& p": {
+      textDecoration: "underline",
+    },
   },
 
   "& .sum": {
     paddingTop: "7px",
     display: "flex",
     gap: "5px",
+    "& p": {
+      textDecoration: "underline",
+    },
   },
 }));
