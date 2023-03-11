@@ -267,7 +267,7 @@ const MainContainer = styled(Container)(({ theme, ischecked }) => ({
 
   "& .image-product": {
     mixBlendMode: "color-burn",
-    width: "74px",
+    width: "90px",
     height: "84px",
   },
 
