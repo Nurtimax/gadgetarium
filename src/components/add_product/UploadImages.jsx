@@ -99,6 +99,9 @@ const UploadImages = ({
 
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
+    accept: {
+      "image/*": [],
+    },
   });
 
   const isSubProductData = useMemo(() => {
