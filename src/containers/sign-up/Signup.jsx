@@ -223,6 +223,7 @@ const StyledInput = styled(Input)(() => ({
   width: "100%",
   height: "43px",
 }));
+
 const StyledInputMask = styled(ReactInputMask)(({ theme }) => ({
   width: "100%",
   height: "43px",

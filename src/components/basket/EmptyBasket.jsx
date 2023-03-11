@@ -12,9 +12,9 @@ const EmptyBasket = () => {
         Но вы всегда можете ее наполнить
       </Typography>
 
-      <StyledButton>
-        <Link to="/">К покупкам</Link>
-      </StyledButton>
+      <Link to="/">
+        <StyledButton>К покупкам</StyledButton>
+      </Link>
     </MainContainer>
   );
 };

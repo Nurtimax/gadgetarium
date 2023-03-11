@@ -1,7 +1,7 @@
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Breadcrumbs } from "@mui/material";
+import { Breadcrumbs, styled } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { BREADCRUMBS } from "../../utils/constants/breadcrumbs";
 import { useMemo } from "react";
@@ -32,12 +32,26 @@ const BreadCrumbs = () => {
     <Breadcrumbs separator={<KeyboardDoubleArrowRightIcon fontSize="6px" />}>
       {breadcrumbs.length > 1 &&
         breadcrumbs.map(({ match, breadcrumb }) => (
-          <NavLink key={match.pathname} to={match.pathname}>
+          <StyledLink
+            key={match.pathname}
+            to={match.pathname}
+            className={({ isActive }) => (isActive ? "active" : "no-active")}
+          >
             {breadcrumb}
-          </NavLink>
+          </StyledLink>
         ))}
     </Breadcrumbs>
   );
 };
 
 export default BreadCrumbs;
+
+const StyledLink = styled(NavLink)(({ theme }) => ({
+  "&.active": {
+    color: theme.palette.primary.main,
+  },
+
+  "&.no-active": {
+    color: "#91969E",
+  },
+}));

@@ -30,6 +30,7 @@ const CartProductInBasket = ({
   memoryOfPhone,
   id,
   productCount,
+  orderCount,
 }) => {
   const priceProduct = price * productCount;
 
@@ -44,7 +45,9 @@ const CartProductInBasket = ({
         <StyledCardContent>
           <Box>
             <NameProduct>
-              {name || "Don't have"} {memoryOfPhone}gb {color.toLowerCase()}
+              <p>{name || "Don't have"}</p>
+              <p>{memoryOfPhone}gb</p>
+              <p> {color.toLowerCase()}</p>
             </NameProduct>
 
             <BoxRating>
@@ -77,7 +80,7 @@ const CartProductInBasket = ({
                   -
                 </ButtonCounter>
 
-                <TextCount>{productCount}</TextCount>
+                <TextCount>{orderCount + productCount}</TextCount>
 
                 <ButtonCounter
                   onClick={() => onPlus(id)}
@@ -93,7 +96,7 @@ const CartProductInBasket = ({
             </BoxCounterAndPrice>
 
             <BoxIcons>
-              <IconsTexts onClick={onFavorite}>
+              <IconsTexts style={{ width: "110px" }} onClick={onFavorite}>
                 <Checkbox
                   icon={<IconHeart className="heart" />}
                   checkedIcon={<ActiveHeartIcon />}
@@ -116,9 +119,7 @@ const CartProductInBasket = ({
 export default CartProductInBasket;
 
 const StyledMainContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  gap: "24px",
-
+  width: "100%",
   "& .MuiButtonBase-root": {
     padding: "0",
     width: "16px",
@@ -132,7 +133,6 @@ const StyledMainContainer = styled(Box)(({ theme }) => ({
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  height: "170px",
   width: "100%",
   padding: "20px",
   borderRadius: "5px",
@@ -140,7 +140,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   background: theme.palette.primary.contrastText,
   display: "flex",
-  gap: "47px",
+  gap: "10px",
 
   "& .MuiCardContent-root:last-child": {
     paddingBottom: "0",
@@ -156,12 +156,15 @@ const StyledCardMedia = styled(CardMedia)(() => ({
   height: "121px",
 }));
 
-const NameProduct = styled(Typography)(({ theme }) => ({
-  width: "390px",
+const NameProduct = styled("span")(({ theme }) => ({
   fontFamily: "Inter",
   fontWeight: "400",
   fontSize: "18px",
   color: theme.palette.primary.dark,
+  display: "flex",
+  gap: "7px",
+  rowGap: "0",
+  flexWrap: "wrap",
 }));
 
 const BoxRating = styled("div")(() => ({
@@ -200,7 +203,7 @@ const TextProductCode = styled(Typography)(({ theme }) => ({
 
 const StyledCardContent = styled(CardContent)(() => ({
   display: "flex",
-  gap: "30px",
+  justifyContent: "space-between",
 }));
 
 const ButtonCounter = styled("button")(({ theme }) => ({

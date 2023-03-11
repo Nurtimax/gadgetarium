@@ -39,15 +39,6 @@ const AdminRoutes = () => {
           }
         />
         <Route
-          path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
-          element={<h1>Product</h1>}
-        />
-        <Route
-          path={`${ROUTES.GOODS}/${ROUTES.ADMINITEMDETAIL}`}
-          element={<h1>detail</h1>}
-        />
-
-        <Route
           path={`${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
@@ -80,15 +71,6 @@ const AdminRoutes = () => {
             }
           />
         </Route>
-        <Route
-          path={`${ROUTES.ORDERS}`}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <Orders />
-            </Suspense>
-          }
-        />
-
         <Route
           path={`${ROUTES.ORDERS}`}
           element={

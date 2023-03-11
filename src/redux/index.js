@@ -16,6 +16,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { orderingSlice } from "./slices/ordering-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   orderProduct: ordersProduct.reducer,
   basket: basketProducts.reducer,
   catolog: catalogSlice.reducer,
+  ordering: orderingSlice.reducer,
 });
 
 const persistConfig = {
