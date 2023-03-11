@@ -64,6 +64,10 @@ const initialState = {
     errorPriceId: [],
     errorCountId: [],
   },
+  addProductFirstPart: {},
+  activeStep: 0,
+  values: {},
+  error: {},
 };
 
 const addProductSlice = createSlice({
@@ -72,6 +76,30 @@ const addProductSlice = createSlice({
   reducers: {
     editData: (state, action) => {
       state.editData = { ...state.editData, ...action.payload };
+    },
+    editAddProductFirstPart: (state, action) => {
+      state.addProductFirstPart = action.payload;
+    },
+    nextActiveStep: (state) => {
+      state.activeStep = state.activeStep + 1;
+    },
+    editAddProductSecondPart: (state, action) => {
+      state.addProductFirstPart = {
+        ...state.addProductFirstPart,
+        [action.payload.key]: action.payload.value,
+      };
+    },
+    editValues: (state, action) => {
+      state.values = action.payload;
+    },
+    editValuesWithKey: (state, action) => {
+      state.values = {
+        ...state.values,
+        [action.payload.key]: action.payload.value,
+      };
+    },
+    getErrors: (state, action) => {
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
