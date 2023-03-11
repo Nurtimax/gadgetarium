@@ -4,13 +4,13 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const DateTableItem = () => {
-  const { editData } = useSelector((state) => state.addProduct);
+  const { values } = useSelector((state) => state.addProduct);
   const date = useMemo(() => {
-    if (editData.date) {
-      return format(new Date(editData.date), "dd.MM.yyyy");
+    if (values.dateOfIssue) {
+      return format(new Date(values.dateOfIssue), "dd.MM.yyyy");
     }
     return null;
-  }, [editData.date]);
+  }, [values.dateOfIssue]);
 
   return <StyledDateTableItem>{date}</StyledDateTableItem>;
 };
