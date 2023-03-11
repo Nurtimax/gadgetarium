@@ -28,7 +28,7 @@ import ColorName from "./fields/ColorName";
 import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
 
-const Forms = ({ getData }) => {
+const Forms = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [keys, setKeys] = useState([]);
 
@@ -47,12 +47,13 @@ const Forms = ({ getData }) => {
     initialValues: ADDPRODUCT_INITIALSTATE,
     validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
     onSubmit: (values, action) => {
-      getData(values);
+      dispatch(ActionAddProductSlice.editAddProductFirstPart(values));
       dispatch(
         ActionAddProductSlice.editData({
           brand: values.brandId,
         })
       );
+      dispatch(ActionAddProductSlice.nextActiveStep());
       action.resetForm();
     },
     validateOnChange: false,
