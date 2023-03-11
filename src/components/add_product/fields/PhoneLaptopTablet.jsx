@@ -43,7 +43,7 @@ const PhoneLaptopTablet = ({
     if (characteristictsError?.characteristics) {
       return characteristictsError?.characteristics;
     }
-    return {};
+    return { ...characteristictsError, characteristics: {} };
   }, [characteristictsError?.characteristics]);
 
   const changeCharacteristicsHandler = useCallback(
@@ -150,9 +150,9 @@ const PhoneLaptopTablet = ({
                   ))}
                 </RadioGroup>
               </StyledFormControl>
-              {characteristictsError?.characteristics[content.key] && (
+              {isCharacteristics[content.key] && (
                 <Typography component="p" variant="body2" color="error">
-                  {characteristictsError.characteristics[content.key]}
+                  {isCharacteristics[content.key]}
                 </Typography>
               )}
             </>
