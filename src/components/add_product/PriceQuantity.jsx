@@ -6,8 +6,10 @@ import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import AddProductTable from "./table";
 
-const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
-  const { editData } = useSelector((state) => state.addProduct);
+const PriceQuantity = () => {
+  const { editData, addProductFirstPart, values } = useSelector(
+    (state) => state.addProduct
+  );
 
   const [value, setValue] = useState(editData[editData.isChecked]);
   const dispatch = useDispatch();
@@ -28,9 +30,8 @@ const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
       })
     );
 
-    setFieldValue(
-      "subProductRequests",
-      values.subProductRequests.map((item, index) => {
+    const updateSubProductequests = values.subProductRequests.map(
+      (item, index) => {
         if (index === Number(editData.id)) {
           const newData = {
             ...item,
@@ -39,8 +40,16 @@ const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
           return newData;
         }
         return item;
+      }
+    );
+
+    dispatch(
+      ActionAddProductSlice.editAddProductSecondPart({
+        key: "subProductRequests",
+        value: updateSubProductequests,
       })
     );
+
     dispatch(
       ActionAddProductSlice.editData({
         [editData.isChecked]: "",
@@ -70,7 +79,7 @@ const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
     );
 
     if (emptyFieldsPrice.includes(null)) {
-      handleNext();
+      dispatch(ActionAddProductSlice.nextActiveStep());
     }
   };
 
@@ -89,7 +98,10 @@ const PriceQuantity = ({ tableData, setFieldValue, values, handleNext }) => {
           <StyledButton type="submit">Установить цену</StyledButton>
         </Grid>
         <Grid item xs={12}>
-          <AddProductTable tableData={tableData} id={findId} />
+          <AddProductTable
+            tableData={addProductFirstPart.subProductRequests}
+            id={findId}
+          />
         </Grid>
         <Grid item xs={12} className="flex flex-end">
           <StyledButton
