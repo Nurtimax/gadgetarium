@@ -51,8 +51,8 @@ export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
     .positive()
     .integer()
     .required("Гарантия (месяцев) - обязательное поле"),
-  videoReview: yup.string(),
-  description: yup.string(),
+  videoReview: yup.string().required("Загрузите видеообзор обязательное поле"),
+  description: yup.string().required("Описание обязательное поле"),
   brandId: yup
     .number()
     .positive()
@@ -81,7 +81,7 @@ export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
       characteristics: yup.object(),
     })
   ),
-  pdf: yup.string().required(),
+  pdf: yup.string().required("Загрузите документ PDF обязательное поле"),
 });
 
 export const PRODUCT_FORMS_FIELDS = [
