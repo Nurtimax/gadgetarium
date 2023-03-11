@@ -4,105 +4,102 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
-import { Container, styled } from "@mui/material";
-import Forms from "../../components/add_product/Forms";
+import { Container, Grid, styled } from "@mui/material";
 import { useFormik } from "formik";
 import {
   PRODUCT_INITIALSTATE,
   PRODUCT_INITIALSTATESCHEMA,
 } from "../../utils/constants/add-product";
-import PriceQuantity from "../../components/add_product/PriceQuantity";
-import DescriptionOverview from "../../components/add_product/DescriptionOverview";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { addProductThunk } from "../../redux/slices/add-product-slice";
+import {
+  ActionAddProductSlice,
+  addProductThunk,
+} from "../../redux/slices/add-product-slice";
 import { ROUTES } from "../../utils/constants/routes";
+import Button from "../../components/UI/button/Button";
 
 const AddProduct = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const { setValues, setFieldValue, values, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: PRODUCT_INITIALSTATE,
-      validationSchema: PRODUCT_INITIALSTATESCHEMA,
-      onSubmit: (values, action) => {
-        dispatch(addProductThunk(values))
-          .unwrap()
-          .then((response) => {
-            if (response.status === "ok") {
-              navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
-              toast.success(response.message, { autoClose: 2000 });
-            }
-          })
-          .catch((error) => toast.error(error.message));
-        action.resetForm();
-      },
-      validateOnChange: false,
-    });
+  const {
+    activeStep,
+    addProductFirstPart,
+    values: AllValues,
+  } = useSelector((state) => state.addProduct);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  const { values, handleSubmit, setValues, errors } = useFormik({
+    initialValues: PRODUCT_INITIALSTATE,
+    validationSchema: PRODUCT_INITIALSTATESCHEMA,
+    onSubmit: (values, action) => {
+      dispatch(addProductThunk(values))
+        .unwrap()
+        .then((response) => {
+          if (response.status === "ok") {
+            navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
+            toast.success(response.message, { autoClose: 2000 });
+          }
+        })
+        .catch((error) => toast.error(error.message));
+      action.resetForm();
+    },
+    validateOnChange: false,
+  });
 
-  const sendData = (value) => {
-    setValues((prevState) => ({ ...prevState, ...value }));
-    handleNext();
-    setSearchParams({ stepper: steps[activeStep].title });
-  };
+  useEffect(() => {
+    setValues((prevState) => ({ ...prevState, ...AllValues }));
+  }, [AllValues]);
+
+  useEffect(() => {
+    const spreatValues = { ...values, ...addProductFirstPart };
+    dispatch(ActionAddProductSlice.editValues(spreatValues));
+    setValues((prevState) => ({ ...prevState, ...spreatValues }));
+  }, [addProductFirstPart, dispatch]);
+
+  useEffect(() => {
+    dispatch(ActionAddProductSlice.getErrors(errors));
+  }, [errors]);
+
+  useEffect(() => {
+    if (activeStep === 0) {
+      navigate("part-1");
+    } else if (activeStep === 1) {
+      navigate("part-2");
+    } else if (activeStep === 2) {
+      navigate("part-3");
+    } else {
+      navigate("part-1");
+    }
+  }, [activeStep]);
 
   const steps = [
     {
       id: 1,
       title: "Добавление товара",
-      link: "",
-      component: <Forms getData={sendData} handleNext={handleNext} />,
+      link: "part-1",
     },
     {
       id: 2,
       title: "Установка цены и количества товара",
-      link: "",
-      component: (
-        <PriceQuantity
-          handleNext={handleNext}
-          tableData={values.subProductRequests}
-          setFieldValue={setFieldValue}
-          values={values}
-        />
-      ),
+      link: values.brandId ? "part-2" : "part-1",
     },
     {
       id: 3,
       title: "Описание и обзор",
-      link: "",
-      component: (
-        <DescriptionOverview
-          setFieldValue={setFieldValue}
-          values={values}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-      ),
+      link: values.brandId ? "part-3" : "part-1",
     },
   ];
-
-  useEffect(() => {
-    setSearchParams({ stepper: steps[activeStep].title });
-  }, [activeStep]);
-
-  const stepper = searchParams.get("stepper");
 
   return (
     <StyledAddProduct>
       <Container>
         <Box className="add_item">
           <Typography component="h1" variant="h4">
-            {stepper || steps[activeStep].title}
+            {steps[activeStep].title}
           </Typography>
         </Box>
         <Stepper activeStep={Number(activeStep)}>
@@ -110,15 +107,31 @@ const AddProduct = () => {
             return (
               <Step key={label.id} completed={false}>
                 <StepLabel>
-                  <Typography variant="body1" component="span">
-                    {label.title}
-                  </Typography>
+                  <Link to={label.link}>
+                    <Typography variant="body1" component="span">
+                      {label.title}
+                    </Typography>
+                  </Link>
                 </StepLabel>
               </Step>
             );
           })}
         </Stepper>
-        {steps[activeStep].component}
+        <Outlet />
+        {activeStep === 2 ? (
+          <Box component="form" onSubmit={handleSubmit}>
+            <Grid container className="padding" width="54.5vw">
+              <Grid item xs={12} className="flex gap2 flex-end">
+                <StyledButton className="cancel_button" type="button">
+                  Отменить
+                </StyledButton>
+                <StyledButton className="add_button" type="submit">
+                  Добавить
+                </StyledButton>
+              </Grid>
+            </Grid>
+          </Box>
+        ) : null}
       </Container>
     </StyledAddProduct>
   );
@@ -158,5 +171,23 @@ const StyledAddProduct = styled(Box)(({ theme }) => ({
   "& .add_item": {
     borderBottom: `1px solid ${theme.palette.grey[600]}`,
     padding: "20px 0",
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  width: "134px",
+  height: "43px",
+  fontSize: "1rem",
+  fontWeight: 600,
+  "&.cancel_button": {
+    border: `1px solid ${theme.palette.secondary.main}`,
+    "&:hover": {
+      background: "white",
+      color: theme.palette.secondary.main,
+    },
+  },
+  "&.add_button": {
+    background: theme.palette.secondary.main,
+    color: "white",
   },
 }));
