@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { ActionauthenticationSlice } from "./redux/slices/authentication";
+import { ActionauthenticationSlice } from "./redux/slices/authentication-slice";
 import AppRoutes from "./routes/AppRoutes";
 import { GADJEDTARIUM_LOGIN_INFO } from "./utils/constants/fetch";
 

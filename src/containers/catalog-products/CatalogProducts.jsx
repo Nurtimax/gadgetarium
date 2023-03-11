@@ -10,13 +10,14 @@ import {
   Grid,
 } from "@mui/material";
 import useDropDown from "../../hooks/useDropDown";
-import Sort from "../../components/catalog-products/Sort";
 import { catalogMenu_FAKE_DATA } from "../../utils/constants";
+
+import Sort from "../../components/catalog-products/Sort";
 import {
   catalogSliceAction,
   fetchColorCatalog,
   fetchDataCatalog,
-} from "../../redux/slices/catalog";
+} from "../../redux/slices/catalog-slice.js";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import ProductsList from "../../components/catalog-products/ProductsList";
 import FilterProducts from "../../components/catalog-products/FilterProducts";

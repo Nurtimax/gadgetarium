@@ -26,7 +26,7 @@ const FunctionalIconsItem = ({
         className={className}
         onClick={toggleHandler}
       >
-        <StyledBadge badgeContent={badgeContent.length} color={color}>
+        <StyledBadge badgeContent={badgeContent?.length} color={color}>
           {!state ? iconDefault : iconRemoveItem}
         </StyledBadge>
       </StyledTooltip>
@@ -47,12 +47,12 @@ const StyledTooltip = styled(({ className, ...props }) => (
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.black,
+    maxWidth: 520,
   },
   [`&.show_cart_items .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(1),
     color: theme.palette.common.black,
-    width: "500px",
     boxShadow: "rgba(0,0,0,0.5) 0 1px 2px",
   },
 }));

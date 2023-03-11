@@ -13,7 +13,7 @@ import {
   fetchNewProduct,
   fetchRecomendationProduct,
   fetchDiscountProduct,
-} from "../../redux/slices/productSlice";
+} from "../../redux/slices/product-slice";
 import Button from "../../components/UI/button/Button";
 import { Navigate } from "react-router-dom";
 

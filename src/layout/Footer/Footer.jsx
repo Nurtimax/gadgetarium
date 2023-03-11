@@ -4,7 +4,7 @@ import { ClockIcon, Logo, Phone, Message, Locotion } from "../../assets";
 import Input from "./../../components/UI/input/Input";
 import Button from "./../../components/UI/button/Button";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../utils/constants/routes";
 const Footer = () => {
   return (
     <FooterStyled>

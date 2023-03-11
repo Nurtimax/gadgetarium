@@ -95,6 +95,7 @@ const catalogSlice = createSlice({
         state.data.products = action.payload.data;
         state.isLoading = false;
       })
+
       .addCase(fetchDataCatalog.pending, (state) => {
         state.errorMessage = false;
         state.isLoading = true;
@@ -105,6 +106,11 @@ const catalogSlice = createSlice({
       })
       .addCase(fetchColorCatalog.fulfilled, (state, action) => {
         state.colorResponses = action.payload.data;
+      })
+
+      .addCase(fetchDataCatalog.rejected, (state, action) => {
+        state.errorMessage = action.payload;
+        state.isLoading = false;
       });
   },
 });

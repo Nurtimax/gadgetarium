@@ -8,7 +8,7 @@ import { Container, styled } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import Forms from "../../components/add_product/Forms";
 import { useDispatch } from "react-redux";
-import { addProductThunk } from "../../redux/slices/add-product";
+import { addProductThunk } from "../../redux/slices/add-product-slice";
 
 const steps = [
   "Добавление товара",
