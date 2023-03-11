@@ -5,7 +5,7 @@ const Goods = () => {
   return (
     <div>
       <h5>goods</h5>
-      <Link to="add-product">add product</Link>
+      <Link to="add-product/part-1">add product</Link>
     </div>
   );
 };
