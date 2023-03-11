@@ -1,5 +1,6 @@
-import * as React from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import React, { useState } from "react";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Accordion,
   AccordionSummary,
@@ -7,35 +8,33 @@ import {
   Box,
   Typography,
   Button,
-  Checkbox,
-  FormControlLabel,
   Paper,
   Slider,
   styled,
   Container,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
-import { useState } from "react";
-import { priceProductSeparate } from "../../utils/helpers/general";
+import Colors from "./Colors";
 import SubproductsFilter from "./SubproductsFilter";
-import { useParams } from "react-router";
-import {
-  catalogProductData,
-  filterPrice,
-} from "../../utils/constants/catalog-product-filter";
+import { catalogProductData } from "../../utils/constants/catalog-product-filter";
 import { ArrowDownIcon, ArrowUpIcon } from "../../assets";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { priceProductSeparate } from "../../utils/helpers/general";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { catalogSliceAction } from "../../redux/slices/catalog";
 
-const FilterProducts = () => {
-  const { catalogItem } = useParams();
-  const [value, setValue] = useState([500, 300000]);
-  const [value1, setValue1] = useState();
+const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
+  const [value, setValue] = useState();
   const [showCategory, setShowCategory] = useState(true);
 
-  // const [checked, setChecked] = React.useState([true, false]);
-  // const [checked, setChecked] = useState();
+  const { subCategoryName, minPrice, maxPrice, colors } = useSelector(
+    (state) => state.filteredCatalog
+  );
 
-  // const handleToggle = (_, newValue) => () => {
-  //   setChecked(newValue);
-  // };
+  const dispatch = useDispatch();
+
+  const { catalogItem } = useParams();
 
   const findedCatalogFilter = React.useMemo(() => {
     return catalogProductData.find(
@@ -43,23 +42,54 @@ const FilterProducts = () => {
     );
   }, [catalogItem]);
 
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
-  };
   const showDataHandler = (_, value) => {
     setShowCategory((prev) => !prev);
-    setValue1(value);
+    setValue(value);
   };
 
-  // const handleChange2 = (event) => {
-  //   setChecked([event.target.checked, checked[1]]);
-  // };
+  const handleToggle = (brandId, title) => {
+    dispatch(catalogSliceAction.chipsFromFilter({ title, id: 1 }));
+    if (subCategoryName === title) {
+      return dispatch(filteredCatalogSliceAction.subCategoryNameElse(null));
+    }
+    return dispatch(
+      filteredCatalogSliceAction.subCategoryName({
+        id: brandId,
+        title: title,
+      })
+    );
+  };
+
+  const handleChangeColor = (colorCode, title) => {
+    dispatch(
+      catalogSliceAction.chipsFromFilter({
+        title,
+        key: "colors",
+        id: "colors",
+        colorCode,
+      })
+    );
+    if (colors.includes(colorCode)) {
+      return dispatch(filteredCatalogSliceAction.colors(colorCode));
+    }
+    return dispatch(filteredCatalogSliceAction.colorsRemove(colorCode));
+  };
+
+  const handleChange = (_, newValue) => {
+    dispatch(filteredCatalogSliceAction.minPriceProduct(newValue[0]));
+    dispatch(filteredCatalogSliceAction.maxPriceProduct(newValue[1]));
+  };
 
   return (
     <FilterProductsStyled>
       <Paper classes={{ root: "paper" }}>
         <Container classes={{ root: "container" }}>
-          <Typography className="remove-data">Сбросить все фильтры</Typography>
+          <Typography
+            className="remove-data pointer"
+            onClick={handelResetAllFilters}
+          >
+            Сбросить все фильтры
+          </Typography>
           <Accordion classes={{ root: "accordion" }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon className="arrow-icon" />}
@@ -84,8 +114,12 @@ const FilterProducts = () => {
                           control={
                             <Checkbox
                               color="secondary"
-                              // checked={checked[0]}
-                              // onChange={handleChange2}
+                              checked={
+                                subCategoryName === category.categoryName
+                              }
+                              onClick={() =>
+                                handleToggle(category.id, category.categoryName)
+                              }
                             />
                           }
                         />
@@ -99,8 +133,10 @@ const FilterProducts = () => {
                         control={
                           <Checkbox
                             color="secondary"
-                            // checked={checked[0]}
-                            // onChange={handleChange2}
+                            checked={subCategoryName === item.categoryName}
+                            onClick={() =>
+                              handleToggle(item.id, item.categoryName)
+                            }
                           />
                         }
                       />
@@ -109,7 +145,7 @@ const FilterProducts = () => {
             </AccordionDetails>
             {findedCatalogFilter.category.subCategory?.length > 5 ? (
               <Button
-                value={value1}
+                value={value}
                 onClick={() => showDataHandler()}
                 className="show-more-button"
               >
@@ -127,45 +163,84 @@ const FilterProducts = () => {
               </Button>
             ) : null}
           </Accordion>
-          {filterPrice.map((item) => (
-            <Accordion key={item.id} classes={{ root: "accordion" }}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon className="arrow-icon" />}
+          <Accordion classes={{ root: "accordion" }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon className="arrow-icon" />}
+            >
+              <Typography
+                variant="body2"
+                component="div"
+                classes={{ root: "product_title" }}
               >
-                <Typography
-                  variant="body2"
-                  component="div"
-                  classes={{ root: "product_title" }}
-                >
-                  {item.title}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails className="accordion-details">
-                <Box className="price-box">
-                  <Button className="price-button" variant="outlined">
-                    <span className="span-styled">от</span>
-                    500
-                  </Button>
-                  <Button className="price-button" variant="outlined">
-                    <span className="span-styled">до</span>
-                    {priceProductSeparate(Number(String(250000)))}
-                  </Button>
-                </Box>
+                Стоимость
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails className="accordion-details">
+              <Box className="price-box">
+                <Button className="price-button" variant="outlined">
+                  <span className="span-styled">от</span>
+                  500
+                </Button>
+                <Button className="price-button" variant="outlined">
+                  <span className="span-styled">до</span>
+                  {priceProductSeparate(Number(String(250000)))}
+                </Button>
+              </Box>
 
-                <Box className="slider-box">
-                  <Slider
-                    value={value}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
-                    min={500}
-                    max={250000}
-                    color="secondary"
-                  />
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+              <Box className="slider-box">
+                <Slider
+                  value={[minPrice, maxPrice]}
+                  onChange={handleChange}
+                  valueLabelDisplay="auto"
+                  min={500}
+                  max={250000}
+                  color="secondary"
+                />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion classes={{ root: "accordion" }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon className="arrow-icon" />}
+            >
+              <Typography
+                variant="body2"
+                component="div"
+                classes={{ root: "product_title" }}
+              >
+                Цвет
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {colorResponses?.map((category) => (
+                <Colors
+                  key={category.colorName}
+                  handleChangeColor={handleChangeColor}
+                  colors={colors}
+                  {...category}
+                />
+              ))}
+            </AccordionDetails>
+            {colorResponses?.length > 5 ? (
+              <Button
+                value={value}
+                onClick={() => showDataHandler()}
+                className="show-more-button"
+              >
+                {showCategory ? (
+                  <>
+                    <ArrowDownIconStyled />
+                    Еще
+                  </>
+                ) : (
+                  <>
+                    <ArrowUpIconStyled />
+                    Скрыть
+                  </>
+                )}
+              </Button>
+            ) : null}
+          </Accordion>
           {findedCatalogFilter.categories.map((product) => (
             <SubproductsFilter key={product.id} {...product} />
           ))}

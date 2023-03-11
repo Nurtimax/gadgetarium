@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Accordion,
   AccordionDetails,
@@ -12,14 +13,40 @@ import {
 } from "@mui/material";
 import { ArrowDownIcon, ArrowUpIcon } from "../../assets";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { changeCaseShape } from "../../utils/helpers/general";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { catalogSliceAction } from "../../redux/slices/catalog";
 
-const SubproductsFilter = ({ type, subCategory = [] }) => {
+const SubproductsFilter = ({
+  type,
+  subCategory = [],
+  filterCharacteristicsKey,
+}) => {
   const [showResult, setShowResult] = useState(true);
-  const [value1, setValue1] = useState();
+  const [value, setValue] = useState();
+
+  const state = useSelector((state) => state.filteredCatalog);
+
+  const dispatch = useDispatch();
 
   const showDataHandler = (_, value) => {
     setShowResult((prev) => !prev);
-    setValue1(value);
+    setValue(value);
+  };
+
+  const handleToggle = (title) => {
+    dispatch(
+      catalogSliceAction.chipsFromFilter({
+        title,
+        id: filterCharacteristicsKey,
+      })
+    );
+    dispatch(
+      filteredCatalogSliceAction.editCharacteristics({
+        key: filterCharacteristicsKey,
+        title,
+      })
+    );
   };
 
   return (
@@ -46,8 +73,13 @@ const SubproductsFilter = ({ type, subCategory = [] }) => {
                     control={
                       <Checkbox
                         color="secondary"
-                        // checked={checked[0]}
-                        // onChange={handleChange2}
+                        checked={
+                          state[filterCharacteristicsKey] ===
+                          changeCaseShape(title.title)
+                        }
+                        onClick={() =>
+                          handleToggle(changeCaseShape(title.title))
+                        }
                       />
                     }
                   />
@@ -61,8 +93,13 @@ const SubproductsFilter = ({ type, subCategory = [] }) => {
                     control={
                       <Checkbox
                         color="secondary"
-                        // checked={checked[0]}
-                        // onChange={handleChange2}
+                        checked={
+                          state[filterCharacteristicsKey] ===
+                          changeCaseShape(item.title)
+                        }
+                        onClick={() =>
+                          handleToggle(changeCaseShape(item.title))
+                        }
                       />
                     }
                   />
@@ -70,7 +107,7 @@ const SubproductsFilter = ({ type, subCategory = [] }) => {
               ))}
           {subCategory?.length > 5 ? (
             <Button
-              value={value1}
+              value={value}
               onClick={() => showDataHandler()}
               className="show-more-button"
             >
