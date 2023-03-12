@@ -15,14 +15,6 @@ const DescriptionTabItem = () => {
     dispatch(getProductDetailThunk({ product, attribute: "Описание" }));
   }, [dispatch]);
 
-  useEffect(() => {
-    // Get a reference to the target window or iframe
-    const targetWindow = window.parent;
-
-    // Send a message to the target window
-    targetWindow.postMessage("http://localhost:3000", data.videoReview);
-  }, []);
-
   return (
     <Styled_Wrapper>
       <ReactPlayer

@@ -10,7 +10,7 @@ const ProductData = ({ subproducts, productId }) => {
             <li>
               Экран..................................................
               <span>
-                {subproducts.characteristics?.screenResolutionOfLaptop}
+                {subproducts?.characteristics?.screenResolutionLaptop}
               </span>
             </li>
             <li>
@@ -27,7 +27,7 @@ const ProductData = ({ subproducts, productId }) => {
             </li>
             <li>
               Pазмер экрана ноутбука.............
-              <span>{subproducts?.characteristics?.screenSizeOfLaptop}</span>
+              <span>{subproducts?.characteristics?.screenSizeLaptop}</span>
             </li>
             <li>
               Память видеокарты......................

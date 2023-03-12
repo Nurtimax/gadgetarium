@@ -19,7 +19,9 @@ const CatalogProducts = () => {
   const { data, isLoading, errorMessage } = useSelector(
     (state) => state.catalog
   );
-
+  console.log(data, "data");
+  console.log(isLoading, "isLoading");
+  console.log(errorMessage, "errorMessage");
   const dispatch = useDispatch();
 
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(

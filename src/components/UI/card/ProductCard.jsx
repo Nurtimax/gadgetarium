@@ -146,31 +146,6 @@ const ProductCard = (props) => {
           <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
         <CardActions>
-          <Box width="30%" marginLeft="-10px">
-            {discountPrice > 0 ? (
-              <Typography variant="h1" fontSize="0.8rem">
-                {priceProductSeparate(Number(String(discountPrice || 0)))}c
-              </Typography>
-            ) : (
-              <Typography variant="h1" fontSize="0.8rem">
-                {priceProductSeparate(Number(String(productPrice || 0)))}c
-              </Typography>
-            )}
-            {discountPrice > 0 ? (
-              <Styled_Price>
-                {priceProductSeparate(Number(String(productPrice || 0)))}c
-              </Styled_Price>
-            ) : null}
-          </Box>
-          <IconButton
-            width="70%"
-            height="2.5vw"
-            title="Добавить в карзину"
-            fontSize="0.5rem"
-            icon={<CartIcon width="1.5vw" />}
-          >
-            В корзину
-          </IconButton>
           <Grid container className="flex between ">
             <Box width="30%" marginLeft="-10px">
               {discountPrice > 0 ? (
@@ -235,8 +210,8 @@ const Styled_Count = styled("p")(() => ({
   color: "#2FC509",
 }));
 const StyledProductCard = styled(Card)(() => ({
-  width: "16.5vw",
   height: "100%",
+  width: "17.4vw",
   display: "grid",
   gridRowGap: "1rem",
   "&:hover": {

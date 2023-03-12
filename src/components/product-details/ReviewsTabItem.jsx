@@ -11,7 +11,6 @@ const ReviewsTabItem = () => {
 
   const { data } = useSelector((state) => state.productDetails);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getProductDetailThunk({ product, attribute: "Отзывы" }));
   }, [dispatch]);

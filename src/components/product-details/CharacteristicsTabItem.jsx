@@ -17,7 +17,6 @@ const CharacteristicsTabItem = () => {
   const { product } = useParams();
 
   const { data, details } = useSelector((state) => state.productDetails);
-  console.log(data?.attribute?.Характеристики);
   const dispatch = useDispatch();
 
   useEffect(() => {

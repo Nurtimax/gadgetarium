@@ -11,9 +11,9 @@ import { getDicountPrice } from "./../../utils/helpers/get-discount-price";
 const ProductDetails = ({ data, chooseItem, count, images }) => {
   const { subproducts = [] } = data;
   const dispatch = useDispatch();
-  console.log(subproducts);
+
   const findedSubProduct = useMemo(() => {
-    return subproducts.find((product) => product.id === Number(chooseItem));
+    return subproducts.find((product) => product.id === chooseItem);
   }, [chooseItem]);
 
   const chooseColorHandler = (colorId, images) => {
@@ -23,18 +23,15 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.addImages(subproducts[0]?.images));
-  }, [data?.subproducts]);
-
-  useEffect(() => {
     dispatch(ActionProductDetails.setChooseItem(subproducts[0]?.id));
-  }, [subproducts]);
+  }, [data?.subproducts]);
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
   }, [findedSubProduct]);
 
   const plusHandler = () => {
-    dispatch(ActionProductDetails.plusCount(findedSubProduct));
+    dispatch(ActionProductDetails.plusCount());
   };
   const minusHandler = () => {
     dispatch(ActionProductDetails.minusCount());
@@ -72,9 +69,9 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                     <Rating
                       size="small"
                       readOnly
-                      value={data.productRating || 0}
+                      value={data?.productRating || 0}
                     />
-                    ({data.countOfReviews})
+                    ({data?.countOfReviews})
                   </span>
                 </Grid>
               </Grid>
@@ -117,12 +114,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                       {count}
                     </Grid>
                     <Grid item xs={5}>
-                      <Styled_Button
-                        onClick={plusHandler}
-                        // disabled={isPlusDisabled}
-                      >
-                        +
-                      </Styled_Button>
+                      <Styled_Button onClick={plusHandler}>+</Styled_Button>
                     </Grid>
                   </Grid>
 
@@ -134,19 +126,19 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                             -{data.amountOfDiscount}%
                           </Discount_Styled>
                           <Discount_Price>
-                            {findedSubProduct?.price}c
+                            {findedSubProduct?.price.toString()}c
                           </Discount_Price>
                           <Price>
                             {getDicountPrice(
                               data.amountOfDiscount,
-                              findedSubProduct?.price
+                              findedSubProduct?.price.toString()
                             )}
                           </Price>
                         </Styled_Price>
                       ) : (
                         <Styled_Price>
                           <Discount_Price>
-                            {findedSubProduct?.price}c
+                            {findedSubProduct?.price.toString()}c
                           </Discount_Price>
                         </Styled_Price>
                       )}

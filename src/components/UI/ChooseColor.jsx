@@ -2,7 +2,6 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 
 const ChooseColor = ({ color, checked, choosed }) => {
-  console.log(color);
   return (
     <StyledChooseColor color={color.toString()}>
       <Box
