@@ -275,7 +275,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography component="p" variant="body1">
-                  price
+                  Цена
                 </Typography>
                 <Select
                   displayEmpty
@@ -295,7 +295,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                           component="span"
                           className="placeholder"
                         >
-                          Price
+                          Цена
                         </Typography>
                       )}
                     </>
