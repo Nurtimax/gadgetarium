@@ -14,6 +14,7 @@ const Button = ({
 }) => {
   return (
     <ButtonStyled
+      type="submit"
       width={width}
       height={height}
       bgcolor={bgcolor}

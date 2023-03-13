@@ -16,10 +16,10 @@ const Input = forwardRef(({ value, onChange, error, ...props }, ref) => {
 Input.displayName = Input;
 export default Input;
 
-const InputStyled = styled(InputBase)(({ theme }) => ({
+const InputStyled = styled(InputBase)(({ theme, backcolor }) => ({
   "&.input": {
     border: `0.1px solid ${theme.palette.grey[900]}`,
-    background: `${theme.palette.background.default}`,
+    background: backcolor || `${theme.palette.background.default}`,
     borderRadius: "5px",
     padding: "0 10px",
   },

@@ -6,6 +6,7 @@ import {
   postProductToFavorite,
 } from "../../redux/slices/basket-slice";
 import CartProductInBasket from "../CartProductInBasket";
+import PopUp from "../UI/PopUp";
 
 const BasketItem = ({
   image,
@@ -22,10 +23,12 @@ const BasketItem = ({
   setAllId,
   setSumOrderData,
   productCount,
+  orderCount,
 }) => {
   const dispatch = useDispatch();
-
   const [check, setCheck] = useState(false);
+  const [text, setText] = useState("");
+  const [dropDown, setDropDown] = useState(false);
 
   const onPlus = (id) => {
     setSumOrderData((prev) =>
@@ -66,8 +69,15 @@ const BasketItem = ({
     }
   };
 
+  const closeDropDown = () => {
+    setDropDown(false);
+  };
+
   const onFavorite = () => {
-    dispatch(postProductToFavorite([id]));
+    dispatch(postProductToFavorite([id])).then(() => {
+      setText("Товар успешно добавлен в избранное!");
+      setDropDown(true);
+    });
   };
 
   const onDelete = () => {
@@ -76,6 +86,18 @@ const BasketItem = ({
 
   return (
     <>
+      <PopUp
+        open={dropDown}
+        handleClose={closeDropDown}
+        transitionTitle="Перейти в корзину"
+        addedTitle={text}
+        durationSnackbar={2000}
+        icon={true}
+        vertical="top"
+        horizontal="right"
+        to="/cart"
+      />
+
       <Checkbox
         color="secondary"
         className="checkbox-product"
@@ -106,6 +128,7 @@ const BasketItem = ({
         onDelete={onDelete}
         id={id}
         productCount={productCount}
+        orderCount={orderCount}
       />
     </>
   );

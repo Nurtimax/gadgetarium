@@ -8,6 +8,7 @@ import {
   CardActions,
   Box,
   styled,
+  CircularProgress,
 } from "@mui/material";
 import IconButton from "../IconButton";
 import {
@@ -18,11 +19,28 @@ import {
   New,
   ComporativePinkIcon,
   HeartActiveIcon,
+  VisibilityOnIcon,
+  VisibilityOffIcon,
 } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postProductToBasket } from "../../../redux/slices/basket-slice";
+import {
+  getBasketProduct,
+  postProductToBasket,
+} from "../../../redux/slices/basket-slice";
+import { useState } from "react";
+import Modal from "../Modal";
+import Input from "../input/Input";
+import Button from "../button/Button";
+import useVisibility from "../../../hooks/useVisibility";
+import { useFormik } from "formik";
+import { singInValidateSchema } from "../../../utils/helpers/validate";
+import {
+  ActionauthenticationSlice,
+  fetchDataSignin,
+} from "../../../redux/slices/authentication-slice";
+import PopUp from "../PopUp";
 
 const ProductCard = (props) => {
   const {
@@ -43,18 +61,45 @@ const ProductCard = (props) => {
 
   const basketData = useSelector((state) => state.basket.data);
 
+  const { isLoading, data } = useSelector((state) => state.auth);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const dispatch = useDispatch();
 
+  const [showPassword, setShowPassword] = useVisibility();
+
+  const [error, setError] = useState(null);
+
+  const [text, setText] = useState("");
+
+  const [dropDown, setDropDown] = useState(false);
+
+  const closeModalWindow = () => {
+    setModalOpen(false);
+  };
+
+  const closeDropDown = () => {
+    setDropDown(false);
+  };
+
   const addBasketHandler = () => {
-    if (basketData?.some((item) => item.id === productId)) {
-      alert("Товар уже добавлен!");
+    if (Object.keys(data).length === 0) {
+      setModalOpen(true);
     } else {
-      dispatch(
-        postProductToBasket({
-          orderCount: count,
-          productId,
-        })
-      );
+      if (basketData?.some((item) => item.id === productId)) {
+        alert("Товар уже добавлен!");
+      } else {
+        dispatch(
+          postProductToBasket({
+            orderCount: count,
+            productId,
+          })
+        ).then(() => {
+          setText("Товар успешно добавлен в корзину!");
+          setDropDown(true);
+        });
+      }
     }
   };
 
@@ -118,6 +163,33 @@ const ProductCard = (props) => {
     );
   }, [favorite]);
 
+  const onSubmit = (values, action) => {
+    dispatch(fetchDataSignin(values)).then((data) => {
+      const { payload } = data;
+      if (payload?.email && payload?.roleName && payload?.token) {
+        if (data) {
+          dispatch(ActionauthenticationSlice.getUserData(payload));
+          dispatch(getBasketProduct());
+          action.resetForm();
+          setError(null);
+          closeModalWindow();
+        }
+      } else {
+        setError(true);
+      }
+    });
+  };
+
+  const { handleChange, handleSubmit, values, errors } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit,
+    validationSchema: singInValidateSchema,
+    validateOnChange: false,
+  });
+
   return (
     <StyledProductCard {...rest}>
       <CardActions>
@@ -129,13 +201,23 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      <Link to={`/item/${categoryId + 1}/${productId}/description`}>
+      {data.token ? (
+        <Link to={`/item/${categoryId + 1}/${productId}/description`}>
+          <CardMedia_Styled
+            src={productImage}
+            title={productName}
+            alt={productName}
+          />
+        </Link>
+      ) : (
         <CardMedia_Styled
           src={productImage}
           title={productName}
           alt={productName}
+          onClick={addBasketHandler}
         />
-      </Link>
+      )}
+
       <Card_contend className="carsContent">
         <Styled_Count>В наличии ({count})</Styled_Count>
         <StyletTitle color="black" title={productName}>
@@ -146,8 +228,8 @@ const ProductCard = (props) => {
           <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
         <CardActions>
-          <Grid container className="flex between ">
-            <Box width="30%" marginLeft="-10px">
+          <Grid container className="flex between">
+            <Box width="35%" background="red">
               {discountPrice > 0 ? (
                 <Typography variant="h1" fontSize="0.8rem">
                   {priceProductSeparate(Number(String(discountPrice || 0)))}c
@@ -165,7 +247,7 @@ const ProductCard = (props) => {
             </Box>
             <IconButton
               onClick={addBasketHandler}
-              width="70%"
+              width="65%"
               height="2.5vw"
               title="Добавить в карзину"
               fontSize="0.5rem"
@@ -176,10 +258,163 @@ const ProductCard = (props) => {
           </Grid>
         </CardActions>
       </Card_contend>
+
+      <>
+        <PopUp
+          open={dropDown}
+          handleClose={closeDropDown}
+          transitionTitle="Перейти в корзину"
+          addedTitle={text}
+          durationSnackbar={2000}
+          icon={true}
+          vertical="bottom"
+          horizontal="right"
+          to="/cart"
+        />
+
+        {isModalOpen ? (
+          <StyledModal
+            handleClose={closeModalWindow}
+            open={isModalOpen}
+            state={true}
+          >
+            <Grid container spacing={1}>
+              <Box className="text-box">
+                <p>Войдите или зарегистрируйтесь</p>
+                <p>чтобы опубликовать отзыв</p>
+              </Box>
+              <Grid item xs={12} className="flex center padding">
+                <Typography component="h1" variant="h5" className="login-title">
+                  Войти
+                </Typography>
+              </Grid>
+            </Grid>
+            <StyledForm
+              component="form"
+              className="flex column"
+              onSubmit={handleSubmit}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <StyledInput
+                    placeholder="Напишите email"
+                    value={values.email}
+                    onChange={handleChange}
+                    name="email"
+                    type="email"
+                  />
+                  {errors.email && (
+                    <Typography component="p" variant="body2" color="error">
+                      {errors.email}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledInput
+                    placeholder="Напишите пароль"
+                    value={values.password}
+                    onChange={handleChange}
+                    name="password"
+                    type={!showPassword ? "password" : "text"}
+                    endAdornment={
+                      <>
+                        {!showPassword ? (
+                          <VisibilityOffIcon
+                            className="pointer"
+                            onClick={setShowPassword}
+                          />
+                        ) : (
+                          <VisibilityOnIcon
+                            className="pointer"
+                            onClick={setShowPassword}
+                          />
+                        )}
+                      </>
+                    }
+                  />
+                  {errors.password && (
+                    <Typography component="p" variant="body2" color="error">
+                      {errors.password}
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
+              {error && (
+                <Typography component="p" variant="body2" color="error">
+                  Неправильно указан Email и/или пароль
+                </Typography>
+              )}
+              <StyledButton type="submit">
+                {isLoading ? <CircularProgress size={30} /> : "Войти"}
+              </StyledButton>
+            </StyledForm>
+
+            <Box className="change_login flex center gap">
+              <Typography component="p" variant="body1">
+                Нет аккаунта?
+              </Typography>
+              <Link to="/sign-up" className="link">
+                <Typography component="span" variant="body1">
+                  Зарегистрироваться
+                </Typography>
+              </Link>
+            </Box>
+          </StyledModal>
+        ) : (
+          ""
+        )}
+      </>
     </StyledProductCard>
   );
 };
 export default React.memo(ProductCard);
+
+const StyledModal = styled(Modal)(({ theme }) => ({
+  "& .MuiDialog-container": {
+    background: "rgba(0,0,0,0.2)",
+  },
+
+  "& .MuiDialogContent-root": {
+    padding: " 10px 0 40px 0",
+  },
+
+  "& .link": {
+    color: theme.palette.secondary.light,
+  },
+
+  "& .text-box": {
+    paddingBottom: "10px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: "Inter",
+    fontWeight: "600",
+    fontSize: "20px",
+  },
+
+  "& .login-title": {
+    fontWeight: "600",
+  },
+}));
+
+const StyledInput = styled(Input)(() => ({
+  width: "100%",
+  height: "43px",
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  background: theme.palette.secondary.main,
+  color: "white !important",
+  width: "100%",
+}));
+
+const StyledForm = styled(Box)(() => ({
+  gap: "24px",
+  padding: "0 40px 12px",
+}));
+
 const Card_contend = styled(CardContent)(() => ({
   "& span": {
     fontSize: "0.8rem",
