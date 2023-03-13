@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AboutStore from "../containers/about-store/AboutStore";
 import Basket from "../containers/basket/Basket";
 import CatalogProducts from "../containers/catalog-products/CatalogProducts";
+import Compare from "../containers/compare/Compare";
 import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
@@ -38,7 +39,14 @@ const MainRoutes = () => {
         <Route path={ROUTES.CART} element={<Basket />} />
         <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
         <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
-        <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
+        <Route
+          path={ROUTES.COMPATISONPRODUCT}
+          element={
+            <h1>
+              <Compare />
+            </h1>
+          }
+        />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
         <Route path={ROUTES.DELIVERY} element={<Delivery />} />
         <Route path={ROUTES.FAG} element={<FrequentlyAskedQuestions />} />

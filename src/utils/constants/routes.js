@@ -11,7 +11,7 @@ export const ROUTES = {
   ORDERING: "ordering",
   CART: "cart",
   CHECKOUT: "checkout",
-  COMPATISONPRODUCT: "comparison",
+  COMPATISONPRODUCT: "comporative",
   LIKE: "like",
   DELIVERY: "delivery",
   FAG: "fag",
