@@ -606,6 +606,8 @@ export const ITEM_SORT = [
   { id: 4, title: "По увеличению цены" },
   { id: 5, title: "По уменьшению цены" },
 ];
+<<<<<<< HEAD
+=======
 
 export const filterCategory = [
   {
@@ -678,3 +680,4 @@ export const chip_item = [
 
 export const notFoundImage =
   "https://us.123rf.com/450wm/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016/167492439-no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image.jpg?ver=6";
+>>>>>>> development
