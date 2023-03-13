@@ -84,3 +84,55 @@ export const isPaginationCountHandler = (status, size) => {
       return 10;
   }
 };
+
+export const changeCaseShape = (key) => {
+  switch (key) {
+    case "Квадратная":
+      return "square";
+    case "Овальная":
+      return "oval";
+    case "Круглая":
+      return "round";
+    case "Прямоугольная":
+      return "rectangular";
+    case "Силикон":
+      return "Silicon";
+    case "Кожа":
+      return "Leather";
+    case "Резина":
+      return "Rubber";
+    case "Пластик":
+      return "Plastic";
+    case "Нейлон":
+      return "Nylon";
+    case "Из искусственной кожи":
+      return "Faux leather";
+    case "Имитация керамики":
+      return "Imitation ceramic";
+    case "Акриловый":
+      return "acrylic";
+    case "Алюминий":
+      return "aluminum";
+    case "Керамика":
+      return "ceramics";
+    case "Металл":
+      return "metal";
+    case "Нержавейщая сталь":
+      return "stainless steel";
+    case "Стекло":
+      return "glass";
+    case "Унисекс":
+      return "Unisex";
+    case "Женский":
+      return "Female";
+    case "Мужской":
+      return "Male";
+    case "Да":
+      return "Yes";
+    case "Нет":
+      return "No";
+
+    default:
+      return key;
+  }
+};
