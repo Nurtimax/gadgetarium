@@ -68,6 +68,7 @@ const MainRoutes = () => {
             />
           }
         />
+
         <Route
           path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
           element={
