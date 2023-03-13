@@ -41,7 +41,7 @@ export const userPages = [
   { id: 11, theme: "Главная", to: "/" },
   { id: 12, theme: "О магазине", to: "about" },
   { id: 13, theme: "Доставка", to: "delivery" },
-  { id: 14, theme: "FAG", to: "fag" },
+  { id: 14, theme: "FAQ", to: "fag" },
   { id: 15, theme: "Контакты", to: "contacts" },
 ];
 

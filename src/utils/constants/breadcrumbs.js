@@ -42,7 +42,7 @@ export const BREADCRUMBS = [
   },
   {
     path: ROUTES.FAG,
-    breadcrumb: "FAG",
+    breadcrumb: "FAQ",
   },
   {
     path: ROUTES.CONTACTS,
