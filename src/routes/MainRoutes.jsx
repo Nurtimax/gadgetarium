@@ -31,6 +31,7 @@ const MainRoutes = () => {
             <PrivateRoute Component={<CatalogProducts />} role={["Customer"]} />
           }
         />
+
         <Route
           path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
           element={
