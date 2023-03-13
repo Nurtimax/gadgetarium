@@ -74,7 +74,7 @@ export const iconsData = [
     tooltip_title_compative_remove: "Удалить из избранного",
     iconDefault: <HeartIcon />,
     iconRemoveItem: <HeartActiveIcon />,
-    title: "heart",
+    title: "favorite",
     badgeContent: [],
     className: "dispatch_message",
     color: "error",
