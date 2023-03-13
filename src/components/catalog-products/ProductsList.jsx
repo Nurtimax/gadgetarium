@@ -1,18 +1,17 @@
-import { Box, CircularProgress, styled } from "@mui/material";
 import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, CircularProgress, styled } from "@mui/material";
 import Button from "../UI/button/Button";
 import ProductCard from "../UI/card/ProductCard";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 
-const ProductsList = ({
-  data,
-  setSize,
-  size,
-  isLoading,
-  sortField,
-  discountField,
-}) => {
+const ProductsList = ({ data, isLoading, sortField, discountField }) => {
+  const { size } = useSelector((state) => state.filteredCatalog);
+
+  const dispatch = useDispatch();
+
   const onClickSize = useCallback(() => {
-    setSize(size + 12);
+    dispatch(filteredCatalogSliceAction.sizeProduct(12));
   }, [size]);
 
   const changeProductStatusHelper = (
@@ -37,15 +36,8 @@ const ProductsList = ({
   };
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "8px",
-        paddingBottom: "20px",
-      }}
-    >
-      {data.products?.map((item) => (
+    <BoxStyled>
+      {data.products.productCardResponses?.map((item) => (
         <ProductCardStyled
           {...item}
           key={item.productId}
@@ -59,27 +51,13 @@ const ProductsList = ({
       ))}
 
       {isLoading ? (
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            padding: "32px 0px",
-          }}
-        >
+        <Box className="loading-style">
           <CircularProgress color="secondary" />
         </Box>
       ) : (
         <>
           {data.products?.length >= 12 ? (
-            <Box
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                padding: "32px 0px",
-              }}
-            >
+            <Box className="loading-style">
               <Button
                 onClick={onClickSize}
                 height="43px"
@@ -94,15 +72,28 @@ const ProductsList = ({
           )}
         </>
       )}
-    </Box>
+    </BoxStyled>
   );
 };
 
 export default ProductsList;
 
+const BoxStyled = styled(Box)(() => ({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "8px",
+  paddingBottom: "20px",
+}));
+
 const ProductCardStyled = styled(ProductCard)(() => ({
   width: "246.5px !important",
 
+  "& .loading-style": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    padding: "32px 0px",
+  },
   "& .css-1mwp0i7": {
     width: "80%",
   },

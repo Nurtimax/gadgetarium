@@ -29,7 +29,7 @@ export const BREADCRUMBS = [
     breadcrumb: "Корзина",
   },
   {
-    path: ROUTES.CHECKOUT,
+    path: `${ROUTES.CART}/${ROUTES.ORDERING}`,
     breadcrumb: "Оформление заказа",
   },
   {
