@@ -28,14 +28,21 @@ export default DetailsImg;
 const Styled_Wrapper = styled(Modal)(() => ({
   width: "100vw",
   position: "fixed",
+
   "& .show_photo": {
     maxWidth: "100vw",
-    maxHeight: "100vh",
+    maxHeight: "105vh",
     position: "fixed",
     top: "-6%",
     left: "-35px",
     bottom: "-10%",
     right: "-30px",
+  },
+  "& .css-1cka1gl": {
+    "& svg": {
+      height: "25px",
+      width: "25px",
+    },
   },
 }));
 const CarouselStyle = styled(Carousel)(() => ({

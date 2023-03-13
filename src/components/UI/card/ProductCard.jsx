@@ -58,7 +58,6 @@ const ProductCard = (props) => {
     categoryId,
     ...rest
   } = props;
-
   const basketData = useSelector((state) => state.basket.data);
 
   const { isLoading, data } = useSelector((state) => state.auth);
@@ -202,7 +201,7 @@ const ProductCard = (props) => {
         </Grid>
       </CardActions>
       {data.token ? (
-        <Link to={`/item/${categoryId + 1}/${productId}/description`}>
+        <Link to={`/item/${categoryId}/${productId}/description`}>
           <CardMedia_Styled
             src={productImage}
             title={productName}

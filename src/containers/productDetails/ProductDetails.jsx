@@ -2,19 +2,28 @@ import { styled, Rating, Box, Typography, Grid } from "@mui/material";
 import ImgSlider from "../../components/UI/ImgSlider";
 import IconButton from "./../../components/UI/IconButton";
 import { CartIcon, HeartActiveIcon, Favorites } from "../../assets";
-import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ActionProductDetails } from "../../redux/slices/product-details";
 import ChooseColor from "../../components/UI/ChooseColor";
 import ProductData from "../../components/product-details/ProductData";
 import { getDicountPrice } from "./../../utils/helpers/get-discount-price";
+import { postProductToBasket } from "../../redux/slices/basket-slice";
+import PopUp from "../../components/UI/PopUp";
 const ProductDetails = ({ data, chooseItem, count, images }) => {
   const { subproducts = [] } = data;
+  const [text, setText] = useState("");
+  const [dropDown, setDropDown] = useState(false);
+
+  const basketData = useSelector((state) => state.basket.data);
+
   const dispatch = useDispatch();
 
   const findedSubProduct = useMemo(() => {
     return subproducts.find((product) => product.id === chooseItem);
   }, [chooseItem]);
+
+  console.log(basketData, findedSubProduct);
 
   const chooseColorHandler = (colorId, images) => {
     dispatch(ActionProductDetails.setChooseItem(colorId));
@@ -28,6 +37,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
+    window.scroll(0, 40);
   }, [findedSubProduct]);
 
   const plusHandler = () => {
@@ -37,130 +47,171 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
     dispatch(ActionProductDetails.minusCount());
   };
 
+  const onClickCartHandler = () => {
+    if (basketData?.some((item) => item.id === findedSubProduct.id)) {
+      alert("Товар уже добавлен!");
+    } else {
+      dispatch(
+        postProductToBasket({
+          orderCount: findedSubProduct.countOfSubproduct,
+          productId: findedSubProduct.id,
+        })
+      ).then(() => {
+        setText("Товар успешно добавлен в корзину!");
+        setDropDown(true);
+      });
+    }
+  };
+  const closeDropDown = () => {
+    setDropDown(false);
+  };
+
   return (
-    <Styled_Container>
-      <Grid container>
-        <Grid className="logo" item xs={12}>
-          <h1>{data.subCategoryName}</h1>
-        </Grid>
-        <Grid container className="paddingTop">
-          <Grid item xs={6}>
-            <ImgSlider images={images} />
+    <>
+      <PopUp
+        open={dropDown}
+        handleClose={closeDropDown}
+        transitionTitle="Перейти в корзину"
+        addedTitle={text}
+        durationSnackbar={2000}
+        icon={true}
+        vertical="bottom"
+        horizontal="right"
+        to="/cart"
+      />
+      <Styled_Container>
+        <Grid container>
+          <Grid className="logo" item xs={12}>
+            <h1>{data.subCategoryName}</h1>
           </Grid>
+          <Grid container className="paddingTop">
+            <Grid item xs={6}>
+              <ImgSlider images={images} />
+            </Grid>
 
-          <Grid item xs={6} className="content">
-            <Styled_Block>
-              <Grid container className="type">
-                <Grid item xs={12}>
-                  <Typography variant="h4">{data.productName}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <span className="green">
-                    в наличии ({findedSubProduct?.countOfSubproduct.toString()}
-                    шт)
-                  </span>
-                </Grid>
-                <Grid item xs={4}>
-                  <span>Артикул: {data?.productVendorCode?.toString()}</span>
+            <Grid item xs={6} className="content">
+              <Styled_Block>
+                <Grid container className="type">
+                  <Grid item xs={12}>
+                    <Typography variant="h4">{data.productName}</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <span className="green">
+                      в наличии (
+                      {findedSubProduct?.countOfSubproduct.toString()}
+                      шт)
+                    </span>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <span>Артикул: {data?.productVendorCode?.toString()}</span>
+                  </Grid>
+
+                  <Grid item xs={4}>
+                    <span className="flex grey">
+                      <Rating
+                        size="small"
+                        readOnly
+                        value={data?.productRating || 0}
+                      />
+                      ({data?.countOfReviews})
+                    </span>
+                  </Grid>
                 </Grid>
 
-                <Grid item xs={4}>
-                  <span className="flex grey">
-                    <Rating
-                      size="small"
-                      readOnly
-                      value={data?.productRating || 0}
-                    />
-                    ({data?.countOfReviews})
-                  </span>
-                </Grid>
-              </Grid>
-
-              <Grid container className="colors">
-                <Grid item xs={12} className="flex data">
-                  <Container_Color>
-                    <p>Цвет товара:</p>
-                    <Stled_Box>
-                      {subproducts?.map((item) => (
-                        <Box
-                          key={item.id}
-                          onClick={() =>
-                            chooseColorHandler(item.id, item.images)
-                          }
-                        >
-                          <ChooseColor
+                <Grid container className="colors">
+                  <Grid item xs={12} className="flex data">
+                    <Container_Color>
+                      <p>Цвет товара:</p>
+                      <Stled_Box>
+                        {subproducts?.map((item) => (
+                          <Box
                             key={item.id}
-                            checked={item.id}
-                            choosed={chooseItem}
-                            color={item?.colorName}
-                          />
-                        </Box>
-                      ))}
-                    </Stled_Box>
-                  </Container_Color>
-                  <Grid container className=" text-center count">
-                    <Grid item xs={12}>
-                      <p>Количество:</p>
+                            onClick={() =>
+                              chooseColorHandler(item.id, item.images)
+                            }
+                          >
+                            <ChooseColor
+                              key={item.id}
+                              checked={item.id}
+                              choosed={chooseItem}
+                              color={item?.colorName}
+                            />
+                          </Box>
+                        ))}
+                      </Stled_Box>
+                    </Container_Color>
+                    <Grid container className=" text-center count">
+                      <Grid item xs={12}>
+                        <p>Количество:</p>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Styled_Button
+                          onClick={minusHandler}
+                          disabled={count === 1}
+                        >
+                          -
+                        </Styled_Button>
+                      </Grid>
+                      <Grid item xs={2}>
+                        {count}
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Styled_Button onClick={plusHandler}>+</Styled_Button>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={5}>
-                      <Styled_Button
-                        onClick={minusHandler}
-                        disabled={count === 1}
-                      >
-                        -
-                      </Styled_Button>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {count}
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Styled_Button onClick={plusHandler}>+</Styled_Button>
-                    </Grid>
-                  </Grid>
 
-                  <Grid item xs={5} className=" center">
-                    <div>
-                      {data.amountOfDiscount > 0 ? (
-                        <Styled_Price>
-                          <Discount_Styled>
-                            -{data.amountOfDiscount}%
-                          </Discount_Styled>
-                          <Discount_Price>
-                            {findedSubProduct?.price.toString()}c
-                          </Discount_Price>
-                          <Price>
-                            {getDicountPrice(
-                              data.amountOfDiscount,
-                              findedSubProduct?.price.toString()
+                    <Grid item xs={5} className=" center">
+                      <div>
+                        {data.amountOfDiscount > 0 ? (
+                          <Styled_Price>
+                            <Discount_Styled>
+                              -{data.amountOfDiscount}%
+                            </Discount_Styled>
+                            <Discount_Price>
+                              {findedSubProduct?.price.toString()}c
+                            </Discount_Price>
+                            <Price>
+                              {getDicountPrice(
+                                data.amountOfDiscount,
+                                findedSubProduct?.price.toString()
+                              )}
+                            </Price>
+                          </Styled_Price>
+                        ) : (
+                          <Styled_Price>
+                            <Discount_Price>
+                              {findedSubProduct?.price.toString()}c
+                            </Discount_Price>
+                          </Styled_Price>
+                        )}
+
+                        <div className="between">
+                          <Component_Button variant="outlined">
+                            {data.favorite ? (
+                              <HeartActiveIcon />
+                            ) : (
+                              <Favorites />
                             )}
-                          </Price>
-                        </Styled_Price>
-                      ) : (
-                        <Styled_Price>
-                          <Discount_Price>
-                            {findedSubProduct?.price.toString()}c
-                          </Discount_Price>
-                        </Styled_Price>
-                      )}
-
-                      <div className="between">
-                        <Component_Button variant="outlined">
-                          {data.favorite ? <HeartActiveIcon /> : <Favorites />}
-                        </Component_Button>
-                        <IconButton width="195px" icon={<CartIcon />}>
-                          В корзину
-                        </IconButton>
+                          </Component_Button>
+                          <IconButton
+                            onClick={onClickCartHandler}
+                            width="195px"
+                            icon={<CartIcon />}
+                          >
+                            В корзину
+                          </IconButton>
+                        </div>
                       </div>
-                    </div>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <ProductData subproducts={findedSubProduct} productId={data} />
-            </Styled_Block>
+                <ProductData subproducts={findedSubProduct} productId={data} />
+              </Styled_Block>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Styled_Container>
+      </Styled_Container>
+    </>
   );
 };
 
