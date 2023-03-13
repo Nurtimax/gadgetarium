@@ -102,7 +102,7 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
             anchorEl={anchorEl}
             onClose={handleClose}
             classes={{ paper: "subpaper" }}
-            marginThreshold={-230}
+            marginThreshold={-380}
             transformOrigin={{ horizontal: "left", vertical: "bottom" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
