@@ -103,23 +103,26 @@ const addProductSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addProductThunk.fulfilled, (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        state.data = action.payload;
-      }
-      state.isLoading = false;
-    });
-    builder.addCase(addProductThunk.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(addProductThunk.rejected, (state) => {
-      state.isLoading = false;
-    });
+    builder
+      .addCase(addProductThunk.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          state.data = action.payload;
+        }
+        state.isLoading = false;
+      })
 
-    builder.addCase(getBrandThunkApi.fulfilled, (state, action) => {
-      state.Productbrand = action.payload;
-    });
+      .addCase(addProductThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(addProductThunk.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(getBrandThunkApi.fulfilled, (state, action) => {
+        state.Productbrand = action.payload;
+      });
   },
 });
 export const ActionAddProductSlice = addProductSlice.actions;

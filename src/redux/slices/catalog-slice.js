@@ -100,17 +100,14 @@ const catalogSlice = createSlice({
         state.errorMessage = false;
         state.isLoading = true;
       })
-      .addCase(fetchDataCatalog.rejected, (state, action) => {
-        state.errorMessage = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(fetchColorCatalog.fulfilled, (state, action) => {
-        state.colorResponses = action.payload.data;
-      })
 
       .addCase(fetchDataCatalog.rejected, (state, action) => {
         state.errorMessage = action.payload;
         state.isLoading = false;
+      })
+
+      .addCase(fetchColorCatalog.fulfilled, (state, action) => {
+        state.colorResponses = action.payload.data;
       });
   },
 });

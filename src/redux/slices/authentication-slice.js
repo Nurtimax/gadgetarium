@@ -60,44 +60,46 @@ const authenticationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDataSignin.fulfilled, (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        localStorage.setItem(
-          GADJEDTARIUM_LOGIN_INFO,
-          JSON.stringify(action.payload)
-        );
-      }
-      state.data = action.payload;
-      state.isLoading = false;
-    });
-
-    builder.addCase(fetchDataSignin.rejected, (state) => {
-      state.isLoading = false;
-    });
-
-    builder.addCase(fetchDataSignin.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(fetchDataSignup.fulfilled, (state, action) => {
-      const { email, roleName, token } = action.payload;
-      if (email && roleName && token) {
-        localStorage.setItem(
-          GADJEDTARIUM_LOGIN_INFO,
-          JSON.stringify(action.payload)
-        );
+    builder
+      .addCase(fetchDataSignin.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          localStorage.setItem(
+            GADJEDTARIUM_LOGIN_INFO,
+            JSON.stringify(action.payload)
+          );
+        }
         state.data = action.payload;
-      }
-      state.isLoading = false;
-    });
-    builder.addCase(fetchDataSignup.rejected, (state) => {
-      state.isLoading = false;
-    });
+        state.isLoading = false;
+      })
 
-    builder.addCase(fetchDataSignup.pending, (state) => {
-      state.isLoading = true;
-    });
+      .addCase(fetchDataSignin.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignin.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(fetchDataSignup.fulfilled, (state, action) => {
+        const { email, roleName, token } = action.payload;
+        if (email && roleName && token) {
+          localStorage.setItem(
+            GADJEDTARIUM_LOGIN_INFO,
+            JSON.stringify(action.payload)
+          );
+          state.data = action.payload;
+        }
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignup.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(fetchDataSignup.pending, (state) => {
+        state.isLoading = true;
+      });
   },
 });
 
