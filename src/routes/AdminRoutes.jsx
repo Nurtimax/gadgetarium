@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import OrderItem from "../components/orders/OrderItem";
 import AddProduct from "../containers/add-product/AddProduct";
 import Orders from "../containers/orders/Orders";
@@ -10,7 +10,14 @@ const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="" element={<AdminLayout />}>
-        <Route path="goods" element={<h1>goods</h1>} />
+        <Route
+          path="goods"
+          element={
+            <h1>
+              <Link to={ROUTES.ADDPRODUCT}>add product</Link> goods
+            </h1>
+          }
+        />
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
           element={<h1>Product</h1>}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   styled,
@@ -9,42 +9,67 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
-import { catalogMenu_FAKE_DATA, chip_item } from "../../utils/constants";
-import { fetchDataCatalog } from "../../redux/slices/catalog-slice";
+import { catalogMenu_FAKE_DATA } from "../../utils/constants";
+
 import Sort from "../../components/catalog-products/Sort";
-import FilterProducts from "../../components/catalog-products/FilterProducts";
+import {
+  catalogSliceAction,
+  fetchColorCatalog,
+  fetchDataCatalog,
+} from "../../redux/slices/catalog-slice.js";
+import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import ProductsList from "../../components/catalog-products/ProductsList";
+import FilterProducts from "../../components/catalog-products/FilterProducts";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 
 const CatalogProducts = () => {
-  const [sortEL, setSortEl] = useDropDown();
-  const [sortField, setSortField] = useState(null);
-  const [discountField, setDiscountField] = useState(null);
-  const { catalogItem } = useParams();
-  const [size, setSize] = useState(12);
-  const { data, isLoading, errorMessage } = useSelector(
-    (state) => state.catalog
-  );
+  const filteredCatalog = useSelector((state) => state.filteredCatalog);
+
+  const { data, isLoading, errorMessage, filterSlice, colorResponses } =
+    useSelector((state) => state.catolog);
 
   const dispatch = useDispatch();
+
+  const [sortEL, setSortEl] = useDropDown();
+
+  const { catalogItem } = useParams();
 
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(
     (catalog) => catalog.id === Number(catalogItem)
   );
 
+  const handleChangeChips = (title, id, colorCode) => {
+    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
+    dispatch(
+      filteredCatalogSliceAction.removeCheckedProduct({
+        key: typeof id === "number" ? "subCategoryName" : id,
+        title,
+        colorCode,
+      })
+    );
+  };
+
+  const handelResetAllFilters = () => {
+    dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  };
+
+  useEffect(() => {
+    dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
+
   useEffect(() => {
     dispatch(
       fetchDataCatalog({
+        ...filteredCatalog,
         categoryName: findedCatalogItem.title,
-        fieldToSort: sortField,
-        discountField: discountField,
-        size: size,
-        // subCategoryName: "Samsung",
-        // colors: ["Rose Gold"]
+        colors: filteredCatalog.colors.join(","),
       })
     );
-  }, [findedCatalogItem, sortField, discountField, size]);
+    dispatch(fetchColorCatalog({ categoryId: catalogItem }));
+  }, [findedCatalogItem, filteredCatalog, catalogItem]);
 
   return (
     <ContainerStyled>
@@ -54,43 +79,40 @@ const CatalogProducts = () => {
 
       <Box className="general-box">
         <Box className="filter-box">
-          <Typography style={{ height: "50px" }}>
-            Найдено 167 Товаров
+          <Typography className="find-products">
+            Найдено {data.products.sizeOfProducts} Товаров
           </Typography>
 
           <Box className="filter-lists">
-            <FilterProducts />
+            <FilterProducts
+              handelResetAllFilters={handelResetAllFilters}
+              colorResponses={colorResponses}
+            />
           </Box>
         </Box>
 
         <Box className="product-container">
           <Box className="chip-and-sort">
             <Box className="chip-container">
-              <div style={{ width: "100%", display: "flex", gap: "12px" }}>
-                {chip_item.map((item) => (
+              <Box className="chips">
+                {filterSlice?.map((item) => (
                   <Button
                     className="chip"
                     key={item.id}
-                    style={{ display: "flex", gap: "10px" }}
+                    onClick={() =>
+                      handleChangeChips(item.title, item.id, item?.colorCode)
+                    }
                   >
                     {item.title}
-
                     <Svg />
                   </Button>
                 ))}
-              </div>
+              </Box>
             </Box>
 
             <Grid item xs={1.5} className="flex gap2">
               <Box className="flexgrow flex height" onClick={setSortEl}>
-                <Sort
-                  anchorElCatalog={sortEL}
-                  handleCloseCatalog={setSortEl}
-                  setDiscountField={setDiscountField}
-                  setSortField={setSortField}
-                  sortField={sortField}
-                  discountField={discountField}
-                />
+                <Sort anchorElCatalog={sortEL} handleCloseCatalog={setSortEl} />
                 <Box className="sort-container" onClick={setSortEl}>
                   <Typography className="gap capitalize sort-text  pointer">
                     Сортировать
@@ -112,10 +134,8 @@ const CatalogProducts = () => {
           <ProductsList
             isLoading={isLoading}
             data={data}
-            setSize={setSize}
-            size={size}
-            sortField={sortField}
-            discountField={discountField}
+            sortField={filteredCatalog.fieldToSort}
+            discountField={filteredCatalog.discountField}
           />
         </Box>
       </Box>
@@ -147,6 +167,14 @@ const ContainerStyled = styled(Container)(() => ({
     paddingTop: "40px",
   },
   "& .filter-box": { width: "351px" },
+  "& .find-products": {
+    height: "50px",
+    color: "#91969E",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "14px",
+    fontFamily: "Inter",
+  },
   "& .filter-lists": {
     width: "351px",
     display: "flex",
@@ -162,6 +190,7 @@ const ContainerStyled = styled(Container)(() => ({
     paddingBottom: "18px",
   },
   "& .chip-container": { display: "flex" },
+  "& .chips": { width: "100%", display: "flex", gap: "12px" },
   "& .sort-container": {
     display: "flex",
     alignItems: "center",
@@ -173,8 +202,12 @@ const ContainerStyled = styled(Container)(() => ({
     fontWeight: "400",
     fontSize: "16px",
     color: "#384255",
+    display: "flex",
+    alignItems: "center",
   },
   "& .chip": {
+    display: "flex",
+    gap: "10px",
     height: "32px",
     borderRadiuse: "0px",
     background: "#E8E8E8",

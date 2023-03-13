@@ -1,18 +1,17 @@
+import React, { useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, MenuItem, styled, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useCallback } from "react";
 import DropDown from "../UI/DropDown";
 import useDropDown from "../../hooks/useDropDown";
 import { ITEM_SORT } from "../../utils/constants";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 
-const Sort = ({
-  anchorElCatalog,
-  handleCloseCatalog,
-  setSortField,
-  setDiscountField,
-  sortField,
-  discountField,
-}) => {
+const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
+  const { fieldToSort, discountField } = useSelector(
+    (state) => state.filteredCatalog
+  );
+
+  const dispatch = useDispatch();
   const [subMenuCatalog, setSubMenuCatalog] = useState([]);
   const [anchorEl, setAnchorEl] = useDropDown();
 
@@ -27,16 +26,16 @@ const Sort = ({
   );
 
   const clickSubSortHandler = (value) => () => {
-    setSortField("По акции");
-    setDiscountField(value);
+    dispatch(filteredCatalogSliceAction.sortField("По акции"));
+    dispatch(filteredCatalogSliceAction.discountField(value));
     closeHandler();
   };
   const clickSortHandler = (value) => () => {
     if (value !== "По акции") {
-      setSortField(value);
+      dispatch(filteredCatalogSliceAction.sortField(value));
     } else {
-      setSortField(null);
-      setDiscountField(clickSubSortHandler());
+      dispatch(filteredCatalogSliceAction.sortField(null));
+      dispatch(filteredCatalogSliceAction.discountField(clickSubSortHandler()));
     }
   };
 
@@ -66,7 +65,7 @@ const Sort = ({
                 )}
                 onClick={clickSortHandler(catalog.title)}
                 className={
-                  sortField === catalog.title ? "selectedSortField" : ""
+                  fieldToSort === catalog.title ? "selectedSortField" : ""
                 }
                 classes={{ root: "sort_dropdown" }}
               >

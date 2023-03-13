@@ -17,15 +17,12 @@ export const fetchDiscountProduct = createAsyncThunk(
   "productSlice/fetchDiscountProduct",
   async (size, { rejectWithValue }) => {
     try {
-      const { data, status } = await axiosInstance.get(
-        `products/discountsProducts`,
-        {
-          params: {
-            page: 1,
-            size,
-          },
-        }
-      );
+      const { data, status } = await axiosInstance.get(`products/discounts`, {
+        params: {
+          page: 1,
+          size,
+        },
+      });
       if (!status === 200) {
         throw new Error("Server orror");
       }
@@ -60,7 +57,7 @@ export const fetchRecomendationProduct = createAsyncThunk(
   async (size, { rejectWithValue }) => {
     try {
       const { data, status } = await axiosInstance.get(
-        `products/recommendationsProducts`,
+        `products/recommendations`,
         {
           params: {
             page: 1,

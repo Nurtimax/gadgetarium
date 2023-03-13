@@ -55,5 +55,5 @@ export { ReactComponent as ArrowOrderIcon } from "./icons/arrows/arrow-order-lis
 export { ReactComponent as ArrowOrderIconRotate } from "./icons/arrows/arrow-icon-rotate-order.svg";
 export { ReactComponent as ArrowUpIcon } from "./icons/arrows/arrowUp.svg";
 export { ReactComponent as DeleteIconBasket } from "./icons/delete-basket.svg";
-export { ReactComponent as StarIcon } from "./icons/StarIcon.svg";
+export { ReactComponent as StarIcon } from "./icons/starIcon.svg";
 export { ReactComponent as EmptyStarIcon } from "./icons/empty.svg";

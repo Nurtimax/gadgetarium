@@ -9,6 +9,7 @@ import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions
 import Home from "../containers/home";
 import Item from "../containers/item/Item";
 import OrderPage from "../containers/order-page/OrderPage";
+import Ordering from "../containers/ordering/Ordering";
 import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
 import Layout from "../layout";
@@ -42,7 +43,10 @@ const MainRoutes = () => {
           />
         </Route>
         <Route path={ROUTES.CART} element={<Basket />} />
-        <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
+          element={<Ordering />}
+        />
         <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
