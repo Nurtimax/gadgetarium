@@ -178,6 +178,7 @@ const Forms = () => {
             type="number"
             placeholder="Введите гарантию товара"
             error={Boolean(errors.guarantee)}
+            inputProps={{ min: 1 }}
           />
           {Boolean(errors.guarantee) && (
             <Typography component="p" variant="body2" color="error">
@@ -267,11 +268,8 @@ const Forms = () => {
                 <Select
                   displayEmpty
                   onChange={changeHandlerColor}
-                  value={color}
                   IconComponent={() => <ChooseColorIcon />}
-                  startAdornment={
-                    color && <StyledChooseColor color={color.toString()} />
-                  }
+                  startAdornment={color && <StyledChooseColor color={color} />}
                   input={<Input error={Boolean(colorError)} />}
                   renderValue={() => (
                     <>
