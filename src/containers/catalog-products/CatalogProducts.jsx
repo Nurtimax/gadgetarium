@@ -27,7 +27,7 @@ const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
 
   const { data, isLoading, errorMessage, filterSlice, colorResponses } =
-    useSelector((state) => state.catalog);
+    useSelector((state) => state.catolog);
 
   const dispatch = useDispatch();
 
