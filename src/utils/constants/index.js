@@ -609,3 +609,72 @@ export const ITEM_SORT = [
 
 export const notFoundImage =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGbwe-jg6PydY6QXFnfHtw4KuLq448Q_AAciwxsGRZg&s";
+
+export const filterCategory = [
+  {
+    id: 1,
+    title: "Категория",
+    subtitle: [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 3, title: "Huawei" },
+      { id: 4, title: "Honor" },
+      { id: 5, title: "Xiaomi" },
+    ],
+  },
+];
+
+export const filterPrice = [
+  {
+    id: 2,
+    title: "Стоимость",
+  },
+];
+
+export const filterProducts = [
+  {
+    id: 3,
+    title: "Цвет",
+    subtitle: [
+      { id: 1, title: "Black " },
+      { id: 2, title: "Blue" },
+      { id: 3, title: "Gold " },
+      { id: 4, title: "Graphite " },
+      { id: 5, title: "Green" },
+      { id: 6, title: "Rose Gold" },
+      { id: 7, title: "Red" },
+      { id: 8, title: "Silver" },
+      { id: 9, title: "White" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Объем памяти (GB) ",
+    subtitle: [
+      { id: 1, title: "8" },
+      { id: 2, title: "16" },
+      { id: 3, title: "32" },
+      { id: 4, title: "64" },
+      { id: 5, title: "128" },
+      { id: 6, title: "256" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Объем оперативной памяти (GB)",
+    subtitle: [
+      { id: 1, title: "3" },
+      { id: 2, title: "4" },
+      { id: 3, title: "6" },
+      { id: 4, title: "8" },
+      { id: 5, title: "12" },
+    ],
+  },
+];
+
+export const chip_item = [
+  { id: 1, title: "Apple" },
+  { id: 2, title: "Graphite" },
+  { id: 3, title: "Apple" },
+  { id: 4, title: "Apple" },
+];

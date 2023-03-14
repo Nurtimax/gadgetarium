@@ -7,7 +7,6 @@ import filteredCatalogSlice from "./slices/catalog-filter-slice";
 import { basketProducts } from "./slices/basket-slice";
 import catalogSlice from "./slices/catalog-slice";
 import { orderingSlice } from "./slices/ordering-slice";
-import { favoriteProducts } from "./slices/favorite-slice";
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +18,6 @@ export const store = configureStore({
     basket: basketProducts.reducer,
     catolog: catalogSlice.reducer,
     ordering: orderingSlice.reducer,
-    favorite: favoriteProducts.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
