@@ -23,8 +23,6 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
     return subproducts.find((product) => product.id === chooseItem);
   }, [chooseItem]);
 
-  console.log(basketData, findedSubProduct);
-
   const chooseColorHandler = (colorId, images) => {
     dispatch(ActionProductDetails.setChooseItem(colorId));
     dispatch(ActionProductDetails.addImages(images));

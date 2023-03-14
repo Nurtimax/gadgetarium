@@ -10,6 +10,7 @@ import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
 import Home from "../containers/home";
+import Item from "../containers/item/Item";
 import OrderPage from "../containers/order-page/OrderPage";
 import MainProductDetails from "../containers/productDetails/MainProductDetails";
 import Ordering from "../containers/ordering/Ordering";
@@ -66,6 +67,7 @@ const MainRoutes = () => {
       </Route>
       <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
       <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+      <Route path="item" element={<Item />} />
     </Routes>
   );
 };
