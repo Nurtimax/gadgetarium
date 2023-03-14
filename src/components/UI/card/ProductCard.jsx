@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Grid,
   Card,
@@ -41,6 +41,12 @@ import {
   fetchDataSignin,
 } from "../../../redux/slices/authentication-slice";
 import PopUp from "../PopUp";
+import { postFavoriteProducts } from "../../../redux/slices/favorite-slice";
+import {
+  fetchDiscountProduct,
+  fetchNewProduct,
+  fetchRecomendationProduct,
+} from "../../../redux/slices/product-slice";
 
 const ProductCard = (props) => {
   const {
@@ -60,7 +66,9 @@ const ProductCard = (props) => {
 
   const basketData = useSelector((state) => state.basket.data);
 
-  const { isLoading, data } = useSelector((state) => state.auth);
+  const { isLoading, data, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -70,7 +78,7 @@ const ProductCard = (props) => {
 
   const [error, setError] = useState(null);
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(["", "", ""]);
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -95,7 +103,11 @@ const ProductCard = (props) => {
             productId,
           })
         ).then(() => {
-          setText("Товар успешно добавлен в корзину!");
+          setText([
+            "Товар успешно добавлен в корзину!",
+            "Перейти в корзину",
+            "/cart",
+          ]);
           setDropDown(true);
         });
       }
@@ -141,6 +153,27 @@ const ProductCard = (props) => {
     );
   }, [compared]);
 
+  const addProductToFavorite = () => {
+    if (Object.keys(data).length === 0) {
+      setModalOpen(true);
+    } else {
+      dispatch(postFavoriteProducts({ productId: productId })).then(() => {
+        !favorite
+          ? setText([
+              "Товар добавлен в избранное!",
+              "Перейти в избранное",
+              "/favorite",
+            ])
+          : setText([
+              "Товар удалён из избранных!",
+              "Перейти в избранное",
+              "/favorite",
+            ]);
+        setDropDown(true);
+      });
+    }
+  };
+
   const onComponentLike = useMemo(() => {
     if (favorite) {
       return (
@@ -149,6 +182,7 @@ const ProductCard = (props) => {
           title="Удалить из избранного"
           width="3.5vh"
           height="3.5vh"
+          onClick={addProductToFavorite}
         />
       );
     }
@@ -158,6 +192,7 @@ const ProductCard = (props) => {
         height="3.5vh"
         title="Добавить в избранное"
         cursor="pointer"
+        onClick={addProductToFavorite}
       />
     );
   }, [favorite]);
@@ -179,6 +214,14 @@ const ProductCard = (props) => {
     });
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchDiscountProduct(100));
+      dispatch(fetchNewProduct(100));
+      dispatch(fetchRecomendationProduct(100));
+    }
+  }, [isAuthenticated, dispatch]);
+
   const { handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
       email: "",
@@ -194,13 +237,13 @@ const ProductCard = (props) => {
       <PopUp
         open={dropDown}
         handleClose={closeDropDown}
-        transitionTitle="Перейти в корзину"
-        addedTitle={text}
+        transitionTitle={text[1]}
+        addedTitle={text[0]}
         durationSnackbar={2000}
         icon={true}
         vertical="bottom"
         horizontal="right"
-        to="/cart"
+        to={text[2]}
       />
 
       {isModalOpen ? (
@@ -312,10 +355,23 @@ const ProductCard = (props) => {
         />
         <Card_contend className="carsContent">
           <Styled_Count>В наличии ({count})</Styled_Count>
-          <StyletTitle color="black" title={productName}>
+          <StyletTitle
+            color="black"
+            title={productName}
+            style={{ fontFamily: "Inter", fontWeight: "500", fontSize: "16px" }}
+          >
             {productName}
           </StyletTitle>
-          <Typography variant="span" className="flex size">
+          <Typography
+            variant="span"
+            className="flex size"
+            style={{
+              fontFamily: "Inter",
+              fontWeight: "500",
+              fontSize: "12px",
+              color: "#909CB5",
+            }}
+          >
             Рейтинг
             <Rating value={productRating} readOnly />({countOfReview})
           </Typography>
@@ -327,7 +383,15 @@ const ProductCard = (props) => {
                     {priceProductSeparate(Number(String(discountPrice || 0)))}c
                   </Typography>
                 ) : (
-                  <Typography variant="h1" fontSize="0.8rem">
+                  <Typography
+                    variant="h1"
+                    fontSize="0.8rem"
+                    style={{
+                      fontFamily: "Inter",
+                      fontWeight: "700",
+                      fontSize: "18px",
+                    }}
+                  >
                     {priceProductSeparate(Number(String(productPrice || 0)))}c
                   </Typography>
                 )}
@@ -340,7 +404,7 @@ const ProductCard = (props) => {
               <IconButton
                 onClick={addBasketHandler}
                 width="70%"
-                height="2.5vw"
+                height="45px"
                 title="Добавить в карзину"
                 fontSize="0.5rem"
                 icon={<CartIcon width="1.5vw" />}
@@ -408,7 +472,6 @@ const Card_contend = styled(CardContent)(() => ({
   },
 }));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "1rem",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",

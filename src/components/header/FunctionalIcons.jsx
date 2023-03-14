@@ -8,11 +8,12 @@ import FunctionalIconsItem from "./FunctionalIconsItem";
 
 const FunctionalIcons = () => {
   const data = useSelector((state) => state.basket.data);
+  const { data: auth } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBasketProduct());
+    Object.keys(auth).length === 0 ? "" : dispatch(getBasketProduct());
   }, []);
 
   return (

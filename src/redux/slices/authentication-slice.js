@@ -8,6 +8,7 @@ export const fetchDataSignin = createAsyncThunk(
     try {
       const response = await axiosInstance.post(`auth/login`, params);
       const data = response.data;
+
       return data;
     } catch (error) {
       if (rejectWithValue) {
