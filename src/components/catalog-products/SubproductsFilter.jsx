@@ -15,7 +15,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "../../assets";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { changeCaseShape } from "../../utils/helpers/general";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
-import { catalogSliceAction } from "../../redux/slices/catalog";
+import { catalogSliceAction } from "../../redux/slices/catalog-slice";
 
 const SubproductsFilter = ({
   type,

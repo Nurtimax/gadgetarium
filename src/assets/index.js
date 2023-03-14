@@ -32,6 +32,7 @@ export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as DeleteIconInCart } from "./icons/delete-icon-in-cart.svg";
 export { default as ImageProductCardInBuscket } from "./images/product-image-in-buscket.png";
 export { default as ImageEmptyBasket } from "./images/basket-empty-photo.png";
+export { default as ImageEmptyCompare } from "./images/sammy-finance 1.png";
 export { ReactComponent as Comporation } from "./icons/favoritesDefoult.svg";
 export { ReactComponent as Favorites } from "./icons/comporation.svg";
 export { ReactComponent as Like } from "./icons/like.svg";
