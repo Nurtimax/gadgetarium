@@ -106,11 +106,6 @@ const catalogSlice = createSlice({
       })
       .addCase(fetchColorCatalog.fulfilled, (state, action) => {
         state.colorResponses = action.payload.data;
-      })
-
-      .addCase(fetchDataCatalog.rejected, (state, action) => {
-        state.errorMessage = action.payload;
-        state.isLoading = false;
       });
   },
 });
