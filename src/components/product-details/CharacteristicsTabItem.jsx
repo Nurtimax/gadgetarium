@@ -21,7 +21,7 @@ const CharacteristicsTabItem = () => {
 
   useEffect(() => {
     dispatch(getProductDetailThunk({ product, attribute: "Характеристики" }));
-  }, [dispatch]);
+  }, [dispatch, product]);
 
   const memory = useMemo(() => {
     switch (data?.categoryName) {

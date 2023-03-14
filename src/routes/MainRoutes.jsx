@@ -26,27 +26,36 @@ const MainRoutes = () => {
       <Route path={ROUTES.MAIN} element={<Layout />}>
         <Route index element={<Home />} />
         <Route path={ROUTES.ABOUTSTORE} element={<AboutStore />} />
-        <Route
-          path={`item/${ROUTES.PHONE}`}
-          element={
-            <PrivateRoute Component={<CatalogProducts />} role={["Customer"]} />
-          }
-        />
+        <Route path="item" element={<Item />}>
+          <Route
+            path={`${ROUTES.PHONE}`}
+            element={
+              <PrivateRoute
+                Component={<CatalogProducts />}
+                role={["Customer"]}
+              />
+            }
+          />
 
-        <Route
-          path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
-          element={
-            <PrivateRoute
-              Component={<MainProductDetails />}
-              role={["Customer"]}
+          <Route
+            path={`${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
+            element={
+              <PrivateRoute
+                Component={<MainProductDetails />}
+                role={["Customer"]}
+              />
+            }
+          >
+            <Route path="description" element={<DescriptionTabItem />} />
+            <Route
+              path="characteristics"
+              element={<CharacteristicsTabItem />}
             />
-          }
-        >
-          <Route path="description" element={<DescriptionTabItem />} />
-          <Route path="characteristics" element={<CharacteristicsTabItem />} />
-          <Route path="reviews" element={<ReviewsTabItem />} />
-          <Route path="shipping-and-payment" element={<Delivery />} />
+            <Route path="reviews" element={<ReviewsTabItem />} />
+            <Route path="shipping-and-payment" element={<Delivery />} />
+          </Route>
         </Route>
+
         <Route path={ROUTES.CART} element={<Basket />} />
         <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
@@ -67,7 +76,6 @@ const MainRoutes = () => {
       </Route>
       <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
       <Route path={ROUTES.SIGNUP} element={<SignUp />} />
-      <Route path="item" element={<Item />} />
     </Routes>
   );
 };

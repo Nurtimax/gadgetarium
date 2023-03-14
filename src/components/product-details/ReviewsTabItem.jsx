@@ -13,7 +13,7 @@ const ReviewsTabItem = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductDetailThunk({ product, attribute: "Отзывы" }));
-  }, [dispatch]);
+  }, [dispatch, product]);
 
   useEffect(() => {
     for (const key in data.reviewCount) {

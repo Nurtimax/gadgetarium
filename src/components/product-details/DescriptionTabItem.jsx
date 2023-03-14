@@ -13,7 +13,7 @@ const DescriptionTabItem = () => {
 
   useEffect(() => {
     dispatch(getProductDetailThunk({ product, attribute: "Описание" }));
-  }, [dispatch]);
+  }, [dispatch, product]);
 
   return (
     <Styled_Wrapper>
