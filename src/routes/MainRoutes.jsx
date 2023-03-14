@@ -8,6 +8,7 @@ import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
 import Home from "../containers/home";
+import Item from "../containers/item/Item";
 import OrderPage from "../containers/order-page/OrderPage";
 import Ordering from "../containers/ordering/Ordering";
 import SignIn from "../containers/sign-in/SignIn";
@@ -22,22 +23,26 @@ const MainRoutes = () => {
       <Route path={ROUTES.MAIN} element={<Layout />}>
         <Route index element={<Home />} />
         <Route path={ROUTES.ABOUTSTORE} element={<AboutStore />} />
-        <Route
-          path={`item/${ROUTES.PHONE}`}
-          element={
-            <PrivateRoute Component={<CatalogProducts />} role={["Customer"]} />
-          }
-        />
-
-        <Route
-          path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
-          element={
-            <PrivateRoute
-              Component={<h1>product item by id</h1>}
-              role={["Customer"]}
-            />
-          }
-        />
+        <Route path="item" element={<Item />}>
+          <Route
+            path={`${ROUTES.PHONE}`}
+            element={
+              <PrivateRoute
+                Component={<CatalogProducts />}
+                role={["Customer"]}
+              />
+            }
+          />
+          <Route
+            path={`${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
+            element={
+              <PrivateRoute
+                Component={<h1>product item by id</h1>}
+                role={["Customer"]}
+              />
+            }
+          />
+        </Route>
         <Route path={ROUTES.CART} element={<Basket />} />
         <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}

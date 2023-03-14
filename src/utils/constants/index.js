@@ -608,7 +608,7 @@ export const ITEM_SORT = [
 ];
 
 export const notFoundImage =
-  "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+  "https://us.123rf.com/450wm/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016/167492439-no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image.jpg?ver=6";
 
 export const TAB_ITEMS_COMPARE = [
   {
