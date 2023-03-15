@@ -6,8 +6,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-
-// import { Addimage } from "";
 import Modal from "../UI/Modal";
 import { useCallback, useEffect } from "react";
 import { useFormik } from "formik";
@@ -20,51 +18,51 @@ import { postAddFeedback } from "../../redux/slices/add-feedback";
 import { useParams } from "react-router-dom";
 import { Addimage } from "../../../assets";
 const Feedback = ({ open, onClose }) => {
-  //   const [isLoading, setIsLoading] = useState(false);
-  //   const a = useSelector((state) => state.feedback);
-  //   console.log(a);
-  //   const { product } = useParams();
-  //   const dispatch = useDispatch();
-  //   const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
-  //     initialValues: {
-  //       productId: 0,
-  //       productGrade: 0,
-  //       reviewComment: "",
-  //       images: [],
-  //     },
-  //     onSubmit: (values) => {
-  //       dispatch(postAddFeedback(values));
-  //       // onClose();
-  //     },
-  //   });
-  //   const getImageLinkHandler = async (file) => {
-  //     setIsLoading(true);
-  //     const bodyFormData = new FormData();
-  //     bodyFormData.append("file", file[0]);
-  //     axios({
-  //       method: "POST",
-  //       url: `${SWAGGER_API}file`,
-  //       data: bodyFormData,
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     })
-  //       .then((response) => {
-  //         setFieldValue("images", [...values.images, response.data.link]);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setIsLoading(false);
-  //       });
-  //   };
-  //   const onDrop = useCallback((files) => {
-  //     getImageLinkHandler(files);
-  //   }, []);
-  //   const { getInputProps, getRootProps } = useDropzone({
-  //     onDrop,
-  //   });
-  //   useEffect(() => {
-  //     setFieldValue("productId", Number(product));
-  //   }, [product]);
+  const [isLoading, setIsLoading] = useState(false);
+  const a = useSelector((state) => state.feedback);
+  console.log(a);
+  const { product } = useParams();
+  const dispatch = useDispatch();
+  const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
+    initialValues: {
+      productId: 0,
+      productGrade: 0,
+      reviewComment: "",
+      images: [],
+    },
+    onSubmit: (values) => {
+      dispatch(postAddFeedback(values));
+      // onClose();
+    },
+  });
+  const getImageLinkHandler = async (file) => {
+    setIsLoading(true);
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file[0]);
+    axios({
+      method: "POST",
+      url: `${SWAGGER_API}file`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        setFieldValue("images", [...values.images, response.data.link]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
+  const onDrop = useCallback((files) => {
+    getImageLinkHandler(files);
+  }, []);
+  const { getInputProps, getRootProps } = useDropzone({
+    onDrop,
+  });
+  useEffect(() => {
+    setFieldValue("productId", Number(product));
+  }, [product]);
   return (
     <Styled open={open} handleClose={onClose}>
       <Styled_Container onSubmit={handleSubmit}>

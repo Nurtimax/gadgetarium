@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { getProductDetailThunk } from "../../redux/slices/product-details";
 // import Feedback from "../UI/feedback/Feedback";
 // import Feedback from "../UI/feedback/Feedback";
+import SuccessFeedback from "../UI/feedback/SuccessFeedback";
 
 const ReviewsTabItem = () => {
   const [reviewCount, setReviewCount] = useState(0);
@@ -32,13 +33,15 @@ const ReviewsTabItem = () => {
     setIsShowModal(true);
   };
 
-  // const onClickCloseModal = () => {
-  //   setIsShowModal(false);
-  // };
+  const onClickCloseModal = () => {
+    setIsShowModal(false);
+  };
 
   return (
     <>
-      {isShowModal && <div>sdjlbk</div>}
+      {isShowModal && (
+        <SuccessFeedback open={isShowModal} onClose={onClickCloseModal} />
+      )}
       <Styled_Wrapper>
         <Grid container spacing={10}>
           {data.attribute?.Отзывы?.length === 0 ? (

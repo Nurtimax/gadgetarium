@@ -9,7 +9,7 @@ import { basketProducts } from "./slices/basket-slice";
 import catalogSlice from "./slices/catalog-slice";
 import { orderingSlice } from "./slices/ordering-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
-
+import addFeedbackSlice from "./slices/feedback-slice";
 export const store = configureStore({
   reducer: {
     auth: reducerAuthenticationSlice,
@@ -22,6 +22,7 @@ export const store = configureStore({
     catolog: catalogSlice.reducer,
     ordering: orderingSlice.reducer,
     viewed: viewedProductSlice.reducer,
+    feedback: addFeedbackSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
