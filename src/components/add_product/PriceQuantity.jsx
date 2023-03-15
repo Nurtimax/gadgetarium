@@ -7,6 +7,7 @@ import Input from "../UI/input/Input";
 import AddProductTable from "./table";
 
 const PriceQuantity = () => {
+  const [error, setError] = useState(null);
   const { editData, addProductFirstPart, values } = useSelector(
     (state) => state.addProduct
   );
@@ -24,36 +25,43 @@ const PriceQuantity = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      ActionAddProductSlice.editData({
-        [editData.isChecked]: value,
-      })
-    );
+    if (Number(value) > 0) {
+      dispatch(
+        ActionAddProductSlice.editData({
+          [editData.isChecked]: value,
+        })
+      );
 
-    const updateSubProductequests = values.subProductRequests.map(
-      (item, index) => {
-        if (index === Number(editData.id)) {
-          const newData = {
-            ...item,
-            [editData.isChecked]: value ? value : 1,
-          };
-          return newData;
+      const updateSubProductequests = values.subProductRequests.map(
+        (item, index) => {
+          if (index === Number(editData.id)) {
+            const newData = {
+              ...item,
+              [editData.isChecked]: value ? value : 1,
+            };
+            return newData;
+          }
+          return item;
         }
-        return item;
-      }
-    );
+      );
 
-    dispatch(
-      ActionAddProductSlice.editAddProductSecondPart({
-        key: "subProductRequests",
-        value: updateSubProductequests,
-      })
-    );
+      dispatch(
+        ActionAddProductSlice.editAddProductSecondPart({
+          key: "subProductRequests",
+          value: updateSubProductequests,
+        })
+      );
 
-    dispatch(
-      ActionAddProductSlice.editData({
-        [editData.isChecked]: "",
-      })
+      dispatch(
+        ActionAddProductSlice.editData({
+          [editData.isChecked]: "",
+        })
+      );
+    }
+    setError(
+      `${
+        editData.isChecked === "countOfProduct" ? "Кол-во товара" : "Цена"
+      } должны быть положительные числа`
     );
   };
 
@@ -96,6 +104,13 @@ const PriceQuantity = () => {
         </Grid>
         <Grid item xs={10} className="setting_price_button">
           <StyledButton type="submit">Установить цену</StyledButton>
+        </Grid>
+        <Grid item>
+          {error && (
+            <Typography variant="body2" color="error">
+              {error}
+            </Typography>
+          )}
         </Grid>
         <Grid item xs={12}>
           <AddProductTable
