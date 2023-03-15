@@ -40,7 +40,7 @@ const CatalogProducts = () => {
   );
 
   const handleChangeChips = (title, id, colorCode) => {
-    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
+    console.log(title);
     dispatch(
       filteredCatalogSliceAction.removeCheckedProduct({
         key: typeof id === "number" ? "subCategoryName" : id,
@@ -48,6 +48,7 @@ const CatalogProducts = () => {
         colorCode,
       })
     );
+    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
   };
 
   const handelResetAllFilters = () => {
@@ -95,18 +96,19 @@ const CatalogProducts = () => {
           <Box className="chip-and-sort">
             <Box className="chip-container">
               <Box className="chips">
-                {filterSlice?.map((item) => (
-                  <Button
-                    className="chip"
-                    key={item.id}
-                    onClick={() =>
-                      handleChangeChips(item.title, item.id, item?.colorCode)
-                    }
-                  >
-                    {item.title}
-                    <Svg />
-                  </Button>
-                ))}
+                {filterSlice.length &&
+                  filterSlice.map((item) => (
+                    <Button
+                      className="chip"
+                      key={item.id}
+                      onClick={() =>
+                        handleChangeChips(item.title, item.id, item?.colorCode)
+                      }
+                    >
+                      {item.title}
+                      <Svg />
+                    </Button>
+                  ))}
               </Box>
             </Box>
 

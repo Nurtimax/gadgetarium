@@ -52,9 +52,9 @@ const MainRoutes = () => {
         <Route
           path={ROUTES.COMPATISONPRODUCT}
           element={
-            <h1>
+            <>
               <Compare />
-            </h1>
+            </>
           }
         />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
