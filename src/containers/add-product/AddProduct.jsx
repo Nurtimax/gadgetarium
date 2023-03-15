@@ -10,7 +10,7 @@ import {
   PRODUCT_INITIALSTATE,
   PRODUCT_INITIALSTATESCHEMA,
 } from "../../utils/constants/add-product";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -45,6 +45,7 @@ const AddProduct = () => {
           }
         })
         .catch((error) => toast.error(error.message));
+      dispatch(ActionAddProductSlice.resetAllValues());
       action.resetForm();
     },
     validateOnChange: false,
@@ -80,17 +81,14 @@ const AddProduct = () => {
     {
       id: 1,
       title: "Добавление товара",
-      link: "part-1",
     },
     {
       id: 2,
       title: "Установка цены и количества товара",
-      link: values.brandId ? "part-2" : "part-1",
     },
     {
       id: 3,
       title: "Описание и обзор",
-      link: values.brandId ? "part-3" : "part-1",
     },
   ];
 
@@ -107,11 +105,9 @@ const AddProduct = () => {
             return (
               <Step key={label.id} completed={false}>
                 <StepLabel>
-                  <Link to={label.link}>
-                    <Typography variant="body1" component="span">
-                      {label.title}
-                    </Typography>
-                  </Link>
+                  <Typography variant="body1" component="span">
+                    {label.title}
+                  </Typography>
                 </StepLabel>
               </Step>
             );
