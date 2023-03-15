@@ -57,12 +57,14 @@ const PriceQuantity = () => {
           [editData.isChecked]: "",
         })
       );
+      setError(null);
+    } else {
+      setError(
+        `${
+          editData.isChecked === "countOfProduct" ? "Кол-во товара" : "Цена"
+        } должны быть положительные числа`
+      );
     }
-    setError(
-      `${
-        editData.isChecked === "countOfProduct" ? "Кол-во товара" : "Цена"
-      } должны быть положительные числа`
-    );
   };
 
   const nextStepperHandler = () => {
