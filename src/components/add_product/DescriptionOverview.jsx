@@ -23,10 +23,13 @@ const DescriptionOverview = () => {
   const dispatch = useDispatch();
 
   const getImageLinkHandler = async (file) => {
+    if (file.name.length > 1000000) {
+      return setError(`pdf file is larger than ${1000000} characters`);
+    }
     setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
-    axios({
+    return axios({
       method: "POST",
       url: `${SWAGGER_API}file`,
       data: bodyFormData,
@@ -42,6 +45,7 @@ const DescriptionOverview = () => {
           );
           setIsLoading(false);
         }
+        setError(null);
       })
       .catch((error) => {
         setError(error?.message || "Something is wrong");
@@ -67,6 +71,7 @@ const DescriptionOverview = () => {
     accept: {
       "application/pdf": [],
     },
+    maxSize: 1000000,
   });
 
   return (
@@ -100,13 +105,13 @@ const DescriptionOverview = () => {
             title={values.pdf}
           />
           {Boolean(error) && (
-            <Typography variant="body2" component="p">
-              {error}
+            <Typography variant="body2" component="p" color="error">
+              {error} 1
             </Typography>
           )}
           {Boolean(errors?.pdf) && (
             <Typography component="p" variant="body2" color="error">
-              {errors.pdf}
+              {errors.pdf} 2
             </Typography>
           )}
         </Grid>
