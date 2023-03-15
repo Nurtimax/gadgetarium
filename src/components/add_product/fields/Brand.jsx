@@ -173,6 +173,7 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
               variant="outlined"
               className="cancel_button"
               onClick={setOpenModal}
+              type="button"
             >
               Отменить
             </StyledButton>
