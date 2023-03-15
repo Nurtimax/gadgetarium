@@ -96,14 +96,6 @@ const MainRoutes = () => {
         />
         <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
         <Route
-          path={ROUTES.CART}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <Basket />
-            </Suspense>
-          }
-        />
-        <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
