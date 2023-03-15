@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   Grid,
   Card,
@@ -41,12 +41,10 @@ import {
   fetchDataSignin,
 } from "../../../redux/slices/authentication-slice";
 import PopUp from "../PopUp";
-import { postFavoriteProducts } from "../../../redux/slices/favorite-slice";
 import {
-  fetchDiscountProduct,
-  fetchNewProduct,
-  fetchRecomendationProduct,
-} from "../../../redux/slices/product-slice";
+  getFavoriteProducts,
+  postFavoriteProducts,
+} from "../../../redux/slices/favorite-slice";
 
 const ProductCard = (props) => {
   const {
@@ -62,13 +60,12 @@ const ProductCard = (props) => {
     compared,
     productId,
     categoryId,
+    size,
     ...rest
   } = props;
   const basketData = useSelector((state) => state.basket.data);
 
-  const { isLoading, data, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, data } = useSelector((state) => state.auth);
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -79,6 +76,7 @@ const ProductCard = (props) => {
   const [error, setError] = useState(null);
 
   const [text, setText] = useState(["", "", ""]);
+  const [loginText, setLoginText] = useState("");
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -92,6 +90,7 @@ const ProductCard = (props) => {
 
   const addBasketHandler = () => {
     if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
       if (basketData?.some((item) => item.id === productId)) {
@@ -108,6 +107,7 @@ const ProductCard = (props) => {
             "Перейти в корзину",
             "/cart",
           ]);
+
           setDropDown(true);
         });
       }
@@ -155,20 +155,22 @@ const ProductCard = (props) => {
 
   const addProductToFavorite = () => {
     if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в избранное!");
       setModalOpen(true);
     } else {
-      dispatch(postFavoriteProducts({ productId: productId })).then(() => {
-        !favorite
+      dispatch(postFavoriteProducts({ size, productId })).then(() => {
+        favorite
           ? setText([
-              "Товар добавлен в избранное!",
+              "Товар удалён из избранных!",
               "Перейти в избранное",
               "/favorite",
             ])
           : setText([
-              "Товар удалён из избранных!",
+              "Товар добавлен в избранное!",
               "Перейти в избранное",
               "/favorite",
             ]);
+
         setDropDown(true);
       });
     }
@@ -204,6 +206,9 @@ const ProductCard = (props) => {
         if (data) {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
+          dispatch(getFavoriteProducts());
+
+          location.reload();
           action.resetForm();
           setError(null);
           closeModalWindow();
@@ -213,14 +218,6 @@ const ProductCard = (props) => {
       }
     });
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchDiscountProduct(100));
-      dispatch(fetchNewProduct(100));
-      dispatch(fetchRecomendationProduct(100));
-    }
-  }, [isAuthenticated, dispatch]);
 
   const { handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
@@ -265,7 +262,11 @@ const ProductCard = (props) => {
         <StyletTitle color="black" title={productName}>
           {productName}
         </StyletTitle>
-        <Typography variant="span" className="flex size">
+        <Typography
+          variant="span"
+          className="flex size"
+          style={{ color: "#909CB5" }}
+        >
           Рейтинг
           <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
@@ -273,11 +274,19 @@ const ProductCard = (props) => {
           <Grid container className="flex between">
             <Box width="35%" background="red">
               {discountPrice > 0 ? (
-                <Typography variant="h1" fontSize="0.8rem">
+                <Typography
+                  variant="h1"
+                  fontSize="0.8rem"
+                  style={{ fontSize: "18px", fontWeight: "700" }}
+                >
                   {priceProductSeparate(Number(String(discountPrice || 0)))}c
                 </Typography>
               ) : (
-                <Typography variant="h1" fontSize="0.8rem">
+                <Typography
+                  variant="h1"
+                  fontSize="0.8rem"
+                  style={{ fontSize: "18px", fontWeight: "700" }}
+                >
                   {priceProductSeparate(Number(String(productPrice || 0)))}c
                 </Typography>
               )}
@@ -305,13 +314,13 @@ const ProductCard = (props) => {
         <PopUp
           open={dropDown}
           handleClose={closeDropDown}
-          transitionTitle="Перейти в корзину"
-          addedTitle={text}
+          addedTitle={text[0]}
+          transitionTitle={text[1]}
+          to={text[2]}
           durationSnackbar={2000}
           icon={true}
           vertical="bottom"
           horizontal="right"
-          to="/cart"
         />
 
         {isModalOpen ? (
@@ -323,7 +332,7 @@ const ProductCard = (props) => {
             <Grid container spacing={1}>
               <Box className="text-box">
                 <p>Войдите или зарегистрируйтесь</p>
-                <p>чтобы опубликовать отзыв</p>
+                <p>{loginText}</p>
               </Box>
               <Grid item xs={12} className="flex center padding">
                 <Typography component="h1" variant="h5" className="login-title">
@@ -463,6 +472,9 @@ const Card_contend = styled(CardContent)(() => ({
   },
 }));
 const StyletTitle = styled("h1")(() => ({
+  fontFamily: "Inter",
+  fontSize: "16px",
+  fontWeight: "500",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",

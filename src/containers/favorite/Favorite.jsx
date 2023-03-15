@@ -7,12 +7,19 @@ import EmptyFavorite from "../../components/favorite/EmptyFavorite";
 import GadgetariumSpinnerLoading from "../../components/GadgetariumSpinnerLoading";
 import Button from "../../components/UI/button/Button";
 import ProductCard from "../../components/UI/card/ProductCard";
-import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
+import {
+  deleteFavoriteAllProducts,
+  getFavoriteProducts,
+} from "../../redux/slices/favorite-slice";
 
 const Favorite = () => {
   const { data, isLoading } = useSelector((state) => state.favorite);
 
   const dispatch = useDispatch();
+
+  const deleteProducts = () => {
+    dispatch(deleteFavoriteAllProducts());
+  };
 
   useEffect(() => {
     dispatch(getFavoriteProducts());
@@ -28,14 +35,29 @@ const Favorite = () => {
             <StyledContainer>
               <Typography className="title">Избранное</Typography>
 
-              <Typography className="clearText">
+              <Typography className="clearText" onClick={deleteProducts}>
                 <IconClear />
                 Очистить список товаров
               </Typography>
 
               <Box className="container-favorite">
                 {data?.map((product, i) => (
-                  <ProductCard key={i} {...product} />
+                  <ProductCard
+                    key={i}
+                    categoryId={product.categoryId}
+                    compared={product.compared}
+                    count={product.count}
+                    countOfReview={product.countOfReview}
+                    discountPrice={product.discountPrice}
+                    favorite={product.favorite}
+                    productId={product.productId}
+                    productImage={product.productImage}
+                    productName={product.productName}
+                    productPrice={product.productPrice}
+                    productRating={product.productRating}
+                    productStatus={product.productStatus}
+                    viewed={product.viewed.toString()}
+                  />
                 ))}
               </Box>
 

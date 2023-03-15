@@ -24,13 +24,38 @@ const postFavoriteProducts = createAsyncThunk(
   "favorite/postFavoriteProducts",
   async (params, { dispatch }) => {
     try {
-      const response = await axiosInstance.post("users", {}, { params });
+      const response = await axiosInstance.post(
+        "users",
+        {},
+        {
+          params: {
+            productId: params.productId,
+          },
+        }
+      );
       const data = await response.data;
 
       dispatch(getFavoriteProducts());
-      dispatch(fetchDiscountProduct(100));
-      dispatch(fetchNewProduct(100));
-      fetchDiscountProduct(fetchRecomendationProduct(100));
+
+      dispatch(fetchDiscountProduct(params.size.discount));
+      dispatch(fetchNewProduct(params.size.news));
+      dispatch(fetchRecomendationProduct(params.size.recomendation));
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+const deleteFavoriteAllProducts = createAsyncThunk(
+  "favorite,deleteFavoriteAllProducts",
+  async (_, { dispatch }) => {
+    try {
+      const response = await axiosInstance.delete("users");
+      const data = await response.data;
+
+      dispatch(getFavoriteProducts());
 
       return data;
     } catch (error) {
@@ -66,4 +91,9 @@ const favoriteProducts = createSlice({
 });
 
 export const ActionFavorite = favoriteProducts.actions;
-export { favoriteProducts, getFavoriteProducts, postFavoriteProducts };
+export {
+  favoriteProducts,
+  getFavoriteProducts,
+  postFavoriteProducts,
+  deleteFavoriteAllProducts,
+};
