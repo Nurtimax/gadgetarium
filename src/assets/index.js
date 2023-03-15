@@ -58,3 +58,4 @@ export { ReactComponent as ArrowUpIcon } from "./icons/arrows/arrowUp.svg";
 export { ReactComponent as DeleteIconBasket } from "./icons/delete-basket.svg";
 export { ReactComponent as StarIcon } from "./icons/starIcon.svg";
 export { ReactComponent as EmptyStarIcon } from "./icons/empty.svg";
+export { ReactComponent as Addimage } from "./icons/add-photo.svg";
