@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import productDetailsSlice from "./slices/product-details-slice";
 import reducerAuthenticationSlice from "./slices/authentication-slice";
 import addProductSlice from "./slices/add-product-slice";
 import { productSlice } from "./slices/product-slice";
@@ -14,6 +15,7 @@ export const store = configureStore({
     auth: reducerAuthenticationSlice,
     addProduct: addProductSlice.reducer,
     product: productSlice.reducer,
+    productDetails: productDetailsSlice.reducer,
     orderProduct: ordersProduct.reducer,
     filteredCatalog: filteredCatalogSlice.reducer,
     basket: basketProducts.reducer,

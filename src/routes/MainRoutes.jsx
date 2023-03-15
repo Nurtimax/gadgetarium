@@ -1,5 +1,8 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import CharacteristicsTabItem from "../components/product-details/CharacteristicsTabItem";
+import DescriptionTabItem from "../components/product-details/DescriptionTabItem";
+import ReviewsTabItem from "../components/product-details/ReviewsTabItem";
 import AboutStore from "../containers/about-store/AboutStore";
 import Basket from "../containers/basket/Basket";
 import CatalogProducts from "../containers/catalog-products/CatalogProducts";
@@ -10,6 +13,7 @@ import Favorite from "../containers/favorite/Favorite";
 import Home from "../containers/home";
 import Item from "../containers/item/Item";
 import OrderPage from "../containers/order-page/OrderPage";
+import MainProductDetails from "../containers/productDetails/MainProductDetails";
 import Ordering from "../containers/ordering/Ordering";
 import SignIn from "../containers/sign-in/SignIn";
 import SignUp from "../containers/sign-up/Signup";
@@ -33,16 +37,26 @@ const MainRoutes = () => {
               />
             }
           />
+
           <Route
             path={`${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
             element={
               <PrivateRoute
-                Component={<h1>product item by id</h1>}
+                Component={<MainProductDetails />}
                 role={["Customer"]}
               />
             }
-          />
+          >
+            <Route path="description" element={<DescriptionTabItem />} />
+            <Route
+              path="characteristics"
+              element={<CharacteristicsTabItem />}
+            />
+            <Route path="reviews" element={<ReviewsTabItem />} />
+            <Route path="shipping-and-payment" element={<Delivery />} />
+          </Route>
         </Route>
+
         <Route path={ROUTES.CART} element={<Basket />} />
         <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
@@ -54,7 +68,6 @@ const MainRoutes = () => {
         <Route path={ROUTES.DELIVERY} element={<Delivery />} />
         <Route path={ROUTES.FAG} element={<FrequentlyAskedQuestions />} />
         <Route path={ROUTES.CONTACTS} element={<Contacts />} />
-
         <Route path={ROUTES.VIP} element={<Navigate to={ROUTES.HISTORY} />}>
           <Route path={ROUTES.HISTORY} element={<h1>History</h1>} />
           <Route path={ROUTES.PROFILE} element={<h1>Profile</h1>} />

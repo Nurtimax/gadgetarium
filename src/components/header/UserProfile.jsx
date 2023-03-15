@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, styled, Typography } from "@mui/material";
+import { Box, IconButton, styled, Typography } from "@mui/material";
 import React from "react";
 import { ProfileIcon } from "../../assets";
 import useDropDown from "../../hooks/useDropDown";
@@ -25,9 +25,7 @@ const UserProfile = () => {
           horizontal="left"
           classes={{ paper: "drop_paper" }}
         >
-          <Grid container spacing={1} className="pointer">
-            <UserProfileList />
-          </Grid>
+          <UserProfileList />
         </StyledDropDown>
       </Box>
     </Box>

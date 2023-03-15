@@ -40,15 +40,17 @@ const UserProfileList = () => {
 
   return (
     <>
-      {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
-        <Grid key={status.id} item xs={12}>
-          <Link to={status.link}>
-            <MenuItem onClick={logOutHandler(status.title)}>
-              {status.title}
-            </MenuItem>
-          </Link>
-        </Grid>
-      ))}
+      <Grid container spacing={1} className="pointer">
+        {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
+          <Grid key={status.id} item xs={12}>
+            <Link to={status.link}>
+              <MenuItem onClick={logOutHandler(status.title)}>
+                {status.title}
+              </MenuItem>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

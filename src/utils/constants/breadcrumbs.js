@@ -25,6 +25,22 @@ export const BREADCRUMBS = [
     breadcrumb: UserCatalogItemBreadcrumbs,
   },
   {
+    path: `item/${ROUTES.PHONE}/${ROUTES.PRODUCT}/description`,
+    breadcrumb: null,
+  },
+  {
+    path: `item/${ROUTES.PHONE}/${ROUTES.PRODUCT}/characteristics`,
+    breadcrumb: null,
+  },
+  {
+    path: `item/${ROUTES.PHONE}/${ROUTES.PRODUCT}/reviews`,
+    breadcrumb: null,
+  },
+  {
+    path: `item/${ROUTES.PHONE}/${ROUTES.PRODUCT}/shipping-and-payment`,
+    breadcrumb: null,
+  },
+  {
     path: ROUTES.CART,
     breadcrumb: "Корзина",
   },

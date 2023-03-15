@@ -52,6 +52,7 @@ export { ReactComponent as XiaomiIcon } from "./icons/brands/xiaomi.svg";
 export { ReactComponent as ElCardIcon } from "./icons/elCard.svg";
 export { ReactComponent as MasterCard } from "./icons/masterCard.svg";
 export { ReactComponent as VisaIcon } from "./icons/visa.svg";
+export { ReactComponent as DetailLogo } from "./icons/detailTitle.svg";
 export { ReactComponent as ArrowOrderIcon } from "./icons/arrows/arrow-order-list.svg";
 export { ReactComponent as ArrowOrderIconRotate } from "./icons/arrows/arrow-icon-rotate-order.svg";
 export { ReactComponent as ArrowUpIcon } from "./icons/arrows/arrowUp.svg";
