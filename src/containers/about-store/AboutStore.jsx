@@ -214,5 +214,6 @@ const LastContainer = styled("div")`
   & img:last-of-type {
     width: 500px;
     height: 250px;
+    mix-blend-mode: multiply;
   }
 `;

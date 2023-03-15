@@ -109,14 +109,25 @@ export const socialIconsData = [
 ];
 
 export const contactsData = [
-  { title: "Адрес:", value: "г. Бишкек, ул. Гражданская 119" },
-  { title: "Телефон:", value: "г+996(400) 00-00-00" },
-  { title: "Почта:", value: "Gadgetarium.kg" },
+  {
+    title: "Адрес:",
+    value: (
+      <a href="https://go.2gis.com/0u9l3"> г. Бишкек, ул. Гражданская 119</a>
+    ),
+  },
+  {
+    title: "Телефон:",
+    value: <a href="tel:+996(400) 00-00-00">г+996(400) 00-00-00</a>,
+  },
+  {
+    title: "Почта:",
+    value: <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>,
+  },
   { title: "Режим работы:", value: "10:00 - 21:00" },
 ];
 
 export const URLMAP =
-  "https://yandex.ru/map-widget/v1/?um=constructor%3A7c9e32c235e852302eb25a02c6b96f88cbebb9457e9a77022bb71341ecfb86e7&amp;source=constructor";
+  "https://yandex.ru/map-widget/v1/?um=constructor%3Af5cc5d7b69388368d81e6fe3dc52745e81d656c14acad83d1ddcbe6bd8f0b806&amp;source=constructor";
 
 export const delivery = [
   {
