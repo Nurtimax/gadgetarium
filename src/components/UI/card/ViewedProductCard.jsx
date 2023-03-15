@@ -14,7 +14,7 @@ const ViewedProductCard = ({
 }) => {
   return (
     <>
-      <Link to={`/item/${categoryId}/${productId}`}>
+      <Link to={`/item/${categoryId}/${productId}/description`}>
         <StyledViewedProductCard image={productImage}>
           <Box className="image" />
           <Box className="padding info">
