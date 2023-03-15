@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IconNext, IconPrev } from "../../assets";
-import { styled, Typography } from "@mui/material";
+import { Container, styled, Typography } from "@mui/material";
 import Map from "../../assets/images/kyrgyzstan's-map.jpg";
 import { dataAboutStore, dataDigitalBestSeller } from "../../utils/constants";
 
@@ -17,7 +17,7 @@ const SampleNextArrow = ({ onClick, style, className }) => {
         position: "absolute",
         width: "50px",
         height: "50px",
-        right: "16%",
+        right: "13%",
       }}
     />
   );
@@ -33,7 +33,7 @@ const SamplePrevArrow = ({ onClick, style, className }) => {
         position: "absolute",
         width: "50px",
         height: "50px",
-        left: "16%",
+        left: "13%",
         zIndex: "1",
       }}
     />
@@ -122,8 +122,6 @@ const BoxMain = styled("div")`
 `;
 
 const TitleAboutStore = styled(Typography)`
-  width: 78vw;
-  margin-left: 130px;
   margin-bottom: 40px;
   padding-bottom: 20px;
   font-family: "Ubuntu";
@@ -131,20 +129,19 @@ const TitleAboutStore = styled(Typography)`
   font-size: 1.8rem;
   border-bottom: 1px solid #cdcdcd;
   color: #292929;
+  margin-left: 55px;
 `;
 
 const SliderContainer = styled("div")`
-  width: 100vw;
+  width: 98.7vw;
+
   .slide {
-    transform: scale(0.9);
-    transition: 0.5;
     filter: brightness(0.3);
     outline: none;
   }
 
   .slide-active {
     filter: brightness(1);
-    transform: scale(1);
     outline: none;
   }
 
@@ -154,28 +151,28 @@ const SliderContainer = styled("div")`
 
   .slick-center {
     width: 60vw;
+    padding: 0 20px;
   }
 
   .slick-slider {
-    height: 50vh;
+    height: 80vh;
   }
 
   .slick-list {
-    height: 50vh;
+    height: 80vh;
   }
 `;
 
 const Image = styled("div")`
   width: 100%;
-  height: 50vh;
+  height: 80vh;
   background-image: url(${({ src }) => src});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 `;
 
-const ContainerText = styled("div")`
-  padding-left: 130px;
+const ContainerText = styled(Container)`
   padding-top: 60px;
   display: flex;
   flex-direction: column;

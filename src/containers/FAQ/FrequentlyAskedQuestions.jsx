@@ -1,4 +1,4 @@
-import { Container, styled, Typography } from "@mui/material";
+import { Box, Container, styled, Typography } from "@mui/material";
 import AccordionComponents from "../../components/UI/AccordionComponents";
 import { title } from "../../utils/constants/listQuestions";
 import { useState } from "react";
@@ -12,12 +12,12 @@ const FrequentlyAskedQuestions = () => {
 
   return (
     <FAQStyled>
-      <Container className="faq-container">
+      <Box className="faq-container">
         <Typography variant="h5" component="h1">
           FAQ
         </Typography>
-      </Container>
-      <Container className="accordion-container">
+      </Box>
+      <Box className="accordion-container">
         <Typography variant="body2" component="p" className="general-text">
           Часто задаваемые вопросы
         </Typography>
@@ -30,14 +30,14 @@ const FrequentlyAskedQuestions = () => {
             className="accordion"
           />
         ))}
-      </Container>
+      </Box>
     </FAQStyled>
   );
 };
 
 export default FrequentlyAskedQuestions;
 
-const FAQStyled = styled("div")(() => ({
+const FAQStyled = styled(Container)(() => ({
   fontFamily: "Inter",
   backgroundColor: "#f4f4f4",
   "& .faq-container": {
