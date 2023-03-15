@@ -39,7 +39,7 @@ const Favorite = () => {
                 ))}
               </Box>
 
-              <Box className="button">
+              <Box className="btn">
                 <Link to="/">
                   <Button width="213px" height="44px" variant="outlined">
                     Продолжить покупки
@@ -88,7 +88,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
     gap: "8px",
   },
 
-  "& .button": {
+  "& .btn": {
     paddingTop: "42px",
     textAlign: "center",
   },

@@ -3,17 +3,22 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
+import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import { iconsData } from "../../utils/constants";
 import FunctionalIconsItem from "./FunctionalIconsItem";
 
 const FunctionalIcons = () => {
   const data = useSelector((state) => state.basket.data);
-  const { data: auth } = useSelector((state) => state.auth);
+  const favorite = useSelector((state) => state.favorite.data);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    Object.keys(auth).length === 0 ? "" : dispatch(getBasketProduct());
+    dispatch(getBasketProduct());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getFavoriteProducts());
   }, []);
 
   return (
@@ -22,7 +27,13 @@ const FunctionalIcons = () => {
         <Link key={icon.id} to={icon.title}>
           <FunctionalIconsItem
             {...icon}
-            badgeContent={icon.title === "cart" ? data || [] : []}
+            badgeContent={
+              icon.title === "cart"
+                ? data || []
+                : icon.title === "favorite"
+                ? favorite || []
+                : []
+            }
           />
         </Link>
       ))}

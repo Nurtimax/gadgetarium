@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
+import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import {
   fetchDiscountProduct,
   fetchNewProduct,
@@ -25,6 +26,7 @@ const UserProfileList = () => {
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
       dispatch(getBasketProduct());
+      dispatch(getFavoriteProducts());
     }
   };
 
