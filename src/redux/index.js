@@ -1,3 +1,4 @@
+import productDetailsSlice from "./slices/product-details";
 import reducerAuthenticationSlice from "./slices/authentication-slice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import addProductSlice from "./slices/add-product-slice";
@@ -18,6 +19,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { orderingSlice } from "./slices/ordering-slice";
+import viewedProductSlice from "./slices/viewed-product-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -28,6 +30,8 @@ const rootReducer = combineReducers({
   catolog: catalogSlice.reducer,
   ordering: orderingSlice.reducer,
   filteredCatalog: filteredCatalogSlice.reducer,
+  productDetails: productDetailsSlice.reducer,
+  viewed: viewedProductSlice.reducer,
 });
 
 const persistConfig = {

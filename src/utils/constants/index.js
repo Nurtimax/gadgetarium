@@ -41,7 +41,7 @@ export const userPages = [
   { id: 11, theme: "Главная", to: "/" },
   { id: 12, theme: "О магазине", to: "about" },
   { id: 13, theme: "Доставка", to: "delivery" },
-  { id: 14, theme: "FAG", to: "fag" },
+  { id: 14, theme: "FAQ", to: "fag" },
   { id: 15, theme: "Контакты", to: "contacts" },
 ];
 
@@ -226,7 +226,11 @@ export const catalogMenu_FAKE_DATA = [
     ],
   },
 ];
+export const characteristicas = [
+  { id: 1, title: "Основные xарактеристики", panel: "panel1" },
 
+  { id: 2, title: "Память и процессор", panel: "panel2" },
+];
 export const titlesTables = [
   "ID",
   "Фото",
@@ -318,20 +322,17 @@ export const TAB_ITEMS = [
     id: 1,
     param: "description",
     label: "Описание",
-    Component: "Описание",
   },
   {
     id: 2,
     param: "characteristics",
     label: "Характеристики",
-    Component: "Характеристики",
   },
-  { id: 3, param: "reviews", label: "Отзывы", Component: "Отзывы" },
+  { id: 3, param: "reviews", label: "Отзывы" },
   {
     id: 4,
     param: "shipping-and-payment",
     label: "Доставка и оплата",
-    Component: "Доставка и оплата",
   },
 ];
 

@@ -9,6 +9,7 @@ const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Contacts = lazy(() => import("../containers/contacts/Contacts"));
 const Home = lazy(() => import("../containers/home"));
+const Item = lazy(() => import("../containers/item/Item"));
 const Basket = lazy(() => import("../containers/basket/Basket"));
 const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
 const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
@@ -20,6 +21,18 @@ const CatalogProducts = lazy(() => {
 });
 const FrequentlyAskedQuestions = lazy(() => {
   return import("../containers/FAQ/FrequentlyAskedQuestions");
+});
+const CharacteristicsTabItem = lazy(() => {
+  return import("../components/product-details/CharacteristicsTabItem");
+});
+const DescriptionTabItem = lazy(() => {
+  return import("../components/product-details/DescriptionTabItem");
+});
+const ReviewsTabItem = lazy(() => {
+  return import("../components/product-details/ReviewsTabItem");
+});
+const MainProductDetails = lazy(() => {
+  return import("../containers/productDetails/MainProductDetails");
 });
 
 const MainRoutes = () => {
@@ -55,59 +68,92 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
-        <Route
-          path={`item/${ROUTES.PHONE}`}
-          element={
-            <PrivateRoute
-              Component={
+        <Route path="item" element={<Item />}>
+          <Route
+            path={`${ROUTES.PHONE}`}
+            element={
+              <PrivateRoute
+                Component={
+                  <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                    <CatalogProducts />
+                  </Suspense>
+                }
+                role={["Customer"]}
+              />
+            }
+          />
+
+          <Route
+            path={`${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
+            element={
+              <PrivateRoute
+                Component={
+                  <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                    <MainProductDetails />
+                  </Suspense>
+                }
+                role={["Customer"]}
+              />
+            }
+          >
+            <Route
+              path="description"
+              element={
                 <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <CatalogProducts />
+                  <DescriptionTabItem />
                 </Suspense>
               }
-              role={["Customer"]}
             />
-          }
-        />
+            <Route
+              path="characteristics"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <CharacteristicsTabItem />
+                </Suspense>
+              }
+            />
 
-        <Route
-          path={`item/${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
-          element={
-            <PrivateRoute
-              Component={<h1>product item by id</h1>}
-              role={["Customer"]}
+            <Route
+              path={ROUTES.CHECKOUT}
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <OrderPage />
+                </Suspense>
+              }
             />
-          }
-        />
-        <Route
-          path={ROUTES.CHECKOUT}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <OrderPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path={ROUTES.CART}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <Basket />
-            </Suspense>
-          }
-        />
-        <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+            <Route
+              path={ROUTES.CART}
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <Basket />
+                </Suspense>
+              }
+            />
+            <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+            <Route
+              path="reviews"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <ReviewsTabItem />
+                </Suspense>
+              }
+            />
+            <Route
+              path="shipping-and-payment"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <Delivery />
+                </Suspense>
+              }
+            />
+          </Route>
+        </Route>
+
         <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
               <Ordering />
-            </Suspense>
-          }
-        />
-        <Route
-          path={ROUTES.CHECKOUT}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <OrderPage />
             </Suspense>
           }
         />

@@ -43,7 +43,7 @@ const postProductToFavorite = createAsyncThunk(
     try {
       const response = await axiosInstance.post("userBasket/move", data);
       const result = await response.data;
-
+      console.log(result);
       dispatch(getBasketProduct());
 
       return result;
