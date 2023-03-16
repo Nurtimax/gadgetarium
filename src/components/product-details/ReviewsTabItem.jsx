@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../UI/button/Button";
 import { useParams } from "react-router-dom";
-import { getProductDetailThunk } from "../../redux/slices/product-details";
+import { getProductDetailThunk } from "../../redux/slices/product-details-slice";
 
 const ReviewsTabItem = () => {
   const [reviewCount, setReviewCount] = useState(0);

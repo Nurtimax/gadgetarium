@@ -4,7 +4,7 @@ import IconButton from "./../../components/UI/IconButton";
 import { CartIcon, HeartActiveIcon, Favorites } from "../../assets";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActionProductDetails } from "../../redux/slices/product-details";
+import { ActionProductDetails } from "../../redux/slices/product-details-slice";
 import ChooseColor from "../../components/UI/ChooseColor";
 import ProductData from "../../components/product-details/ProductData";
 import { getDicountPrice } from "./../../utils/helpers/get-discount-price";
