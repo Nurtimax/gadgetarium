@@ -12,7 +12,7 @@ export const ROUTES = {
   CART: "cart",
   CHECKOUT: "checkout",
   COMPATISONPRODUCT: "comporative",
-  LIKE: "like",
+  LIKE: "favorite",
   DELIVERY: "delivery",
   FAG: "fag",
   CONTACTS: "contacts",

@@ -1,26 +1,22 @@
 import { Tabs as MuiTabs, Tab, Box, styled } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function TabPanel({ label, children, param, ...other }) {
-  const [searchParams] = useSearchParams();
-  const contentStatus = searchParams.get(param) === label;
-  if (contentStatus) {
-    return <div {...other}>{children}</div>;
-  }
-}
-
-export default function Tabs({ param, tabs }) {
+export default function Tabs({ tabs = [] }) {
   const [query, setQuery] = useState(tabs[0].param);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    setQuery(searchParams.get(param));
-  }, []);
+    const route =
+      location.pathname.split("/")[location.pathname.split("/").length - 1];
+
+    setQuery(route);
+  }, [location.pathname]);
 
   const handleChange = (_, newParam) => {
     setQuery(newParam);
-    setSearchParams({ [param]: newParam });
+    navigate(newParam);
   };
 
   return (
@@ -36,18 +32,13 @@ export default function Tabs({ param, tabs }) {
           {tabs.map((tab) => (
             <Tab
               key={tab.label}
-              label={tab.label}
+              label={<Link to={tab.param}>{tab.label}</Link>}
               value={tab.param}
               className="tab"
             />
           ))}
         </TabsStyled>
       </BoxStyled>
-      {tabs.map((item) => (
-        <TabPanel label={item.param} key={item.label} param={param}>
-          {item.Component}
-        </TabPanel>
-      ))}
     </>
   );
 }

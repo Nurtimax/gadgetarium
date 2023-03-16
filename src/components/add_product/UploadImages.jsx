@@ -190,7 +190,7 @@ const UploadImages = ({
                   Минимальное разрешение - 450x600
                 </Typography>
                 <Typography component="li">
-                  максимальное количество - 10 фото
+                  Mаксимальное количество - 10 фото
                 </Typography>
               </Typography>
             </Grid>

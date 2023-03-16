@@ -5,6 +5,9 @@ import Input from "../../components/UI/input/Input";
 import { contactsData, URLMAP } from "../../utils/constants";
 
 const Contacts = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <ContainerPage>
       <Container>
@@ -62,7 +65,9 @@ const Contacts = () => {
                 </TextareaTitle>
                 <StyledTextarea placeholder="Напишите сообщение" />
               </ContainerTextarea>
-              <StyledButton type="submit">отправить</StyledButton>
+              <StyledButton type="submit" onClick={onSubmit}>
+                отправить
+              </StyledButton>
             </>
           </FormMainContainer>
         </ContainerSeparating>
@@ -123,9 +128,11 @@ const LabelInput = styled(InputLabel)`
 const StyledInput = styled(Input)(() => ({
   width: "338px",
   height: "48px",
+  backgroundColor: "#ffff !important",
 }));
 
 const StyledInputMask = styled(ReactInputMask)(() => ({ theme }) => ({
+  backgroundColor: "#ffff !important",
   width: "338px",
   height: "48px",
   "&": {
