@@ -81,9 +81,9 @@ const Home = () => {
           ) : (
             <Global_Card>
               <Typography variant="h4">Акции</Typography>
-              <Grid container className="" spacing={1}>
+              <Grid container spacing={1}>
                 {discountsProducts?.map((product) => (
-                  <Grid item xs={2.4} key={product.productName}>
+                  <Grid item xs={2.4} key={product.productId}>
                     <ProductCard
                       categoryId={product.categoryId}
                       compared={product.compared}
@@ -129,7 +129,7 @@ const Home = () => {
               <Typography variant="h4">Новинки</Typography>
               <Grid container spacing={1}>
                 {newProducts?.map((product) => (
-                  <Grid item xs={2.4} key={product.productName}>
+                  <Grid item xs={2.4} key={product.productId}>
                     <ProductCard
                       categoryId={product.categoryId}
                       compared={product.compared}
@@ -175,7 +175,7 @@ const Home = () => {
               <Typography variant="h4">Рекемендуем</Typography>
               <Grid container spacing={2}>
                 {recommendationProduct?.map((product) => (
-                  <Grid item xs={2.4} key={product.productName}>
+                  <Grid item xs={2.4} key={product.productId}>
                     <ProductCard
                       categoryId={product.categoryId}
                       compared={product.compared}
