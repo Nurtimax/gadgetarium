@@ -37,15 +37,26 @@ const ProductsList = ({ data, isLoading, sortField, discountField }) => {
 
   return (
     <BoxStyled>
-      {data.products.productCardResponses?.map((item) => (
+      {data.products.productCardResponses?.map((product) => (
         <ProductCardStyled
-          {...item}
-          key={item.productId}
+          categoryId={product.categoryId}
+          compared={product.compared}
+          count={product.count}
+          countOfReview={product.countOfReview}
+          discountPrice={product.discountPrice}
+          favorite={product.favorite}
+          productId={product.productId}
+          productImage={product.productImage}
+          productName={product.productName}
+          productPrice={product.productPrice}
+          productRating={product.productRating}
+          viewed={product.viewed.toString()}
+          key={product.productId}
           productStatus={changeProductStatusHelper(
             sortField,
             discountField,
-            item.discountPrice,
-            item.productStatus
+            product.discountPrice,
+            product.productStatus
           )}
         />
       ))}

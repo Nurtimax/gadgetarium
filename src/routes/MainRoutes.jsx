@@ -9,6 +9,7 @@ import CatalogProducts from "../containers/catalog-products/CatalogProducts";
 import Contacts from "../containers/contacts/Contacts";
 import Delivery from "../containers/delivery/Delivery";
 import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
+import Favorite from "../containers/favorite/Favorite";
 import Home from "../containers/home";
 import Item from "../containers/item/Item";
 import OrderPage from "../containers/order-page/OrderPage";
@@ -63,7 +64,7 @@ const MainRoutes = () => {
         />
         <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
-        <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
+        <Route path={ROUTES.LIKE} element={<Favorite />} />
         <Route path={ROUTES.DELIVERY} element={<Delivery />} />
         <Route path={ROUTES.FAG} element={<FrequentlyAskedQuestions />} />
         <Route path={ROUTES.CONTACTS} element={<Contacts />} />

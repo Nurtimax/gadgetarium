@@ -73,7 +73,7 @@ export const BREADCRUMBS = [
     breadcrumb: "История заказов",
   },
   {
-    path: `${ROUTES.VIP}/${ROUTES.LIKE}`,
+    path: `/${ROUTES.LIKE}`,
     breadcrumb: "Избранное",
   },
   {

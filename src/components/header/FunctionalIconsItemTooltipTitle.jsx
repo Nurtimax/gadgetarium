@@ -7,15 +7,20 @@ import { deleteProductBasket } from "../../redux/slices/basket-slice";
 import Button from "../UI/button/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
+import { postFavoriteProducts } from "../../redux/slices/favorite-slice";
 
 const FunctionalIconsItemTooltipTitle = ({
   title,
   cartItem,
+  favoriteItem,
   focused,
   tooltip_title_compative_remove,
   tooltip_title_compative_add,
 }) => {
-  const { data = [] } = useSelector((state) => state.basket);
+  const { data: basketData } = useSelector((state) => state.basket);
+  const { data: favoriteData } = useSelector((state) => state.favorite);
+  const bData = Array.isArray(basketData) ? basketData : [];
+  const fData = Array.isArray(favoriteData) ? favoriteData : [];
 
   const dispatch = useDispatch();
 
@@ -23,9 +28,62 @@ const FunctionalIconsItemTooltipTitle = ({
     dispatch(deleteProductBasket([id]));
   };
 
-  const price = data?.reduce((acc, curr) => {
+  const price = bData?.reduce((acc, curr) => {
     return Number(acc) + Number(curr.price);
   }, 0);
+
+  const addProductToFavorite = (productId) => {
+    dispatch(postFavoriteProducts({ productId }));
+  };
+
+  if (title === "favorite") {
+    if (favoriteItem.length) {
+      return (
+        <Grid container spacing={1}>
+          {favoriteItem.map((cart) => (
+            <Grid item xs={12} key={cart.id}>
+              <Item>{cart.title}</Item>
+            </Grid>
+          ))}
+        </Grid>
+      );
+    }
+    return (
+      <>
+        {fData?.length < 1 ? (
+          <Typography style={{ color: "red" }}>Empty products!</Typography>
+        ) : (
+          <StyledMainContainer length={fData?.length}>
+            <Box className="box-product">
+              {fData?.map((item, i) => (
+                <Box key={i} className="item-box">
+                  <img src={item.productImage} alt="photo" className="image" />
+
+                  <span className="name">{item.productName}</span>
+
+                  <span className="price">
+                    {priceProductSeparate(Number(String(item.productPrice)))} c
+                  </span>
+
+                  <span className="dlt">
+                    <IconClose
+                      onClick={() => addProductToFavorite(item.productId)}
+                    />
+                  </span>
+                </Box>
+              ))}
+            </Box>
+
+            <Box className="box-total">
+              <Link to={`/${ROUTES.LIKE}`}>
+                <StyledButton>Перейти в избранное</StyledButton>
+              </Link>
+            </Box>
+          </StyledMainContainer>
+        )}
+      </>
+    );
+  }
 
   if (title === "cart") {
     if (cartItem.length) {
@@ -41,12 +99,12 @@ const FunctionalIconsItemTooltipTitle = ({
     }
     return (
       <>
-        {data?.length < 1 ? (
+        {bData?.length < 1 ? (
           <Typography style={{ color: "red" }}>Empty products!</Typography>
         ) : (
-          <StyledMainContainer length={data?.length}>
+          <StyledMainContainer length={bData?.length}>
             <Box className="box-product">
-              {data?.map((item, i) => (
+              {bData?.map((item, i) => (
                 <Box key={i} className="item-box">
                   <img src={item.image} alt="photo" className="image" />
 
@@ -71,6 +129,7 @@ const FunctionalIconsItemTooltipTitle = ({
               <Link to={`${ROUTES.CART}/${ROUTES.ORDERING}`}>
                 <StyledButton>Оформить заказ</StyledButton>
               </Link>
+
               <Typography className="total-price">
                 Итого {priceProductSeparate(Number(String(price)))} с
               </Typography>
@@ -91,7 +150,6 @@ export default FunctionalIconsItemTooltipTitle;
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
   color: "white !important",
-  width: "172px",
 }));
 
 const Item = styled(Paper)(({ theme }) => ({

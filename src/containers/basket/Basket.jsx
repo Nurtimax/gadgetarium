@@ -177,11 +177,15 @@ const Basket = () => {
                       </span>
                       <p>c</p>
                     </span>
-                    <Typography className="sum">
+                    <Typography className="sum" component="span" variant="span">
                       {priceProductSeparate(Number(String(price || 0)))}
                       <p>c</p>
                     </Typography>
-                    <Typography className="total">
+                    <Typography
+                      className="total"
+                      component="span"
+                      variant="span"
+                    >
                       {priceProductSeparate(
                         Number(String(price - price / discount || 0))
                       )}
