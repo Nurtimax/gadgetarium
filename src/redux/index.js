@@ -8,7 +8,7 @@ import { basketProducts } from "./slices/basket-slice";
 import catalogSlice from "./slices/catalog-slice";
 import { orderingSlice } from "./slices/ordering-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
-import compareSlice from "./slices/compore-slice";
+import compareSlice from "./slices/compare-slice";
 
 export const store = configureStore({
   reducer: {
@@ -21,8 +21,9 @@ export const store = configureStore({
     catalog: catalogSlice.reducer,
     ordering: orderingSlice.reducer,
     viewed: viewedProductSlice.reducer,
-    comporeProducts: compareSlice.reducer,
+    compareProducts: compareSlice.reducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

@@ -26,31 +26,31 @@ import axiosInstance from "../../config/axios-instance";
 
 export const getCompareProduct = createAsyncThunk(
   "compare/getComparePrdoduct",
-  async (params, { rejectWithValue }) => {
+  async (params) => {
     try {
-      const response = await axiosInstance.get(`products/catalog`, {
+      const response = await axiosInstance.get(`userCompare`, {
         params,
       });
       console.log(response);
       return response;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return error;
     }
   }
 );
+
 const initialState = {
-  data: {
-    comporeProducts: [],
-  },
+  data: [],
 };
-export const compareSlice = createSlice({
+
+const compareSlice = createSlice({
   name: "compare",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCompareProduct.fulfilled, (state, action) => {
-      console.log(action, "action");
-      state.data.comporeProducts = action.payload.data;
+      console.log(action, "actiion");
+      state.data = action.payload;
     });
   },
 });
