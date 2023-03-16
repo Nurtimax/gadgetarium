@@ -1,13 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
 import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
+import {
+  fetchDiscountProduct,
+  fetchNewProduct,
+  fetchRecomendationProduct,
+} from "./product-slice";
 
 export const fetchDataSignin = createAsyncThunk(
   "authenticationSlice/fetchDataSignin",
-  async (params, { rejectWithValue }) => {
+  async (params, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosInstance.post(`auth/login`, params);
       const data = response.data;
+
+      dispatch(fetchDiscountProduct(5));
+      dispatch(fetchNewProduct(5));
+      dispatch(fetchRecomendationProduct(5));
+
       return data;
     } catch (error) {
       if (rejectWithValue) {
@@ -24,6 +34,7 @@ export const fetchDataSignup = createAsyncThunk(
     try {
       const response = await axiosInstance.post(`auth/register`, params);
       const data = response.data;
+
       return data;
     } catch (error) {
       if (rejectWithValue) {

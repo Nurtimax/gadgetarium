@@ -65,6 +65,7 @@ export const fetchRecomendationProduct = createAsyncThunk(
           },
         }
       );
+
       if (!status === 200) {
         throw new Error("Server orror");
       }

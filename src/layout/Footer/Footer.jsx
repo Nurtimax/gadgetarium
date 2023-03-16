@@ -86,13 +86,13 @@ const Footer = () => {
               <Typography component="li" variant="body1" color="inherit">
                 <Message />
                 <Typography variant="body1" component="p">
-                  <a href="sms:+996703717797">Gadgetarium.kg</a>
+                  <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>
                 </Typography>
               </Typography>
               <div>
                 <Locotion />
                 <Typography component="li" variant="body1" color="inherit">
-                  <a href="https://2gis.kg/bishkek">
+                  <a href="https://go.2gis.com/0u9l3">
                     г.Бишкек, ул. Гражданская 119
                   </a>
                 </Typography>

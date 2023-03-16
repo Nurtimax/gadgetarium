@@ -5,6 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
+import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
+import {
+  fetchDiscountProduct,
+  fetchNewProduct,
+  fetchRecomendationProduct,
+} from "../../redux/slices/product-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
 const UserProfileList = () => {
@@ -19,19 +25,27 @@ const UserProfileList = () => {
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
       dispatch(getBasketProduct());
+      dispatch(getFavoriteProducts());
+
+      dispatch(fetchDiscountProduct(5));
+      dispatch(fetchNewProduct(5));
+      dispatch(fetchRecomendationProduct(5));
     }
   };
+
   return (
     <>
-      {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
-        <Grid key={status.id} item xs={12}>
-          <Link to={status.link}>
-            <MenuItem onClick={logOutHandler(status.title)}>
-              {status.title}
-            </MenuItem>
-          </Link>
-        </Grid>
-      ))}
+      <Grid container spacing={1} className="pointer">
+        {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
+          <Grid key={status.id} item xs={12}>
+            <Link to={status.link}>
+              <MenuItem onClick={logOutHandler(status.title)}>
+                {status.title}
+              </MenuItem>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

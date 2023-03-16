@@ -23,6 +23,7 @@ import {
   VisibilityOffIcon,
 } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getBasketProduct,
@@ -32,7 +33,6 @@ import { useState } from "react";
 import Modal from "../Modal";
 import Input from "../input/Input";
 import Button from "../button/Button";
-import { Link } from "react-router-dom";
 import useVisibility from "../../../hooks/useVisibility";
 import { useFormik } from "formik";
 import { singInValidateSchema } from "../../../utils/helpers/validate";
@@ -41,6 +41,10 @@ import {
   fetchDataSignin,
 } from "../../../redux/slices/authentication-slice";
 import PopUp from "../PopUp";
+import {
+  getFavoriteProducts,
+  postFavoriteProducts,
+} from "../../../redux/slices/favorite-slice";
 
 const ProductCard = (props) => {
   const {
@@ -55,9 +59,10 @@ const ProductCard = (props) => {
     favorite,
     compared,
     productId,
+    categoryId,
+    size,
     ...rest
   } = props;
-
   const basketData = useSelector((state) => state.basket.data);
 
   const { isLoading, data } = useSelector((state) => state.auth);
@@ -70,7 +75,8 @@ const ProductCard = (props) => {
 
   const [error, setError] = useState(null);
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(["", "", ""]);
+  const [loginText, setLoginText] = useState("");
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -84,6 +90,7 @@ const ProductCard = (props) => {
 
   const addBasketHandler = () => {
     if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
       if (basketData?.some((item) => item.id === productId)) {
@@ -95,7 +102,12 @@ const ProductCard = (props) => {
             productId,
           })
         ).then(() => {
-          setText("Товар успешно добавлен в корзину!");
+          setText([
+            "Товар успешно добавлен в корзину!",
+            "Перейти в корзину",
+            "/cart",
+          ]);
+
           setDropDown(true);
         });
       }
@@ -116,7 +128,7 @@ const ProductCard = (props) => {
         return <Like width="2vw" height="2vw" title="Рекoмендуем" />;
 
       default:
-        return <div></div>;
+        return null;
     }
   }, [productStatus]);
 
@@ -141,6 +153,29 @@ const ProductCard = (props) => {
     );
   }, [compared]);
 
+  const addProductToFavorite = () => {
+    if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в избранное!");
+      setModalOpen(true);
+    } else {
+      dispatch(postFavoriteProducts({ size, productId })).then(() => {
+        favorite
+          ? setText([
+              "Товар удалён из избранных!",
+              "Перейти в избранное",
+              "/favorite",
+            ])
+          : setText([
+              "Товар добавлен в избранное!",
+              "Перейти в избранное",
+              "/favorite",
+            ]);
+
+        setDropDown(true);
+      });
+    }
+  };
+
   const onComponentLike = useMemo(() => {
     if (favorite) {
       return (
@@ -149,6 +184,7 @@ const ProductCard = (props) => {
           title="Удалить из избранного"
           width="3.5vh"
           height="3.5vh"
+          onClick={addProductToFavorite}
         />
       );
     }
@@ -158,6 +194,7 @@ const ProductCard = (props) => {
         height="3.5vh"
         title="Добавить в избранное"
         cursor="pointer"
+        onClick={addProductToFavorite}
       />
     );
   }, [favorite]);
@@ -169,6 +206,9 @@ const ProductCard = (props) => {
         if (data) {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
+          dispatch(getFavoriteProducts());
+
+          location.reload();
           action.resetForm();
           setError(null);
           closeModalWindow();
@@ -190,168 +230,192 @@ const ProductCard = (props) => {
   });
 
   return (
-    <>
-      <PopUp
-        open={dropDown}
-        handleClose={closeDropDown}
-        transitionTitle="Перейти в корзину"
-        addedTitle={text}
-        durationSnackbar={2000}
-        icon={true}
-        vertical="bottom"
-        horizontal="right"
-        to="/cart"
-      />
-
-      {isModalOpen ? (
-        <StyledModal
-          handleClose={closeModalWindow}
-          open={isModalOpen}
-          state={true}
-        >
-          <Grid container spacing={1}>
-            <Box className="text-box">
-              <p>Войдите или зарегистрируйтесь</p>
-              <p>чтобы опубликовать отзыв</p>
-            </Box>
-            <Grid item xs={12} className="flex center padding">
-              <Typography component="h1" variant="h5" className="login-title">
-                Войти
-              </Typography>
-            </Grid>
+    <StyledProductCard {...rest}>
+      <CardActions>
+        <Grid className="between" container>
+          {sortStatus}
+          <Grid item className="flex gap2">
+            {onComponentComporation}
+            {onComponentLike}
           </Grid>
-          <StyledForm
-            component="form"
-            className="flex column"
-            onSubmit={handleSubmit}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <StyledInput
-                  placeholder="Напишите email"
-                  value={values.email}
-                  onChange={handleChange}
-                  name="email"
-                  type="email"
-                />
-                {errors.email && (
-                  <Typography component="p" variant="body2" color="error">
-                    {errors.email}
-                  </Typography>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <StyledInput
-                  placeholder="Напишите пароль"
-                  value={values.password}
-                  onChange={handleChange}
-                  name="password"
-                  type={!showPassword ? "password" : "text"}
-                  endAdornment={
-                    <>
-                      {!showPassword ? (
-                        <VisibilityOffIcon
-                          className="pointer"
-                          onClick={setShowPassword}
-                        />
-                      ) : (
-                        <VisibilityOnIcon
-                          className="pointer"
-                          onClick={setShowPassword}
-                        />
-                      )}
-                    </>
-                  }
-                />
-                {errors.password && (
-                  <Typography component="p" variant="body2" color="error">
-                    {errors.password}
-                  </Typography>
-                )}
-              </Grid>
-            </Grid>
-            {error && (
-              <Typography component="p" variant="body2" color="error">
-                Неправильно указан Email и/или пароль
-              </Typography>
-            )}
-            <StyledButton type="submit">
-              {isLoading ? <CircularProgress size={30} /> : "Войти"}
-            </StyledButton>
-          </StyledForm>
-
-          <Box className="change_login flex center gap">
-            <Typography component="p" variant="body1">
-              Нет аккаунта?
-            </Typography>
-            <Link to="/sign-up" className="link">
-              <Typography component="span" variant="body1">
-                Зарегистрироваться
-              </Typography>
-            </Link>
-          </Box>
-        </StyledModal>
+        </Grid>
+      </CardActions>
+      {data.token ? (
+        <Link to={`/item/${categoryId}/${productId}/description`}>
+          <CardMedia_Styled
+            src={productImage}
+            title={productName}
+            alt={productName}
+          />
+        </Link>
       ) : (
-        ""
-      )}
-
-      <StyledProductCard {...rest}>
-        <CardActions>
-          <Grid className="between" container>
-            {sortStatus}
-            <Grid className="flex gap2">
-              {onComponentComporation}
-              {onComponentLike}
-            </Grid>
-          </Grid>
-        </CardActions>
         <CardMedia_Styled
           src={productImage}
           title={productName}
           alt={productName}
+          onClick={addBasketHandler}
         />
-        <Card_contend className="carsContent">
-          <Styled_Count>В наличии ({count})</Styled_Count>
-          <StyletTitle color="black" title={productName}>
-            {productName}
-          </StyletTitle>
-          <Typography variant="span" className="flex size">
-            Рейтинг
-            <Rating value={productRating} readOnly />({countOfReview})
-          </Typography>
-          <CardActions>
-            <Grid container className="flex between ">
-              <Box width="30%" marginLeft="-10px">
-                {discountPrice > 0 ? (
-                  <Typography variant="h1" fontSize="0.8rem">
-                    {priceProductSeparate(Number(String(discountPrice || 0)))}c
-                  </Typography>
-                ) : (
-                  <Typography variant="h1" fontSize="0.8rem">
-                    {priceProductSeparate(Number(String(productPrice || 0)))}c
-                  </Typography>
-                )}
-                {discountPrice > 0 ? (
-                  <Styled_Price>
-                    {priceProductSeparate(Number(String(productPrice || 0)))}c
-                  </Styled_Price>
-                ) : null}
+      )}
+
+      <Card_contend className="carsContent">
+        <Styled_Count>В наличии ({count})</Styled_Count>
+        <StyletTitle color="black" title={productName}>
+          {productName}
+        </StyletTitle>
+        <Typography
+          variant="span"
+          className="flex size"
+          style={{ color: "#909CB5" }}
+        >
+          Рейтинг
+          <Rating value={productRating} readOnly />({countOfReview})
+        </Typography>
+        <CardActions>
+          <Grid container className="flex between">
+            <Box width="35%" background="red">
+              {discountPrice > 0 ? (
+                <Typography
+                  variant="h1"
+                  fontSize="0.8rem"
+                  style={{ fontSize: "18px", fontWeight: "700" }}
+                >
+                  {priceProductSeparate(Number(String(discountPrice || 0)))}c
+                </Typography>
+              ) : (
+                <Typography
+                  variant="h1"
+                  fontSize="0.8rem"
+                  style={{ fontSize: "18px", fontWeight: "700" }}
+                >
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
+                </Typography>
+              )}
+              {discountPrice > 0 ? (
+                <Styled_Price>
+                  {priceProductSeparate(Number(String(productPrice || 0)))}c
+                </Styled_Price>
+              ) : null}
+            </Box>
+            <IconButton
+              onClick={addBasketHandler}
+              width="65%"
+              height="2.5vw"
+              title="Добавить в карзину"
+              fontSize="0.5rem"
+              icon={<CartIcon width="1.5vw" />}
+            >
+              В корзину
+            </IconButton>
+          </Grid>
+        </CardActions>
+      </Card_contend>
+
+      <>
+        <PopUp
+          open={dropDown}
+          handleClose={closeDropDown}
+          addedTitle={text[0]}
+          transitionTitle={text[1]}
+          to={text[2]}
+          durationSnackbar={2000}
+          icon={true}
+          vertical="bottom"
+          horizontal="right"
+        />
+
+        {isModalOpen ? (
+          <StyledModal
+            handleClose={closeModalWindow}
+            open={isModalOpen}
+            state={true}
+          >
+            <Grid container spacing={1}>
+              <Box className="text-box">
+                <p>Войдите или зарегистрируйтесь</p>
+                <p>{loginText}</p>
               </Box>
-              <IconButton
-                onClick={addBasketHandler}
-                width="70%"
-                height="2.5vw"
-                title="Добавить в карзину"
-                fontSize="0.5rem"
-                icon={<CartIcon width="1.5vw" />}
-              >
-                В корзину
-              </IconButton>
+              <Grid item xs={12} className="flex center padding">
+                <Typography component="h1" variant="h5" className="login-title">
+                  Войти
+                </Typography>
+              </Grid>
             </Grid>
-          </CardActions>
-        </Card_contend>
-      </StyledProductCard>
-    </>
+            <StyledForm
+              component="form"
+              className="flex column"
+              onSubmit={handleSubmit}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <StyledInput
+                    placeholder="Напишите email"
+                    value={values.email}
+                    onChange={handleChange}
+                    name="email"
+                    type="email"
+                  />
+                  {errors.email && (
+                    <Typography component="p" variant="body2" color="error">
+                      {errors.email}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledInput
+                    placeholder="Напишите пароль"
+                    value={values.password}
+                    onChange={handleChange}
+                    name="password"
+                    type={!showPassword ? "password" : "text"}
+                    endAdornment={
+                      <>
+                        {!showPassword ? (
+                          <VisibilityOffIcon
+                            className="pointer"
+                            onClick={setShowPassword}
+                          />
+                        ) : (
+                          <VisibilityOnIcon
+                            className="pointer"
+                            onClick={setShowPassword}
+                          />
+                        )}
+                      </>
+                    }
+                  />
+                  {errors.password && (
+                    <Typography component="p" variant="body2" color="error">
+                      {errors.password}
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
+              {error && (
+                <Typography component="p" variant="body2" color="error">
+                  Неправильно указан Email и/или пароль
+                </Typography>
+              )}
+              <StyledButton type="submit">
+                {isLoading ? <CircularProgress size={30} /> : "Войти"}
+              </StyledButton>
+            </StyledForm>
+
+            <Box className="change_login flex center gap">
+              <Typography component="p" variant="body1">
+                Нет аккаунта?
+              </Typography>
+              <Link to="/sign-up" className="link">
+                <Typography component="span" variant="body1">
+                  Зарегистрироваться
+                </Typography>
+              </Link>
+            </Box>
+          </StyledModal>
+        ) : (
+          ""
+        )}
+      </>
+    </StyledProductCard>
   );
 };
 export default React.memo(ProductCard);
@@ -408,7 +472,9 @@ const Card_contend = styled(CardContent)(() => ({
   },
 }));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "1rem",
+  fontFamily: "Inter",
+  fontSize: "16px",
+  fontWeight: "500",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",
@@ -432,8 +498,8 @@ const Styled_Count = styled("p")(() => ({
   color: "#2FC509",
 }));
 const StyledProductCard = styled(Card)(() => ({
-  width: "16.5vw",
   height: "100%",
+  width: "17.4vw",
   display: "grid",
   gridRowGap: "1rem",
   "&:hover": {
