@@ -7,7 +7,6 @@ import { DeleteIcon } from "../../assets";
 import { deleteOrderProducts } from "../../redux/slices/orders-slice";
 import Button from "../UI/button/Button";
 import Modal from "../UI/Modal";
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 const Delete = ({ fullName, id }) => {

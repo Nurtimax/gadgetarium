@@ -1,39 +1,46 @@
-import {
-  AppleIcon,
-  HonorIcon,
-  HuaweiIcon,
-  SamsungIcon,
-  XiaomiIcon,
-} from "../../assets";
 import * as yup from "yup";
-
-export const PRODUCTBRAND = [
-  { id: 1, icon: <SamsungIcon />, brandName: "Samsung" },
-  { id: 2, icon: <AppleIcon />, brandName: "Apple" },
-  { id: 3, icon: <HuaweiIcon />, brandName: "Huawei" },
-  { id: 4, icon: <HonorIcon />, brandName: "Honor" },
-  { id: 5, icon: <XiaomiIcon />, brandName: "Xiaomi" },
-];
+import DateTableItem from "../../components/add_product/table/DateTableItem";
+import EditPriceTableIItem from "../../components/add_product/table/EditPriceTableIItem";
+import EditCountProduct from "../../components/add_product/table/EditCountProduct";
+import BrandTableItem from "../../components/add_product/table/BrandTableItem";
+import ColorName from "../../components/add_product/fields/ColorName";
 
 export const PRODUCT_INITIALSTATE = {
   productName: "",
   productVendorCode: 11111,
   guarantee: "",
-  videoReview: "productVideoReview1",
-  description: "new Iphone",
+  videoReview: "",
+  description: "",
   brandId: "",
   categoryId: "",
   subCategoryId: "",
   subProductRequests: [
     {
-      price: "",
-      countOfProduct: 222,
+      price: 0,
+      countOfProduct: 1,
       color: "",
       images: [],
       characteristics: {},
     },
   ],
-  pdf: "Product pdf 1",
+  pdf: "",
+};
+export const ADDPRODUCT_INITIALSTATE = {
+  productName: "",
+  guarantee: "",
+  brandId: "",
+  categoryId: "",
+  subCategoryId: "",
+  subProductRequests: [
+    {
+      price: 0,
+      countOfProduct: 1,
+      color: "",
+      images: [],
+      characteristics: {},
+    },
+  ],
+  dateOfIssue: "",
 };
 
 export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
@@ -44,8 +51,8 @@ export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
     .positive()
     .integer()
     .required("Гарантия (месяцев) - обязательное поле"),
-  videoReview: yup.string(),
-  description: yup.string(),
+  videoReview: yup.string().required("Загрузите видеообзор обязательное поле"),
+  description: yup.string().required("Описание обязательное поле"),
   brandId: yup
     .number()
     .positive()
@@ -74,7 +81,7 @@ export const PRODUCT_INITIALSTATESCHEMA = yup.object().shape({
       characteristics: yup.object(),
     })
   ),
-  pdf: yup.string(),
+  pdf: yup.string().required("Загрузите документ PDF обязательное поле"),
 });
 
 export const PRODUCT_FORMS_FIELDS = [
@@ -144,7 +151,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 3,
         name: "Объем оперативной памяти (GB)",
-        key: "ramOfLaptop",
+        key: "ramLaptop",
         values: [2, 4, 6, 8, 16, 32, 36],
         choosePlaceholder: "Выберите оперативную память",
         type: "select",
@@ -152,7 +159,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 4,
         name: "Размер экрана (дюйм)",
-        key: "screenDiagonalOfSmartWatch",
+        key: "screenSizeLaptop",
         values: [11.6, 13.3, 14, 15, 15.6, 16, 16.1, 17.3],
         choosePlaceholder: "Выберите Диагональ дисплея (дюйм)",
         type: "select",
@@ -160,13 +167,12 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 5,
         name: "Разрешение экрана",
-        key: "screenResolutionOfLaptop",
+        key: "screenResolutionLaptop",
         values: [
           "1024x600",
           "1280x800",
           "1366x768",
           "1600x900",
-          "1366x768",
           "1920x1080",
           "2160x1440",
           "2560x1600",
@@ -179,7 +185,7 @@ export const PRODUCT_FORMS_FIELDS = [
       {
         id: 6,
         name: "Назначение",
-        key: "appointmentOfLaptop",
+        key: "appointmentLaptop",
         values: [
           "Для работы",
           "Мультимедийный",
@@ -289,6 +295,23 @@ export const PRODUCT_FORMS_FIELDS = [
         type: "select",
       },
       {
+        id: 21,
+        name: "Материал корпуса",
+        key: "caseMaterial",
+        values: [
+          "Акриловый",
+          "Алюминий",
+          "Резина",
+          "Керамика",
+          "Пластик",
+          "Металл",
+          "Нержавейщая сталь",
+          "Стекло",
+        ],
+        choosePlaceholder: "Выберите материал корпуса",
+        type: "select",
+      },
+      {
         id: 3,
         name: "Диагональ дисплея (дюйм)",
         key: "screenDiagonalOfSmartWatch",
@@ -328,6 +351,256 @@ export const PRODUCT_FORMS_FIELDS = [
         choosePlaceholder: "",
         type: "radio",
       },
+    ],
+  },
+];
+
+export const PRODUCT_FORM_KEYS = [
+  {
+    id: 1,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfPhone",
+        required: "Объем памяти обязательное поле",
+      },
+      {
+        id: 2,
+        key: "ramOfPhone",
+        required: "Оперативная память обязательное поле",
+      },
+      { id: 3, key: "simCard", required: "Кол-во SIM-карт обязательное поле" },
+    ],
+  },
+  {
+    id: 2,
+    keys: [
+      {
+        id: 1,
+        key: "laptopCPU",
+        required: "Процессор ноутбука обязательное поле",
+      },
+      {
+        id: 2,
+        key: "videoCardMemory",
+        required: "Объем видеопамяти (GB) обязательное поле",
+      },
+      {
+        id: 3,
+        key: "ramLaptop",
+        required: "Объем оперативной памяти (GB) обязательное поле",
+      },
+      {
+        id: 4,
+        key: "screenSizeLaptop",
+        required: "Размер экрана (дюйм) обязательное поле",
+      },
+      {
+        id: 5,
+        key: "screenResolutionLaptop",
+        required: "Разрешение экрана обязательное поле",
+      },
+      {
+        id: 6,
+        key: "appointmentLaptop",
+        required: "Назначение обязательное поле",
+      },
+    ],
+  },
+  {
+    id: 3,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfTablet",
+        required: "Объем памяти (GB) обязательное поле",
+      },
+      {
+        id: 2,
+        key: "ramOfTablet",
+        required: "Объем оперативной памяти (GB) обязательное поле",
+      },
+      {
+        id: 3,
+        key: "screenSizeOfTablet",
+        required: "Размер экрана (дюйм) обязательные поле",
+      },
+      {
+        id: 4,
+        key: "screenResolutionOfTablet",
+        required: "Разрешение экрана обязательное поле",
+      },
+      {
+        id: 5,
+        key: "screenDiagonalOfTablet",
+        required: "Диагональ экрана (дюйм) обязательное поле",
+      },
+      {
+        id: 6,
+        key: "batteryCapacity",
+        required: "Емкость аккумулятора планшета, мА/ч обязательное поле",
+      },
+    ],
+  },
+  {
+    id: 4,
+    keys: [
+      {
+        id: 1,
+        key: "memoryOfWatch",
+        required: "Объем памяти обязательное поле",
+      },
+      {
+        id: 2,
+        key: "braceletMaterial",
+        required: "Материал браслета/ремешка обязательное поле",
+      },
+      {
+        id: 3,
+        key: "caseMaterial",
+        required: "Материал корпуса обязательное поле",
+      },
+      {
+        id: 4,
+        key: "screenDiagonalOfSmartWatch",
+        required: "Диагональ дисплея (дюйм) обязательное поле",
+      },
+      { id: 5, key: "gender", required: "Пол обязательное поле" },
+      {
+        id: 6,
+        key: "waterProof",
+        required: "Водонепроницаемые обязательное поле",
+      },
+      {
+        id: 7,
+        key: "wirelessInterface",
+        required: "Беспроводные интерфейсы обязательное поле",
+      },
+      { id: 8, key: "caseShape", required: "Форма корпуса обязательное поле" },
+    ],
+  },
+];
+
+const generalStyles = { padding: "28.5px" };
+
+export const ADD_PRODUCT_TABLE_HEADER_TITLE = [
+  {
+    Header: "Бренд",
+    accessor: "brandId",
+    style: {
+      flex: 1,
+    },
+    Cell: () => {
+      return <BrandTableItem />;
+    },
+  },
+  {
+    Header: "Цвет",
+    accessor: "color",
+    style: {
+      flex: 1.5,
+    },
+    Cell: ({ row }) => {
+      return (
+        <div style={generalStyles}>
+          <ColorName color={row.original.color} />
+        </div>
+      );
+    },
+  },
+];
+
+export const ChangeValueTableData = [
+  {
+    Header: "Дата выпуска",
+    accessor: "",
+    style: {
+      flex: 1.7,
+    },
+    Cell: ({ row }) => {
+      return <DateTableItem id={row.id} />;
+    },
+  },
+  {
+    Header: "Кол-во товара",
+    accessor: "",
+    style: {
+      flex: 1.5,
+    },
+    Cell: ({ row }) => {
+      return (
+        <EditCountProduct count={row.original.countOfProduct} id={row.id} />
+      );
+    },
+  },
+  {
+    Header: "Цена",
+    accessor: "price",
+    style: {
+      flex: 1.4,
+    },
+    Cell: ({ row }) => {
+      return <EditPriceTableIItem id={row.id} price={row.original.price} />;
+    },
+  },
+];
+
+export const tableReusibleItems = [
+  {
+    id: 1,
+    keys: [
+      { id: 1, key: "memoryOfPhone", name: "Объем памяти", flex: 1.5 },
+      { id: 2, key: "ramOfPhone", name: "Оперативная память", flex: 1.5 },
+      { id: 3, key: "simCard", name: "Кол-во SIM-карт", flex: 1.5 },
+    ],
+  },
+  {
+    id: 2,
+    keys: [
+      { id: 1, key: "laptopCPU", name: "Процессор ноутбука", flex: 1.5 },
+      {
+        id: 2,
+        key: "videoCardMemory",
+        name: "Объем видеопамяти (GB)",
+        flex: 2,
+      },
+      {
+        id: 3,
+        key: "ramLaptop",
+        name: "Объем оперативной памяти (GB)",
+        flex: 2,
+      },
+    ],
+  },
+  {
+    id: 3,
+    keys: [
+      { id: 1, key: "memoryOfTablet", name: "Объем памяти (GB)", flex: 1.5 },
+      {
+        id: 2,
+        key: "ramOfTablet",
+        name: "Объем оперативной памяти (GB)",
+        flex: 2,
+      },
+      {
+        id: 3,
+        key: "screenResolutionOfTablet",
+        name: "Разрешение экрана",
+        flex: 1.5,
+      },
+    ],
+  },
+  {
+    id: 4,
+    keys: [
+      { id: 1, key: "memoryOfWatch", name: "Объем памяти", flex: 1.5 },
+      {
+        id: 2,
+        key: "braceletMaterial",
+        name: "Материал браслета/ремешка",
+        flex: 2,
+      },
+      { id: 3, key: "caseShape", name: "Форма корпуса", flex: 1.5 },
     ],
   },
 ];

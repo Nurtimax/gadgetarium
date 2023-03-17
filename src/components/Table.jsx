@@ -71,6 +71,9 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
         ];
       });
     }
+    if (isMarked === null) {
+      hooks.visibleColumns.push((columns) => [...columns]);
+    }
   };
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -84,7 +87,7 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
     );
 
   return (
-    <MainContainer>
+    <MainContainer marked={String(isMarked)}>
       {found ? (
         <Typography className="foundOrderText">
           Найдено {countOfOrders} заказов
@@ -180,7 +183,7 @@ const StyledTableRow = styled(TableRow)(({ theme, checked }) => ({
   },
 }));
 
-const MainContainer = styled(TableContainer)(({ theme }) => ({
+const MainContainer = styled(TableContainer)(({ theme, marked }) => ({
   fontFamily: "Inter",
   fontWeight: "400",
   fontSize: "14px",
@@ -213,6 +216,7 @@ const MainContainer = styled(TableContainer)(({ theme }) => ({
       gap: "8px",
 
       "& .MuiTableRow-root": {
+        padding: marked === "null" ? 0 : "",
         "& .MuiTableCell-root": {
           border: "none",
           padding: "0",
