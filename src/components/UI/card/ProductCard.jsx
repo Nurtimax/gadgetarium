@@ -105,6 +105,7 @@ const ProductCard = (props) => {
         .catch((rejectedValueOrSerializedError) => {
           toast.error(rejectedValueOrSerializedError.message);
         });
+
       if (basketData?.some((item) => item.id === productId)) {
         alert("Товар уже добавлен!");
       } else {

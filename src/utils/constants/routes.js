@@ -23,6 +23,6 @@ export const ROUTES = {
   REVIEWSRATING: "reviews-rating",
   SIGNIN: "/sign-in",
   SIGNUP: "/sign-up",
-  NOTFOUND: "/*",
+  NOTFOUND: "*",
   PROFILE: "profile",
 };
