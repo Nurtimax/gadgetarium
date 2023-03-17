@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
+import Paymant from "../containers/paymant/Paymant";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
@@ -159,6 +160,16 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Paymant />
+            </Suspense>
+          }
+        />
+
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route
           path={ROUTES.DELIVERY}
