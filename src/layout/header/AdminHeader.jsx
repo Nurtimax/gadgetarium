@@ -3,6 +3,7 @@ import { Logo } from "../../assets";
 import NavLinks from "../../components/header/NavLinks";
 import AdminProfile from "../../components/header/AdminProfile";
 import { adminPage } from "../../utils/constants";
+import { Link } from "react-router-dom";
 
 const AdminHeader = () => {
   return (
@@ -12,7 +13,9 @@ const AdminHeader = () => {
           <Toolbar className="padding flex">
             <Grid container className="flex between">
               <Grid item xl={2} lg={2} md={1.9}>
-                <Logo />
+                <Link to="/">
+                  <Logo />
+                </Link>
               </Grid>
               <Grid item xl={5} lg={5} md={7.4} className="flex center">
                 <NavLinks page={adminPage} />

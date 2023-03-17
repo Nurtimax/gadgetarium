@@ -32,6 +32,7 @@ export { ReactComponent as Logo } from "./icons/logo.svg";
 export { ReactComponent as DeleteIconInCart } from "./icons/delete-icon-in-cart.svg";
 export { default as ImageProductCardInBuscket } from "./images/product-image-in-buscket.png";
 export { default as ImageEmptyBasket } from "./images/basket-empty-photo.png";
+export { default as ImageEmptyFavorite } from "./images/empty-image-in-favorite.png";
 export { ReactComponent as Comporation } from "./icons/favoritesDefoult.svg";
 export { ReactComponent as Favorites } from "./icons/comporation.svg";
 export { ReactComponent as Like } from "./icons/like.svg";
@@ -57,5 +58,6 @@ export { ReactComponent as ArrowOrderIcon } from "./icons/arrows/arrow-order-lis
 export { ReactComponent as ArrowOrderIconRotate } from "./icons/arrows/arrow-icon-rotate-order.svg";
 export { ReactComponent as ArrowUpIcon } from "./icons/arrows/arrowUp.svg";
 export { ReactComponent as DeleteIconBasket } from "./icons/delete-basket.svg";
+export { ReactComponent as IconClear } from "./icons/icon-clear.svg";
 export { ReactComponent as StarIcon } from "./icons/starIcon.svg";
 export { ReactComponent as EmptyStarIcon } from "./icons/empty.svg";

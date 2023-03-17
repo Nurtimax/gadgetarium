@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
+const Favorite = lazy(() => import("../containers/favorite/Favorite"));
 const Contacts = lazy(() => import("../containers/contacts/Contacts"));
 const Home = lazy(() => import("../containers/home"));
 const Item = lazy(() => import("../containers/item/Item"));
@@ -184,6 +185,14 @@ const MainRoutes = () => {
           }
         />
 
+        <Route
+          path={ROUTES.LIKE}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Favorite />
+            </Suspense>
+          }
+        />
         <Route path={ROUTES.VIP} element={<Navigate to={ROUTES.HISTORY} />}>
           <Route path={ROUTES.HISTORY} element={<h1>History</h1>} />
           <Route path={ROUTES.PROFILE} element={<h1>Profile</h1>} />

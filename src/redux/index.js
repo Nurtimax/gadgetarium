@@ -1,4 +1,4 @@
-import productDetailsSlice from "./slices/product-details";
+import productDetailsSlice from "./slices/product-details-slice";
 import reducerAuthenticationSlice from "./slices/authentication-slice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import addProductSlice from "./slices/add-product-slice";
@@ -19,6 +19,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { orderingSlice } from "./slices/ordering-slice";
+import { favoriteProducts } from "./slices/favorite-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
 
 const rootReducer = combineReducers({
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   filteredCatalog: filteredCatalogSlice.reducer,
   productDetails: productDetailsSlice.reducer,
   viewed: viewedProductSlice.reducer,
+  favorite: favoriteProducts.reducer,
 });
 
 const persistConfig = {

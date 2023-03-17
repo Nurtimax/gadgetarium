@@ -18,6 +18,7 @@ import { userPages } from "../../utils/constants";
 import IconButton from "../../components/UI/IconButton";
 import Catalog from "../../components/catalog/Catalog";
 import useDropDown from "../../hooks/useDropDown";
+import { Link } from "react-router-dom";
 
 const UserHeader = () => {
   const [isScroll, setIsScroll] = useState(false);
@@ -46,7 +47,9 @@ const UserHeader = () => {
           <Toolbar className="padding flex">
             <Grid container spacing={1} className="flex between">
               <Grid item xl={2} lg={2} md={1.9}>
-                <Logo width="100%" height="100%" />
+                <Link to="/">
+                  <Logo width="100%" height="100%" />
+                </Link>
               </Grid>
               <Grid item xl={6.5} lg={7.3} md={7.4} className="flex center">
                 <NavLinks page={userPages} />

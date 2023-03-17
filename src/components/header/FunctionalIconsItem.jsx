@@ -40,14 +40,14 @@ const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
-    color: theme.palette.common.black,
+    color: theme.palette.common.white,
   },
   [`&.show_cart_items .${tooltipClasses.arrow}`]: {
     color: theme.palette.common.white,
   },
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.common.black,
-    maxWidth: 520,
+    backgroundColor: theme.palette.common.white,
+    maxWidth: 550,
   },
   [`&.show_cart_items .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
