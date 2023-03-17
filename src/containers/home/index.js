@@ -15,9 +15,6 @@ import {
   fetchDiscountProduct,
 } from "../../redux/slices/product-slice";
 import Button from "../../components/UI/button/Button";
-import { Navigate } from "react-router-dom";
-import { getBasketProduct } from "../../redux/slices/basket-slice";
-import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 
 const Home = () => {
   const {
@@ -32,7 +29,6 @@ const Home = () => {
       discountError,
       recomenError,
     },
-    auth,
   } = useSelector((store) => store);
 
   const [size, setSize] = useState({
@@ -61,15 +57,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
-
-  useEffect(() => {
-    dispatch(getBasketProduct());
-    dispatch(getFavoriteProducts());
-  }, []);
-
-  if (auth?.data?.roleName?.toLowerCase() === "admin") {
-    return <Navigate to="/admin" />;
-  }
 
   return (
     <>

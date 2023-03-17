@@ -11,7 +11,7 @@ const AdminHeader = () => {
       <AppBar position="fixed">
         <Container>
           <Toolbar className="padding flex">
-            <Grid container spacing={5} className="flex between">
+            <Grid container className="flex between">
               <Grid item xl={2} lg={2} md={1.9}>
                 <Link to="/">
                   <Logo />

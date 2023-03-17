@@ -25,9 +25,13 @@ const AdminProfile = () => {
   const navigate = useNavigate();
 
   const logOutHandler = () => {
-    dispatch(ActionauthenticationSlice.authLogOut());
-    setOpenModal();
-    navigate("/");
+    try {
+      dispatch(ActionauthenticationSlice.authLogOut());
+      setOpenModal();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

@@ -76,7 +76,6 @@ const basketProducts = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
       .addCase(getBasketProduct.fulfilled, (state, action) => {
         state.data = action.payload.data;
         state.isLoading = false;

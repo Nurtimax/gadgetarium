@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axiosInstance from "../../config/axios-instance";
 import { GADJEDTARIUM_LOGIN_INFO } from "../../utils/constants/fetch";
 import {
@@ -37,6 +38,9 @@ export const fetchDataSignup = createAsyncThunk(
 
       return data;
     } catch (error) {
+      if (error.response.data.message) {
+        toast.error(error.response.data.message);
+      }
       if (rejectWithValue) {
         return error;
       }
@@ -56,6 +60,7 @@ const authenticationSlice = createSlice({
   initialState,
   reducers: {
     authLogOut: (state) => {
+      state.data = {};
       state.isAuthenticated = false;
       state.data = initialState.data;
       localStorage.removeItem(GADJEDTARIUM_LOGIN_INFO);
@@ -65,10 +70,8 @@ const authenticationSlice = createSlice({
       state.data = action.payload;
     },
   },
-
   extraReducers: (builder) => {
     builder
-
       .addCase(fetchDataSignin.fulfilled, (state, action) => {
         const { email, roleName, token } = action.payload;
         if (email && roleName && token) {
