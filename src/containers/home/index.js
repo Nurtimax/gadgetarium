@@ -70,6 +70,8 @@ const Home = () => {
       <Banner />
       <Container>
         <Container_Card>
+          <div id="Promotion"></div>
+
           {discountError ? (
             <Styled_Error>Error {discountError} </Styled_Error>
           ) : (
@@ -116,6 +118,8 @@ const Home = () => {
             </Global_Card>
           )}
 
+          <div id="New"></div>
+
           {newError ? (
             <Styled_Error>Error {newError}</Styled_Error>
           ) : (
@@ -161,6 +165,8 @@ const Home = () => {
               </Typography>
             </Global_Card>
           )}
+
+          <div id="Recomendation"></div>
 
           {recomenError ? (
             <Styled_Error>Error {recomenError}</Styled_Error>

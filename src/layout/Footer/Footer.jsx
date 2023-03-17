@@ -39,7 +39,7 @@ const Footer = () => {
                 <a href="#New">Новинки</a>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                <a href="#Recomendation">Популярные котегории</a>
+                <a href="#Recomendation">Рекомендуемые</a>
               </Typography>
             </Box>
 
