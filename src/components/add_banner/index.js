@@ -1,24 +1,56 @@
 import { Box, CardMedia, styled, Typography } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useCallback } from "react";
+import React, { Fragment, useCallback } from "react";
+import { useState } from "react";
 import { useMemo } from "react";
 import { useDropzone } from "react-dropzone";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { DeleteIcon, DownloadBannerIcon } from "../../assets";
+import { postBannerImagesThunk } from "../../redux/slices/add-banners-slice";
+import { addBannerImagesSchema } from "../../utils/constants/add-banner";
 import { SWAGGER_API } from "../../utils/constants/fetch";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import Button from "../UI/button/Button";
 import Modal from "../UI/Modal";
+import SuccessMessage from "./SuccesMessage";
 
 const AddBanner = ({ setOpenModal, openModal }) => {
-  const { values, setFieldValue } = useFormik({
+  const [isLoading, setIsLoading] = useState(false);
+  const [customError, setCustomError] = useState(false);
+
+  const { isLoading: bannerIsLoading } = useSelector(
+    (state) => state.addBanner
+  );
+
+  const dispatch = useDispatch();
+
+  const { values, setFieldValue, handleSubmit, errors } = useFormik({
     initialValues: {
-      images: [],
+      image: [],
+    },
+    validationSchema: addBannerImagesSchema,
+    onSubmit: (values, action) => {
+      dispatch(postBannerImagesThunk(values)).then((response) => {
+        if (response.payload.data.status === "ok") {
+          setOpenModal();
+          action.resetForm();
+          if (response.payload.data.message) {
+            toast.success(response.payload.data.message);
+          }
+        } else {
+          setCustomError("Что-то не так с сервером или данными");
+        }
+      });
     },
   });
 
   const getBrandLinkHandler = async (file) => {
+    setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
+
     axios({
       method: "POST",
       url: `${SWAGGER_API}file`,
@@ -26,18 +58,23 @@ const AddBanner = ({ setOpenModal, openModal }) => {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then((response) => {
-        setFieldValue("images", [...values.images, response.data.link]);
+        setFieldValue("image", [...values.image, response.data.link]);
       })
       .catch((error) => {
+        if (error.message) {
+          toast.error(error.message);
+          setCustomError(error.message);
+        }
         return error;
       });
+    setIsLoading(false);
   };
 
   const onDrop = useCallback(
     (acceptFiles) => {
       getBrandLinkHandler(acceptFiles);
     },
-    [values.images]
+    [values.image]
   );
 
   const { getInputProps, getRootProps } = useDropzone({
@@ -48,6 +85,8 @@ const AddBanner = ({ setOpenModal, openModal }) => {
   });
 
   const removeBrandImageHandler = (image) => {
+    setIsLoading(true);
+
     axios({
       method: "DELETE",
       url: `${SWAGGER_API}file`,
@@ -57,55 +96,66 @@ const AddBanner = ({ setOpenModal, openModal }) => {
         fileLink: image,
       },
     })
-      .then(() => {
-        setFieldValue("images", [
-          ...values.images.filter((item) => item !== image),
+      .then((response) => {
+        const removedImage = response.data.message
+          .split(" has been deleted")
+          .join("");
+        setFieldValue("image", [
+          ...values.image.filter((item) => item !== image),
         ]);
+        toast.success(<SuccessMessage image={removedImage} />);
       })
       .catch((error) => {
+        if (error.message) {
+          toast.error(error.message);
+          setCustomError(error.message);
+        }
         return error;
       });
+    setIsLoading(false);
   };
 
   const imagesLength = useMemo(() => {
-    if (values.images.length === 1) {
+    if (values.image.length === 1) {
       return "one_images";
     }
-    if (values.images.length === 2) {
+    if (values.image.length === 2) {
       return "two_images gap";
     }
-    if (values.images.length === 3) {
+    if (values.image.length === 3) {
       return "three_images wrap between";
     }
-    if (values.images.length === 4) {
+    if (values.image.length === 4) {
       return "four_image";
     }
-    if (values.images.length === 5) {
+    if (values.image.length === 5) {
       return "five_image";
     }
-    if (values.images.length === 6) {
+    if (values.image.length === 6) {
       return "six_image gap2";
     }
     return "";
-  }, [values.images]);
+  }, [values.image]);
 
   return (
     <>
+      {isLoading && <GadgetariumSpinnerLoading />}
+      {bannerIsLoading && <GadgetariumSpinnerLoading />}
       <StyledModal open={openModal} handleClose={setOpenModal}>
         <Typography component="h1" variant="h5" className="flex center">
           Загрузить баннер
         </Typography>
-        <Box component="form" className="flex column gap2">
+        <Box
+          component="form"
+          className="flex column gap2"
+          onSubmit={handleSubmit}
+        >
           <StyledUploadBannerImage className={`flex center`}>
             <Box className={`flex images ${imagesLength}`}>
-              {[1, ...values.images].map((image) => (
-                <>
+              {[1, ...values.image].map((image) => (
+                <Fragment key={image}>
                   {Number(image) === 1 ? (
-                    <Box
-                      className="banner_default"
-                      {...getRootProps()}
-                      key={image + 2}
-                    >
+                    <Box className="banner_default" {...getRootProps()}>
                       <input {...getInputProps()} />
                       <DownloadBannerIcon width={36} height={33} />
                       <Typography
@@ -118,11 +168,7 @@ const AddBanner = ({ setOpenModal, openModal }) => {
                       </Typography>
                     </Box>
                   ) : (
-                    <StyledImage
-                      className="flex image_item"
-                      key={image + 1}
-                      image={image}
-                    >
+                    <StyledImage className="grid image_item" image={image}>
                       <StyledButton
                         variant="outlined"
                         className="branner_button"
@@ -131,15 +177,24 @@ const AddBanner = ({ setOpenModal, openModal }) => {
                       >
                         <DeleteIcon />
                       </StyledButton>
-                      {/* <img src={image} alt="" /> */}
                       <CardMedia image={image} className="image" />
-                      {/* <Box className="image" /> */}
                     </StyledImage>
                   )}
-                </>
+                </Fragment>
               ))}
             </Box>
           </StyledUploadBannerImage>
+
+          {errors.image && (
+            <Typography variant="body2" color="error">
+              {errors.image}
+            </Typography>
+          )}
+          {customError && (
+            <Typography variant="body2" color="error">
+              {customError}
+            </Typography>
+          )}
 
           <Box className="flex center gap2 buttons">
             <StyledButton
@@ -198,6 +253,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
     width: "30px",
     height: "30px",
     position: "absolute",
+    justifySelf: "flex-start",
+    alignSelf: "flex-start",
   },
 }));
 
@@ -219,7 +276,6 @@ const StyledUploadBannerImage = styled(Box)(() => ({
     height: "150px",
   },
   "& .one_images.images .image_item:nth-of-type(2)": {
-    width: "90%",
     justifyContent: "center",
   },
   "& .two_images .banner_default": {
