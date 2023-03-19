@@ -76,6 +76,13 @@ const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
                       maxLength: 19,
                     }}
                   />
+                  {isTouched ||
+                  (Boolean(errors?.cardNumber) &&
+                    Boolean(touched?.cardNumber)) ? (
+                    <p className="error-name">{errors?.cardNumber}</p>
+                  ) : (
+                    ""
+                  )}
                 </FormControlStyled>
               </PaymentInputsWrapper>
             </Grid>
@@ -113,6 +120,13 @@ const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
                     value={values?.expiryDate}
                     onChange={handleChange}
                   />
+                  {isTouched ||
+                  (Boolean(errors?.expiryDate) &&
+                    Boolean(touched?.expiryDate)) ? (
+                    <p className="error-name">{errors?.expiryDate}</p>
+                  ) : (
+                    ""
+                  )}
                 </FormControlStyled>
               </PaymentInputsWrapper>
             </Grid>
@@ -147,6 +161,12 @@ const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  {isTouched ||
+                  (Boolean(errors?.cvc) && Boolean(touched?.cvc)) ? (
+                    <p className="error-name">{errors?.cvc}</p>
+                  ) : (
+                    ""
+                  )}
                 </FormControlStyled>
               </PaymentInputsWrapper>
             </Grid>
@@ -189,7 +209,6 @@ const PaymentCard = ({ values, handleChange, errors, touched, handleBlur }) => {
 export default PaymentCard;
 
 const BoxStyled = styled(Box)(() => ({
-  height: "340px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",

@@ -9,8 +9,13 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 import { ElCardIcon, MasterCardPaymant, VisaIcon } from "../../assets";
 import PaymentCard from "../../components/payment-card/PaymentCard";
+import Button from "../../components/UI/button/Button";
+import { useFormik } from "formik";
+import { paymantValidateSchema } from "../../utils/helpers/validate";
+import { ActionsPaymant } from "../../redux/slices/paymant-slice";
 
 const steps = ["Варианты доставки", "Оплата", "Обзор заказа"];
 
@@ -28,6 +33,39 @@ const Paymant = () => {
   const handleCash = () => {
     setIsChecked("cash");
   };
+
+  const onSubmit = (values) => {
+    const paymantMethod = !isChecked
+      ? "Картой онлайн"
+      : isChecked === true
+      ? "Картой при получении"
+      : "Наличными при получении";
+
+    const token = uuidv4() + uuidv4() + uuidv4();
+
+    const userPersonalCardData = {
+      token,
+      paymantMethod,
+      data: {
+        ...values,
+      },
+    };
+
+    ActionsPaymant.getUserPersonalCardData(userPersonalCardData);
+  };
+
+  const { handleSubmit, handleBlur, values, touched, errors, handleChange } =
+    useFormik({
+      initialValues: {
+        cardNumber: "",
+        expiryDate: "",
+        cvc: "",
+        userName: "",
+      },
+      validationSchema: !isChecked ? paymantValidateSchema : "",
+      validateOnChange: false,
+      onSubmit,
+    });
 
   return (
     <MainContainer ischecked={isChecked.toString()}>
@@ -69,7 +107,7 @@ const Paymant = () => {
                 <Box className="checbox-box">
                   <Checkbox
                     classes={{ root: "checkbox" }}
-                    checked={isChecked ? true : false || false}
+                    checked={isChecked === true ? true : false || false}
                     color="success"
                   />
                   Картой при получении
@@ -100,7 +138,29 @@ const Paymant = () => {
             </Box>
           </Box>
 
-          <PaymentCard />
+          <form onSubmit={handleSubmit}>
+            {!isChecked ? (
+              <Box className="kredit-card">
+                <PaymentCard
+                  handleBlur={handleBlur}
+                  values={values}
+                  touched={touched}
+                  errors={errors}
+                  handleChange={handleChange}
+                />
+
+                <Box>
+                  Платеж защищен. Данные карты передаются только в <br />
+                  зашифрованном виде по протоколу SSL, защищаются и <br />
+                  обрабатываются по стандарту безопасности PCI DSS.
+                </Box>
+              </Box>
+            ) : (
+              ""
+            )}
+
+            <StyledButton type="submit">Продолжить</StyledButton>
+          </form>
         </Box>
       </Box>
     </MainContainer>
@@ -111,6 +171,19 @@ export default Paymant;
 
 const MainContainer = styled(Container)(({ theme, ischecked }) => ({
   paddingBottom: "120px",
+
+  "& .kredit-card": {
+    display: "flex",
+    alignItems: "center",
+    gap: "46px",
+
+    "& div:last-of-type": {
+      fontFamily: "Inter",
+      fontWeight: "400",
+      fontSize: "14px",
+      color: "#384255",
+    },
+  },
 
   "& .card-box": {
     paddingTop: "30px",
@@ -295,4 +368,11 @@ const MainContainer = styled(Container)(({ theme, ischecked }) => ({
     position: "relative",
     bottom: "17px",
   },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginTop: "30px",
+  width: "48%",
+  backgroundColor: theme.palette.secondary.main,
+  color: "white !important",
 }));

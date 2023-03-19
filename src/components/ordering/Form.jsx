@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
+import { ActionsPaymant } from "../../redux/slices/paymant-slice";
 import { ROUTES } from "../../utils/constants/routes";
 import { showErrors } from "../../utils/helpers/catch-signup";
 import {
@@ -28,7 +29,7 @@ const Form = ({ handleNext, data, isChecked }) => {
       .split(")")
       .join("");
 
-    const registerData = {
+    const userPersonalData = {
       ...values,
       phoneNumber,
       orderType: isChecked ? "DELIVERY" : "PICKUP",
@@ -36,7 +37,7 @@ const Form = ({ handleNext, data, isChecked }) => {
 
     navigate(`/${ROUTES.CART}/${ROUTES.PAYMANT}`);
 
-    console.log(registerData);
+    ActionsPaymant.getUserPersonalData(userPersonalData);
   };
 
   const {
