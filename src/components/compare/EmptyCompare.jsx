@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ImageEmptyCompare } from "../../assets";
 import Button from "../UI/button/Button";
 
-const EmptyCompore = () => {
+const EmptyCompare = () => {
   return (
     <MainContainer>
       <img src={ImageEmptyCompare} alt="image" />
@@ -20,7 +20,7 @@ const EmptyCompore = () => {
   );
 };
 
-export default EmptyCompore;
+export default EmptyCompare;
 
 const StyledButton = styled(Button)(({ theme }) => ({
   marginTop: "20px",
