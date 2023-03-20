@@ -42,6 +42,12 @@ const CarouselStyle = styled(Carousel)(() => ({
   },
   "& .thumb": {
     border: "none",
+
+    "& img": {
+      height: "80px",
+      aspectRatio: "1/1",
+      objectFit: "contain",
+    },
   },
   "& .thumb:hover": {
     border: "2px solid #cb11ab",
