@@ -12,13 +12,11 @@ import { CartIcon, DeleteIconInCart } from "../../../assets";
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { postProductToBasket } from "../../../redux/slices/basket-slice";
 
-const CompareProductCard = ({
-  image,
-  price,
-  productId,
-  count,
-  productName,
-}) => {
+import { deleteCompareProductsById } from "../../../redux/slices/compare-slice";
+
+const CompareProductCard = ({ image, price, id, count, productName }) => {
+  // const compare = useSelector((state) => state.compareProducts);
+
   const basketData = useSelector((state) => state.basket.data);
 
   const [dropDown, setDropDown] = useState(false);
@@ -30,15 +28,28 @@ const CompareProductCard = ({
   const closeDropDown = () => {
     setDropDown(false);
   };
+  const deleteByIdHandle = () => {
+    dispatch(
+      deleteCompareProductsById({
+        id,
+        params: {
+          categoryId: 1,
+          isUnique: false,
+          size: 12,
+          page: 1,
+        },
+      })
+    );
+  };
 
   const addBasketHandler = () => {
-    if (basketData?.some((item) => item.id === productId)) {
+    if (basketData?.some((item) => item.id === id)) {
       alert("Товар уже добавлен!");
     } else {
       dispatch(
         postProductToBasket({
           orderCount: count,
-          productId,
+          id,
         })
       ).then(() => {
         setText("Товар успешно добавлен в корзину!");
@@ -61,9 +72,9 @@ const CompareProductCard = ({
         to="/cart"
       />
 
-      <Box className="box-button">
+      <Box className="box-button" onClick={() => deleteByIdHandle()}>
         <MuiIconButton className="delete_button">
-          <DeleteIconInCart />{" "}
+          <DeleteIconInCart />
         </MuiIconButton>
       </Box>
 
@@ -100,7 +111,9 @@ const StyledViewedProductCard = styled(Box)(({ image }) => ({
   background: "#FFFFFF",
   boxShadow:
     "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
-
+  "&:hover": {
+    boxShadow: "0 0 10px rgba(0,0,0,0.6)",
+  },
   "& .box-button": {
     width: "206px",
     height: "33px",
