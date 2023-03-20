@@ -25,10 +25,9 @@ import {
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getBasketProduct,
-  postProductToBasket,
-} from "../../../redux/slices/basket-slice";
+import { postProductToBasket } from "../../../redux/slices/basket-slice";
+import { toast } from "react-toastify";
+import { getBasketProduct } from "../../../redux/slices/basket-slice";
 import { useState } from "react";
 import Modal from "../Modal";
 import Input from "../input/Input";
@@ -93,6 +92,19 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
+      dispatch(
+        postProductToBasket({
+          orderCount: count,
+          productId,
+        })
+      )
+        .unwrap()
+        .then((originalPromiseResult) => {
+          toast.success(originalPromiseResult.message);
+        })
+        .catch((rejectedValueOrSerializedError) => {
+          toast.error(rejectedValueOrSerializedError.message);
+        });
       if (basketData?.some((item) => item.id === productId)) {
         alert("Товар уже добавлен!");
       } else {
@@ -240,7 +252,7 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      {data.token ? (
+      {data?.token ? (
         <Link to={`/item/${categoryId}/${productId}/description`}>
           <CardMedia_Styled
             src={productImage}

@@ -1,5 +1,6 @@
 import { styled, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NavLinks = ({ page = [], ...rest }) => {
@@ -8,6 +9,10 @@ const NavLinks = ({ page = [], ...rest }) => {
 
   const params = page.find((item) => `/${item.to}` === location.pathname);
   const tabsValue = params?.theme ? params.theme : page[0].theme;
+
+  const isChoosed = useMemo(() => {
+    return params?.theme;
+  }, [params?.theme]);
 
   const [value, setValue] = useState(tabsValue);
 
@@ -31,7 +36,7 @@ const NavLinks = ({ page = [], ...rest }) => {
     <Tabs
       {...rest}
       textColor="inherit"
-      value={value}
+      value={isChoosed ? isChoosed : value}
       onChange={handleChange}
       indicatorColor="none"
       classes={{ flexContainer: "gap", root: "navlink_tabs" }}

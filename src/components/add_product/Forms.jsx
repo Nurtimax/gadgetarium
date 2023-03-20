@@ -2,62 +2,99 @@ import {
   Box,
   FormLabel,
   Grid,
-  MenuItem,
   Select,
   styled,
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
-import { useMemo } from "react";
-import { useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { CompactPicker } from "react-color";
-import { useSelector } from "react-redux";
-import {
-  ArrowDownIcon,
-  ChooseColorIcon,
-  DeleteIconInCart,
-  PlusIcon,
-} from "../../assets";
-import {
-  PRODUCT_INITIALSTATE,
-  PRODUCT_INITIALSTATESCHEMA,
-} from "../../utils/constants/add-product";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { ChooseColorIcon, DeleteIconInCart, PlusIcon } from "../../assets";
+import { ActionAddProductSlice } from "../../redux/slices/add-product-slice";
+import { ADDPRODUCT_INITIALSTATE } from "../../utils/constants/add-product";
 import { CompactPickerColors } from "../../utils/constants/compact-picker";
+import {
+  addProductSchema,
+  catchErrorValidationHandler,
+  validationHandler,
+} from "../../utils/helpers/add-product-helper";
 import Button from "../UI/button/Button";
 import Input from "../UI/input/Input";
 import Brand from "./fields/Brand";
 import Category from "./fields/Category";
+import ColorName from "./fields/ColorName";
 import PhoneLaptopTablet from "./fields/PhoneLaptopTablet";
 import SubCategory from "./fields/SubCategory";
 
-const Forms = ({ getData, searchParams, setSearchParams }) => {
-  const { values, handleChange, setFieldValue, handleSubmit, errors } =
-    useFormik({
-      initialValues: PRODUCT_INITIALSTATE,
-      validationSchema: PRODUCT_INITIALSTATESCHEMA,
-      onSubmit: (values, action) => {
-        getData(values);
-        action.resetForm();
-      },
-      validateOnChange: false,
-    });
+const Forms = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [keys, setKeys] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const ADDPRODUCT_INITIALSTATESCHEMA = addProductSchema(keys);
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleSubmit,
+    errors,
+    setValues,
+  } = useFormik({
+    initialValues: ADDPRODUCT_INITIALSTATE,
+    validationSchema: ADDPRODUCT_INITIALSTATESCHEMA,
+    onSubmit: (values, action) => {
+      dispatch(ActionAddProductSlice.editAddProductFirstPart(values));
+      dispatch(
+        ActionAddProductSlice.editData({
+          brand: values.brandId,
+        })
+      );
+      dispatch(ActionAddProductSlice.nextActiveStep());
+      action.resetForm();
+    },
+    validateOnChange: false,
+  });
 
   const getProductIdParam = searchParams.get("productId") || 0;
 
   const { Productbrand } = useSelector((state) => state.addProduct);
+
+  useEffect(() => {
+    validationHandler(values.categoryId, setKeys, setValues, values);
+  }, [values.categoryId]);
+
+  useEffect(() => {
+    catchErrorValidationHandler(errors);
+  }, [errors]);
+
+  useEffect(() => {
+    dispatch(
+      ActionAddProductSlice.editData({
+        date: values.dateOfIssue,
+      })
+    );
+  }, [values.dateOfIssue]);
 
   const addNewProduct = useCallback(() => {
     setFieldValue("subProductRequests", [
       ...values.subProductRequests,
       {
         price: 0,
-        countOfProduct: 111,
+        countOfProduct: 1,
         color: "",
         images: [],
         characteristics: {},
       },
     ]);
+    dispatch(
+      ActionAddProductSlice.editData({
+        brand: values.brandId,
+      })
+    );
   }, [values.subProductRequests]);
 
   const chooseProductDataHandler = (e) => {
@@ -72,21 +109,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
           const newData = {
             ...subproduct,
             color: e.hex,
-          };
-          return newData;
-        }
-        return subproduct;
-      })
-    );
-  };
-  const changeHandlerPrice = (e) => {
-    setFieldValue(
-      "subProductRequests",
-      values.subProductRequests.map((subproduct, index) => {
-        if (index === Number(getProductIdParam)) {
-          const newData = {
-            ...subproduct,
-            price: e.target.value,
           };
           return newData;
         }
@@ -125,7 +147,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
   return (
     <StyledFormControl component="form" size="small" onSubmit={handleSubmit}>
       <Grid container spacing={2.5}>
-        <Grid item xl={3.5} lg={6}>
+        <Grid item xl={3.5} md={6} lg={4.3}>
           <Category
             handleChange={handleChange}
             values={values}
@@ -139,7 +161,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
             errors={errors}
           />
         </Grid>
-        <Grid item xl={3.5} lg={6}>
+        <Grid item xl={3.5} lg={4.3} md={6}>
           <Brand
             handleChange={handleChange}
             values={values}
@@ -156,6 +178,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
             type="number"
             placeholder="Введите гарантию товара"
             error={Boolean(errors.guarantee)}
+            inputProps={{ min: 1 }}
           />
           {Boolean(errors.guarantee) && (
             <Typography component="p" variant="body2" color="error">
@@ -163,7 +186,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xl={3.5} lg={4.3} md={6}>
           <FormLabel required>Название товара</FormLabel>
           <StyledInput
             onChange={handleChange}
@@ -175,6 +198,22 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
           {Boolean(errors.productName) && (
             <Typography component="p" variant="body2" color="error">
               {errors.productName}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={6} display="flex" flexDirection="column">
+          <FormLabel required>Дата выпуска</FormLabel>
+          <StyledInput
+            onChange={handleChange}
+            value={values.dateOfIssue}
+            name="dateOfIssue"
+            placeholder="Введите название товара"
+            error={Boolean(errors.dateOfIssue)}
+            type="date"
+          />
+          {Boolean(errors.dateOfIssue) && (
+            <Typography component="p" variant="body2" color="error">
+              {errors.dateOfIssue}
             </Typography>
           )}
         </Grid>
@@ -229,7 +268,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                 <Select
                   displayEmpty
                   onChange={changeHandlerColor}
-                  value={color}
                   IconComponent={() => <ChooseColorIcon />}
                   startAdornment={color && <StyledChooseColor color={color} />}
                   input={<Input error={Boolean(colorError)} />}
@@ -237,7 +275,7 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                     <>
                       {color ? (
                         <Typography variant="body1" component="span">
-                          {color}
+                          <ColorName color={color} />
                         </Typography>
                       ) : (
                         <Typography
@@ -273,41 +311,6 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
                   errors={errors}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Typography component="p" variant="body1">
-                  Цена
-                </Typography>
-                <Select
-                  displayEmpty
-                  onChange={changeHandlerPrice}
-                  value={findedSubProductData.price}
-                  IconComponent={() => <ArrowDownIcon width={18} height={18} />}
-                  input={<Input />}
-                  renderValue={() => (
-                    <>
-                      {findedSubProductData.price ? (
-                        <Typography variant="body1" component="span">
-                          {findedSubProductData.price}
-                        </Typography>
-                      ) : (
-                        <Typography
-                          variant="body1"
-                          component="span"
-                          className="placeholder"
-                        >
-                          Цена
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                >
-                  {[100000, 120000].map((catalog) => (
-                    <StyledMenuItem key={catalog} value={catalog}>
-                      {catalog}
-                    </StyledMenuItem>
-                  ))}
-                </Select>
-              </Grid>
 
               <Grid item xs={3.5} display="grid">
                 <StyledButton className="next_button" type="submit">
@@ -324,9 +327,9 @@ const Forms = ({ getData, searchParams, setSearchParams }) => {
 
 export default Forms;
 
-const StyledInput = styled(Input)(() => ({
-  padding: "0 10px",
-}));
+const StyledInput = styled(Input)`
+  padding: 0 10px;
+`;
 
 const StyledButton = styled(Button)(({ theme }) => ({
   "&.next_button": {
@@ -417,7 +420,6 @@ const StyledFormControl = styled(Box)(() => ({
     fontWeight: 300,
     fontSize: "16px",
     lineHeight: "19px",
-
     color: "#91969E",
   },
   "& .MuiFormLabel-asterisk": {
@@ -462,15 +464,4 @@ const StyledChooseColor = styled(Box)(({ color }) => ({
   height: "28px",
   background: color,
   borderRadius: "inherit",
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  width: "97%",
-  margin: "0 auto",
-  color: "black",
-  "&.MuiMenuItem-root:hover": {
-    background: theme.palette.secondary.main,
-    borderRadius: "11px",
-    color: theme.palette.grey[200],
-  },
 }));

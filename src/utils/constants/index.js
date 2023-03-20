@@ -618,9 +618,6 @@ export const ITEM_SORT = [
   { id: 5, title: "По уменьшению цены" },
 ];
 
-export const notFoundImage =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGbwe-jg6PydY6QXFnfHtw4KuLq448Q_AAciwxsGRZg&s";
-
 export const filterCategory = [
   {
     id: 1,
@@ -689,3 +686,6 @@ export const chip_item = [
   { id: 3, title: "Apple" },
   { id: 4, title: "Apple" },
 ];
+
+export const notFoundImage =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGbwe-jg6PydY6QXFnfHtw4KuLq448Q_AAciwxsGRZg&s";

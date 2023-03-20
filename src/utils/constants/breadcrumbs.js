@@ -13,7 +13,7 @@ export const BREADCRUMBS = [
     breadcrumb: "О магазине",
   },
   {
-    path: `item`,
+    path: "item",
     breadcrumb: null,
   },
   {
@@ -86,7 +86,7 @@ export const BREADCRUMBS = [
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}`,
-    breadcrumb: null,
+    breadcrumb: "Товары",
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}`,
@@ -111,7 +111,19 @@ export const BREADCRUMBS = [
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`,
+    breadcrumb: null,
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}/part-1`,
     breadcrumb: "Добавление товара",
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}/part-2`,
+    breadcrumb: "Установка цены и количества товара",
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}/part-3`,
+    breadcrumb: "Описание и обзор",
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.SETTINGPRICEQUANTITYITEM}`,

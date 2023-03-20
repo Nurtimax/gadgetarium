@@ -19,36 +19,42 @@ const MenuBar = ({ editor }) => {
   return (
     <StyledWrapper>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? "is-active btn" : "btn"}
       >
         <FaBold />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "is-active btn" : "btn"}
       >
         <FaItalic />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? "is-active btn" : "btn"}
       >
         <FaStrikethrough />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         className={editor.isActive("underline") ? "is-active btn" : "btn"}
       >
         <FaUnderline />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive("bulletList") ? "is-active btn" : "btn"}
       >
         <FaListUl />
       </button>
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive("orderedList") ? "is-active btn" : "btn"}
       >
@@ -68,7 +74,7 @@ const TextEditor = ({ onChange }) => {
     content: ``,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      onChange(html);
+      onChange({ key: "description", value: html });
     },
   });
 
