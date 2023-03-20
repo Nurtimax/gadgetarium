@@ -45,6 +45,10 @@ import {
   getFavoriteProducts,
   postFavoriteProducts,
 } from "../../../redux/slices/favorite-slice";
+import {
+  getCompareProduct,
+  postCompareProducts,
+} from "../../../redux/slices/compare-slice";
 
 const ProductCard = (props) => {
   const {
@@ -63,6 +67,7 @@ const ProductCard = (props) => {
     size,
     ...rest
   } = props;
+
   const basketData = useSelector((state) => state.basket.data);
 
   const { isLoading, data } = useSelector((state) => state.auth);
@@ -132,14 +137,44 @@ const ProductCard = (props) => {
     }
   }, [productStatus]);
 
+  const addProductToCompare = () => {
+    if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в список сравнения!");
+      setModalOpen(true);
+    } else {
+      dispatch(
+        postCompareProducts({
+          params: { size, productId },
+          getProducts: { categoryId, isUnique: false, size: 6, page: 1 },
+        })
+      ).then(() => {
+        compared
+          ? setText([
+              "Товар удалён из сравнения!",
+              "Перейти к сравнению",
+              "/comporative",
+            ])
+          : setText([
+              "Товар добавлен в список сравнения!",
+              "Перейти к сравнению",
+              "/comporative",
+            ]);
+
+        setDropDown(true);
+      });
+    }
+  };
+
   const onComponentComporation = useMemo(() => {
     if (compared) {
+      console.log(compared);
       return (
         <ComporativePinkIcon
           cursor="pointer"
           title="Добавить к сравнению"
           width="3.5vh"
           height="3.5vh"
+          onClick={addProductToCompare}
         />
       );
     }
@@ -149,6 +184,7 @@ const ProductCard = (props) => {
         title="Удалить из сравнения"
         width="3.5vh"
         height="3.5vh"
+        onClick={addProductToCompare}
       />
     );
   }, [compared]);
@@ -207,6 +243,14 @@ const ProductCard = (props) => {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
           dispatch(getFavoriteProducts());
+          dispatch(
+            getCompareProduct({
+              categoryId: 1,
+              isUnique: false,
+              size: 12,
+              page: 1,
+            })
+          );
 
           location.reload();
           action.resetForm();
