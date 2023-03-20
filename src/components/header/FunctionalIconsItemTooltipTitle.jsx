@@ -8,20 +8,26 @@ import Button from "../UI/button/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
 import { postFavoriteProducts } from "../../redux/slices/favorite-slice";
+// import { getCompareProduct } from "../../redux/slices/compare-slice";
 
 const FunctionalIconsItemTooltipTitle = ({
   title,
   cartItem,
   favoriteItem,
+  compareItem,
   focused,
   tooltip_title_compative_remove,
   tooltip_title_compative_add,
 }) => {
   const { data: basketData } = useSelector((state) => state.basket);
   const { data: favoriteData } = useSelector((state) => state.favorite);
+  const { compare: compareData } = useSelector(
+    (state) => state.compareProducts
+  );
+
   const bData = Array.isArray(basketData) ? basketData : [];
   const fData = Array.isArray(favoriteData) ? favoriteData : [];
-
+  const cData = Array.isArray(compareData) ? compareData : [];
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
@@ -35,6 +41,63 @@ const FunctionalIconsItemTooltipTitle = ({
   const addProductToFavorite = (productId) => {
     dispatch(postFavoriteProducts({ productId }));
   };
+  // useEffect(() => {
+  //   dispatch(
+  //     getCompareProduct({
+  //       categoryId: 1,
+  //       isUnique: false,
+  //       size: 12,
+  //       page: 1,
+  //     })
+  //   );
+  // }, []);
+
+  if (title === "comporative") {
+    if (compareItem.length) {
+      return (
+        <Grid container spacing={1}>
+          {compareItem.map((cart) => (
+            <Grid item xs={12} key={cart.id}>
+              <Item>{cart.title}</Item>
+            </Grid>
+          ))}
+        </Grid>
+      );
+    }
+    return (
+      <>
+        {cData?.length > 0 ? (
+          <StyledMainContainer length={cData?.length}>
+            <Box className="box-product">
+              {cData?.map((item, i) => (
+                <Box key={i} className="item-box">
+                  <img src={item.image} alt="photo" className="image" />
+
+                  <span className="name">{item.productName}</span>
+
+                  <span className="price">
+                    {priceProductSeparate(Number(String(item.price)))} c
+                  </span>
+
+                  <span className="dlt">
+                    <IconClose onClick={() => addProductToFavorite(item.id)} />
+                  </span>
+                </Box>
+              ))}
+            </Box>
+
+            <Box className="box-total">
+              <Link to={`/${ROUTES.COMPATISONPRODUCT}`}>
+                <StyledButton>Сравнить</StyledButton>
+              </Link>
+            </Box>
+          </StyledMainContainer>
+        ) : (
+          <Typography style={{ color: "red" }}>Empty products!</Typography>
+        )}
+      </>
+    );
+  }
 
   if (title === "favorite") {
     if (favoriteItem.length) {
@@ -139,6 +202,7 @@ const FunctionalIconsItemTooltipTitle = ({
       </>
     );
   }
+
   if (focused) {
     return tooltip_title_compative_remove;
   }
