@@ -1,40 +1,53 @@
 import {
-  Rating,
-  Typography,
-  styled,
   Box,
   CircularProgress,
+  Grid,
+  Rating,
+  styled,
+  Typography,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import Modal from "../UI/Modal";
-import { useCallback, useEffect } from "react";
-import { useFormik } from "formik";
-import axios from "axios";
-import { SWAGGER_API } from "../../utils/constants/fetch";
-import { useDropzone } from "react-dropzone";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postAddFeedback } from "../../redux/slices/add-feedback";
-import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+// import { useDropzone } from "react-dropzone";
 import { Addimage } from "../../../assets";
+import Button from "../button/Button";
+import Modal from "../Modal";
+import { postAddFeedback } from "../../../redux/slices/feedback-slice";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import { SWAGGER_API } from "../../../utils/constants/fetch";
+import axios from "axios";
+import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
 const Feedback = ({ open, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const a = useSelector((state) => state.feedback);
-  console.log(a);
   const { product } = useParams();
   const dispatch = useDispatch();
+
   const { handleChange, handleSubmit, values, setFieldValue } = useFormik({
     initialValues: {
-      productId: 0,
       productGrade: 0,
       reviewComment: "",
-      images: [],
+      images: [""],
+      product,
     },
     onSubmit: (values) => {
-      dispatch(postAddFeedback(values));
-      // onClose();
+      dispatch(postAddFeedback(values)).then((res) => {
+        switch (res.payload.response.data.message) {
+          case "This customer did not purchase this product":
+            return toast.warning("Отзыв только после покупке!"), onClose();
+          case "User has already added a review for this product":
+            return (
+              toast.error("Вы уже добавили отзыв об этом продукте!"), onClose()
+            );
+          default:
+            return null;
+        }
+      });
+      onClose();
     },
   });
+
   const getImageLinkHandler = async (file) => {
     setIsLoading(true);
     const bodyFormData = new FormData();
@@ -49,70 +62,78 @@ const Feedback = ({ open, onClose }) => {
         setFieldValue("images", [...values.images, response.data.link]);
         setIsLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setIsLoading(false);
       });
   };
   const onDrop = useCallback((files) => {
     getImageLinkHandler(files);
   }, []);
+
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
   });
+
   useEffect(() => {
     setFieldValue("productId", Number(product));
   }, [product]);
+
   return (
     <Styled open={open} handleClose={onClose}>
       <Styled_Container onSubmit={handleSubmit}>
-        <Typography variant="h6">Оставьте свой отзыв</Typography>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="h6">Оставьте свой отзыв</Typography>
+          </Grid>
+          <Grid item xs={12} className="flex rating">
+            <Typography component="p">Оценки</Typography>
+            <Rating
+              value={values.productGrade}
+              onChange={handleChange}
+              name="productGrade"
+            />
+          </Grid>
+        </Grid>
         <Typography variant="p" className="flex">
-          Оценки
-          <Rating
-            value={values.productGrade}
-            onChange={handleChange}
-            name="productGrade"
-            icon={<StarIcon />}
-          />
+          <Styled_Box>
+            <Typography variant="p">Ваш комментарий</Typography>
+            <Styled_Texterea
+              value={values.reviewComment}
+              onChange={handleChange}
+              name="reviewComment"
+              type="text"
+              placeholder="Напишите комментарий"
+            />
+            <Styled_img {...getRootProps()}>
+              <Typography variant="input" {...getInputProps()} />
+              <Addimage className="btn" />
+              {isLoading ? (
+                <CircularProgress color="secondary" />
+              ) : (
+                values.images.map((item) => (
+                  <img key={item} src={item} alt={item} />
+                ))
+              )}
+            </Styled_img>
+          </Styled_Box>
         </Typography>
-        <Styled_Box>
-          <Typography variant="p">Ваш комментарий</Typography>
-          <Styled_Texterea
-            value={values.reviewComment}
-            onChange={handleChange}
-            name="reviewComment"
-            type="text"
-            placeholder="Напишите комментарий"
-          />
-          <Styled_img {...getRootProps()}>
-            <Typography variant="input" {...getInputProps()} />
-            <Addimage className="btn" />
-            {isLoading ? (
-              <CircularProgress color="secondary" />
-            ) : (
-              values.images.map((item) => (
-                <img key={item} src={item} alt={item} />
-              ))
-            )}
-          </Styled_img>
-        </Styled_Box>
-        <Styled_Button variant="contained" type="submit">
-          Отправить отзыв
-        </Styled_Button>
+        <Grid item xs={12}>
+          <Styled_Button variant="contained" type="submit">
+            Отправить отзыв
+          </Styled_Button>
+        </Grid>
       </Styled_Container>
     </Styled>
   );
 };
 export default Feedback;
-
 const Styled = styled(Modal)(() => ({
   width: "100%",
   height: "100%",
 }));
 const Styled_Container = styled("form")(() => ({
-  width: "500px",
-  height: "500px",
+  width: "550px",
+  height: "460px",
   display: "grid",
   gap: 10,
   "& p": {
@@ -123,8 +144,21 @@ const Styled_Container = styled("form")(() => ({
     fontWeight: 600,
     fontSize: "20px",
   },
+  "& .rating": {
+    padding: "20px 0",
+  },
+}));
+const Styled_Texterea = styled("textarea")(() => ({
+  width: "100%",
+  height: "180px",
+  boxSizing: "border-box",
+  padding: "14px",
+  fontFamily: "Inter",
+  fontSize: "14px",
+  border: "1px solid #CDCDCD",
 }));
 const Styled_Box = styled(Box)(() => ({
+  width: "100%",
   display: "grid",
   "& .MuiInputBase-sizeSmall": {
     height: "150px",
@@ -133,7 +167,7 @@ const Styled_Box = styled(Box)(() => ({
 }));
 const Styled_img = styled("div")(() => ({
   width: "100%",
-  height: "118px",
+  height: "100px",
   border: "1px solid #CDCDCD",
   marginTop: "12px",
   display: "flex",
@@ -157,13 +191,4 @@ const Styled_img = styled("div")(() => ({
 const Styled_Button = styled(Button)(() => ({
   width: "100%",
   height: "42px",
-}));
-const Styled_Texterea = styled("textarea")(() => ({
-  width: "100%",
-  height: "150px",
-  boxSizing: "border-box",
-  padding: "14px",
-  fontFamily: "Inter",
-  fontSize: "14px",
-  border: "1px solid #CDCDCD",
 }));
