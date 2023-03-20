@@ -11,7 +11,6 @@ export const postAddFeedback = createAsyncThunk(
   async (params, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosInstance.post("users/review", params);
-      console.log(response);
       const result = response.data;
 
       if (response.status === 200) {

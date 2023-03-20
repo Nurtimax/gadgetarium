@@ -8,7 +8,6 @@ import {
   putAddFeedback,
 } from "../../../redux/slices/feedback-slice";
 import { useParams } from "react-router-dom";
-// import { getProductDetailThunk } from "../../../redux/slices/product-details";
 const AnswerComment = ({
   answer,
   responseOfReview,
