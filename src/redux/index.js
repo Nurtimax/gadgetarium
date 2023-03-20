@@ -11,6 +11,7 @@ import { orderingSlice } from "./slices/ordering-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
 import compareSlice from "./slices/compare-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
+import compareDataSlice from "./slices/compareData-slice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     viewed: viewedProductSlice.reducer,
     compareProducts: compareSlice.reducer,
     favorite: favoriteProducts.reducer,
+    compareData: compareDataSlice.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
