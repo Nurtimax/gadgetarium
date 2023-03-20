@@ -15,7 +15,6 @@ import {
   fetchDiscountProduct,
 } from "../../redux/slices/product-slice";
 import Button from "../../components/UI/button/Button";
-import { Navigate } from "react-router-dom";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import {
@@ -77,10 +76,6 @@ const Home = () => {
       })
     );
   }, []);
-
-  if (auth?.data?.roleName?.toLowerCase() === "admin") {
-    return <Navigate to="/admin" />;
-  }
 
   return (
     <>
