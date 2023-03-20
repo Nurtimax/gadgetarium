@@ -12,7 +12,9 @@ import { postProductToBasket } from "../../redux/slices/basket-slice";
 import PopUp from "../../components/UI/PopUp";
 const ProductDetails = ({ data, chooseItem, count, images }) => {
   const { subproducts = [] } = data;
+  // console.log(data);
   const [text, setText] = useState("");
+
   const [dropDown, setDropDown] = useState(false);
 
   const basketData = useSelector((state) => state.basket.data);
@@ -35,7 +37,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
-    window.scroll(0, 40);
+    window.scroll(0, 150);
   }, [findedSubProduct]);
 
   const plusHandler = () => {
