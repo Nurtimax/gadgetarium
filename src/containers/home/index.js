@@ -36,7 +36,6 @@ const Home = () => {
       discountError,
       recomenError,
     },
-    auth,
   } = useSelector((store) => store);
 
   const [size, setSize] = useState({
