@@ -18,6 +18,10 @@ import Button from "../../components/UI/button/Button";
 import { Navigate } from "react-router-dom";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
+import {
+  getCompareProduct,
+  getCountCompareProduct,
+} from "../../redux/slices/compare-slice";
 
 const Home = () => {
   const {
@@ -40,7 +44,6 @@ const Home = () => {
     discount: 5,
     recomendation: 5,
   });
-
   const onClickSize = useCallback(
     (e) => {
       setSize((prev) => ({ ...prev, [e.target.id]: prev[e.target.id] + 5 }));
@@ -65,6 +68,15 @@ const Home = () => {
   useEffect(() => {
     dispatch(getBasketProduct());
     dispatch(getFavoriteProducts());
+    dispatch(getCountCompareProduct());
+    dispatch(
+      getCompareProduct({
+        categoryId: 1,
+        isUnique: false,
+        size: 12,
+        page: 1,
+      })
+    );
   }, []);
 
   if (auth?.data?.roleName?.toLowerCase() === "admin") {
@@ -172,7 +184,7 @@ const Home = () => {
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4">Рекемендуем</Typography>
+              <Typography variant="h4">Мы рекомендуем</Typography>
               <Grid container spacing={2}>
                 {recommendationProduct?.map((product) => (
                   <Grid item xs={2.4} key={product.productId}>
