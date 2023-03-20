@@ -3,87 +3,150 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
+  IconButton,
   Paper,
   styled,
   Typography,
 } from "@mui/material";
-import { useEffect } from "react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { DeleteIconInCart } from "../../assets";
-import CompareTable from "../../components/compare/CompareTableOne";
-import { TAB_ITEMS_COMPARE } from "../../utils/constants";
-import { checkTabName } from "../../utils/helpers/general";
+import { ArrowRightPinkIcon, DeleteIconInCart } from "../../assets";
+import EmptyCompare from "../../components/compare/EmptyCompare";
+import {
+  // deleteAllCompareProduct,
+  getCompareProduct,
+} from "../../redux/slices/compare-slice";
+import CompareTable from "../../components/compare/CompareTable";
+import { headers } from "../../utils/constants/compare";
+import { useState } from "react";
+import { compareDataAction } from "../../redux/slices/compareData-slice";
 
 const Compare = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const compareStatus = searchParams.get("compareStatus");
-  // const page = searchParams.get("page_index") || 1;
+  const { compare } = useSelector((state) => state.compareProducts);
 
-  const handleTabClick = useCallback((e) => {
-    searchParams.set("compareStatus", e.target.name);
-    setSearchParams(searchParams);
-  });
+  const dispatch = useDispatch();
+
+  const [searchParams, setSearchParams] = useSearchParams(headers[0].id);
+
+  const compareStatus = searchParams.get("compareStatus") || headers[0].id;
+
+  const [productTable, setProductTable] = useState(headers[compareStatus - 1]);
+
+  const handleChange = useCallback(
+    (e, newCategory) => {
+      searchParams.set("compareStatus", e.target.name);
+      setSearchParams(searchParams);
+      setProductTable(newCategory);
+    },
+    [searchParams, productTable]
+  );
+
+  useEffect(() => {
+    dispatch(
+      getCompareProduct({
+        categoryId: compareStatus,
+        isUnique: false,
+        size: 12,
+        page: 1,
+      })
+    );
+
+    dispatch(
+      compareDataAction.categoryChange({
+        categoryId: compareStatus,
+      })
+    );
+  }, [compareStatus]);
 
   useEffect(() => {
     searchParams.set("compareStatus", compareStatus);
     setSearchParams(searchParams);
   }, [compareStatus]);
 
+  // const deleteCompareAllProducts = () => {
+  //   dispatch(deleteAllCompareProduct());
+  // };
+
   return (
-    <Paper style={{ background: "#FFFFFF" }}>
-      <ContainerStyled>
-        <Typography variant="h5" component="h1" className="text_header">
-          Сравнение товаров
-        </Typography>
-        {/* <EmptyCompore /> */}
-        <Tabs>
-          {TAB_ITEMS_COMPARE.map((tab, i) => (
-            <button
-              key={i}
-              name={tab.tabTitle}
-              disabled={compareStatus === `${tab.tabTitle}`}
-              onClick={handleTabClick}
-            >
-              {tab.title} {checkTabName(tab.title)}
-            </button>
-          ))}
-        </Tabs>
-        <Box style={{ display: "flex", gap: "30px" }}>
-          <FormControlLabel
-            control={<Checkbox defaultChecked color="secondary" />}
-            label="Показывать только различия"
-            style={{
-              fontFamily: "Inter",
-              fontWeight: "400",
-              fontSize: "14px",
-            }}
-          />
-          <Box style={{ display: "flex", alignItems: "center", gap: "6.5px" }}>
-            <DeleteIconInCart />
-            <Typography
-              style={{
-                fontFamily: "Roboto,Helvetica,Arial,sans-serif",
-                fontWeight: "400",
-                fontSize: "1rem",
-                lineHeight: "1.5",
-                letterSpacing: "0.00938em",
-              }}
-            >
-              Очистить список
+    <>
+      {compare?.length > 0 ? (
+        <Paper style={{ background: "#FFFFFF" }}>
+          <ContainerStyled>
+            <Typography variant="h5" component="h1" className="text_header">
+              Сравнение товаров
             </Typography>
-          </Box>
-        </Box>
-        <Box className="table-box">
-          <CompareTable />
-        </Box>
-      </ContainerStyled>
-    </Paper>
+
+            <Tabs>
+              {headers.map((tab) => (
+                <button
+                  key={tab.id}
+                  name={tab.id}
+                  disabled={compareStatus === `${tab.id}`}
+                  onClick={(e) => handleChange(e, tab)}
+                >
+                  {tab.categoryName}
+                </button>
+              ))}
+            </Tabs>
+            <Box
+              style={{ display: "flex", gap: "30px", paddingBottom: "30px" }}
+            >
+              <FormControlLabel
+                control={<Checkbox defaultChecked color="secondary" />}
+                label="Показывать только различия"
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: "400",
+                  fontSize: "14px",
+                }}
+              />
+              <Box
+                style={{ display: "flex", alignItems: "center", gap: "6.5px" }}
+                // onClick={() => deleteCompareAllProducts()}
+              >
+                <DeleteIconInCart />
+                <Typography
+                  style={{
+                    fontFamily: "Roboto,Helvetica,Arial,sans-serif",
+                    fontWeight: "400",
+                    fontSize: "1rem",
+                    lineHeight: "1.5",
+                    letterSpacing: "0.00938em",
+                  }}
+                  className="pointer"
+                >
+                  Очистить список
+                </Typography>
+              </Box>
+            </Box>
+            <Box className="table-box">
+              <CompareTable
+                productTable={productTable}
+                categoryId={compareStatus}
+              />
+            </Box>
+            {compare.length >= 5 ? (
+              <IconButton className="arrow-btn">
+                <ArrowRightPinkIcon />
+              </IconButton>
+            ) : (
+              ""
+            )}
+          </ContainerStyled>
+        </Paper>
+      ) : (
+        <BoxStyled>
+          <EmptyCompare />
+        </BoxStyled>
+      )}
+    </>
   );
 };
 
 export default Compare;
 const ContainerStyled = styled(Container)(() => ({
+  paddingBottom: "120px",
   "& .text_header": {
     height: "83px",
     display: "flex",
@@ -93,7 +156,18 @@ const ContainerStyled = styled(Container)(() => ({
     fontSize: "30px",
     borderBottom: "1px solid #CDCDCD",
   },
-  "& .table-box": { paddingBottom: "120px" },
+  "& .arrow-btn": {
+    width: "50px",
+    height: "52px",
+    background: "white",
+    border: "1px solid #CB11AB",
+    boxShadow:
+      "0px 2px 6px rgba(0, 0, 0, 0.07), 0px 0px 25px rgba(0, 0, 0, 0.1)",
+    possition: "relative",
+    bottom: "465px",
+    left: "1330px",
+    ":hover": { background: "white" },
+  },
 }));
 
 const Tabs = styled("div")(({ theme }) => ({
@@ -117,4 +191,7 @@ const Tabs = styled("div")(({ theme }) => ({
     backgroundColor: "#384255",
     color: theme.palette.primary.contrastText,
   },
+}));
+const BoxStyled = styled(Box)(() => ({
+  paddingBottom: "120px",
 }));

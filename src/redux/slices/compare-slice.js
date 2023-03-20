@@ -1,38 +1,90 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
-
-// export const postProductToCompare = createAsyncThunk(
-//   "compare/postProductToCompare",
-//   async (params, { dispatch }) => {
-//     try {
-//       const response = await axiosInstance.post(
-//         "userCompare",
-//         {},
-//         {
-//           params,
-//         }
-//       );
-
-//       const result = await response.data;
-
-//       dispatch(getCompareProduct);
-
-//       return result;
-//     } catch (error) {
-//       return error;
-//     }
-//   }
-// );
+import {
+  fetchDiscountProduct,
+  fetchNewProduct,
+  fetchRecomendationProduct,
+} from "./product-slice";
 
 export const getCompareProduct = createAsyncThunk(
-  "compare/getComparePrdoduct",
+  "compare/getCompareProduct",
   async (params) => {
+    console.log(params, "parrmass");
     try {
-      const response = await axiosInstance.get(`userCompare`, {
-        params,
-      });
-      console.log(response);
-      return response;
+      const response = await axiosInstance.get(`userCompare`, { params });
+
+      const result = await response.data;
+      console.log(result, "ressssult");
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const getCountCompareProduct = createAsyncThunk(
+  "compare/getCountCompareProduct",
+  async () => {
+    try {
+      const response = await axiosInstance.get(`userCompare/count`);
+
+      const result = await response.data;
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const postCompareProducts = createAsyncThunk(
+  "compare/postCompareProducts",
+  async ({ params, getProducts }, { dispatch }) => {
+    try {
+      const response = await axiosInstance.post(
+        "userCompare",
+        {},
+        {
+          params: {
+            productId: params.productId,
+          },
+        }
+      );
+      const result = await response.data;
+
+      dispatch(fetchDiscountProduct(params.size.discount));
+      dispatch(fetchNewProduct(params.size.news));
+      dispatch(fetchRecomendationProduct(params.size.recomendation));
+
+      dispatch(getCompareProduct(getProducts));
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const deleteCompareProductsByCategoryId = createAsyncThunk(
+  "compare/deleteCompareProduct",
+  async (_, { dispatch }) => {
+    try {
+      const response = await axiosInstance.delete(`userCompare`);
+      const data = await response.data;
+
+      dispatch(getCompareProduct());
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const deleteCompareProductsById = createAsyncThunk(
+  "compare/deleteCompareProductsById",
+  async ({ id, params }, { dispatch }) => {
+    console.log(id, "hello world ");
+    try {
+      const response = await axiosInstance.delete(`userCompare/${id}`);
+      const data = await response.data;
+      dispatch(getCompareProduct(params));
+      return data;
     } catch (error) {
       return error;
     }
@@ -40,7 +92,8 @@ export const getCompareProduct = createAsyncThunk(
 );
 
 const initialState = {
-  data: [],
+  compare: [],
+  productCategoryName: [],
 };
 
 const compareSlice = createSlice({
@@ -48,10 +101,20 @@ const compareSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCompareProduct.fulfilled, (state, action) => {
-      console.log(action, "actiion");
-      state.data = action.payload;
-    });
+    builder
+
+      .addCase(getCompareProduct.fulfilled, (state, action) => {
+        state.compare = action.payload;
+      })
+      .addCase(getCountCompareProduct.fulfilled, (state, action) => {
+        state.productCategoryName = [
+          ...state.productCategoryName,
+          action.payload,
+        ];
+      })
+      .addCase(deleteCompareProductsById.fulfilled, (state, action) => {
+        console.log(action.payload, "delete");
+      });
   },
 });
 
