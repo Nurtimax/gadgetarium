@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
+import {
+  getCompareProduct,
+  getCountCompareProduct,
+} from "../../redux/slices/compare-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import {
   fetchDiscountProduct,
@@ -26,6 +30,8 @@ const UserProfileList = () => {
       dispatch(ActionauthenticationSlice.authLogOut());
       dispatch(getBasketProduct());
       dispatch(getFavoriteProducts());
+      dispatch(getCompareProduct());
+      dispatch(getCountCompareProduct());
 
       dispatch(fetchDiscountProduct(5));
       dispatch(fetchNewProduct(5));
