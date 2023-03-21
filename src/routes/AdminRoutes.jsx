@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import React from "react";
 import { ROUTES } from "../utils/constants/routes";
+import Admin from "../containers/admin";
 
 const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
 const Orders = lazy(() => import("../containers/orders/Orders"));
@@ -29,15 +30,43 @@ const AdminRoutes = () => {
           </Suspense>
         }
       >
-        <Route index element={<Navigate to={ROUTES.GOODS} />} />
-        <Route
-          path="goods"
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <Goods />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<Admin />}>
+          <Route index element={<Navigate to={ROUTES.GOODS} />} />
+          <Route
+            path="goods"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <Goods />
+              </Suspense>
+            }
+          />
+          <Route
+            path={`${ROUTES.ORDERS}`}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <Orders />
+              </Suspense>
+            }
+          />
+          <Route
+            path={`${ROUTES.ORDERS}/:orderId`}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <OrderItem />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path={`${ROUTES.REVIEWSRATING}`}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <ReviewRating />
+              </Suspense>
+            }
+          />
+        </Route>
+
         <Route
           path={`${ROUTES.GOODS}/${ROUTES.ADDPRODUCT}`}
           element={
@@ -71,32 +100,6 @@ const AdminRoutes = () => {
             }
           />
         </Route>
-        <Route
-          path={`${ROUTES.ORDERS}`}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <Orders />
-            </Suspense>
-          }
-        />
-        <Route
-          path={`${ROUTES.ORDERS}/:orderId`}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <OrderItem />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path={`${ROUTES.REVIEWSRATING}`}
-          element={
-            <Suspense fallback={<GadgetariumSpinnerLoading />}>
-              <ReviewRating />
-            </Suspense>
-          }
-        />
-        <Route />
       </Route>
     </Routes>
   );
