@@ -44,6 +44,7 @@ const CarouselStyle = styled(Carousel)(() => ({
 
   "& .carousel .thumb:hover": {
     border: "2px solid #cb11ab",
+    borderRadius: "10px",
   },
 
   "& .slider-wrapper": {
