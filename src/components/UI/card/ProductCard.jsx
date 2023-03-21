@@ -252,7 +252,7 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      {data.token ? (
+      {data?.token ? (
         <Link to={`/item/${categoryId}/${productId}/description`}>
           <CardMedia_Styled
             src={productImage}
