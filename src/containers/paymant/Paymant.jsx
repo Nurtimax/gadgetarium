@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
-  Checkbox,
   Container,
   Step,
   StepLabel,
@@ -9,298 +8,446 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
-import { ElCardIcon, MasterCardPaymant, VisaIcon } from "../../assets";
-import PaymentCard from "../../components/payment-card/PaymentCard";
 import Button from "../../components/UI/button/Button";
-import { useFormik } from "formik";
-import { paymantValidateSchema } from "../../utils/helpers/validate";
-import { ActionsPaymant } from "../../redux/slices/paymant-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { ROUTES } from "../../utils/constants/routes";
+import { priceProductSeparate } from "../../utils/helpers/general";
+import { getBasketProduct } from "../../redux/slices/basket-slice";
+import { postOrdering } from "../../redux/slices/paymant-slice";
 
 const steps = ["Варианты доставки", "Оплата", "Обзор заказа"];
 
 const Paymant = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const { personalData, personalCardData } = useSelector(
+    (state) => state.paymant
+  );
 
-  const handleCard = () => {
-    setIsChecked(false);
+  const { data: basketData } = useSelector((state) => state.basket);
+
+  const [sumOrderData, setSumOrderData] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setSumOrderData(
+      basketData?.length > 0
+        ? basketData?.map((product) => ({ ...product, productCount: 1 }))
+        : []
+    );
+  }, [basketData]);
+
+  useEffect(() => {
+    dispatch(getBasketProduct());
+  }, []);
+
+  const orderCount = sumOrderData?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.orderCount);
+  }, 0);
+
+  const discount = sumOrderData?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.amountOfDiscount);
+  }, 0);
+
+  const price = sumOrderData?.reduce((acc, current) => {
+    return Number(acc) + Number(current.productCount) * Number(current.price);
+  }, 0);
+
+  const ordersId = sumOrderData?.map(({ id }) => {
+    return id;
+  });
+
+  const orderingHandler = () => {
+    dispatch(
+      postOrdering({
+        firstName: personalData.firstName,
+        lastName: personalData.lastName,
+        email: personalData.email,
+        phoneNumber: personalData.phoneNumber,
+        address: personalData.address,
+        countOfProduct: orderCount,
+        totalSum: parseInt(price - price / discount),
+        totalDiscount: parseInt(price / discount),
+        payment: !personalCardData.paymantMethod
+          ? "PAYMENT_WITH_CARD"
+          : personalCardData.paymantMethod === true
+          ? " PAYMANT_OFFLINE_WITH_CARD"
+          : " CASH",
+        orderType: personalData.orderType,
+        subproductsId: ordersId,
+      })
+    );
+
+    navigate("/cart");
   };
-
-  const handleCardGetting = () => {
-    setIsChecked(true);
-  };
-
-  const handleCash = () => {
-    setIsChecked("cash");
-  };
-
-  const onSubmit = (values) => {
-    const paymantMethod = !isChecked
-      ? "Картой онлайн"
-      : isChecked === true
-      ? "Картой при получении"
-      : "Наличными при получении";
-
-    const token = uuidv4() + uuidv4() + uuidv4();
-
-    const userPersonalCardData = {
-      token,
-      paymantMethod,
-      data: {
-        ...values,
-      },
-    };
-
-    ActionsPaymant.getUserPersonalCardData(userPersonalCardData);
-  };
-
-  const { handleSubmit, handleBlur, values, touched, errors, handleChange } =
-    useFormik({
-      initialValues: {
-        cardNumber: "",
-        expiryDate: "",
-        cvc: "",
-        userName: "",
-      },
-      validationSchema: !isChecked ? paymantValidateSchema : "",
-      validateOnChange: false,
-      onSubmit,
-    });
 
   return (
-    <MainContainer ischecked={isChecked.toString()}>
-      <Typography className="ordering-title">Оформление заказа</Typography>
+    <>
+      <MainContainer>
+        <Typography className="title">Оформление заказа</Typography>
 
-      <Box className="ordering">
-        <Box className="box-1">
-          <Stepper>
-            {steps.map((label) => {
-              return (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
+        <Box className="container">
+          <Box className="box-1">
+            <Stepper>
+              {steps.map((label) => {
+                return (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
 
-          <Box className="card-container">
-            <Typography className="variant-delivered">Способ оплаты</Typography>
+            <Typography className="view-order">Обзор заказа</Typography>
 
-            <Box className="card-box">
-              <Box className="card-1" onClick={handleCard}>
-                <Box className="checbox-box">
-                  <Checkbox
-                    classes={{ root: "checkbox" }}
-                    checked={!isChecked ? true : false || false}
-                    color="success"
-                  />
-                  Оплата картой онлайн
-                </Box>
+            <Box className="view-box">
+              <Box>
+                <p>Итого</p>
+                <span>
+                  {priceProductSeparate(
+                    Number(String(parseInt(price - price / discount)))
+                  )}
 
-                <Box>
-                  <MasterCardPaymant />
-                  <VisaIcon />
-                  <ElCardIcon />
-                </Box>
-              </Box>
-              <Box className="card-2" onClick={handleCardGetting}>
-                <Box className="checbox-box">
-                  <Checkbox
-                    classes={{ root: "checkbox" }}
-                    checked={isChecked === true ? true : false || false}
-                    color="success"
-                  />
-                  Картой при получении
-                </Box>
-
-                <Typography>Предоплата не требуется.</Typography>
-
-                <Box>
-                  <MasterCardPaymant />
-                  <VisaIcon />
-                  <ElCardIcon />
-                </Box>
+                  <span>c</span>
+                </span>
               </Box>
 
-              <Box className="card-3" onClick={handleCash}>
-                <Box className="checbox-box">
-                  <Checkbox
-                    classes={{ root: "checkbox" }}
-                    checked={isChecked === "cash" ? true : false || false}
-                    color="success"
-                  />
-                  Наличными при
-                </Box>
-                <div className="get">получении</div>
+              <Box>
+                <p>Доставка</p>
 
-                <Typography>Предоплата не требуется.</Typography>
+                <span>{personalData.address}</span>
+
+                <p>
+                  <Link to={`/${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                    Изменить
+                  </Link>
+                </p>
+              </Box>
+
+              <Box>
+                <p>Оплата</p>
+
+                <span>{personalCardData.paymantMethod}</span>
+
+                <p>
+                  <Link to={`/${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}>
+                    Изменить
+                  </Link>
+                </p>
               </Box>
             </Box>
+
+            <StyledButton type="submit" onClick={orderingHandler}>
+              Оформить заказ
+            </StyledButton>
           </Box>
 
-          <form onSubmit={handleSubmit}>
-            {!isChecked ? (
-              <Box className="kredit-card">
-                <PaymentCard
-                  handleBlur={handleBlur}
-                  values={values}
-                  touched={touched}
-                  errors={errors}
-                  handleChange={handleChange}
-                />
+          <Box className="box-2">
+            <Box className="sum-order-card">
+              <Box className="title-box">
+                <Typography>Сумма заказа</Typography>
+                <Typography>
+                  <Link to={`/${ROUTES.CART}`}>Изменить</Link>
+                </Typography>
+              </Box>
+
+              <Box className="text-container">
+                <Box>
+                  <Typography>Количество товаров:</Typography>
+                  <Typography>Ваша скидка:</Typography>
+                  <Typography>Сумма:</Typography>
+                </Box>
 
                 <Box>
-                  Платеж защищен. Данные карты передаются только в <br />
-                  зашифрованном виде по протоколу SSL, защищаются и <br />
-                  обрабатываются по стандарту безопасности PCI DSS.
+                  <Typography>{orderCount} шт.</Typography>
+                  <Typography
+                    className="discount"
+                    style={{
+                      display: "flex",
+                      gap: "5px",
+                    }}
+                  >
+                    –{" "}
+                    {priceProductSeparate(
+                      Number(String(parseInt(price / discount)))
+                    )}
+                    <li>c</li>
+                  </Typography>
+                  <Typography
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {priceProductSeparate(Number(String(parseInt(price))))}
+                    <li>c</li>
+                  </Typography>
                 </Box>
               </Box>
-            ) : (
-              ""
-            )}
+              <Box className="total">
+                <Typography>Итого</Typography>
+                <Typography
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                  }}
+                >
+                  {priceProductSeparate(
+                    Number(String(parseInt(price - price / discount)))
+                  )}
+                  <li>c</li>
+                </Typography>
+              </Box>
+            </Box>
 
-            <StyledButton type="submit">Продолжить</StyledButton>
-          </form>
+            <Box className="product-container">
+              {basketData?.map((product, i) => (
+                <Box
+                  key={i}
+                  className="product-box"
+                  style={{
+                    borderTop: i !== 0 ? "1px solid #CDCDCD" : "none",
+                    paddingTop: i !== 0 ? "16px" : "0",
+                  }}
+                >
+                  <img
+                    src={product.image}
+                    alt="image"
+                    className="image-product"
+                  />
+                  <Box>
+                    <Box className="product-name">
+                      <Typography>{product.productName}</Typography>
+                      <Typography>
+                        {product.characteristics.memoryOfPhone}gb
+                      </Typography>
+                      <Typography>{product.color.toLowerCase()}</Typography>
+                    </Box>
+
+                    <Box className="rest-text">
+                      <p>Артикул: {product.vendorCode}</p>
+                      <p>Кол-во: {product.orderCount}</p>
+                      <p>Цвет: {product.color}</p>
+                    </Box>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Box>
         </Box>
-      </Box>
-    </MainContainer>
+      </MainContainer>
+    </>
   );
 };
 
 export default Paymant;
 
-const MainContainer = styled(Container)(({ theme, ischecked }) => ({
+const MainContainer = styled(Container)(({ theme }) => ({
   paddingBottom: "120px",
 
-  "& .kredit-card": {
+  "& .rest-text": {
+    fontFamily: "Inter",
+    fontWeight: "400",
+    fontSize: "14px",
+    color: "#384255",
+    paddingTop: "7px",
     display: "flex",
-    alignItems: "center",
-    gap: "46px",
+    flexDirection: "column",
+    gap: "3px",
+  },
 
-    "& div:last-of-type": {
+  "& .product-container": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+  },
+
+  "& .product-name": {
+    display: "flex",
+    gap: "5px",
+    flexWrap: "wrap",
+  },
+
+  "& .product-box": {
+    display: "flex",
+    gap: "16px",
+  },
+
+  "& .image-product": {
+    mixBlendMode: "color-burn",
+    width: "90px",
+    height: "84px",
+  },
+
+  "& li": {
+    textDecoration: "underline",
+    listStyle: "none",
+  },
+
+  "& .total": {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
+  "& .sum-order-card": {
+    width: "434px",
+    padding: "20px 43px 20px 30px",
+    backgroundColor: "#ffff",
+  },
+
+  "& .title-box": {
+    display: "flex",
+    justifyContent: "space-between",
+    paddingBottom: "12px",
+    borderBottom: `1px solid ${theme.palette.grey[600]}`,
+
+    "& p:first-of-type": {
       fontFamily: "Inter",
-      fontWeight: "400",
+      fontWeight: "500",
+      fontSize: "18px",
+    },
+
+    "& p:last-of-type": {
+      fontFamily: "Inter",
+      fontWeight: "700",
       fontSize: "14px",
-      color: "#384255",
+      color: theme.palette.secondary.light,
     },
   },
 
-  "& .card-box": {
-    paddingTop: "30px",
+  "& .discount": {
+    color: theme.palette.error.main,
+  },
+
+  "& .text-container": {
+    padding: "12px 0",
     display: "flex",
-    gap: "30px",
-  },
-
-  "& .card-container": {
-    padding: "38px 0 40px",
-  },
-
-  "& .card-1": {
-    border: ischecked === "false" ? "2px solid #2FC509" : "none",
-    backgroundColor: "#ffff",
-    fontFamily: "Inter",
-    fontWeight: "700",
-    fontSize: "18px",
-    borderRadius: "6px",
-    padding: "32px 18px",
-    width: "290px",
-    height: "137.9px",
-
-    "& .checkbox": {
-      paddingRight: "26px",
-      width: "16px",
-      height: "16px",
-    },
+    justifyContent: "space-between",
 
     "& div:last-of-type": {
-      width: "200px",
-      paddingTop: "13px",
+      textAlign: "right",
+    },
+  },
+
+  "& .text-card": {
+    paddingLeft: "36px",
+    textAlign: "left",
+  },
+
+  "& .view-box": {
+    width: "410px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+    borderBottom: `1px solid ${theme.palette.grey[600]}`,
+    paddingBottom: "13px",
+    marginBottom: "30px",
+
+    "& div:first-of-type": {
+      paddingBottom: "13px",
+      borderBottom: `1px solid ${theme.palette.grey[600]}`,
       display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center",
-      gap: "13px",
-    },
-  },
+      gap: "90px",
+      fontFamily: "Inter",
+      fontWeight: "800",
+      fontSize: "20px",
+      color: theme.palette.secondary.main,
 
-  "& .card-2": {
-    border: ischecked === "true" ? "2px solid #2FC509" : "none",
-    backgroundColor: "#ffff",
-    fontFamily: "Inter",
-    fontWeight: "700",
-    fontSize: "18px",
-    padding: "32px 18px",
-    borderRadius: "6px",
-    width: "290px",
-    height: "137.9px",
+      "& span span": {
+        textDecoration: "underline",
+      },
 
-    "& .checkbox": {
-      paddingRight: "26px",
-      width: "16px",
-      height: "16px",
+      "& span": {
+        display: "flex",
+        gap: "5px",
+      },
     },
 
-    "& p": {
-      textAlign: "center",
-      paddingLeft: "13px",
-    },
-
-    "& div:last-of-type": {
-      width: "200px",
-      paddingTop: "13px",
+    "& div:nth-of-type(2)": {
       display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center",
-      gap: "13px",
+      justifyContent: "space-between",
+      fontFamily: "Inter",
+      fontWeight: "800",
+      fontSize: "20px",
+
+      "& p:first-of-type": {
+        fontWeight: "700",
+        fontSize: "16px",
+      },
+
+      "& p:last-of-type": {
+        fontWeight: "700",
+        fontSize: "14px",
+        color: "#4B7EE8",
+      },
+
+      "& span": {
+        fontWeight: "400",
+        fontSize: "16px",
+        color: "#384255",
+        width: "150px",
+      },
+    },
+
+    "& div:nth-of-type(3)": {
+      display: "flex",
+      justifyContent: "space-between",
+      fontFamily: "Inter",
+      fontWeight: "800",
+      fontSize: "20px",
+
+      "& p:first-of-type": {
+        fontWeight: "700",
+        fontSize: "16px",
+        width: "110px",
+      },
+
+      "& p:last-of-type": {
+        fontWeight: "700",
+        fontSize: "14px",
+        color: "#4B7EE8",
+      },
+
+      "& span": {
+        width: "150px",
+        fontWeight: "400",
+        fontSize: "16px",
+        color: "#384255",
+      },
     },
   },
 
-  "& .card-3": {
-    border: ischecked === "cash" ? "2px solid #2FC509" : "none",
-    backgroundColor: "#ffff",
-    fontFamily: "Inter",
-    fontWeight: "700",
-    fontSize: "18px",
-    padding: "32px 18px",
-    borderRadius: "6px",
-    width: "290px",
-    height: "137.9px",
-
-    "& .checkbox": {
-      paddingRight: "26px",
-      width: "16px",
-      height: "16px",
-    },
-
-    "& p": {
-      textAlign: "center",
-      paddingLeft: "13px",
-    },
-
-    "& .get": {
-      textAlign: "center",
-      width: "165px",
-    },
+  "& .container": {
+    paddingTop: "28px",
+    display: "flex",
+    justifyContent: "space-between",
   },
 
-  "& .variant-delivered": {
+  "& .box-1": {
+    width: "650px",
+  },
+  "& .box-2": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+  },
+
+  "& .view-order": {
+    padding: "38px 0 41px",
     fontFamily: "Inter",
-    fontWeight: "700",
+    fontWeight: "500",
     fontSize: "24px",
   },
 
-  "& .ordering-title": {
+  "& .title": {
     paddingBottom: "20px",
     fontFamily: "Ubuntu",
     fontWeight: "500",
     fontSize: "30px",
     color: theme.palette.primary.dark,
     borderBottom: `1px solid ${theme.palette.grey[600]}`,
-  },
-
-  "& .ordering": {
-    paddingTop: "28px",
-    display: "flex",
-    justifyContent: "space-between",
   },
 
   "& .MuiStepIcon-root": {
@@ -344,6 +491,12 @@ const MainContainer = styled(Container)(({ theme, ischecked }) => ({
     },
   },
 
+  "& .MuiStepper-root div:nth-of-type(4)": {
+    "& span": {
+      borderColor: theme.palette.secondary.main,
+    },
+  },
+
   "& .MuiStepper-root div:nth-of-type(3)": {
     "& span span:last-of-type": {
       paddingRight: "50px",
@@ -361,6 +514,13 @@ const MainContainer = styled(Container)(({ theme, ischecked }) => ({
     "& span span:last-of-type": {
       marginRight: "110px",
     },
+
+    "& span span:first-of-type": {
+      color: `${theme.palette.secondary.main} !important`,
+      "& svg": {
+        fill: theme.palette.secondary.main,
+      },
+    },
   },
 
   "& .MuiStepConnector-line": {
@@ -371,8 +531,7 @@ const MainContainer = styled(Container)(({ theme, ischecked }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  marginTop: "30px",
-  width: "48%",
+  width: "63%",
   backgroundColor: theme.palette.secondary.main,
   color: "white !important",
 }));

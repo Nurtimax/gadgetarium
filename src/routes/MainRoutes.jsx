@@ -2,10 +2,11 @@ import React, { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
-import Paymant from "../containers/paymant/Paymant";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
+const Paymant = lazy(() => import("../containers/paymant/Paymant"));
+const PaymantMethod = lazy(() => import("../containers/paymant/PaymantMethod"));
 const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Favorite = lazy(() => import("../containers/favorite/Favorite"));
@@ -157,6 +158,15 @@ const MainRoutes = () => {
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
               <Ordering />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <PaymantMethod />
             </Suspense>
           }
         />

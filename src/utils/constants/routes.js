@@ -5,6 +5,7 @@ export const ROUTES = {
   SETTINGPRICEQUANTITYITEM: "setting-price-quantity-item",
   DESCRIPTIONOVERVIEW: "description-overview",
   MAIN: "/",
+  PAYMANT_METHOD: "paymant-method",
   PAYMANT: "paymant",
   ABOUTSTORE: "/about",
   PHONE: ":catalogItem",
