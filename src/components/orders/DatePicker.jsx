@@ -1,12 +1,23 @@
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-import { InputAdornment, InputBase, styled } from "@mui/material";
+import {
+  Box,
+  FormLabel,
+  InputAdornment,
+  InputBase,
+  styled,
+} from "@mui/material";
 import DateFnsUtils from "@date-io/date-fns";
 import { ru } from "date-fns/locale";
 import { DateIcon } from "../../assets";
 import { useState } from "react";
 
-export default function DatePicker({ date, setDate }) {
+export default function DatePicker({
+  date,
+  setDate,
+  FormLabelTitle = [],
+  ...rest
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -30,36 +41,47 @@ export default function DatePicker({ date, setDate }) {
             setDate(nev);
           }
         }}
+        {...rest}
         PaperProps={{ classes: { root: "paper" } }}
         renderInput={({ inputProps, startProps }, endProps) => {
           return (
             <>
-              <InputBase
-                {...startProps}
-                focused={isOpen.toString()}
-                onFocus={openCalendar}
-                inputProps={{
-                  ...inputProps,
-                  placeholder: "От",
-                }}
-                endAdornment={
-                  <InputAdornment position="start">
-                    <StyledDateIcon onClick={openCalendar} />
-                  </InputAdornment>
-                }
-              />
+              <Box className="align-start column">
+                {Boolean(FormLabelTitle.length) && (
+                  <FormLabel required>{FormLabelTitle[0]}</FormLabel>
+                )}
+                <InputBase
+                  {...startProps}
+                  focused={isOpen.toString()}
+                  onFocus={openCalendar}
+                  inputProps={{
+                    ...inputProps,
+                    placeholder: "От",
+                  }}
+                  endAdornment={
+                    <InputAdornment position="start">
+                      <StyledDateIcon onClick={openCalendar} />
+                    </InputAdornment>
+                  }
+                />
+              </Box>
 
-              <InputBase
-                {...endProps}
-                onFocus={openCalendar}
-                focused={isOpen.toString()}
-                inputProps={{ ...endProps.inputProps, placeholder: "До" }}
-                endAdornment={
-                  <InputAdornment position="start">
-                    <StyledDateIcon onClick={openCalendar} />
-                  </InputAdornment>
-                }
-              />
+              <Box className="align-start column">
+                {Boolean(FormLabelTitle.length) && (
+                  <FormLabel required>{FormLabelTitle[1]}</FormLabel>
+                )}
+                <InputBase
+                  {...endProps}
+                  onFocus={openCalendar}
+                  focused={isOpen.toString()}
+                  inputProps={{ ...endProps.inputProps, placeholder: "До" }}
+                  endAdornment={
+                    <InputAdornment position="start">
+                      <StyledDateIcon onClick={openCalendar} />
+                    </InputAdornment>
+                  }
+                />
+              </Box>
             </>
           );
         }}
