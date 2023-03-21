@@ -155,11 +155,11 @@ const SliderContainer = styled("div")`
   }
 
   .slick-slider {
-    height: 80vh;
+    height: 60vh;
   }
 
   .slick-list {
-    height: 80vh;
+    height: 60vh;
   }
 `;
 
