@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import GadgetariumSpinnerLoading from "../../GadgetariumSpinnerLoading";
 
-const ColorName = (props) => {
+const ColorName = ({ color }) => {
   const [colorName, setColorName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchColorName() {
     setIsLoading(true);
     const response = await fetch(
-      `http://www.thecolorapi.com/id?hex=${props.color.substring(1)}`
+      `http://www.thecolorapi.com/id?hex=${color.substring(1)}`
     );
     const data = await response.json();
     const name = data.name?.value;
@@ -18,7 +18,7 @@ const ColorName = (props) => {
 
   useEffect(() => {
     fetchColorName();
-  }, [props.color]);
+  }, [color]);
 
   if (isLoading) {
     return <GadgetariumSpinnerLoading />;
