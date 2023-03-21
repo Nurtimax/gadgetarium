@@ -61,3 +61,4 @@ export { ReactComponent as DeleteIconBasket } from "./icons/delete-basket.svg";
 export { ReactComponent as IconClear } from "./icons/icon-clear.svg";
 export { ReactComponent as StarIcon } from "./icons/starIcon.svg";
 export { ReactComponent as EmptyStarIcon } from "./icons/empty.svg";
+export { ReactComponent as BannerIcon } from "./icons/banner.svg";
