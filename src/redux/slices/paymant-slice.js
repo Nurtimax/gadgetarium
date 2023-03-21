@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axiosInstance from "../../config/axios-instance";
+import { getBasketProduct } from "./basket-slice";
 
 const postCardData = createAsyncThunk("paymant/postCardData", async (data) => {
   try {
@@ -21,13 +22,15 @@ const postCardData = createAsyncThunk("paymant/postCardData", async (data) => {
 
 const postOrdering = createAsyncThunk(
   "paymant/postOrdering",
-  async (params) => {
+  async (params, { dispatch }) => {
     try {
       const response = await axiosInstance.post("userOrders", params);
 
       if (response.status === 200) {
         toast.success(response.data.message);
       }
+
+      dispatch(getBasketProduct());
 
       return response;
     } catch (error) {
