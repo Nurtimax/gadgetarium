@@ -42,9 +42,16 @@ const CarouselStyle = styled(Carousel)(() => ({
   },
   "& .thumb": {
     border: "none",
+
+    "& img": {
+      height: "80px",
+      aspectRatio: "1/1",
+      objectFit: "contain",
+    },
   },
   "& .thumb:hover": {
     border: "2px solid #cb11ab",
+    borderRadius: "10px",
   },
 
   "& .slider-wrapper": {
@@ -60,7 +67,8 @@ const CarouselStyle = styled(Carousel)(() => ({
     display: "flex",
     justifyContent: "center",
     "& .selected": {
-      border: "2px solid #cb11ab",
+      border: "1px solid #cb11ab",
+      borderRadius: "10px",
     },
   },
 

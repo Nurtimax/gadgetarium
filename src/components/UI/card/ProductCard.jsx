@@ -288,16 +288,14 @@ const ProductCard = (props) => {
               {discountPrice > 0 ? (
                 <Typography
                   variant="h1"
-                  fontSize="0.8rem"
-                  style={{ fontSize: "18px", fontWeight: "700" }}
+                  style={{ fontSize: "0.8rem", fontWeight: "700" }}
                 >
                   {priceProductSeparate(Number(String(discountPrice || 0)))}c
                 </Typography>
               ) : (
                 <Typography
                   variant="h1"
-                  fontSize="0.8rem"
-                  style={{ fontSize: "18px", fontWeight: "700" }}
+                  style={{ fontSize: "0.9rem", fontWeight: "700" }}
                 >
                   {priceProductSeparate(Number(String(productPrice || 0)))}c
                 </Typography>
@@ -533,6 +531,6 @@ const CardMedia_Styled = styled("img")(() => ({
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "0.7rem",
+  fontSize: "0.8rem",
   textDecoration: "line-through",
 }));

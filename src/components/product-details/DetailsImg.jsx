@@ -54,7 +54,8 @@ const CarouselStyle = styled(Carousel)(() => ({
     border: "none",
   },
   "& .thumb:hover": {
-    border: "2px solid #cb11ab",
+    border: "2px solid #CB11AB",
+    borderRadius: "10px",
   },
 
   "& .slider-wrapper": {
@@ -70,7 +71,8 @@ const CarouselStyle = styled(Carousel)(() => ({
     display: "flex",
     justifyContent: "center",
     "& .selected": {
-      border: "2px solid #cb11ab",
+      borderRadius: "10px",
+      border: "1px solid #CB11AB",
     },
   },
 

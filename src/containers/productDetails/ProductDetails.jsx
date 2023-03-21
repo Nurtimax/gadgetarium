@@ -12,7 +12,9 @@ import { postProductToBasket } from "../../redux/slices/basket-slice";
 import PopUp from "../../components/UI/PopUp";
 const ProductDetails = ({ data, chooseItem, count, images }) => {
   const { subproducts = [] } = data;
+  // console.log(data);
   const [text, setText] = useState("");
+
   const [dropDown, setDropDown] = useState(false);
 
   const basketData = useSelector((state) => state.basket.data);
@@ -35,7 +37,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
-    window.scroll(0, 40);
+    window.scroll(0, 150);
   }, [findedSubProduct]);
 
   const plusHandler = () => {
@@ -138,8 +140,8 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                         ))}
                       </Stled_Box>
                     </Container_Color>
-                    <Grid container className=" text-center count">
-                      <Grid item xs={12}>
+                    <Grid container className="text-center count">
+                      <Grid item xs={12} className="btn">
                         <p>Количество:</p>
                       </Grid>
                       <Grid item xs={5}>
@@ -253,6 +255,7 @@ const Styled_Container = styled("div")(() => ({
     width: "102px",
     margin: "0 auto",
     height: "100%",
+    alignItems: "flex-start",
   },
 }));
 
@@ -295,12 +298,13 @@ const Price = styled("span")(() => ({
 
 const Container_Color = styled(Box)(() => ({
   height: "100%",
+  width: "150px",
 }));
 const Stled_Box = styled(Box)(() => ({
   display: "flex",
   width: "178px",
   gap: 10,
-  paddingTop: "23px",
+  paddingTop: "20px",
 }));
 const Discount_Styled = styled("div")(() => ({
   color: "white",
@@ -320,6 +324,7 @@ const Styled_Button = styled("button")(() => ({
   borderRadius: "50%",
   cursor: "pointer",
   border: "1px solid grey",
+
   "&:hover": {
     background: "#292929",
     color: "white",
