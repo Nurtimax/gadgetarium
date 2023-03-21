@@ -422,9 +422,6 @@ const StyledFormControl = styled(Box)(() => ({
     lineHeight: "19px",
     color: "#91969E",
   },
-  "& .MuiFormLabel-asterisk": {
-    color: "red",
-  },
   "& .MuiSvgIcon-root": {
     display: "none",
   },
