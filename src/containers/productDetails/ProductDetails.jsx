@@ -4,7 +4,7 @@ import IconButton from "./../../components/UI/IconButton";
 import { CartIcon, HeartActiveIcon, Favorites } from "../../assets";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActionProductDetails } from "../../redux/slices/product-details";
+import { ActionProductDetails } from "../../redux/slices/product-details-slice";
 import ChooseColor from "../../components/UI/ChooseColor";
 import ProductData from "../../components/product-details/ProductData";
 import { getDicountPrice } from "./../../utils/helpers/get-discount-price";
@@ -140,8 +140,8 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                         ))}
                       </Stled_Box>
                     </Container_Color>
-                    <Grid container className=" text-center count">
-                      <Grid item xs={12}>
+                    <Grid container className="text-center count">
+                      <Grid item xs={12} className="btn">
                         <p>Количество:</p>
                       </Grid>
                       <Grid item xs={5}>
@@ -255,6 +255,7 @@ const Styled_Container = styled("div")(() => ({
     width: "102px",
     margin: "0 auto",
     height: "100%",
+    alignItems: "flex-start",
   },
 }));
 
@@ -297,12 +298,13 @@ const Price = styled("span")(() => ({
 
 const Container_Color = styled(Box)(() => ({
   height: "100%",
+  width: "150px",
 }));
 const Stled_Box = styled(Box)(() => ({
   display: "flex",
   width: "178px",
   gap: 10,
-  paddingTop: "23px",
+  paddingTop: "20px",
 }));
 const Discount_Styled = styled("div")(() => ({
   color: "white",
@@ -322,6 +324,7 @@ const Styled_Button = styled("button")(() => ({
   borderRadius: "50%",
   cursor: "pointer",
   border: "1px solid grey",
+
   "&:hover": {
     background: "#292929",
     color: "white",

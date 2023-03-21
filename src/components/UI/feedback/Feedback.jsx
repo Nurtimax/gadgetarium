@@ -7,11 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-// import { useDropzone } from "react-dropzone";
 import { Addimage } from "../../../assets";
 import Button from "../button/Button";
 import Modal from "../Modal";
-import { postAddFeedback } from "../../../redux/slices/feedback-slice";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
@@ -19,6 +17,7 @@ import { SWAGGER_API } from "../../../utils/constants/fetch";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
+import { postAddFeedback } from "../../../redux/slices/feedback-slice";
 const Feedback = ({ open, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { product } = useParams();
@@ -33,7 +32,7 @@ const Feedback = ({ open, onClose }) => {
     },
     onSubmit: (values) => {
       dispatch(postAddFeedback(values)).then((res) => {
-        switch (res.payload.response.data.message) {
+        switch (res?.payload?.response?.data?.message) {
           case "This customer did not purchase this product":
             return toast.warning("Отзыв только после покупке!"), onClose();
           case "User has already added a review for this product":

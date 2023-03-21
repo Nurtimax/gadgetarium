@@ -1,37 +1,84 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import CharacteristicsTabItem from "../components/product-details/CharacteristicsTabItem";
-import DescriptionTabItem from "../components/product-details/DescriptionTabItem";
-import ReviewsTabItem from "../components/product-details/ReviewsTabItem";
-import AboutStore from "../containers/about-store/AboutStore";
-import Basket from "../containers/basket/Basket";
-import CatalogProducts from "../containers/catalog-products/CatalogProducts";
-import Contacts from "../containers/contacts/Contacts";
-import Delivery from "../containers/delivery/Delivery";
-import FrequentlyAskedQuestions from "../containers/FAQ/FrequentlyAskedQuestions";
-import Home from "../containers/home";
-import Item from "../containers/item/Item";
-import OrderPage from "../containers/order-page/OrderPage";
-import MainProductDetails from "../containers/productDetails/MainProductDetails";
-import Ordering from "../containers/ordering/Ordering";
-import SignIn from "../containers/sign-in/SignIn";
-import SignUp from "../containers/sign-up/Signup";
-import Layout from "../layout";
+import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
+const Layout = lazy(() => import("../layout"));
+const Delivery = lazy(() => import("../containers/delivery/Delivery"));
+const Favorite = lazy(() => import("../containers/favorite/Favorite"));
+const Contacts = lazy(() => import("../containers/contacts/Contacts"));
+const Home = lazy(() => import("../containers/home"));
+const Item = lazy(() => import("../containers/item/Item"));
+const Basket = lazy(() => import("../containers/basket/Basket"));
+const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
+const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
+const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
+const SignUp = lazy(() => import("../containers/sign-up/Signup"));
+const Ordering = lazy(() => import("../containers/ordering/Ordering"));
+const CatalogProducts = lazy(() => {
+  return import("../containers/catalog-products/CatalogProducts");
+});
+const FrequentlyAskedQuestions = lazy(() => {
+  return import("../containers/FAQ/FrequentlyAskedQuestions");
+});
+const CharacteristicsTabItem = lazy(() => {
+  return import("../components/product-details/CharacteristicsTabItem");
+});
+const DescriptionTabItem = lazy(() => {
+  return import("../components/product-details/DescriptionTabItem");
+});
+const ReviewsTabItem = lazy(() => {
+  return import("../components/product-details/ReviewsTabItem");
+});
+const MainProductDetails = lazy(() => {
+  return import("../containers/productDetails/MainProductDetails");
+});
+
 const MainRoutes = () => {
+  const { auth } = useSelector((store) => store);
+
+  if (auth?.data?.roleName?.toLowerCase() === "admin") {
+    return <Navigate to="/admin" />;
+  }
+
   return (
     <Routes>
-      <Route path={ROUTES.MAIN} element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path={ROUTES.ABOUTSTORE} element={<AboutStore />} />
+      <Route
+        path={ROUTES.MAIN}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <Layout />
+          </Suspense>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.ABOUTSTORE}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <AboutStore />
+            </Suspense>
+          }
+        />
         <Route path="item" element={<Item />}>
           <Route
             path={`${ROUTES.PHONE}`}
             element={
               <PrivateRoute
-                Component={<CatalogProducts />}
+                Component={
+                  <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                    <CatalogProducts />
+                  </Suspense>
+                }
                 role={["Customer"]}
               />
             }
@@ -41,32 +88,111 @@ const MainRoutes = () => {
             path={`${ROUTES.PHONE}/${ROUTES.PRODUCT}`}
             element={
               <PrivateRoute
-                Component={<MainProductDetails />}
+                Component={
+                  <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                    <MainProductDetails />
+                  </Suspense>
+                }
                 role={["Customer"]}
               />
             }
           >
-            <Route path="description" element={<DescriptionTabItem />} />
+            <Route
+              path="description"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <DescriptionTabItem />
+                </Suspense>
+              }
+            />
             <Route
               path="characteristics"
-              element={<CharacteristicsTabItem />}
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <CharacteristicsTabItem />
+                </Suspense>
+              }
             />
-            <Route path="reviews" element={<ReviewsTabItem />} />
-            <Route path="shipping-and-payment" element={<Delivery />} />
+
+            <Route
+              path={ROUTES.CHECKOUT}
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <OrderPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path={ROUTES.CART}
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <Basket />
+                </Suspense>
+              }
+            />
+            <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+            <Route
+              path="reviews"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <ReviewsTabItem />
+                </Suspense>
+              }
+            />
+            <Route
+              path="shipping-and-payment"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <Delivery />
+                </Suspense>
+              }
+            />
           </Route>
         </Route>
 
-        <Route path={ROUTES.CART} element={<Basket />} />
         <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
-          element={<Ordering />}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Ordering />
+            </Suspense>
+          }
         />
-        <Route path={ROUTES.CHECKOUT} element={<OrderPage />} />
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
-        <Route path={ROUTES.DELIVERY} element={<Delivery />} />
-        <Route path={ROUTES.FAG} element={<FrequentlyAskedQuestions />} />
-        <Route path={ROUTES.CONTACTS} element={<Contacts />} />
+        <Route
+          path={ROUTES.DELIVERY}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Delivery />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.FAG}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <FrequentlyAskedQuestions />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTES.CONTACTS}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Contacts />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path={ROUTES.LIKE}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Favorite />
+            </Suspense>
+          }
+        />
         <Route path={ROUTES.VIP} element={<Navigate to={ROUTES.HISTORY} />}>
           <Route path={ROUTES.HISTORY} element={<h1>History</h1>} />
           <Route path={ROUTES.PROFILE} element={<h1>Profile</h1>} />
@@ -74,8 +200,22 @@ const MainRoutes = () => {
           <Route />
         </Route>
       </Route>
-      <Route path={`/${ROUTES.SIGNIN}`} element={<SignIn />} />
-      <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+      <Route
+        path={`/${ROUTES.SIGNIN}`}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <SignIn />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTES.SIGNUP}
+        element={
+          <Suspense fallback={<GadgetariumSpinnerLoading />}>
+            <SignUp />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };

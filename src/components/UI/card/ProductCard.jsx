@@ -25,10 +25,9 @@ import {
 import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getBasketProduct,
-  postProductToBasket,
-} from "../../../redux/slices/basket-slice";
+import { postProductToBasket } from "../../../redux/slices/basket-slice";
+import { toast } from "react-toastify";
+import { getBasketProduct } from "../../../redux/slices/basket-slice";
 import { useState } from "react";
 import Modal from "../Modal";
 import Input from "../input/Input";
@@ -41,6 +40,10 @@ import {
   fetchDataSignin,
 } from "../../../redux/slices/authentication-slice";
 import PopUp from "../PopUp";
+import {
+  getFavoriteProducts,
+  postFavoriteProducts,
+} from "../../../redux/slices/favorite-slice";
 
 const ProductCard = (props) => {
   const {
@@ -56,6 +59,7 @@ const ProductCard = (props) => {
     compared,
     productId,
     categoryId,
+    size,
     ...rest
   } = props;
   const basketData = useSelector((state) => state.basket.data);
@@ -70,7 +74,8 @@ const ProductCard = (props) => {
 
   const [error, setError] = useState(null);
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(["", "", ""]);
+  const [loginText, setLoginText] = useState("");
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -84,8 +89,22 @@ const ProductCard = (props) => {
 
   const addBasketHandler = () => {
     if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
+      dispatch(
+        postProductToBasket({
+          orderCount: count,
+          productId,
+        })
+      )
+        .unwrap()
+        .then((originalPromiseResult) => {
+          toast.success(originalPromiseResult.message);
+        })
+        .catch((rejectedValueOrSerializedError) => {
+          toast.error(rejectedValueOrSerializedError.message);
+        });
       if (basketData?.some((item) => item.id === productId)) {
         alert("Товар уже добавлен!");
       } else {
@@ -95,7 +114,12 @@ const ProductCard = (props) => {
             productId,
           })
         ).then(() => {
-          setText("Товар успешно добавлен в корзину!");
+          setText([
+            "Товар успешно добавлен в корзину!",
+            "Перейти в корзину",
+            "/cart",
+          ]);
+
           setDropDown(true);
         });
       }
@@ -141,6 +165,29 @@ const ProductCard = (props) => {
     );
   }, [compared]);
 
+  const addProductToFavorite = () => {
+    if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в избранное!");
+      setModalOpen(true);
+    } else {
+      dispatch(postFavoriteProducts({ size, productId })).then(() => {
+        favorite
+          ? setText([
+              "Товар удалён из избранных!",
+              "Перейти в избранное",
+              "/favorite",
+            ])
+          : setText([
+              "Товар добавлен в избранное!",
+              "Перейти в избранное",
+              "/favorite",
+            ]);
+
+        setDropDown(true);
+      });
+    }
+  };
+
   const onComponentLike = useMemo(() => {
     if (favorite) {
       return (
@@ -149,6 +196,7 @@ const ProductCard = (props) => {
           title="Удалить из избранного"
           width="3.5vh"
           height="3.5vh"
+          onClick={addProductToFavorite}
         />
       );
     }
@@ -158,6 +206,7 @@ const ProductCard = (props) => {
         height="3.5vh"
         title="Добавить в избранное"
         cursor="pointer"
+        onClick={addProductToFavorite}
       />
     );
   }, [favorite]);
@@ -169,6 +218,9 @@ const ProductCard = (props) => {
         if (data) {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
+          dispatch(getFavoriteProducts());
+
+          location.reload();
           action.resetForm();
           setError(null);
           closeModalWindow();
@@ -200,7 +252,7 @@ const ProductCard = (props) => {
           </Grid>
         </Grid>
       </CardActions>
-      {data.token ? (
+      {data?.token ? (
         <Link to={`/item/${categoryId}/${productId}/description`}>
           <CardMedia_Styled
             src={productImage}
@@ -222,7 +274,11 @@ const ProductCard = (props) => {
         <StyletTitle color="black" title={productName}>
           {productName}
         </StyletTitle>
-        <Typography variant="span" className="flex size">
+        <Typography
+          variant="span"
+          className="flex size"
+          style={{ color: "#909CB5" }}
+        >
           Рейтинг
           <Rating value={productRating} readOnly />({countOfReview})
         </Typography>
@@ -230,11 +286,17 @@ const ProductCard = (props) => {
           <Grid container className="flex between">
             <Box width="35%" background="red">
               {discountPrice > 0 ? (
-                <Typography variant="h1" fontSize="0.8rem">
+                <Typography
+                  variant="h1"
+                  style={{ fontSize: "0.8rem", fontWeight: "700" }}
+                >
                   {priceProductSeparate(Number(String(discountPrice || 0)))}c
                 </Typography>
               ) : (
-                <Typography variant="h1" fontSize="0.8rem">
+                <Typography
+                  variant="h1"
+                  style={{ fontSize: "0.9rem", fontWeight: "700" }}
+                >
                   {priceProductSeparate(Number(String(productPrice || 0)))}c
                 </Typography>
               )}
@@ -262,13 +324,13 @@ const ProductCard = (props) => {
         <PopUp
           open={dropDown}
           handleClose={closeDropDown}
-          transitionTitle="Перейти в корзину"
-          addedTitle={text}
+          addedTitle={text[0]}
+          transitionTitle={text[1]}
+          to={text[2]}
           durationSnackbar={2000}
           icon={true}
           vertical="bottom"
           horizontal="right"
-          to="/cart"
         />
 
         {isModalOpen ? (
@@ -280,7 +342,7 @@ const ProductCard = (props) => {
             <Grid container spacing={1}>
               <Box className="text-box">
                 <p>Войдите или зарегистрируйтесь</p>
-                <p>чтобы опубликовать отзыв</p>
+                <p>{loginText}</p>
               </Box>
               <Grid item xs={12} className="flex center padding">
                 <Typography component="h1" variant="h5" className="login-title">
@@ -420,7 +482,9 @@ const Card_contend = styled(CardContent)(() => ({
   },
 }));
 const StyletTitle = styled("h1")(() => ({
-  fontSize: "1rem",
+  fontFamily: "Inter",
+  fontSize: "16px",
+  fontWeight: "500",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box ",
@@ -467,6 +531,6 @@ const CardMedia_Styled = styled("img")(() => ({
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "0.7rem",
+  fontSize: "0.8rem",
   textDecoration: "line-through",
 }));

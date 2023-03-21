@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../UI/button/Button";
 import { useParams } from "react-router-dom";
-import { getProductDetailThunk } from "../../redux/slices/product-details";
+import { getProductDetailThunk } from "../../redux/slices/product-details-slice";
 import Feedback from "../UI/feedback/Feedback";
 import ReviewsTabSlice from "./ReviewsTabSlice";
 
@@ -23,9 +23,11 @@ const ReviewsTabItem = () => {
   }, [dispatch, product]);
 
   useEffect(() => {
+    let review = 0;
     for (const key in data.reviewCount) {
-      setReviewCount((prev) => prev + data.reviewCount[key]);
+      review = review + data.reviewCount[key];
     }
+    setReviewCount(review);
   }, [data.reviewCount]);
 
   const onClickOpenModal = () => {
@@ -45,7 +47,7 @@ const ReviewsTabItem = () => {
         <Grid container spacing={10}>
           {data.attribute?.Отзывы?.length === 0 ? (
             <Grid item xs={7}>
-              review is empty
+              Отзывы нет
             </Grid>
           ) : (
             data.attribute?.Отзывы?.map((user) => (
@@ -67,6 +69,7 @@ const ReviewsTabItem = () => {
                 <Grid item xs={6}>
                   <div className="rating">
                     <h1>{reviewCount / 5}</h1>
+
                     <Rating
                       readOnly
                       size="small"
@@ -77,7 +80,7 @@ const ReviewsTabItem = () => {
                   <p>{data.countOfReviews} отзывов</p>
                 </Grid>
                 <Grid item xs={6} className="ul">
-                  {[1, 2, 3, 4, 5].reverse().map((review) => (
+                  {[5, 4, 3, 2, 1].map((review) => (
                     <li key={review} className="flex gap">
                       <Rating
                         readOnly

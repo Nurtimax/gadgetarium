@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
-import { getProductDetailThunk } from "./product-details";
+import { getProductDetailThunk } from "./product-details-slice";
 import { toast } from "react-toastify";
 const initialState = {
   status: null,
   error: null,
 };
+
 export const postAddFeedback = createAsyncThunk(
   "addFeedbackSlice/postAddFeedback",
   async (params, { rejectWithValue, dispatch }) => {
     try {
       const response = await axiosInstance.post("users/review", params);
       const result = response.data;
-
       if (response.status === 200) {
         toast.success("Вы успешно оставили отзыв");
         dispatch(
@@ -85,18 +85,43 @@ const addFeedbackSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(postAddFeedback.pending, (state) => {
-      state.status = "pending";
-    });
-    builder.addCase(postAddFeedback.fulfilled, (state, action) => {
-      state.status = "success";
-      state.successMessage = action.payload;
-    });
-    builder.addCase(postAddFeedback.rejected, (state, action) => {
-      console.log(action.payload);
-      state.status = "error";
-      state.error = action.payload;
-    });
+    builder
+      .addCase(postAddFeedback.pending, (state) => {
+        state.status = "pending";
+      })
+
+      .addCase(postAddFeedback.fulfilled, (state) => {
+        state.status = "success";
+      })
+
+      .addCase(postAddFeedback.rejected, (state) => {
+        state.status = "error";
+      });
+
+    //     .addCase(deletetFeedback.pending, (state) => {
+    //       state.status = "pending";
+    //     })
+    //     .addCase(deletetFeedback.fulfilled, (state, action) => {
+    //       console.log("aaaaaaaaaa", action.p);
+    //       state.status = "success";
+    //       state.successMessage = action.payload;
+    //     })
+    //     .addCase(deletetFeedback.rejected, (state, action) => {
+    //       console.log(action.payload);
+    //       state.status = "error";
+    //       state.error = action.payload;
+    //     })
+    //     .addCase(putAddFeedback.pending, (state) => {
+    //       state.status = "pending";
+    //     })
+    //     .addCase(putAddFeedback.fulfilled, (state, action) => {
+    //       state.status = "success";
+    //       state.successMessage = action.payload;
+    //     })
+    //     .addCase(putAddFeedback.rejected, (state, action) => {
+    //       state.status = "error";
+    //       state.error = action.payload;
+    //     });
   },
 });
 export const ActionAddFeedbackSlice = addFeedbackSlice.actions;

@@ -15,21 +15,8 @@ import {
   fetchDiscountProduct,
 } from "../../redux/slices/product-slice";
 import Button from "../../components/UI/button/Button";
-import { Navigate } from "react-router-dom";
 
 const Home = () => {
-  const [size, setSize] = useState({
-    news: 5,
-    discount: 5,
-    recomendation: 5,
-  });
-  const onClickSize = useCallback(
-    (e) => {
-      setSize((prev) => ({ ...prev, [e.target.id]: prev[e.target.id] + 5 }));
-    },
-    [size]
-  );
-  const dispatch = useDispatch();
   const {
     product: {
       newProducts,
@@ -42,8 +29,22 @@ const Home = () => {
       discountError,
       recomenError,
     },
-    auth,
   } = useSelector((store) => store);
+
+  const [size, setSize] = useState({
+    news: 5,
+    discount: 5,
+    recomendation: 5,
+  });
+
+  const onClickSize = useCallback(
+    (e) => {
+      setSize((prev) => ({ ...prev, [e.target.id]: prev[e.target.id] + 5 }));
+    },
+    [size]
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchNewProduct(size.news));
@@ -57,10 +58,6 @@ const Home = () => {
     dispatch(fetchRecomendationProduct(size.recomendation));
   }, [size.recomendation]);
 
-  if (auth?.data?.roleName?.toLowerCase() === "admin") {
-    return <Navigate to="/admin" />;
-  }
-
   return (
     <>
       <Banner />
@@ -71,10 +68,25 @@ const Home = () => {
           ) : (
             <Global_Card>
               <Typography variant="h4">Акции</Typography>
-              <Grid container className="" spacing={1}>
-                {discountsProducts?.map((item) => (
-                  <Grid item xs={2.4} key={item.productName}>
-                    <ProductCard {...item} productStatus="DISCOUNT" />
+              <Grid container spacing={1}>
+                {discountsProducts?.map((product) => (
+                  <Grid item xs={2.4} key={product.productId}>
+                    <ProductCard
+                      categoryId={product.categoryId}
+                      compared={product.compared}
+                      count={product.count}
+                      countOfReview={product.countOfReview}
+                      discountPrice={product.discountPrice}
+                      favorite={product.favorite}
+                      productId={product.productId}
+                      productImage={product.productImage}
+                      productName={product.productName}
+                      productPrice={product.productPrice}
+                      productRating={product.productRating}
+                      productStatus={product.productStatus}
+                      viewed={product.viewed.toString()}
+                      size={size}
+                    />
                   </Grid>
                 ))}
               </Grid>
@@ -103,9 +115,24 @@ const Home = () => {
             <Global_Card>
               <Typography variant="h4">Новинки</Typography>
               <Grid container spacing={1}>
-                {newProducts?.map((item) => (
-                  <Grid item xs={2.4} key={item.productName}>
-                    <ProductCard {...item} />
+                {newProducts?.map((product) => (
+                  <Grid item xs={2.4} key={product.productId}>
+                    <ProductCard
+                      categoryId={product.categoryId}
+                      compared={product.compared}
+                      count={product.count}
+                      countOfReview={product.countOfReview}
+                      discountPrice={product.discountPrice}
+                      favorite={product.favorite}
+                      productId={product.productId}
+                      productImage={product.productImage}
+                      productName={product.productName}
+                      productPrice={product.productPrice}
+                      productRating={product.productRating}
+                      productStatus={product.productStatus}
+                      viewed={product.viewed.toString()}
+                      size={size}
+                    />
                   </Grid>
                 ))}
               </Grid>
@@ -134,9 +161,24 @@ const Home = () => {
             <Global_Card>
               <Typography variant="h4">Рекемендуем</Typography>
               <Grid container spacing={2}>
-                {recommendationProduct?.map((item) => (
-                  <Grid item xs={2.4} key={item.productName}>
-                    <ProductCard {...item} />
+                {recommendationProduct?.map((product) => (
+                  <Grid item xs={2.4} key={product.productId}>
+                    <ProductCard
+                      categoryId={product.categoryId}
+                      compared={product.compared}
+                      count={product.count}
+                      countOfReview={product.countOfReview}
+                      discountPrice={product.discountPrice}
+                      favorite={product.favorite}
+                      productId={product.productId}
+                      productImage={product.productImage}
+                      productName={product.productName}
+                      productPrice={product.productPrice}
+                      productRating={product.productRating}
+                      productStatus={product.productStatus}
+                      viewed={product.viewed.toString()}
+                      size={size}
+                    />
                   </Grid>
                 ))}
               </Grid>

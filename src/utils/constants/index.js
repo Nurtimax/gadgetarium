@@ -1,9 +1,7 @@
 import {
   CartIcon,
   ComparativeIcon,
-  ComporativePinkIcon,
   FaceBookIcon,
-  HeartActiveIcon,
   HeartIcon,
   InstagramIcon,
   WhatsAppIcon,
@@ -41,7 +39,7 @@ export const userPages = [
   { id: 11, theme: "Главная", to: "/" },
   { id: 12, theme: "О магазине", to: "about" },
   { id: 13, theme: "Доставка", to: "delivery" },
-  { id: 14, theme: "FAG", to: "fag" },
+  { id: 14, theme: "FAQ", to: "fag" },
   { id: 15, theme: "Контакты", to: "contacts" },
 ];
 
@@ -57,7 +55,7 @@ export const iconsData = [
     tooltip_title_compative_add: "Добавить к сравнению",
     tooltip_title_compative_remove: "Удалить из сравнения",
     iconDefault: <ComparativeIcon />,
-    iconRemoveItem: <ComporativePinkIcon />,
+    iconRemoveItem: <ComparativeIcon />,
     title: "comporative",
     badgeContent: [],
     className: "dispatch_message",
@@ -73,12 +71,13 @@ export const iconsData = [
     tooltip_title_compative_add: "Добавить в избранное",
     tooltip_title_compative_remove: "Удалить из избранного",
     iconDefault: <HeartIcon />,
-    iconRemoveItem: <HeartActiveIcon />,
-    title: "heart",
+    iconRemoveItem: <HeartIcon />,
+    title: "favorite",
+    favoriteItem: [],
     badgeContent: [],
     className: "dispatch_message",
     color: "error",
-    placementTooltip: "top",
+    placementTooltip: "bottom-end",
     focused: false,
     addedTitle: "Товар добавлен в избранное!",
     transitionTitle: "Перейти в избранное",
@@ -110,14 +109,25 @@ export const socialIconsData = [
 ];
 
 export const contactsData = [
-  { title: "Адрес:", value: "г. Бишкек, ул. Гражданская 119" },
-  { title: "Телефон:", value: "г+996(400) 00-00-00" },
-  { title: "Почта:", value: "Gadgetarium.kg" },
+  {
+    title: "Адрес:",
+    value: (
+      <a href="https://go.2gis.com/0u9l3"> г. Бишкек, ул. Гражданская 119</a>
+    ),
+  },
+  {
+    title: "Телефон:",
+    value: <a href="tel:+996(400) 00-00-00">г+996(400) 00-00-00</a>,
+  },
+  {
+    title: "Почта:",
+    value: <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>,
+  },
   { title: "Режим работы:", value: "10:00 - 21:00" },
 ];
 
 export const URLMAP =
-  "https://yandex.ru/map-widget/v1/?um=constructor%3A7c9e32c235e852302eb25a02c6b96f88cbebb9457e9a77022bb71341ecfb86e7&amp;source=constructor";
+  "https://yandex.ru/map-widget/v1/?um=constructor%3Af5cc5d7b69388368d81e6fe3dc52745e81d656c14acad83d1ddcbe6bd8f0b806&amp;source=constructor";
 
 export const delivery = [
   {
@@ -608,5 +618,74 @@ export const ITEM_SORT = [
   { id: 5, title: "По уменьшению цены" },
 ];
 
+export const filterCategory = [
+  {
+    id: 1,
+    title: "Категория",
+    subtitle: [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 3, title: "Huawei" },
+      { id: 4, title: "Honor" },
+      { id: 5, title: "Xiaomi" },
+    ],
+  },
+];
+
+export const filterPrice = [
+  {
+    id: 2,
+    title: "Стоимость",
+  },
+];
+
+export const filterProducts = [
+  {
+    id: 3,
+    title: "Цвет",
+    subtitle: [
+      { id: 1, title: "Black " },
+      { id: 2, title: "Blue" },
+      { id: 3, title: "Gold " },
+      { id: 4, title: "Graphite " },
+      { id: 5, title: "Green" },
+      { id: 6, title: "Rose Gold" },
+      { id: 7, title: "Red" },
+      { id: 8, title: "Silver" },
+      { id: 9, title: "White" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Объем памяти (GB) ",
+    subtitle: [
+      { id: 1, title: "8" },
+      { id: 2, title: "16" },
+      { id: 3, title: "32" },
+      { id: 4, title: "64" },
+      { id: 5, title: "128" },
+      { id: 6, title: "256" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Объем оперативной памяти (GB)",
+    subtitle: [
+      { id: 1, title: "3" },
+      { id: 2, title: "4" },
+      { id: 3, title: "6" },
+      { id: 4, title: "8" },
+      { id: 5, title: "12" },
+    ],
+  },
+];
+
+export const chip_item = [
+  { id: 1, title: "Apple" },
+  { id: 2, title: "Graphite" },
+  { id: 3, title: "Apple" },
+  { id: 4, title: "Apple" },
+];
+
 export const notFoundImage =
-  "https://us.123rf.com/450wm/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016/167492439-no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image.jpg?ver=6";
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGbwe-jg6PydY6QXFnfHtw4KuLq448Q_AAciwxsGRZg&s";

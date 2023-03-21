@@ -48,7 +48,7 @@ const Category = ({ values, handleChange, errors }) => {
           </StyledMenuItem>
         ))}
       </Select>
-      {errors.categoryId && (
+      {Boolean(errors.categoryId) && (
         <Typography component="p" variant="body2" color="error">
           {errors.categoryId}
         </Typography>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DownloadBannerIcon } from "../../assets";
 import { SWAGGER_API } from "../../utils/constants/fetch";
+import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import ShowUploadImage from "./ShowUploadImage";
 
 const UploadImages = ({
@@ -13,6 +14,7 @@ const UploadImages = ({
   getProductIdParam,
   findedSubProductData,
   errors,
+  imagesError,
 }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +24,7 @@ const UploadImages = ({
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
     axios({
-      method: "POST",
+      method: `POST`,
       url: `${SWAGGER_API}file`,
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
@@ -42,6 +44,7 @@ const UploadImages = ({
           })
         );
         setIsLoading(false);
+        setError(null);
       })
       .catch((error) => {
         setError(error?.message || "Something is wrong");
@@ -96,6 +99,9 @@ const UploadImages = ({
 
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
+    accept: {
+      "image/*": [],
+    },
   });
 
   const isSubProductData = useMemo(() => {
@@ -111,7 +117,6 @@ const UploadImages = ({
     }
     return null;
   }, []);
-
   const removeImageHandler = (item) => {
     setIsLoading(true);
     axios({
@@ -148,24 +153,20 @@ const UploadImages = ({
       });
   };
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
-
   return (
     <>
+      {isLoading && <GadgetariumSpinnerLoading />}
       <Typography component="p" variant="body1">
         Добавьте фото
       </Typography>
       <StyledUploadImages
-        className={`${uploadImageError || error ? "error" : ""}`}
+        className={`${
+          Boolean(uploadImageError) || Boolean(error) || Boolean(imagesError)
+            ? "error"
+            : ""
+        }`}
       >
-        <Grid
-          {...getRootProps()}
-          container
-          className={`flex center`}
-          margin={0}
-        >
+        <Grid {...getRootProps()} container className="flex center" margin={0}>
           <input {...getInputProps()} />
           {findedSubProductData.images?.length !== 10 && (
             <Grid item xs={2} className="flex center upload_icon">
@@ -190,7 +191,7 @@ const UploadImages = ({
                   Минимальное разрешение - 450x600
                 </Typography>
                 <Typography component="li">
-                  максимальное количество - 10 фото
+                  Mаксимальное количество - 10 фото
                 </Typography>
               </Typography>
             </Grid>
@@ -214,7 +215,7 @@ const UploadImages = ({
           ))}
         </Box>
       </StyledUploadImages>
-      {error && (
+      {Boolean(error) && (
         <Typography variant="body2" component="p" color="error">
           {error}
         </Typography>
@@ -224,7 +225,6 @@ const UploadImages = ({
 };
 
 export default UploadImages;
-
 const StyledUploadImages = styled(Box)(({ theme }) => ({
   width: "396px",
   height: "200px",
