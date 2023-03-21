@@ -97,31 +97,6 @@ const addFeedbackSlice = createSlice({
       .addCase(postAddFeedback.rejected, (state) => {
         state.status = "error";
       });
-
-    //     .addCase(deletetFeedback.pending, (state) => {
-    //       state.status = "pending";
-    //     })
-    //     .addCase(deletetFeedback.fulfilled, (state, action) => {
-    //       console.log("aaaaaaaaaa", action.p);
-    //       state.status = "success";
-    //       state.successMessage = action.payload;
-    //     })
-    //     .addCase(deletetFeedback.rejected, (state, action) => {
-    //       console.log(action.payload);
-    //       state.status = "error";
-    //       state.error = action.payload;
-    //     })
-    //     .addCase(putAddFeedback.pending, (state) => {
-    //       state.status = "pending";
-    //     })
-    //     .addCase(putAddFeedback.fulfilled, (state, action) => {
-    //       state.status = "success";
-    //       state.successMessage = action.payload;
-    //     })
-    //     .addCase(putAddFeedback.rejected, (state, action) => {
-    //       state.status = "error";
-    //       state.error = action.payload;
-    //     });
   },
 });
 export const ActionAddFeedbackSlice = addFeedbackSlice.actions;
