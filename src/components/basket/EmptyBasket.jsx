@@ -23,6 +23,10 @@ const EmptyBasket = () => {
     if (status === 200) {
       setOpen(true);
     }
+
+    return () => {
+      setOpen(false);
+    };
   }, [status]);
 
   return (

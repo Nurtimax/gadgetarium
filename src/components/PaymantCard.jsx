@@ -9,11 +9,16 @@ const PaymantCard = ({ handleSubmitCard }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { token } = await stripe.createToken(
-      elements.getElement(CardElement)
-    );
 
-    handleSubmitCard(token);
+    try {
+      const { token } = await stripe.createToken(
+        elements.getElement(CardElement)
+      );
+
+      handleSubmitCard(token);
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
