@@ -266,6 +266,7 @@ const CharacteristicsTabItem = () => {
 export default CharacteristicsTabItem;
 const Styled_Wrapper = styled(Box)(() => ({
   width: "90vw",
+  paddingTop: "73px",
   height: "100vh",
 
   "& h6": {
@@ -276,6 +277,11 @@ const Styled_Wrapper = styled(Box)(() => ({
   },
   "& .MuiAccordionSummary-expandIconWrapper": {
     color: "#CB11AB",
+  },
+
+  "& .MuiAccordion-root": {
+    background: "#f4f4f4",
+    boxShadow: "none",
   },
 
   "& .expandIconWrapper.expanded": {

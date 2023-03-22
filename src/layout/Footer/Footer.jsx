@@ -1,13 +1,17 @@
 import { styled } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Typography, CssBaseline } from "@mui/material";
 import { ClockIcon, Logo, Phone, Message, Locotion } from "../../assets";
 import Input from "./../../components/UI/input/Input";
 import Button from "./../../components/UI/button/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
+import { Link as Scroll } from "react-scroll";
+
 const Footer = () => {
   return (
     <FooterStyled>
+      <CssBaseline />
+
       <FooterContainer>
         <BoxContainer>
           <BoxBlock>
@@ -33,13 +37,19 @@ const Footer = () => {
                 <Title> Будь с нами </Title>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                <a href="#Promotion">Акции</a>
+                <Scroll to="Promotion" smooth={true}>
+                  Акции
+                </Scroll>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                <a href="#New">Новинки</a>
+                <Scroll to="New" smooth={true}>
+                  Новинки
+                </Scroll>
               </Typography>
               <Typography component="li" variant="body1" color="inherit">
-                <a href="#Recomendation">Популярные котегории</a>
+                <Scroll to="Recomendation" smooth={true}>
+                  Рекомендуемые
+                </Scroll>
               </Typography>
             </Box>
 

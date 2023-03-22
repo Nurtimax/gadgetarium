@@ -26,7 +26,6 @@ import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postProductToBasket } from "../../../redux/slices/basket-slice";
-import { toast } from "react-toastify";
 import { getBasketProduct } from "../../../redux/slices/basket-slice";
 import { useState } from "react";
 import Modal from "../Modal";
@@ -92,25 +91,12 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
-      dispatch(
-        postProductToBasket({
-          orderCount: count,
-          productId,
-        })
-      )
-        .unwrap()
-        .then((originalPromiseResult) => {
-          toast.success(originalPromiseResult.message);
-        })
-        .catch((rejectedValueOrSerializedError) => {
-          toast.error(rejectedValueOrSerializedError.message);
-        });
       if (basketData?.some((item) => item.id === productId)) {
         alert("Товар уже добавлен!");
       } else {
         dispatch(
           postProductToBasket({
-            orderCount: count,
+            orderCount: 1,
             productId,
           })
         ).then(() => {

@@ -38,8 +38,14 @@ const FrequentlyAskedQuestions = () => {
 export default FrequentlyAskedQuestions;
 
 const FAQStyled = styled(Container)(() => ({
+  width: "100%",
   fontFamily: "Inter",
   backgroundColor: "#f4f4f4",
+
+  "&.MuiAccordion-root": {
+    width: "100%",
+  },
+
   "& .faq-container": {
     padding: "1rem 0",
     borderBottom: "1px solid #CDCDCD",

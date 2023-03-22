@@ -21,8 +21,7 @@ import storage from "redux-persist/lib/storage";
 import { orderingSlice } from "./slices/ordering-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
-import addBannerImageSlice from "./slices/add-banners-slice";
-import addFeedbackSlice from "./slices/feedback-slice";
+import { paymantSlice } from "./slices/paymant-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -36,8 +35,7 @@ const rootReducer = combineReducers({
   productDetails: productDetailsSlice.reducer,
   viewed: viewedProductSlice.reducer,
   favorite: favoriteProducts.reducer,
-  addBanner: addBannerImageSlice.reducer,
-  feedback: addFeedbackSlice.reducer,
+  paymant: paymantSlice.reducer,
 });
 
 const persistConfig = {

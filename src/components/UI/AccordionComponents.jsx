@@ -19,7 +19,11 @@ const AccordionComponents = ({
   ...props
 }) => {
   return (
-    <Accordion expanded={expanded === panel} onChange={onChange} {...props}>
+    <StyledAccordion
+      expanded={expanded === panel}
+      onChange={onChange}
+      {...props}
+    >
       <AccordionSummaryStyled
         classes={{
           root: "summary",
@@ -44,16 +48,23 @@ const AccordionComponents = ({
           {text}
         </Typography>
       </AccordionDetailsStyled>
-    </Accordion>
+    </StyledAccordion>
   );
 };
 
 export default AccordionComponents;
 
+const StyledAccordion = styled(Accordion)(() => ({
+  "&.MuiAccordion-root": {
+    width: "100%",
+  },
+}));
+
 const AccordionSummaryStyled = styled(AccordionSummary)(() => ({
   fontFamily: "Inter",
   height: "80px",
   borderRadius: "100px",
+
   "&.summary div": {
     display: "flex",
     alignItems: "center",
