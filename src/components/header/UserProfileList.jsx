@@ -13,7 +13,7 @@ import {
 } from "../../redux/slices/product-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
-const UserProfileList = () => {
+const UserProfileList = ({ handleClick }) => {
   const { data } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ const UserProfileList = () => {
   }, [data?.roleName]);
 
   const logOutHandler = (title) => () => {
+    handleClick();
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
       dispatch(getBasketProduct());
