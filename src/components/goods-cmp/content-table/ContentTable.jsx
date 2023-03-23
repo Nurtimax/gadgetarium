@@ -1,5 +1,5 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionGoodSlice } from "../../../redux/slices/goods-slice";
 import { tableHeader } from "../../../utils/constants/content-table";
@@ -7,39 +7,30 @@ import Table from "../../Table";
 import Pagination from "../../UI/Pagination";
 
 const ContentTable = () => {
-  const [tableTitle, setTableTitle] = useState([]);
-
-  const { data } = useSelector((state) => state.goods);
+  const { data, localParams, choosedItems } = useSelector(
+    (state) => state.goods
+  );
 
   const dispatch = useDispatch();
 
   const handleChange = (value) => {
-    setTableTitle((prevState) => {
-      if (!prevState.includes(value)) {
-        return [...prevState, value];
-      }
-      return prevState.filter((state) => state !== value);
-    });
+    dispatch(actionGoodSlice.changeChoosedProducts({ value }));
   };
 
   useEffect(() => {
-    if (tableTitle.length) {
+    if (choosedItems.length) {
       dispatch(
         actionGoodSlice.changeLocalParams({
           key: "chooseItem",
-          value: tableTitle,
+          value: choosedItems,
         })
       );
     }
-  }, [tableTitle]);
+  }, [choosedItems]);
 
   const handleChangePagination = (currentPage) => {
     dispatch(actionGoodSlice.changeParams({ key: "page", value: currentPage }));
   };
-
-  useEffect(() => {
-    dispatch(actionGoodSlice.changeParams({ key: "page", value: 1 }));
-  }, []);
 
   return (
     <Grid item xs={12}>
@@ -53,10 +44,10 @@ const ContentTable = () => {
               isMarked={true}
               found={true}
               onChange={handleChange}
-              selectedItem={tableTitle}
+              selectedItem={choosedItems}
               isSort
             />
-            {data.pages > 1 && (
+            {(data.pages > 1 && data.responseList?.length < 7) || (
               <Pagination
                 count={data.pages}
                 color="secondary"
@@ -65,7 +56,7 @@ const ContentTable = () => {
             )}
           </>
         ) : (
-          <Typography>Нет продукта в корзине</Typography>
+          <Typography>Нет продукта {localParams.productType}</Typography>
         )}
       </StyledContentTable>
     </Grid>
