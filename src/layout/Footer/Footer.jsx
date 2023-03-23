@@ -132,6 +132,7 @@ export default Footer;
 const FooterStyled = styled("footer")(() => ({
   width: "100%",
   background: "#1a1a25",
+  minHeight: "500px",
 }));
 
 const FooterContainer = styled("div")(() => ({

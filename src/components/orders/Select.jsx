@@ -43,10 +43,11 @@ const Select = ({ orderStatus, orderType, id }) => {
           currentPage,
         })
       ),
+
       {
-        pending: "Pending",
-        success: "Updated",
-        error: "Error",
+        pending: `Заказ ожидается в ${checkInOrderStatus(e.target.id)}`,
+        success: `Заказ перемещён в ${checkInOrderStatus(e.target.id)}`,
+        error: `Заказ не перемещён в ${checkInOrderStatus(e.target.id)}`,
       }
     );
   };

@@ -36,6 +36,7 @@ const MainContainer = styled(Container)(() => ({
   display: "flex",
   gap: "86px",
   paddingBottom: "64px",
+  minHeight: "500px",
 }));
 
 const ContainerTabs = styled("div")(() => ({
