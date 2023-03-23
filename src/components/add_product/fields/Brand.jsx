@@ -301,6 +301,8 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   "& .brand_icons img": {
     maxWidth: "30px",
     maxHeight: "30px",
+    width: "30px",
+    height: "30px",
     aspectRatio: "9/9",
     objectFit: "contain",
     mixBlendMode: "revert-layer",
