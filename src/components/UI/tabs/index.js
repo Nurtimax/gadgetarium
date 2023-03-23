@@ -19,7 +19,7 @@ const Tabs = ({ contents = [], onChange, checked }) => {
 
   useEffect(() => {
     onChange(contents[0].label);
-  }, []);
+  }, [contents]);
 
   return (
     <StyledTabs>
