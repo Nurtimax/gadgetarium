@@ -8,8 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightWithoutColorIcon } from "../../assets";
+import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 import { catalogMenu_FAKE_DATA } from "../../utils/constants";
 
 const initialState = {
@@ -23,6 +25,9 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (anchorElCatalog === null) {
@@ -48,6 +53,14 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
     handleClose();
     handleCloseCatalog();
     setSubMenuCatalog(initialState);
+  };
+
+  const subCatalogHandler = (subCatalogTitle) => {
+    dispatch(
+      filteredCatalogSliceAction.subCategoryName({ title: subCatalogTitle })
+    );
+    navigate(`/item/${subMenuCatalog.id}`);
+    closeHandler();
   };
 
   return (
@@ -114,10 +127,8 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
               </Grid>
               {subMenuCatalog.subMenu.map((catalog) => (
                 <Grid item xs={12} key={catalog.id}>
-                  <MenuItem onClick={() => closeHandler()}>
-                    <Link to={`item/${subMenuCatalog.id}/${catalog.id}`}>
-                      {catalog.title}
-                    </Link>
+                  <MenuItem onClick={() => subCatalogHandler(catalog.title)}>
+                    {catalog.title}
                   </MenuItem>
                 </Grid>
               ))}
