@@ -2,6 +2,10 @@ import { Box, FormLabel, styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { ActionsPaymant } from "../../redux/slices/paymant-slice";
+import { ROUTES } from "../../utils/constants/routes";
 import { showErrors } from "../../utils/helpers/catch-signup";
 import {
   orderingValidateSchema,
@@ -12,6 +16,9 @@ import Input from "../UI/input/Input";
 
 const Form = ({ handleNext, data, isChecked }) => {
   const [schema, setSchema] = useState(orderingValidateSchema);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
     handleNext();
@@ -24,13 +31,15 @@ const Form = ({ handleNext, data, isChecked }) => {
       .split(")")
       .join("");
 
-    const registerData = {
+    const userPersonalData = {
       ...values,
       phoneNumber,
       orderType: isChecked ? "DELIVERY" : "PICKUP",
     };
 
-    console.log(registerData);
+    navigate(`/${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`);
+
+    dispatch(ActionsPaymant.getUserPersonalData(userPersonalData));
   };
 
   const {
@@ -50,6 +59,13 @@ const Form = ({ handleNext, data, isChecked }) => {
   });
 
   useEffect(() => {
+    setValues({
+      ...values,
+      ...data,
+    });
+  }, []);
+
+  useEffect(() => {
     if (isChecked) {
       setSchema(orderingValidateSchemaWithAdreess);
     }
@@ -57,13 +73,6 @@ const Form = ({ handleNext, data, isChecked }) => {
       setSchema(orderingValidateSchema);
     };
   }, [isChecked]);
-
-  useEffect(() => {
-    setValues({
-      ...values,
-      ...data,
-    });
-  }, []);
 
   return (
     <MainContainer className="form-container" onSubmit={handleSubmit}>

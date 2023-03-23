@@ -1,32 +1,32 @@
 export const title = [
   {
-    number: 1,
-    panel: "panel1",
-    question: "Как можно оплатить заказ?",
-    text: "Urna aliquet dignissim pharetra consectetur commodo pellentesque at tellus. Odio eget scelerisque faucibus ut. Cras amet, diam vel, sollicitudin gravida quis augue. Bibendum et nulla accumsan sollicitudin aliquet velit viverra risus. Eget molestie enim quisque sodales habitant nulla tincidunt. Ullamcorper tincidunt purus sed facilisis. Ullamcorper aliquam gravida aliquet felis iaculis urna diam dui id. Consectetur in sagittis, sagittis, diam fames ac morbi convallis. Convallis vitae vel luctus erat tempus.Proin feugiat nisl egestas neque facilisi porta ipsum. At diam ut diam euismod sit fames tellus amet. In tortor placerat dictum faucibus id. Amet facilisis blandit dignissim sed nisl fermentum molestie pretium non.",
-  },
-  {
-    number: 2,
-    panel: "panel2",
-    question: "Какой мининимальный заказ?",
-    text: "Urna aliquet dignissim pharetra consectetur commodo pellentesque at tellus. Odio eget scelerisque faucibus ut. Cras amet, diam vel, sollicitudin gravida quis augue. Bibendum et nulla accumsan sollicitudin aliquet velit viverra risus. Eget molestie enim quisque sodales habitant nulla tincidunt. Ullamcorper tincidunt purus sed facilisis. Ullamcorper aliquam gravida aliquet felis iaculis urna diam dui id. Consectetur in sagittis, sagittis, diam fames ac morbi convallis. Convallis vitae vel luctus erat tempus.Proin feugiat nisl egestas neque facilisi porta ipsum. At diam ut diam euismod sit fames tellus amet. In tortor placerat dictum faucibus id. Amet facilisis blandit dignissim sed nisl fermentum molestie pretium non.",
-  },
-  {
-    number: 3,
-    panel: "panel3",
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    text: "Urna aliquet dignissim pharetra consectetur commodo pellentesque at tellus. Odio eget scelerisque faucibus ut. Cras amet, diam vel, sollicitudin gravida quis augue. Bibendum et nulla accumsan sollicitudin aliquet velit viverra risus. Eget molestie enim quisque sodales habitant nulla tincidunt. Ullamcorper tincidunt purus sed facilisis. Ullamcorper aliquam gravida aliquet felis iaculis urna diam dui id. Consectetur in sagittis, sagittis, diam fames ac morbi convallis. Convallis vitae vel luctus erat tempus.Proin feugiat nisl egestas neque facilisi porta ipsum. At diam ut diam euismod sit fames tellus amet. In tortor placerat dictum faucibus id. Amet facilisis blandit dignissim sed nisl fermentum molestie pretium non.",
-  },
-  {
     number: 4,
     panel: "panel4",
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    text: "Urna aliquet dignissim pharetra consectetur commodo pellentesque at tellus. Odio eget scelerisque faucibus ut. Cras amet, diam vel, sollicitudin gravida quis augue. Bibendum et nulla accumsan sollicitudin aliquet velit viverra risus. Eget molestie enim quisque sodales habitant nulla tincidunt. Ullamcorper tincidunt purus sed facilisis. Ullamcorper aliquam gravida aliquet felis iaculis urna diam dui id. Consectetur in sagittis, sagittis, diam fames ac morbi convallis. Convallis vitae vel luctus erat tempus.Proin feugiat nisl egestas neque facilisi porta ipsum. At diam ut diam euismod sit fames tellus amet. In tortor placerat dictum faucibus id. Amet facilisis blandit dignissim sed nisl fermentum molestie pretium non.",
+    question: "Какие способы оплаты вы принимаете?",
+    text: "Наличными или картой",
   },
   {
     number: 5,
     panel: "panel5",
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    text: "Urna aliquet dignissim pharetra consectetur commodo pellentesque at tellus. Odio eget scelerisque faucibus ut. Cras amet, diam vel, sollicitudin gravida quis augue. Bibendum et nulla accumsan sollicitudin aliquet velit viverra risus. Eget molestie enim quisque sodales habitant nulla tincidunt. Ullamcorper tincidunt purus sed facilisis. Ullamcorper aliquam gravida aliquet felis iaculis urna diam dui id. Consectetur in sagittis, sagittis, diam fames ac morbi convallis. Convallis vitae vel luctus erat tempus.Proin feugiat nisl egestas neque facilisi porta ipsum. At diam ut diam euismod sit fames tellus amet. In tortor placerat dictum faucibus id. Amet facilisis blandit dignissim sed nisl fermentum molestie pretium non.",
+    question: "У меня еще остались вопросы.",
+    text: "Позвоните нам по телефону +996 (400) 00 00 00.",
+  },
+  {
+    number: 2,
+    panel: "panel2",
+    question: "Какова стоимость доставки?",
+    text: "Стоимость доставки зависит от требований к отгрузке. Если продукты в вашем заказе связаны с особыми требованиями (например, 10 телефонов), к стоимости доставки будет добавлена ​​​​дополнительная плата. Вы можете увидеть стоимость доставки в процессе оформления заказа до оплаты.",
+  },
+  {
+    number: 1,
+    panel: "panel1",
+    question: "Как я могу заказать?",
+    text: "Вы можете легко сделать заказ, используя нашу онлайн-платформу. Когда вы найдете нужный вам товар, вы можете добавить его в корзину, авторизоваться и пройти процесс оформления заказа. После того, как заказ будет готов, вы получите сводку заказа на вашу электронную почту. Сводка заказа также будет храниться в вашей учетной записи.",
+  },
+  {
+    number: 3,
+    panel: "panel3",
+    question: "Безопасность",
+    text: "Наш интернет-магазин защищен сертификатом SSL. Это означает, что введенная вами информация зашифрована и не будет доступна третьим лицам.",
   },
 ];

@@ -10,6 +10,10 @@ const MainProductDetails = () => {
     (state) => state.productDetails
   );
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Container>
       {isLoading && <GadgetariumSpinnerLoading />}

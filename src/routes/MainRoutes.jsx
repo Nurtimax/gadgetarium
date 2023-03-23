@@ -5,6 +5,8 @@ import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
+const Paymant = lazy(() => import("../containers/paymant/Paymant"));
+const PaymantMethod = lazy(() => import("../containers/paymant/PaymantMethod"));
 const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Favorite = lazy(() => import("../containers/favorite/Favorite"));
@@ -122,15 +124,7 @@ const MainRoutes = () => {
                 </Suspense>
               }
             />
-            <Route
-              path={ROUTES.CART}
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <Basket />
-                </Suspense>
-              }
-            />
-            <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+
             <Route
               path="reviews"
               element={
@@ -151,6 +145,15 @@ const MainRoutes = () => {
         </Route>
 
         <Route
+          path={ROUTES.CART}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Basket />
+            </Suspense>
+          }
+        />
+
+        <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
@@ -158,8 +161,26 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <PaymantMethod />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Paymant />
+            </Suspense>
+          }
+        />
+
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
-        <Route path={ROUTES.LIKE} element={<h1>Like</h1>} />
         <Route
           path={ROUTES.DELIVERY}
           element={

@@ -53,6 +53,14 @@ export const BREADCRUMBS = [
     breadcrumb: "comparison",
   },
   {
+    path: `${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`,
+    breadcrumb: "Оформление заказа",
+  },
+  {
+    path: `${ROUTES.CART}/${ROUTES.PAYMANT}`,
+    breadcrumb: "Оформление заказа",
+  },
+  {
     path: ROUTES.DELIVERY,
     breadcrumb: "Доставка",
   },

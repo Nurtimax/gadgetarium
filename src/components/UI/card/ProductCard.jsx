@@ -26,7 +26,6 @@ import { priceProductSeparate } from "../../../utils/helpers/general";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postProductToBasket } from "../../../redux/slices/basket-slice";
-import { toast } from "react-toastify";
 import { getBasketProduct } from "../../../redux/slices/basket-slice";
 import { useState } from "react";
 import Modal from "../Modal";
@@ -92,25 +91,12 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
-      dispatch(
-        postProductToBasket({
-          orderCount: count,
-          productId,
-        })
-      )
-        .unwrap()
-        .then((originalPromiseResult) => {
-          toast.success(originalPromiseResult.message);
-        })
-        .catch((rejectedValueOrSerializedError) => {
-          toast.error(rejectedValueOrSerializedError.message);
-        });
       if (basketData?.some((item) => item.id === productId)) {
         alert("Товар уже добавлен!");
       } else {
         dispatch(
           postProductToBasket({
-            orderCount: count,
+            orderCount: 1,
             productId,
           })
         ).then(() => {
@@ -288,16 +274,14 @@ const ProductCard = (props) => {
               {discountPrice > 0 ? (
                 <Typography
                   variant="h1"
-                  fontSize="0.8rem"
-                  style={{ fontSize: "18px", fontWeight: "700" }}
+                  style={{ fontSize: "0.8rem", fontWeight: "700" }}
                 >
                   {priceProductSeparate(Number(String(discountPrice || 0)))}c
                 </Typography>
               ) : (
                 <Typography
                   variant="h1"
-                  fontSize="0.8rem"
-                  style={{ fontSize: "18px", fontWeight: "700" }}
+                  style={{ fontSize: "0.9rem", fontWeight: "700" }}
                 >
                   {priceProductSeparate(Number(String(productPrice || 0)))}c
                 </Typography>
@@ -533,6 +517,6 @@ const CardMedia_Styled = styled("img")(() => ({
 }));
 const Styled_Price = styled("p")(() => ({
   color: "#909CB5",
-  fontSize: "0.7rem",
+  fontSize: "0.8rem",
   textDecoration: "line-through",
 }));

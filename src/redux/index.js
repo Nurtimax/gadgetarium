@@ -22,6 +22,7 @@ import { orderingSlice } from "./slices/ordering-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
 import goodsSlice from "./slices/goods-slice";
+import { paymantSlice } from "./slices/paymant-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
 import mailingSlice from "./slices/mailing-slice";
 
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   viewed: viewedProductSlice.reducer,
   favorite: favoriteProducts.reducer,
   goods: goodsSlice.reducer,
+  paymant: paymantSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
   mailing: mailingSlice.reducer,
 });

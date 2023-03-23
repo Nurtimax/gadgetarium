@@ -22,12 +22,17 @@ const steps = ["Варианты доставки", "Оплата", "Обзор 
 
 const Ordering = () => {
   const { data, isLoading } = useSelector((state) => state.ordering);
+
   const { data: basketData, isLoading: loading } = useSelector(
     (state) => state.basket
   );
+
   const [activeStep, setActiveStep] = useState(0);
+
   const [isChecked, setIsChecked] = useState(false);
+
   const [sumOrderData, setSumOrderData] = useState([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -162,7 +167,10 @@ const Ordering = () => {
                         gap: "5px",
                       }}
                     >
-                      – {priceProductSeparate(Number(String(price / discount)))}
+                      –{" "}
+                      {priceProductSeparate(
+                        Number(String(parseInt(price / discount)))
+                      )}
                       <li>c</li>
                     </Typography>
                     <Typography
@@ -171,7 +179,8 @@ const Ordering = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      {priceProductSeparate(Number(String(price)))} <li>c</li>
+                      {priceProductSeparate(Number(String(parseInt(price))))}
+                      <li>c</li>
                     </Typography>
                   </Box>
                 </Box>
@@ -184,7 +193,7 @@ const Ordering = () => {
                     }}
                   >
                     {priceProductSeparate(
-                      Number(String(price - price / discount))
+                      Number(String(parseInt(price - price / discount)))
                     )}
                     <li>c</li>
                   </Typography>
