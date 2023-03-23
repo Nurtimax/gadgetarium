@@ -23,7 +23,9 @@ const Paymant = () => {
     (state) => state.paymant
   );
 
-  const { data: basketData } = useSelector((state) => state.basket);
+  const { data: basketData, sumOrderData: sumData } = useSelector(
+    (state) => state.basket
+  );
 
   const [sumOrderData, setSumOrderData] = useState([]);
 
@@ -43,18 +45,6 @@ const Paymant = () => {
     dispatch(getBasketProduct());
   }, []);
 
-  const orderCount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.orderCount);
-  }, 0);
-
-  const discount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.amountOfDiscount);
-  }, 0);
-
-  const price = sumOrderData?.reduce((acc, current) => {
-    return Number(acc) + Number(current.productCount) * Number(current.price);
-  }, 0);
-
   const ordersId = sumOrderData?.map(({ id }) => {
     return id;
   });
@@ -67,9 +57,9 @@ const Paymant = () => {
         email: personalData.email,
         phoneNumber: personalData.phoneNumber,
         address: personalData.address,
-        countOfProduct: orderCount,
-        totalSum: parseInt(price - price / discount),
-        totalDiscount: parseInt(price / discount),
+        countOfProduct: sumData.count,
+        totalSum: parseInt(sumData.total),
+        totalDiscount: parseInt(sumData.discount),
         payment: !personalCardData.paymantMethod
           ? "PAYMENT_WITH_CARD"
           : personalCardData.paymantMethod === true
@@ -107,7 +97,7 @@ const Paymant = () => {
                 <p>Итого</p>
                 <span>
                   {priceProductSeparate(
-                    Number(String(parseInt(price - price / discount)))
+                    Number(String(parseInt(sumData.total)))
                   )}
 
                   <span>c</span>
@@ -161,7 +151,7 @@ const Paymant = () => {
                 </Box>
 
                 <Box>
-                  <Typography>{orderCount} шт.</Typography>
+                  <Typography>{sumData.count} шт.</Typography>
                   <Typography
                     className="discount"
                     style={{
@@ -171,7 +161,7 @@ const Paymant = () => {
                   >
                     –{" "}
                     {priceProductSeparate(
-                      Number(String(parseInt(price / discount)))
+                      Number(String(parseInt(sumData.discount)))
                     )}
                     <li>c</li>
                   </Typography>
@@ -181,7 +171,9 @@ const Paymant = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    {priceProductSeparate(Number(String(parseInt(price))))}
+                    {priceProductSeparate(
+                      Number(String(parseInt(sumData.price)))
+                    )}
                     <li>c</li>
                   </Typography>
                 </Box>
@@ -195,7 +187,7 @@ const Paymant = () => {
                   }}
                 >
                   {priceProductSeparate(
-                    Number(String(parseInt(price - price / discount)))
+                    Number(String(parseInt(sumData.total)))
                   )}
                   <li>c</li>
                 </Typography>
@@ -228,7 +220,7 @@ const Paymant = () => {
 
                     <Box className="rest-text">
                       <p>Артикул: {product.vendorCode}</p>
-                      <p>Кол-во: {product.orderCount}</p>
+                      {/* <p>Кол-во: {product.orderCount}</p> */}
                       <p>Цвет: {product.color}</p>
                     </Box>
                   </Box>
@@ -246,7 +238,7 @@ export default Paymant;
 
 const MainContainer = styled(Container)(({ theme }) => ({
   paddingBottom: "120px",
-
+  minHeight: "500px",
   "& .rest-text": {
     fontFamily: "Inter",
     fontWeight: "400",

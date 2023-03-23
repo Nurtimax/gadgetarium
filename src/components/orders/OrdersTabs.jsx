@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { styled, Typography } from "@mui/material";
+import { styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { TAB_ITEMS_ORDER } from "../../utils/constants";
@@ -17,6 +17,7 @@ import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
 import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import { useCallback } from "react";
+import { ImageEmpty } from "../../assets";
 
 const OrdersTabs = ({ searchTerm }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
@@ -109,7 +110,7 @@ const OrdersTabs = ({ searchTerm }) => {
             <div key={i}>
               {orderStatus === `${tab.tabTitle}` &&
                 (data.length < 1 ? (
-                  <StyledNoOrdersText>No orders!</StyledNoOrdersText>
+                  <Image src={ImageEmpty} alt="empty" />
                 ) : (
                   <Table
                     tableHeaderTitle={OrdersTableHeaderTitle}
@@ -135,13 +136,8 @@ const OrdersTabs = ({ searchTerm }) => {
 
 export default OrdersTabs;
 
-const StyledNoOrdersText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.error.main,
-  fontFamily: "Inter",
-  fontWeight: "500",
-  fontSize: "30px",
-  display: "flex",
-  justifyContent: "center",
+const Image = styled("img")(() => ({
+  paddingLeft: "20%",
 }));
 
 const Tabs = styled("div")(({ theme }) => ({

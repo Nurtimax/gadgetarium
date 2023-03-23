@@ -225,7 +225,7 @@ export default PaymantMethod;
 
 const MainContainer = styled(Container)(({ theme, ischecked }) => ({
   paddingBottom: "120px",
-
+  minHeight: "500px",
   "& .kredit-card": {
     display: "flex",
     gap: "46px",

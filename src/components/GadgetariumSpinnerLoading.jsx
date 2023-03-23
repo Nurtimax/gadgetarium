@@ -13,7 +13,7 @@ export default GadgetariumSpinnerLoading;
 const StyledGadgetariumSpinnerLoading = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100vh",
-  background: "rgba(0,0,0,0.5)",
+  background: "rgba(0,0,0,0.2)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

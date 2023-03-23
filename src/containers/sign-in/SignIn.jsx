@@ -145,6 +145,7 @@ const StyledSignIn = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  minHeight: "500px",
 }));
 
 const StyledModal = styled(Modal)(({ theme }) => ({

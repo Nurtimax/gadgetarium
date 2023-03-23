@@ -26,6 +26,7 @@ const StyledAdminLayout = styled(Box)(() => ({
   flexDirection: "column",
   justifyContent: "space-between",
   height: "100vh",
+  minHeight: "500px",
   gap: "2rem",
   "& .admin_stop": {
     padding: "0 0 6rem",
