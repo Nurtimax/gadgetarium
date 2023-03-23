@@ -20,7 +20,7 @@ const Banner = () => {
         {img_banner.map((image) => (
           <WrapperStyled key={image.id}>
             <div className="container">
-              <Styled_H3>GATGETARIUM</Styled_H3>
+              <Styled_H3>GADGETARIUM</Styled_H3>
               <Styled_H1>{image.title}</Styled_H1>
               <Styled_H2>{image.desctop}</Styled_H2>
             </div>
