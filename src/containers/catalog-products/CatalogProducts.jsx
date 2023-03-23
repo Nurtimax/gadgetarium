@@ -56,11 +56,6 @@ const CatalogProducts = () => {
   };
 
   useEffect(() => {
-    dispatch(filteredCatalogSliceAction.resetState());
-    dispatch(catalogSliceAction.resetAllFilters());
-  }, [catalogItem]);
-
-  useEffect(() => {
     dispatch(
       fetchDataCatalog({
         ...filteredCatalog,
@@ -70,6 +65,11 @@ const CatalogProducts = () => {
     );
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
+
+  useEffect(() => {
+    // dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
 
   return (
     <ContainerStyled>
