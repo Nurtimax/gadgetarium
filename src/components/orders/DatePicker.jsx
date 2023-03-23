@@ -6,6 +6,7 @@ import {
   InputAdornment,
   InputBase,
   styled,
+  Typography,
 } from "@mui/material";
 import DateFnsUtils from "@date-io/date-fns";
 import { ru } from "date-fns/locale";
@@ -16,6 +17,7 @@ export default function DatePicker({
   date,
   setDate,
   FormLabelTitle = [],
+  errors = [],
   ...rest
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,6 +66,11 @@ export default function DatePicker({
                     </InputAdornment>
                   }
                 />
+                {errors[0] && (
+                  <Typography variant="subtitle2" color="error">
+                    {errors[0]}
+                  </Typography>
+                )}
               </Box>
 
               <Box className="align-start column">
@@ -81,6 +88,11 @@ export default function DatePicker({
                     </InputAdornment>
                   }
                 />
+                {errors[1] && (
+                  <Typography variant="subtitle2" color="error">
+                    {errors[1]}
+                  </Typography>
+                )}
               </Box>
             </>
           );
