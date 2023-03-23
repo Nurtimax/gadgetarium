@@ -41,7 +41,7 @@ const AddProduct = () => {
         .then((response) => {
           if (response.status === "ok") {
             navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
-            toast.success(response.message, { autoClose: 2000 });
+            toast.success(response.message);
           }
         })
         .catch((error) => toast.error(error.message));
