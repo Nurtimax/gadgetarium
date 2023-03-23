@@ -13,7 +13,7 @@ const TableCellEditAndDelete = ({ id }) => {
   const removeProducts = () => {
     dispatch(removeProductsThunk({ id, params })).then((res) => {
       if (res.payload.status === "ok") {
-        return toast.success(res.payload?.message);
+        return toast.success("Продукт успешно удален!");
       }
       return toast.error("Что-то не так с сервером или данными");
     });
