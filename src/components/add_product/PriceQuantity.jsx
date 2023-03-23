@@ -112,8 +112,8 @@ const PriceQuantity = () => {
           <StyledButton type="submit">
             Установить{" "}
             {editData.isChecked === "countOfProduct"
-              ? "Кол-во товара"
-              : " Цена"}
+              ? "кол-во товара"
+              : " Цену"}
           </StyledButton>
         </Grid>
         <Grid item>
