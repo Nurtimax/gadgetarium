@@ -122,7 +122,7 @@ export const contactsData = [
   },
   {
     title: "Почта:",
-    value: <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>,
+    value: <a href="mailto:gadgetariumph@gmail.com">Gadgetarium.kg</a>,
   },
   { title: "Режим работы:", value: "10:00 - 21:00" },
 ];

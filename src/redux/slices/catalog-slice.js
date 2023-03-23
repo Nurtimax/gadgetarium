@@ -81,7 +81,6 @@ const catalogSlice = createSlice({
       }
     },
     chipsFromFilterRemove: (state, action) => {
-      console.log(action, "proverka");
       state.filterSlice = state.filterSlice.filter(
         (slice) => slice.title !== action.payload.title
       );

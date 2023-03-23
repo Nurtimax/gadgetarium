@@ -6,15 +6,30 @@ import {
   fetchRecomendationProduct,
 } from "./product-slice";
 
-export const getCompareProduct = createAsyncThunk(
-  "compare/getCompareProduct",
+export const getAllCompareProducts = createAsyncThunk(
+  "compare/getAllCompareProducts",
+  async () => {
+    try {
+      const response = await axiosInstance.get(`userCompare/get`);
+
+      const result = response.data;
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const getCompareProductByCategoryId = createAsyncThunk(
+  "compare/getCompareProductByCategoryId",
   async (params) => {
-    console.log(params, "parrmass");
+    console.log(params, "rabotau");
+
     try {
       const response = await axiosInstance.get(`userCompare`, { params });
 
       const result = await response.data;
-      console.log(result, "ressssult");
+
+      console.log(result, "resultttt");
       return result;
     } catch (error) {
       return error;
@@ -37,38 +52,42 @@ export const getCountCompareProduct = createAsyncThunk(
 
 export const postCompareProducts = createAsyncThunk(
   "compare/postCompareProducts",
-  async ({ params, getProducts }, { dispatch }) => {
+  async ({ params }, { dispatch }) => {
     try {
       const response = await axiosInstance.post(
         "userCompare",
         {},
         {
-          params: {
-            productId: params.productId,
-          },
+          params,
         }
       );
-      const result = await response.data;
+      const result = response.data;
+      dispatch(getAllCompareProducts());
 
-      dispatch(fetchDiscountProduct(params.size.discount));
-      dispatch(fetchNewProduct(params.size.news));
-      dispatch(fetchRecomendationProduct(params.size.recomendation));
+      dispatch(fetchDiscountProduct(params.size));
+      dispatch(fetchNewProduct(params.size));
+      dispatch(fetchRecomendationProduct(params.size));
 
-      dispatch(getCompareProduct(getProducts));
       return result;
     } catch (error) {
       return error;
     }
   }
 );
+
 export const deleteCompareProductsByCategoryId = createAsyncThunk(
   "compare/deleteCompareProduct",
-  async (_, { dispatch }) => {
+  async ({ params, getProducts }, { dispatch }) => {
+    console.log("worked");
+    console.log(params, "paraaaaams");
     try {
-      const response = await axiosInstance.delete(`userCompare`);
+      const response = await axiosInstance.delete(`userCompare`, {
+        params: { id: params.categoryId },
+      });
       const data = await response.data;
 
-      dispatch(getCompareProduct());
+      dispatch(getCompareProductByCategoryId(getProducts));
+      dispatch(getAllCompareProducts());
 
       return data;
     } catch (error) {
@@ -80,20 +99,36 @@ export const deleteCompareProductsById = createAsyncThunk(
   "compare/deleteCompareProductsById",
   async ({ id, params }, { dispatch }) => {
     console.log(id, "hello world ");
-    try {
-      const response = await axiosInstance.delete(`userCompare/${id}`);
-      const data = await response.data;
-      dispatch(getCompareProduct(params));
-      return data;
-    } catch (error) {
-      return error;
+    if (params === undefined) {
+      try {
+        console.log("work card delete");
+        const response = await axiosInstance.delete(`userCompare/${id}`);
+        const data = response.data;
+        dispatch(getAllCompareProducts());
+        return data;
+      } catch (error) {
+        return error;
+      }
+    } else {
+      try {
+        console.log("work delete with params");
+        const response = await axiosInstance.delete(`userCompare/${id}`);
+        const data = await response.data;
+        dispatch(getCompareProductByCategoryId(params));
+        dispatch(getAllCompareProducts());
+        return data;
+      } catch (error) {
+        return error;
+      }
     }
   }
 );
 
 const initialState = {
   compare: [],
+  compareByCategoryId: [],
   productCategoryName: [],
+  isLoading: false,
 };
 
 const compareSlice = createSlice({
@@ -103,8 +138,16 @@ const compareSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      .addCase(getCompareProduct.fulfilled, (state, action) => {
+      .addCase(getAllCompareProducts.fulfilled, (state, action) => {
         state.compare = action.payload;
+      })
+
+      .addCase(getCompareProductByCategoryId.fulfilled, (state, action) => {
+        state.compareByCategoryId = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getCompareProductByCategoryId.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(getCountCompareProduct.fulfilled, (state, action) => {
         state.productCategoryName = [
@@ -118,5 +161,5 @@ const compareSlice = createSlice({
   },
 });
 
-export const catalogSliceAction = compareSlice.actions;
+export const compareSliceAction = compareSlice.actions;
 export default compareSlice;

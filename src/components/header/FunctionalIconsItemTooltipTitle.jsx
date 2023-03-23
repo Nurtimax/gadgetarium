@@ -8,7 +8,7 @@ import Button from "../UI/button/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
 import { postFavoriteProducts } from "../../redux/slices/favorite-slice";
-// import { getCompareProduct } from "../../redux/slices/compare-slice";
+import { deleteCompareProductsById } from "../../redux/slices/compare-slice";
 
 const FunctionalIconsItemTooltipTitle = ({
   title,
@@ -41,16 +41,10 @@ const FunctionalIconsItemTooltipTitle = ({
   const addProductToFavorite = (productId) => {
     dispatch(postFavoriteProducts({ productId }));
   };
-  // useEffect(() => {
-  //   dispatch(
-  //     getCompareProduct({
-  //       categoryId: 1,
-  //       isUnique: false,
-  //       size: 12,
-  //       page: 1,
-  //     })
-  //   );
-  // }, []);
+
+  const deleteByIdHandle = (id) => {
+    dispatch(deleteCompareProductsById({ id }));
+  };
 
   if (title === "comporative") {
     if (compareItem.length) {
@@ -80,7 +74,7 @@ const FunctionalIconsItemTooltipTitle = ({
                   </span>
 
                   <span className="dlt">
-                    <IconClose onClick={() => addProductToFavorite(item.id)} />
+                    <IconClose onClick={() => deleteByIdHandle(item.id)} />
                   </span>
                 </Box>
               ))}

@@ -14,9 +14,14 @@ import { postProductToBasket } from "../../../redux/slices/basket-slice";
 
 import { deleteCompareProductsById } from "../../../redux/slices/compare-slice";
 
-const CompareProductCard = ({ image, price, id, count, productName }) => {
-  // const compare = useSelector((state) => state.compareProducts);
-
+const CompareProductCard = ({
+  image,
+  price,
+  id,
+  count,
+  productName,
+  paramsCompare,
+}) => {
   const basketData = useSelector((state) => state.basket.data);
 
   const [dropDown, setDropDown] = useState(false);
@@ -28,16 +33,11 @@ const CompareProductCard = ({ image, price, id, count, productName }) => {
   const closeDropDown = () => {
     setDropDown(false);
   };
-  const deleteByIdHandle = () => {
+  const deleteByIdHandle = (id) => {
     dispatch(
       deleteCompareProductsById({
         id,
-        params: {
-          categoryId: 1,
-          isUnique: false,
-          size: 12,
-          page: 1,
-        },
+        params: paramsCompare,
       })
     );
   };
@@ -72,7 +72,7 @@ const CompareProductCard = ({ image, price, id, count, productName }) => {
         to="/cart"
       />
 
-      <Box className="box-button" onClick={() => deleteByIdHandle()}>
+      <Box className="box-button" onClick={() => deleteByIdHandle(id)}>
         <MuiIconButton className="delete_button">
           <DeleteIconInCart />
         </MuiIconButton>

@@ -22,7 +22,6 @@ import { orderingSlice } from "./slices/ordering-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
 import compareSlice from "./slices/compare-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
-import compareDataSlice from "./slices/compareData-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
 
 const rootReducer = combineReducers({
@@ -31,14 +30,13 @@ const rootReducer = combineReducers({
   product: productSlice.reducer,
   orderProduct: ordersProduct.reducer,
   basket: basketProducts.reducer,
-  catolog: catalogSlice.reducer,
+  catalog: catalogSlice.reducer,
   ordering: orderingSlice.reducer,
   filteredCatalog: filteredCatalogSlice.reducer,
   productDetails: productDetailsSlice.reducer,
   viewed: viewedProductSlice.reducer,
   favorite: favoriteProducts.reducer,
   compareProducts: compareSlice.reducer,
-  compareData: compareDataSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
 });
 

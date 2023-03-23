@@ -45,8 +45,9 @@ import {
   postFavoriteProducts,
 } from "../../../redux/slices/favorite-slice";
 import {
-  getCompareProduct,
+  getAllCompareProducts,
   postCompareProducts,
+  // postCompareProductsByCategoryId,
 } from "../../../redux/slices/compare-slice";
 
 const ProductCard = (props) => {
@@ -64,6 +65,7 @@ const ProductCard = (props) => {
     productId,
     categoryId,
     size,
+    dataCatalog,
     ...rest
   } = props;
 
@@ -80,6 +82,7 @@ const ProductCard = (props) => {
   const [error, setError] = useState(null);
 
   const [text, setText] = useState(["", "", ""]);
+
   const [loginText, setLoginText] = useState("");
 
   const [dropDown, setDropDown] = useState(false);
@@ -156,8 +159,7 @@ const ProductCard = (props) => {
     } else {
       dispatch(
         postCompareProducts({
-          params: { size, productId },
-          getProducts: { categoryId, isUnique: false, size: 6, page: 1 },
+          params: { size: 10, productId },
         })
       ).then(() => {
         compared
@@ -179,11 +181,10 @@ const ProductCard = (props) => {
 
   const onComponentComporation = useMemo(() => {
     if (compared) {
-      console.log(compared);
       return (
         <ComporativePinkIcon
           cursor="pointer"
-          title="Добавить к сравнению"
+          title="Удалить из списка сравнения"
           width="3.5vh"
           height="3.5vh"
           onClick={addProductToCompare}
@@ -193,7 +194,7 @@ const ProductCard = (props) => {
     return (
       <Comporation
         cursor="pointer"
-        title="Удалить из сравнения"
+        title="Добавить в список сравнения"
         width="3.5vh"
         height="3.5vh"
         onClick={addProductToCompare}
@@ -206,21 +207,23 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в избранное!");
       setModalOpen(true);
     } else {
-      dispatch(postFavoriteProducts({ size, productId })).then(() => {
-        favorite
-          ? setText([
-              "Товар удалён из избранных!",
-              "Перейти в избранное",
-              "/favorite",
-            ])
-          : setText([
-              "Товар добавлен в избранное!",
-              "Перейти в избранное",
-              "/favorite",
-            ]);
+      dispatch(postFavoriteProducts({ size, productId, dataCatalog })).then(
+        () => {
+          favorite
+            ? setText([
+                "Товар удалён из избранных!",
+                "Перейти в избранное",
+                "/favorite",
+              ])
+            : setText([
+                "Товар добавлен в избранное!",
+                "Перейти в избранное",
+                "/favorite",
+              ]);
 
-        setDropDown(true);
-      });
+          setDropDown(true);
+        }
+      );
     }
   };
 
@@ -255,14 +258,7 @@ const ProductCard = (props) => {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
           dispatch(getFavoriteProducts());
-          dispatch(
-            getCompareProduct({
-              categoryId: 1,
-              isUnique: false,
-              size: 12,
-              page: 1,
-            })
-          );
+          dispatch(getAllCompareProducts());
 
           location.reload();
           action.resetForm();
@@ -356,7 +352,7 @@ const ProductCard = (props) => {
               onClick={addBasketHandler}
               width="65%"
               height="2.5vw"
-              title="Добавить в карзину"
+              title="Добавить в корзину"
               fontSize="0.5rem"
               icon={<CartIcon width="1.5vw" />}
             >
@@ -559,7 +555,7 @@ const StyledProductCard = styled(Card)(() => ({
   display: "grid",
   gridRowGap: "1rem",
   "&:hover": {
-    boxShadow: "0 0 10px rgba(0,0,0,0.6)",
+    boxShadow: "0 0 10px rgba(0,0,0,0.2)",
   },
   "& .carsContent": {
     display: "grid",

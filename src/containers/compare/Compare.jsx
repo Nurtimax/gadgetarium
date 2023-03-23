@@ -1,30 +1,26 @@
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import {
   Box,
   Checkbox,
   Container,
   FormControlLabel,
-  IconButton,
   Paper,
   styled,
   Typography,
 } from "@mui/material";
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { ArrowRightPinkIcon, DeleteIconInCart } from "../../assets";
+import { DeleteIconInCart } from "../../assets";
 import EmptyCompare from "../../components/compare/EmptyCompare";
 import {
-  // deleteAllCompareProduct,
-  getCompareProduct,
+  deleteCompareProductsByCategoryId,
+  getCompareProductByCategoryId,
 } from "../../redux/slices/compare-slice";
 import CompareTable from "../../components/compare/CompareTable";
 import { headers } from "../../utils/constants/compare";
-import { useState } from "react";
-import { compareDataAction } from "../../redux/slices/compareData-slice";
 
 const Compare = () => {
   const { compare } = useSelector((state) => state.compareProducts);
-
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams(headers[0].id);
@@ -32,6 +28,19 @@ const Compare = () => {
   const compareStatus = searchParams.get("compareStatus") || headers[0].id;
 
   const [productTable, setProductTable] = useState(headers[compareStatus - 1]);
+
+  const [isUnique, setIsUnique] = useState(false);
+
+  const [size, setSize] = useState(5);
+
+  const [page, setPage] = useState(1);
+
+  const paramsCompare = {
+    categoryId: compareStatus,
+    isUnique: isUnique,
+    size: size,
+    page: page,
+  };
 
   const handleChange = useCallback(
     (e, newCategory) => {
@@ -42,32 +51,32 @@ const Compare = () => {
     [searchParams, productTable]
   );
 
+  const toggleHandleIsUnique = () => {
+    setIsUnique((prev) => !prev);
+  };
+
+  const handleQuantityProducts = () => {
+    setSize(size + 5);
+    setPage(page + 1);
+  };
+
   useEffect(() => {
+    dispatch(getCompareProductByCategoryId(paramsCompare));
+  }, [compareStatus, paramsCompare.isUnique]);
+
+  const deleteCompareAllProducts = (categoryId) => {
+    console.log(categoryId, "categortId");
     dispatch(
-      getCompareProduct({
-        categoryId: compareStatus,
-        isUnique: false,
-        size: 12,
-        page: 1,
+      deleteCompareProductsByCategoryId({
+        params: { categoryId },
+        getProducts: paramsCompare,
       })
     );
-
-    dispatch(
-      compareDataAction.categoryChange({
-        categoryId: compareStatus,
-      })
-    );
-  }, [compareStatus]);
-
+  };
   useEffect(() => {
     searchParams.set("compareStatus", compareStatus);
     setSearchParams(searchParams);
   }, [compareStatus]);
-
-  // const deleteCompareAllProducts = () => {
-  //   dispatch(deleteAllCompareProduct());
-  // };
-
   return (
     <>
       {compare?.length > 0 ? (
@@ -93,17 +102,25 @@ const Compare = () => {
               style={{ display: "flex", gap: "30px", paddingBottom: "30px" }}
             >
               <FormControlLabel
-                control={<Checkbox defaultChecked color="secondary" />}
+                control={
+                  <Checkbox
+                    defaultChecked
+                    color="secondary"
+                    checked={isUnique}
+                  />
+                }
                 label="Показывать только различия"
                 style={{
                   fontFamily: "Inter",
                   fontWeight: "400",
                   fontSize: "14px",
                 }}
+                onClick={toggleHandleIsUnique}
               />
               <Box
                 style={{ display: "flex", alignItems: "center", gap: "6.5px" }}
-                // onClick={() => deleteCompareAllProducts()}
+                onClick={() => deleteCompareAllProducts(compareStatus)}
+                className="pointer"
               >
                 <DeleteIconInCart />
                 <Typography
@@ -114,7 +131,6 @@ const Compare = () => {
                     lineHeight: "1.5",
                     letterSpacing: "0.00938em",
                   }}
-                  className="pointer"
                 >
                   Очистить список
                 </Typography>
@@ -123,27 +139,29 @@ const Compare = () => {
             <Box className="table-box">
               <CompareTable
                 productTable={productTable}
-                categoryId={compareStatus}
+                paramsCompare={paramsCompare}
+                handleQuantityProducts={handleQuantityProducts}
               />
             </Box>
-            {compare.length >= 5 ? (
-              <IconButton className="arrow-btn">
-                <ArrowRightPinkIcon />
-              </IconButton>
-            ) : (
-              ""
-            )}
           </ContainerStyled>
         </Paper>
       ) : (
         <BoxStyled>
-          <EmptyCompare />
+          <EmptyCompare
+            mainTitle="Сравнивать пока нечего"
+            text={
+              <p>
+                Добавляйте сюда товары, чтобы сравнить их характеристики.
+                <br /> Так выбрать станет проще!
+              </p>
+            }
+            buttonText="К покупкам"
+          />
         </BoxStyled>
       )}
     </>
   );
 };
-
 export default Compare;
 const ContainerStyled = styled(Container)(() => ({
   paddingBottom: "120px",

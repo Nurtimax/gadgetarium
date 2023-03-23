@@ -3,18 +3,15 @@ import { Link } from "react-router-dom";
 import { ImageEmptyCompare } from "../../assets";
 import Button from "../UI/button/Button";
 
-const EmptyCompare = () => {
+const EmptyCompare = ({ mainTitle, text, buttonText }) => {
   return (
     <MainContainer>
       <img src={ImageEmptyCompare} alt="image" />
-      <Typography className="first-text">Сравнивать пока нечего</Typography>
-      <Typography className="second-text">
-        Добавляйте сюда товары, чтобы сравнить их характеристики. <br />
-        Так выбрать станет проще!
-      </Typography>
+      <Typography className="first-text">{mainTitle}</Typography>
+      <Typography className="second-text">{text}</Typography>
 
       <Link to="/">
-        <StyledButton>К покупкам</StyledButton>
+        <StyledButton>{buttonText}</StyledButton>
       </Link>
     </MainContainer>
   );
@@ -41,7 +38,6 @@ const MainContainer = styled(Box)(({ theme }) => ({
     color: theme.palette.primary.main,
   },
   "& .second-text": {
-    // width: "555px",
     display: "flex",
     justifyContent: "center",
     paddingTop: "5px",

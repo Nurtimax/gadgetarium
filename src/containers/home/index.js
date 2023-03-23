@@ -18,7 +18,7 @@ import Button from "../../components/UI/button/Button";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import {
-  getCompareProduct,
+  getAllCompareProducts,
   getCountCompareProduct,
 } from "../../redux/slices/compare-slice";
 
@@ -67,14 +67,7 @@ const Home = () => {
     dispatch(getBasketProduct());
     dispatch(getFavoriteProducts());
     dispatch(getCountCompareProduct());
-    dispatch(
-      getCompareProduct({
-        categoryId: 1,
-        isUnique: false,
-        size: 12,
-        page: 1,
-      })
-    );
+    dispatch(getAllCompareProducts());
   }, []);
 
   return (

@@ -1,150 +1,211 @@
 import React from "react";
 import {
   Box,
+  CircularProgress,
+  IconButton,
   styled,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import CompareProductCard from "../UI/card/CompareProductCard";
+import { ArrowRightPinkIcon } from "../../assets";
+import EmptyCompare from "./EmptyCompare";
+import ColorName from "../add_product/fields/ColorName";
 
-const CompareTable = ({ productTable }) => {
-  const { compare } = useSelector((state) => state.compareProducts);
-  console.log(compare, "fuseTea");
-  console.log(
-    compare.map((product) => product.categoryName),
-    "Смартфоны"
+const CompareTable = ({
+  productTable,
+  paramsCompare,
+  handleQuantityProducts,
+}) => {
+  const { compareByCategoryId, isLoading } = useSelector(
+    (state) => state.compareProducts
   );
 
-  console.log(productTable, "productTable");
   return (
     <BoxStyled>
-      <Table className="table">
-        <TableRow className="row-head">
-          {productTable.description?.map((header) => (
-            <TableHead key={header} className={header ? "tr-head" : ""}>
-              {header}
-            </TableHead>
-          ))}
-        </TableRow>
-        {compare.find((product) => product.categoryName === "Смартфоны")
-          ? compare.map((product) => (
-              <TableBody className="row-body" key={product.id}>
-                <TableCell className="tr_image">
-                  <CompareProductCard {...product} />
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.productName}
-                </TableCell>
-                <TableCell className="td_product">{product.color}</TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.memoryOfPhone} GB
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.ramOfPhone}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.simCard}
-                </TableCell>
-              </TableBody>
-            ))
-          : compare.find((product) => product.categoryName === "Ноутбуки")
-          ? compare.map((product) => (
-              <TableRow className="row-body" key={product.id}>
-                <TableCell className="tr_image">
-                  <CompareProductCard {...product} />
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.productName}
-                </TableCell>
-                <TableCell className="td_product">{product.color}</TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.laptopCPU}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenResolutionLaptop}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenSizeLaptop}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.videoCardMemory} GB
-                </TableCell>
-              </TableRow>
-            ))
-          : compare.find((product) => product.categoryName === "Планшеты")
-          ? compare.map((product) => (
-              <TableRow className="row-body" key={product.id}>
-                <TableCell className="tr_image">
-                  <CompareProductCard {...product} />
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.productName}
-                </TableCell>
-                <TableCell className="td_product">{product.color}</TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenResolutionOfTablet}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.memoryOfTablet}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.ramOfTablet}
-                </TableCell>
-                <TableCell className="td_product_of-table">
-                  {product.characteristics.batteryCapacityOfTablet}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenDiagonalOfTablet}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenSizeOfTablet}
-                </TableCell>
-              </TableRow>
-            ))
-          : compare.find(
-              (product) => product.categoryName === "Смарт-часы и браслеты"
-            )
-          ? compare.map((product) => (
-              <TableRow className="row-body" key={product.id}>
-                <TableCell className="tr_image">
-                  <CompareProductCard {...product} />
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.productName}
-                </TableCell>
-                <TableCell className="td_product">{product.color}</TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.caseShape}
-                </TableCell>
-                <TableCell className="td_product_of-table">
-                  {product.characteristics.braceletMaterial}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.gender}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.wirelessInterface}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.memoryOfSmartWatch} GB
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.screenDiagonalOfSmartWatch}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.waterProof}
-                </TableCell>
-                <TableCell className="td_product">
-                  {product.characteristics.housingMaterial}
-                </TableCell>
-              </TableRow>
-            ))
-          : ""}
-      </Table>
+      {isLoading ? (
+        <Box style={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress color="secondary" />
+        </Box>
+      ) : compareByCategoryId.length > 0 ? (
+        <Table className="table">
+          <TableRow className="row-head">
+            {productTable.description?.map((header) => (
+              <TableHead key={header} className={header ? "tr-head" : ""}>
+                {header}
+              </TableHead>
+            ))}
+          </TableRow>
+
+          {compareByCategoryId.find(
+            (product) => product.categoryName === "Смартфоны"
+          )
+            ? compareByCategoryId.map((product) => (
+                <TableBody className="row-body" key={product.id}>
+                  <TableCell className="tr_image">
+                    <CompareProductCard
+                      paramsCompare={paramsCompare}
+                      {...product}
+                    />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.productName}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    <ColorName color={product.color} />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.memoryOfPhone} GB
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.ramOfPhone}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.simCard}
+                  </TableCell>
+                </TableBody>
+              ))
+            : compareByCategoryId.find(
+                (product) => product.categoryName === "Ноутбуки"
+              )
+            ? compareByCategoryId.map((product) => (
+                <TableRow className="row-body" key={product.id}>
+                  <TableCell className="tr_image">
+                    <CompareProductCard
+                      paramsCompare={paramsCompare}
+                      {...product}
+                    />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.productName}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    <ColorName color={product.color} />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.laptopCPU}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenResolutionLaptop}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenSizeLaptop}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.videoCardMemory} GB
+                  </TableCell>
+                </TableRow>
+              ))
+            : compareByCategoryId.find(
+                (product) => product.categoryName === "Планшеты"
+              )
+            ? compareByCategoryId.map((product) => (
+                <TableRow className="row-body" key={product.id}>
+                  <TableCell className="tr_image">
+                    <CompareProductCard
+                      paramsCompare={paramsCompare}
+                      {...product}
+                    />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.productName}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    <ColorName color={product.color} />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenResolutionOfTablet}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.memoryOfTablet} GB
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.ramOfTablet}
+                  </TableCell>
+                  <TableCell className="td_product_of-table">
+                    {product.characteristics.batteryCapacityOfTablet}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenDiagonalOfTablet}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenSizeOfTablet}
+                  </TableCell>
+                </TableRow>
+              ))
+            : compareByCategoryId.find(
+                (product) => product.categoryName === "Смарт-часы и браслеты"
+              )
+            ? compareByCategoryId.map((product) => (
+                <TableRow className="row-body" key={product.id}>
+                  <TableCell className="tr_image">
+                    <CompareProductCard
+                      paramsCompare={paramsCompare}
+                      {...product}
+                    />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.productName}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    <ColorName color={product.color} />
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.caseShape}
+                  </TableCell>
+                  <TableCell className="td_product_of-table">
+                    {product.characteristics.braceletMaterial}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.gender}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.wirelessInterface}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.memoryOfSmartWatch} GB
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.screenDiagonalOfSmartWatch}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.waterProof}
+                  </TableCell>
+                  <TableCell className="td_product">
+                    {product.characteristics.housingMaterial}
+                  </TableCell>
+                </TableRow>
+              ))
+            : ""}
+        </Table>
+      ) : (
+        <>
+          <EmptyCompare
+            mainTitle={
+              <Typography component="div" variant="h5">
+                В категории{" "}
+                <span style={{ fontSize: "24px", fontWeight: "700" }}>
+                  {productTable.categoryName}
+                </span>{" "}
+                товаров для сравнения нет{" "}
+              </Typography>
+            }
+            buttonText="К покупкам"
+          />
+        </>
+      )}
+      {compareByCategoryId.length >= 5 ? (
+        <IconButton className="arrow-btn" onClick={handleQuantityProducts}>
+          <ArrowRightPinkIcon />
+        </IconButton>
+      ) : (
+        ""
+      )}
     </BoxStyled>
   );
 };
@@ -178,10 +239,11 @@ const BoxStyled = styled(Box)(() => ({
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "16px",
+    height: "51px",
   },
   "& .td_product_of-table": {
     textAlign: "start",
-    padding: "14px 0 14px 0px",
+    padding: "14px 0 20px 0",
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "16px",
