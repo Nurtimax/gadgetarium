@@ -34,8 +34,9 @@ const MailGenius = ({ openModal, setOpenModal }) => {
           action.resetForm();
           setDates([null, null]);
           setOpenModal();
-          toast.success(res.payload.message);
+          return toast.success("Успешно отправлен");
         }
+        return toast.error("Что-то не так с сервером или данными");
       });
     },
   });
