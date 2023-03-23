@@ -54,6 +54,8 @@ const updateOrderProducts = createAsyncThunk(
         })
       );
 
+      dispatch(getOrderInforaphic());
+
       return response.data;
     } catch (error) {
       throw new Error();
@@ -78,6 +80,8 @@ const deleteOrderProducts = createAsyncThunk(
           size: 7,
         })
       );
+
+      dispatch(getOrderInforaphic());
 
       return response.data;
     } catch (error) {
