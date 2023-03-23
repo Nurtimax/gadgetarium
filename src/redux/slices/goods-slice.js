@@ -29,8 +29,8 @@ export const removeProductsThunk = createAsyncThunk(
 
 const initialState = {
   params: {
-    productType: null,
-    page: null,
+    productType: "Все товары",
+    page: 1,
     size: 7,
     endDate: null,
     startDate: null,
@@ -65,6 +65,7 @@ const initialState = {
     "chooseItem",
     "fieldToSort",
   ],
+  choosedItems: [],
 };
 
 const goodsSlice = createSlice({
@@ -85,6 +86,21 @@ const goodsSlice = createSlice({
     },
     changeAllParams: (state, action) => {
       state.params = { ...state.params, ...action.payload };
+    },
+    changeChoosedProducts: (state, action) => {
+      const value = action.payload.value;
+      const prevChoosedItems = state.choosedItems;
+
+      if (!state.choosedItems.includes(value)) {
+        state.choosedItems = [...prevChoosedItems, value];
+      } else {
+        state.choosedItems = prevChoosedItems.filter(
+          (state) => state !== value
+        );
+      }
+    },
+    resetChoosedProducts: (state) => {
+      state.choosedItems = [];
     },
   },
   extraReducers: (builder) => {
