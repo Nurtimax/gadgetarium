@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
+import { fetchDataCatalog } from "./catalog-slice";
 import {
   fetchDiscountProduct,
   fetchNewProduct,
@@ -36,6 +37,7 @@ const postFavoriteProducts = createAsyncThunk(
       const data = await response.data;
 
       dispatch(getFavoriteProducts());
+      dispatch(fetchDataCatalog(params.dataCatalog));
 
       dispatch(fetchDiscountProduct(params.size.discount));
       dispatch(fetchNewProduct(params.size.news));

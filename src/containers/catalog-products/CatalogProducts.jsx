@@ -61,14 +61,14 @@ const CatalogProducts = () => {
     dispatch(catalogSliceAction.resetAllFilters());
   }, [catalogItem]);
 
+  const catalogData = {
+    ...filteredCatalog,
+    categoryName: findedCatalogItem.title,
+    colors: filteredCatalog.colors.join(","),
+  };
+
   useEffect(() => {
-    dispatch(
-      fetchDataCatalog({
-        ...filteredCatalog,
-        categoryName: findedCatalogItem.title,
-        colors: filteredCatalog.colors.join(","),
-      })
-    );
+    dispatch(fetchDataCatalog(catalogData));
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
 
@@ -96,19 +96,18 @@ const CatalogProducts = () => {
           <Box className="chip-and-sort">
             <Box className="chip-container">
               <Box className="chips">
-                {filterSlice.length &&
-                  filterSlice.map((item) => (
-                    <Button
-                      className="chip"
-                      key={item.id}
-                      onClick={() =>
-                        handleChangeChips(item.title, item.id, item?.colorCode)
-                      }
-                    >
-                      {item.title}
-                      <Svg />
-                    </Button>
-                  ))}
+                {filterSlice.map((item) => (
+                  <Button
+                    className="chip"
+                    key={item.id}
+                    onClick={() =>
+                      handleChangeChips(item.title, item.id, item?.colorCode)
+                    }
+                  >
+                    {item.title}
+                    <Svg />
+                  </Button>
+                ))}
               </Box>
             </Box>
 
@@ -134,6 +133,7 @@ const CatalogProducts = () => {
           )}
 
           <ProductsList
+            dataCatalog={catalogData}
             isLoading={isLoading}
             data={data}
             sortField={filteredCatalog.fieldToSort}
