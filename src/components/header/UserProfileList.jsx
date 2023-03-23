@@ -7,11 +7,6 @@ import { ActionauthenticationSlice } from "../../redux/slices/authentication-sli
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { getAllCompareProducts } from "../../redux/slices/compare-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
-import {
-  fetchDiscountProduct,
-  fetchNewProduct,
-  fetchRecomendationProduct,
-} from "../../redux/slices/product-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
 const UserProfileList = () => {
@@ -29,9 +24,7 @@ const UserProfileList = () => {
       dispatch(getFavoriteProducts());
       dispatch(getAllCompareProducts());
 
-      dispatch(fetchDiscountProduct(5));
-      dispatch(fetchNewProduct(5));
-      dispatch(fetchRecomendationProduct(5));
+      location.reload();
     }
   };
 

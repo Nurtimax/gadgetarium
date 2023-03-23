@@ -321,7 +321,7 @@ export const userProfileStatus_FAKE_DATA = {
   ],
   enteredLogIn: [
     { id: 1, title: "История заказов", link: "/vip/history" },
-    { id: 2, title: "Избранное", link: "like" },
+    { id: 2, title: "Избранное", link: "/vip/favorite" },
     { id: 3, title: "Профиль", link: "profile" },
     { id: 4, title: "Выйти", link: "" },
   ],

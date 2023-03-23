@@ -99,3 +99,10 @@ export const orderingValidateSchemaWithAdreess = yup.object().shape({
 
   address: yup.string().required("Имя обязательное поле!"),
 });
+
+export const paymantValidateSchema = yup.object().shape({
+  cardNumber: yup.string().required("Номер карты обязательное поле!"),
+  expiryDate: yup.string().required("Дата обязательное поле!"),
+  cvc: yup.string().required("СVC обязательное поле!"),
+  userName: yup.string().required("Имя владельца обязательное поле!"),
+});
