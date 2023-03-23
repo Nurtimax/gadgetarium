@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, MenuItem, styled, Typography } from "@mui/material";
-import DropDown from "../UI/DropDown";
-import useDropDown from "../../hooks/useDropDown";
-import { ITEM_SORT } from "../../utils/constants";
-import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { actionGoodSlice } from "../../../redux/slices/goods-slice";
+import useDropDown from "../../../hooks/useDropDown";
+import DropDown from "../../UI/DropDown";
+import { ITEM_SORT } from "../../../utils/constants";
 
-const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
+const SortModal = ({ anchorElCatalog, handleCloseCatalog }) => {
   const { fieldToSort, discountField } = useSelector(
     (state) => state.filteredCatalog
   );
@@ -17,33 +17,44 @@ const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
 
   const open = Boolean(anchorEl);
 
-  const subMenuCatalogHandler = useCallback(
-    (value) => (e) => {
-      setSubMenuCatalog(value);
-      setAnchorEl(e);
-    },
-    []
-  );
-
-  const clickSubSortHandler = (value) => () => {
-    dispatch(filteredCatalogSliceAction.sortField("По акции"));
-    dispatch(filteredCatalogSliceAction.discountField(value));
+  const clickSubSortHandler = useCallback((value) => {
+    dispatch(
+      actionGoodSlice.changeParams({ key: "fieldToSort", value: "По акции" })
+    );
+    dispatch(actionGoodSlice.changeParams({ key: "discountField", value }));
     closeHandler();
-  };
-  const clickSortHandler = (value) => () => {
-    if (value !== "По акции") {
-      handleCloseCatalog();
-      dispatch(filteredCatalogSliceAction.sortField(value));
-    } else {
-      dispatch(filteredCatalogSliceAction.sortField(null));
-      dispatch(filteredCatalogSliceAction.discountField(clickSubSortHandler()));
-    }
-  };
+  }, []);
+
+  const clickSortHandler = useCallback(
+    (value, e) => {
+      if (value !== "По акции") {
+        handleCloseCatalog();
+        dispatch(actionGoodSlice.changeParams({ value, key: "fieldToSort" }));
+        dispatch(
+          actionGoodSlice.changeParams({ key: "discountField", value: null })
+        );
+        return setAnchorEl(e);
+      }
+      return setAnchorEl(e);
+    },
+    [handleCloseCatalog]
+  );
 
   const closeHandler = useCallback(() => {
     handleCloseCatalog();
     setAnchorEl();
-  }, [anchorElCatalog]);
+  }, [handleCloseCatalog, setAnchorEl]);
+
+  const subMenuCatalogHandler = useCallback(
+    (value) => (e) => {
+      if (value.length) {
+        setSubMenuCatalog(value);
+        return setAnchorEl(e);
+      }
+      return setAnchorEl();
+    },
+    [setAnchorEl]
+  );
 
   return (
     <StyledMenuCatalog onMouseLeave={closeHandler}>
@@ -64,7 +75,7 @@ const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
                 onMouseEnter={subMenuCatalogHandler(
                   catalog?.subcategories ? catalog.subcategories : []
                 )}
-                onClick={clickSortHandler(catalog.title)}
+                onClick={(e) => clickSortHandler(catalog.title, e)}
                 className={
                   fieldToSort === catalog.title ? "selectedSortField" : ""
                 }
@@ -97,7 +108,7 @@ const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
                           ? "selectedSortField"
                           : ""
                       }
-                      onClick={clickSubSortHandler(catalog.title)}
+                      onClick={() => clickSubSortHandler(catalog.title)}
                     >
                       {catalog.title}
                     </MenuItem>
@@ -111,7 +122,7 @@ const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
     </StyledMenuCatalog>
   );
 };
-export default Sort;
+export default SortModal;
 
 const StyledMenuCatalog = styled(Box)(() => ({
   position: "absolute",

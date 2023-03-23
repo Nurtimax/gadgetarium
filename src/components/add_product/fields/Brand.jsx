@@ -247,23 +247,6 @@ const Brand = ({ handleChange, values, errors, Productbrand }) => {
 export default Brand;
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  "&.next_button": {
-    background: theme.palette.secondary.main,
-    color: "#fff !important",
-    width: "99px",
-    height: "43px",
-    justifySelf: "flex-end",
-  },
-  "&.product_button": {
-    padding: ".5rem",
-    width: "107px",
-    height: "35px",
-    color: `${theme.palette.grey[800]} !important`,
-    borderColor: `${theme.palette.grey[800]} !important`,
-    "&:hover": {
-      background: "none",
-    },
-  },
   "&.create_product": {
     width: "201px",
     height: "35px",

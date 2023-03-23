@@ -18,9 +18,20 @@ const ContentTable = () => {
       if (!prevState.includes(value)) {
         return [...prevState, value];
       }
-      return [...prevState.filter((state) => state !== value)];
+      return prevState.filter((state) => state !== value);
     });
   };
+
+  useEffect(() => {
+    if (tableTitle.length) {
+      dispatch(
+        actionGoodSlice.changeLocalParams({
+          key: "chooseItem",
+          value: tableTitle,
+        })
+      );
+    }
+  }, [tableTitle]);
 
   const handleChangePagination = (currentPage) => {
     dispatch(actionGoodSlice.changeParams({ key: "page", value: currentPage }));
@@ -33,7 +44,7 @@ const ContentTable = () => {
   return (
     <Grid item xs={12}>
       <StyledContentTable>
-        {data.responseList?.length ? (
+        {data.responseList?.length >= 1 ? (
           <>
             <StyledTable
               countOfOrders={data.responseList?.length}
@@ -45,11 +56,13 @@ const ContentTable = () => {
               selectedItem={tableTitle}
               isSort
             />
-            <Pagination
-              count={data.pages}
-              color="secondary"
-              onChange={handleChangePagination}
-            />
+            {data.pages > 1 && (
+              <Pagination
+                count={data.pages}
+                color="secondary"
+                onChange={handleChangePagination}
+              />
+            )}
           </>
         ) : (
           <Typography>Нет продукта в корзине</Typography>

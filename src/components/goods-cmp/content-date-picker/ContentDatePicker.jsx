@@ -12,7 +12,7 @@ const ContentDatePicker = () => {
 
   useEffect(() => {
     if (dates[0]) {
-      const dateFormat = format(new Date(dates[0]), "yyyy-mm-dd");
+      const dateFormat = format(new Date(dates[0]), "yyyy-MM-dd");
       dispatch(
         actionGoodSlice.changeParams({ key: "startDate", value: dateFormat })
       );
@@ -21,7 +21,7 @@ const ContentDatePicker = () => {
 
   useEffect(() => {
     if (dates[1]) {
-      const dateFormat = format(new Date(dates[1]), "yyyy-mm-dd");
+      const dateFormat = format(new Date(dates[1]), "yyyy-MM-dd");
       dispatch(
         actionGoodSlice.changeParams({ key: "endDate", value: dateFormat })
       );

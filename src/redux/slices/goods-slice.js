@@ -12,6 +12,20 @@ export const getProductsThunk = createAsyncThunk(
     }
   }
 );
+export const removeProductsThunk = createAsyncThunk(
+  "removeProductsThunk/goodsSlice",
+  async ({ params, id }, { dispatch }) => {
+    try {
+      const response = await axiosInstance.delete("adminProducts", {
+        params: { id },
+      });
+      dispatch(getProductsThunk(params));
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 
 const initialState = {
   params: {
@@ -30,14 +44,27 @@ const initialState = {
     responseList: [],
   },
   localParams: {
-    tabs: null,
-    endDate: null,
-    startDate: null,
-    search: null,
+    productType: "",
+    endDate: "",
+    startDate: "",
+    searchText: "",
     chooseItem: [],
-    sort: null,
+    sort: "",
   },
   isLoading: false,
+  errors: {
+    getProductsErrorMessage: null,
+    removeProductsErrorMessage: null,
+    errorMessage: null,
+  },
+  localParamsKeys: [
+    "productType",
+    "endDate",
+    "startDate",
+    "searchText",
+    "chooseItem",
+    "fieldToSort",
+  ],
 };
 
 const goodsSlice = createSlice({
@@ -50,6 +77,15 @@ const goodsSlice = createSlice({
         [action.payload.key]: action.payload.value,
       };
     },
+    changeLocalParams: (state, action) => {
+      state.localParams = {
+        ...state.localParams,
+        [action.payload.key]: action.payload.value,
+      };
+    },
+    changeAllParams: (state, action) => {
+      state.params = { ...state.params, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,6 +97,16 @@ const goodsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getProductsThunk.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(removeProductsThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(removeProductsThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeProductsThunk.rejected, (state) => {
         state.isLoading = false;
       });
   },

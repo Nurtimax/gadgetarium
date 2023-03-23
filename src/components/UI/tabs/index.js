@@ -1,15 +1,21 @@
 import { Box, styled } from "@mui/material";
 import React, { useEffect } from "react";
+import { memo } from "react";
 import { useState } from "react";
 import Button from "../button/Button";
 
-const Tabs = ({ contents = [], onChange }) => {
+const Tabs = ({ contents = [], onChange, checked }) => {
   const [isChecked, setIsChecked] = useState(1);
 
   const handleChangeButtonTab = (id, label) => {
     setIsChecked(id);
     onChange(label);
   };
+  useEffect(() => {
+    if (checked) {
+      setIsChecked(checked);
+    }
+  }, [checked]);
 
   useEffect(() => {
     onChange(contents[0].label);
@@ -30,7 +36,7 @@ const Tabs = ({ contents = [], onChange }) => {
   );
 };
 
-export default Tabs;
+export default memo(Tabs);
 
 const StyledTabs = styled(Box)(() => ({
   display: "flex",
