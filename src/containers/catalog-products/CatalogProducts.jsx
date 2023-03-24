@@ -40,7 +40,6 @@ const CatalogProducts = () => {
   );
 
   const handleChangeChips = (title, id, colorCode) => {
-    console.log(title);
     dispatch(
       filteredCatalogSliceAction.removeCheckedProduct({
         key: typeof id === "number" ? "subCategoryName" : id,
