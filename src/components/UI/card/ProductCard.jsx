@@ -46,7 +46,6 @@ import {
 import {
   getAllCompareProducts,
   postCompareProducts,
-  // postCompareProductsByCategoryId,
 } from "../../../redux/slices/compare-slice";
 
 const ProductCard = (props) => {
@@ -145,7 +144,9 @@ const ProductCard = (props) => {
     } else {
       dispatch(
         postCompareProducts({
-          params: { size: 10, productId },
+          size,
+          productId,
+          dataCatalog,
         })
       ).then(() => {
         compared

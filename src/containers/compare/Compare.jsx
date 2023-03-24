@@ -31,7 +31,7 @@ const Compare = () => {
 
   const [isUnique, setIsUnique] = useState(false);
 
-  const [size, setSize] = useState(5);
+  const [size, setSize] = useState(20);
 
   const [page, setPage] = useState(1);
 
@@ -56,16 +56,20 @@ const Compare = () => {
   };
 
   const handleQuantityProducts = () => {
-    setSize(size + 5);
-    setPage(page + 1);
+    setSize((prev) => prev + size);
+    setPage((prev) => prev + page);
   };
 
   useEffect(() => {
     dispatch(getCompareProductByCategoryId(paramsCompare));
-  }, [compareStatus, paramsCompare.isUnique]);
+  }, [
+    paramsCompare.isUnique,
+    paramsCompare.size,
+    paramsCompare.page,
+    compareStatus,
+  ]);
 
   const deleteCompareAllProducts = (categoryId) => {
-    console.log(categoryId, "categortId");
     dispatch(
       deleteCompareProductsByCategoryId({
         params: { categoryId },
@@ -73,14 +77,16 @@ const Compare = () => {
       })
     );
   };
+
   useEffect(() => {
     searchParams.set("compareStatus", compareStatus);
     setSearchParams(searchParams);
   }, [compareStatus]);
+
   return (
     <>
       {compare?.length > 0 ? (
-        <Paper style={{ background: "#FFFFFF" }}>
+        <PaperStyled>
           <ContainerStyled>
             <Typography variant="h5" component="h1" className="text_header">
               Сравнение товаров
@@ -98,9 +104,7 @@ const Compare = () => {
                 </button>
               ))}
             </Tabs>
-            <Box
-              style={{ display: "flex", gap: "30px", paddingBottom: "30px" }}
-            >
+            <Box className="checkbox-show">
               <FormControlLabel
                 control={
                   <Checkbox
@@ -110,28 +114,15 @@ const Compare = () => {
                   />
                 }
                 label="Показывать только различия"
-                style={{
-                  fontFamily: "Inter",
-                  fontWeight: "400",
-                  fontSize: "14px",
-                }}
+                className="label"
                 onClick={toggleHandleIsUnique}
               />
               <Box
-                style={{ display: "flex", alignItems: "center", gap: "6.5px" }}
                 onClick={() => deleteCompareAllProducts(compareStatus)}
-                className="pointer"
+                className="delete-box pointer"
               >
                 <DeleteIconInCart />
-                <Typography
-                  style={{
-                    fontFamily: "Roboto,Helvetica,Arial,sans-serif",
-                    fontWeight: "400",
-                    fontSize: "1rem",
-                    lineHeight: "1.5",
-                    letterSpacing: "0.00938em",
-                  }}
-                >
+                <Typography className="delete-label">
                   Очистить список
                 </Typography>
               </Box>
@@ -144,7 +135,7 @@ const Compare = () => {
               />
             </Box>
           </ContainerStyled>
-        </Paper>
+        </PaperStyled>
       ) : (
         <BoxStyled>
           <EmptyCompare
@@ -162,7 +153,10 @@ const Compare = () => {
     </>
   );
 };
+
 export default Compare;
+
+const PaperStyled = styled(Paper)(() => ({ background: "#FFFFFF" }));
 const ContainerStyled = styled(Container)(() => ({
   paddingBottom: "120px",
   "& .text_header": {
@@ -185,6 +179,16 @@ const ContainerStyled = styled(Container)(() => ({
     bottom: "465px",
     left: "1330px",
     ":hover": { background: "white" },
+  },
+  "& .checkbox-show": { display: "flex", gap: "30px", paddingBottom: "30px" },
+  "& .label": { fontFamily: "Inter", fontWeight: "400", fontSize: "14px" },
+  "& .delete-box ": { display: "flex", alignItems: "center", gap: "6.5px" },
+  "& .delete-label": {
+    fontFamily: "Roboto,Helvetica,Arial,sans-serif",
+    fontWeight: "400",
+    fontSize: "1rem",
+    lineHeight: "1.5",
+    letterSpacing: "0.00938em",
   },
 }));
 

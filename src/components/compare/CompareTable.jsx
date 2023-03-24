@@ -29,7 +29,7 @@ const CompareTable = ({
   return (
     <BoxStyled>
       {isLoading ? (
-        <Box style={{ display: "flex", justifyContent: "center" }}>
+        <Box className="loading-box">
           <CircularProgress color="secondary" />
         </Box>
       ) : compareByCategoryId.length > 0 ? (
@@ -199,7 +199,7 @@ const CompareTable = ({
           />
         </>
       )}
-      {compareByCategoryId.length >= 5 ? (
+      {compareByCategoryId.length > 5 ? (
         <IconButton className="arrow-btn" onClick={handleQuantityProducts}>
           <ArrowRightPinkIcon />
         </IconButton>
@@ -228,18 +228,15 @@ const BoxStyled = styled(Box)(() => ({
     fontFamily: "Inter",
     fontWeight: "700",
     fontSize: "18px",
-    // position: "sticky",
-    // left: 0,
-    // background: "white",
-    // boxShadow: "5px 2px 5px grey",
+    height: "56.8px",
   },
   "& .td_product": {
     textAlign: "start",
-    padding: "14px 0",
+    padding: "14px 0px 15px ",
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "16px",
-    height: "51px",
+    height: "56.8px",
   },
   "& .td_product_of-table": {
     textAlign: "start",
@@ -247,10 +244,9 @@ const BoxStyled = styled(Box)(() => ({
     fontFamily: "Inter",
     fontWeight: "400",
     fontSize: "16px",
-    height: "72.5px",
-    // background: "red",
+    height: "56.8px",
   },
-  "& .row-head": { paddingTop: "421.5px", width: "260px" },
+  "& .row-head": { paddingTop: "421px", width: "260px" },
   "& .row-body": {
     color: "inherit",
     display: "inline-grid",
@@ -258,4 +254,5 @@ const BoxStyled = styled(Box)(() => ({
     outline: "0",
     width: "250px",
   },
+  "& .loading-box": { display: "flex", justifyContent: "center" },
 }));

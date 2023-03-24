@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axios-instance";
+import { getBasketProduct } from "./basket-slice";
+import { fetchDataCatalog } from "./catalog-slice";
 import {
   fetchDiscountProduct,
   fetchNewProduct,
@@ -11,7 +13,6 @@ export const getAllCompareProducts = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.get(`userCompare/get`);
-
       const result = response.data;
       return result;
     } catch (error) {
@@ -21,15 +22,12 @@ export const getAllCompareProducts = createAsyncThunk(
 );
 export const getCompareProductByCategoryId = createAsyncThunk(
   "compare/getCompareProductByCategoryId",
-  async (params) => {
-    console.log(params, "rabotau");
-
+  async (params, { dispatch }) => {
     try {
       const response = await axiosInstance.get(`userCompare`, { params });
 
       const result = await response.data;
-
-      console.log(result, "resultttt");
+      dispatch(getAllCompareProducts());
       return result;
     } catch (error) {
       return error;
@@ -52,21 +50,25 @@ export const getCountCompareProduct = createAsyncThunk(
 
 export const postCompareProducts = createAsyncThunk(
   "compare/postCompareProducts",
-  async ({ params }, { dispatch }) => {
+  async (params, { dispatch }) => {
     try {
       const response = await axiosInstance.post(
         "userCompare",
         {},
         {
-          params,
+          params: {
+            productId: params.productId,
+          },
         }
       );
       const result = response.data;
       dispatch(getAllCompareProducts());
 
-      dispatch(fetchDiscountProduct(params.size));
-      dispatch(fetchNewProduct(params.size));
-      dispatch(fetchRecomendationProduct(params.size));
+      dispatch(fetchDataCatalog(params.dataCatalog));
+      dispatch(fetchDiscountProduct(params.size.discount));
+      dispatch(fetchNewProduct(params.size.news));
+      dispatch(fetchRecomendationProduct(params.size.recomendation));
+      dispatch(getBasketProduct());
 
       return result;
     } catch (error) {
@@ -78,8 +80,6 @@ export const postCompareProducts = createAsyncThunk(
 export const deleteCompareProductsByCategoryId = createAsyncThunk(
   "compare/deleteCompareProduct",
   async ({ params, getProducts }, { dispatch }) => {
-    console.log("worked");
-    console.log(params, "paraaaaams");
     try {
       const response = await axiosInstance.delete(`userCompare`, {
         params: { id: params.categoryId },
@@ -98,10 +98,8 @@ export const deleteCompareProductsByCategoryId = createAsyncThunk(
 export const deleteCompareProductsById = createAsyncThunk(
   "compare/deleteCompareProductsById",
   async ({ id, params }, { dispatch }) => {
-    console.log(id, "hello world ");
     if (params === undefined) {
       try {
-        console.log("work card delete");
         const response = await axiosInstance.delete(`userCompare/${id}`);
         const data = response.data;
         dispatch(getAllCompareProducts());
@@ -111,7 +109,6 @@ export const deleteCompareProductsById = createAsyncThunk(
       }
     } else {
       try {
-        console.log("work delete with params");
         const response = await axiosInstance.delete(`userCompare/${id}`);
         const data = await response.data;
         dispatch(getCompareProductByCategoryId(params));
@@ -139,7 +136,11 @@ const compareSlice = createSlice({
     builder
 
       .addCase(getAllCompareProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.compare = action.payload;
+      })
+      .addCase(getAllCompareProducts.pending, (state) => {
+        state.isLoading = true;
       })
 
       .addCase(getCompareProductByCategoryId.fulfilled, (state, action) => {
@@ -154,9 +155,6 @@ const compareSlice = createSlice({
           ...state.productCategoryName,
           action.payload,
         ];
-      })
-      .addCase(deleteCompareProductsById.fulfilled, (state, action) => {
-        console.log(action.payload, "delete");
       });
   },
 });

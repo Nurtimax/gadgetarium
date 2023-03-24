@@ -18,12 +18,10 @@ const CompareProductCard = ({
   image,
   price,
   id,
-  count,
   productName,
   paramsCompare,
 }) => {
   const basketData = useSelector((state) => state.basket.data);
-
   const [dropDown, setDropDown] = useState(false);
 
   const [text, setText] = useState("");
@@ -48,11 +46,16 @@ const CompareProductCard = ({
     } else {
       dispatch(
         postProductToBasket({
-          orderCount: count,
+          orderCount: 154,
           id,
         })
       ).then(() => {
-        setText("Товар успешно добавлен в корзину!");
+        setText([
+          "Товар успешно добавлен в корзину!",
+          "Перейти в корзину",
+          "/cart",
+        ]);
+
         setDropDown(true);
       });
     }
@@ -112,7 +115,7 @@ const StyledViewedProductCard = styled(Box)(({ image }) => ({
   boxShadow:
     "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
   "&:hover": {
-    boxShadow: "0 0 10px rgba(0,0,0,0.6)",
+    boxShadow: "0 0 10px rgba(0,0,0,0.2)",
   },
   "& .box-button": {
     width: "206px",
