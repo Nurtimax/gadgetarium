@@ -7,9 +7,9 @@ import DropDown from "../../UI/DropDown";
 import { ITEM_SORT } from "../../../utils/constants";
 
 const SortModal = ({ anchorElCatalog, handleCloseCatalog }) => {
-  const { fieldToSort, discountField } = useSelector(
-    (state) => state.filteredCatalog
-  );
+  const { params } = useSelector((state) => state.goods);
+
+  const { fieldToSort, discountField } = params;
 
   const dispatch = useDispatch();
   const [subMenuCatalog, setSubMenuCatalog] = useState([]);
