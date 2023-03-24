@@ -26,11 +26,9 @@ const InputStyled = styled(InputBase)(({ theme, backcolor }) => ({
   "&.input.focused": {
     border: `0.1px solid ${theme.palette.secondary.main}`,
     background: `${theme.palette.background.default}`,
-    borderRadius: "5px",
     color: `${theme.palette.primary.dark}`,
   },
   "&.input.error": {
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: "5px",
   },
 }));

@@ -23,6 +23,7 @@ import { favoriteProducts } from "./slices/favorite-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
 import { paymantSlice } from "./slices/paymant-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
+import { subscribeSlice } from "./slices/subscribe-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   favorite: favoriteProducts.reducer,
   paymant: paymantSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
+  subscribe: subscribeSlice.reducer,
 });
 
 const persistConfig = {
