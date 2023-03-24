@@ -92,7 +92,7 @@ const Home = () => {
                       productName={product.productName}
                       productPrice={product.productPrice}
                       productRating={product.productRating}
-                      productStatus={product.productStatus}
+                      productStatus="DISCOUNT"
                       viewed={product.viewed.toString()}
                       firstSubproductId={product.firstSubproductId[0]}
                       size={size}
