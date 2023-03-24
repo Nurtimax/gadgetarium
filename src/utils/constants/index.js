@@ -57,10 +57,11 @@ export const iconsData = [
     iconDefault: <ComparativeIcon />,
     iconRemoveItem: <ComparativeIcon />,
     title: "comporative",
+    compareItem: [],
     badgeContent: [],
     className: "dispatch_message",
     color: "error",
-    placementTooltip: "top",
+    placementTooltip: "bottom-end",
     focused: false,
     addedTitle: "Товар добавлен в список сравнения!",
     transitionTitle: "Перейти к сравнению",
@@ -121,7 +122,7 @@ export const contactsData = [
   },
   {
     title: "Почта:",
-    value: <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>,
+    value: <a href="mailto:gadgetariumph@gmail.com">Gadgetarium.kg</a>,
   },
   { title: "Режим работы:", value: "10:00 - 21:00" },
 ];

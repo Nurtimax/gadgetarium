@@ -6,12 +6,12 @@ import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import Modal from "../../components/UI/Modal";
 import { useFormik } from "formik";
-import ReactInputMask from "react-input-mask";
 import useVisibility from "../../hooks/useVisibility";
 import { showError } from "../../utils/helpers/catch-signup";
 import { singUpValidateSchema } from "../../utils/helpers/validate";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataSignup } from "../../redux/slices/authentication-slice";
+import { PatternFormat } from "react-number-format";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useVisibility();
@@ -24,12 +24,11 @@ const SignUp = () => {
 
   const onSubmit = async (values, action) => {
     const phoneNumber = values.phoneNumber
-      .split("-")
-      .join("")
       .split("(")
       .join("")
       .split(")")
-      .join("");
+      .join("")
+      .replace(/\s/g, "");
 
     const registerData = {
       ...values,
@@ -103,8 +102,9 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <StyledInputMask
-                mask="+996(999)99-99-99"
-                placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                format="+996 (###) ### ###"
+                mask="_"
+                placeholder="+996(_ _ _) _ _  _ _  _ _"
                 value={values.phoneNumber}
                 onChange={handleChange}
                 name="phoneNumber"
@@ -199,6 +199,7 @@ const SignUp = () => {
 export default SignUp;
 
 const StyledSignIn = styled(Box)(() => ({
+  minHeight: "500px",
   width: "100%",
   height: "100vh",
   display: "flex",
@@ -224,7 +225,7 @@ const StyledInput = styled(Input)(() => ({
   height: "43px",
 }));
 
-const StyledInputMask = styled(ReactInputMask)(({ theme }) => ({
+const StyledInputMask = styled(PatternFormat)(({ theme }) => ({
   width: "100%",
   height: "43px",
   "&": {

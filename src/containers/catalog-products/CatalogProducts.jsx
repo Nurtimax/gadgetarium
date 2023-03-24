@@ -27,7 +27,7 @@ const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
 
   const { data, isLoading, errorMessage, filterSlice, colorResponses } =
-    useSelector((state) => state.catolog);
+    useSelector((state) => state.catalog);
 
   const dispatch = useDispatch();
 
@@ -40,7 +40,6 @@ const CatalogProducts = () => {
   );
 
   const handleChangeChips = (title, id, colorCode) => {
-    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
     dispatch(
       filteredCatalogSliceAction.removeCheckedProduct({
         key: typeof id === "number" ? "subCategoryName" : id,
@@ -48,17 +47,13 @@ const CatalogProducts = () => {
         colorCode,
       })
     );
+    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
   };
 
   const handelResetAllFilters = () => {
     dispatch(filteredCatalogSliceAction.resetState());
     dispatch(catalogSliceAction.resetAllFilters());
   };
-
-  useEffect(() => {
-    dispatch(filteredCatalogSliceAction.resetState());
-    dispatch(catalogSliceAction.resetAllFilters());
-  }, [catalogItem]);
 
   useEffect(() => {
     dispatch(
@@ -68,8 +63,25 @@ const CatalogProducts = () => {
         colors: filteredCatalog.colors.join(","),
       })
     );
+    dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
+
+  const catalogData = {
+    ...filteredCatalog,
+    categoryName: findedCatalogItem.title,
+    colors: filteredCatalog.colors.join(","),
+  };
+
+  useEffect(() => {
+    dispatch(fetchDataCatalog(catalogData));
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
+
+  useEffect(() => {
+    // dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
 
   return (
     <ContainerStyled>
@@ -95,7 +107,7 @@ const CatalogProducts = () => {
           <Box className="chip-and-sort">
             <Box className="chip-container">
               <Box className="chips">
-                {filterSlice?.map((item) => (
+                {filterSlice.map((item) => (
                   <Button
                     className="chip"
                     key={item.id}
@@ -132,6 +144,7 @@ const CatalogProducts = () => {
           )}
 
           <ProductsList
+            dataCatalog={catalogData}
             isLoading={isLoading}
             data={data}
             sortField={filteredCatalog.fieldToSort}
@@ -151,6 +164,7 @@ const Svg = styled(DeleteIconInCart)(() => ({
   },
 }));
 const ContainerStyled = styled(Container)(() => ({
+  minHeight: "500px",
   "& .text_header": {
     height: "83px",
     display: "flex",

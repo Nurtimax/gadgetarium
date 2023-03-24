@@ -36,6 +36,14 @@ code {
 .flex-end {
   justify-content: flex-end;
 }
+.align-end {
+  display: flex;
+  align-items: flex-end;
+}
+.align-start {
+  display: flex;
+  align-items: flex-start;
+}
 .flex-start {
   display: flex;
   justify-content: flex-start;
@@ -138,6 +146,10 @@ a {
   display: none !important;
 }
 
+.MuiFormLabel-asterisk {
+  color: red;
+}
+
 .grid {
   display: grid;
 }
@@ -146,3 +158,22 @@ a {
   flex-wrap: wrap;
 }
 
+/* input:-internal-autofill-selected {
+  appearance: inherit;
+  background-image: none !important;
+  background-color: white !important;
+  color: white !important;
+}
+input:-webkit-autofill {
+  color: #2a2a2a !important;
+  background-color: white !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+  background: white !important;
+  color: #555 !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #555555 !important;
+} */

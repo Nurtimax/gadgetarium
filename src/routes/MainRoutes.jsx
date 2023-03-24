@@ -16,10 +16,10 @@ const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Favorite = lazy(() => import("../containers/favorite/Favorite"));
 const Contacts = lazy(() => import("../containers/contacts/Contacts"));
 const Home = lazy(() => import("../containers/home"));
+const Compare = lazy(() => import("../containers/compare/Compare.jsx"));
 const Item = lazy(() => import("../containers/item/Item"));
 const Basket = lazy(() => import("../containers/basket/Basket"));
 const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
-const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
 const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
 const SignUp = lazy(() => import("../containers/sign-up/Signup"));
 const Ordering = lazy(() => import("../containers/ordering/Ordering"));
@@ -122,15 +122,6 @@ const MainRoutes = () => {
             />
 
             <Route
-              path={ROUTES.CHECKOUT}
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <OrderPage />
-                </Suspense>
-              }
-            />
-
-            <Route
               path="reviews"
               element={
                 <Suspense fallback={<GadgetariumSpinnerLoading />}>
@@ -166,7 +157,14 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
-
+        <Route
+          path={ROUTES.COMPATISONPRODUCT}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Compare />
+            </Suspense>
+          }
+        />
         <Route
           path={`${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}
           element={

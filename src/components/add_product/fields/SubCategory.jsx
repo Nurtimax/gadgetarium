@@ -8,6 +8,7 @@ const SubCategory = ({ values, handleChange, errors }) => {
   const findedCategory = catalogMenu_FAKE_DATA.find(
     (category) => category.id === Number(values?.categoryId)
   );
+
   const findedSubCategory = findedCategory?.subcategories?.find(
     (item) => item.id === values?.subCategoryId
   );
@@ -41,11 +42,15 @@ const SubCategory = ({ values, handleChange, errors }) => {
           </>
         )}
       >
-        {findedCategory?.subcategories?.map((catalog) => (
-          <StyledMenuItem key={catalog.id} value={catalog.id}>
-            {catalog.title}
-          </StyledMenuItem>
-        ))}
+        {Array.isArray(findedCategory?.subcategories) ? (
+          findedCategory?.subcategories?.map((catalog) => (
+            <StyledMenuItem key={catalog.id} value={catalog.id}>
+              {catalog.title}
+            </StyledMenuItem>
+          ))
+        ) : (
+          <StyledMenuItem disabled>Выберите категорию</StyledMenuItem>
+        )}
       </Select>
       {Boolean(errors.subCategoryId) && (
         <Typography component="p" variant="body2" color="error">

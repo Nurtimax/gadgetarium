@@ -83,6 +83,7 @@ export default Favorite;
 const StyledContainer = styled(Container)(({ theme }) => ({
   backgroundColor: "#f4f4f4",
   paddingBottom: "119px",
+  minHeight: "500px",
 
   "& .title": {
     fontFamily: "Ubuntu",

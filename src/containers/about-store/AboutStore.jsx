@@ -115,6 +115,7 @@ const AboutStore = () => {
 export default AboutStore;
 
 const BoxMain = styled("div")`
+  min-height: 500px;
   width: 100%;
   max-width: 1424px;
   margin-top: 30px;
@@ -155,11 +156,11 @@ const SliderContainer = styled("div")`
   }
 
   .slick-slider {
-    height: 80vh;
+    height: 60vh;
   }
 
   .slick-list {
-    height: 80vh;
+    height: 60vh;
   }
 `;
 

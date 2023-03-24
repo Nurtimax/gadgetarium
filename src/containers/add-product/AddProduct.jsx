@@ -41,7 +41,7 @@ const AddProduct = () => {
         .then((response) => {
           if (response.status === "ok") {
             navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
-            toast.success(response.message, { autoClose: 2000 });
+            toast.success(response.message);
           }
         })
         .catch((error) => toast.error(error.message));
@@ -136,6 +136,8 @@ const AddProduct = () => {
 export default AddProduct;
 
 const StyledAddProduct = styled(Box)(({ theme }) => ({
+  minHeight: "500px",
+
   "& .MuiSvgIcon-root": {
     height: "56px",
     width: "56px",

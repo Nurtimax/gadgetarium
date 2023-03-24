@@ -50,7 +50,7 @@ export const BREADCRUMBS = [
   },
   {
     path: ROUTES.COMPATISONPRODUCT,
-    breadcrumb: "comparison",
+    breadcrumb: "Сравнение товаров",
   },
   {
     path: `${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`,

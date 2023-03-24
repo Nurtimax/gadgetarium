@@ -80,7 +80,7 @@ const CartProductInBasket = ({
                   -
                 </ButtonCounter>
 
-                <TextCount>{orderCount + productCount}</TextCount>
+                <TextCount>{orderCount + productCount - 1}</TextCount>
 
                 <ButtonCounter
                   onClick={() => onPlus(id)}

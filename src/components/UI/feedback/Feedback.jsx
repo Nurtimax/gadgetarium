@@ -34,7 +34,7 @@ const Feedback = ({ open, onClose }) => {
       dispatch(postAddFeedback(values)).then((res) => {
         switch (res?.payload?.response?.data?.message) {
           case "This customer did not purchase this product":
-            return toast.warning("Отзыв только после покупке!"), onClose();
+            return toast.warning("Отзыв только после покупки!"), onClose();
           case "User has already added a review for this product":
             return (
               toast.error("Вы уже добавили отзыв об этом продукте!"), onClose()

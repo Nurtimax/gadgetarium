@@ -1,8 +1,11 @@
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { img_banner } from "../assets/images";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getBannerThunk } from "../redux/slices/banner-slice";
+import GadgetariumSpinnerLoading from "./GadgetariumSpinnerLoading";
 const Banner = () => {
   const settings = {
     dots: true,
@@ -14,19 +17,30 @@ const Banner = () => {
     autoplaySpeed: 3000,
     arrows: false,
   };
+
+  const { banners, isLoading, message } = useSelector((state) => state.banner);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBannerThunk());
+  }, []);
+
   return (
     <StyledWrapper>
+      {isLoading && <GadgetariumSpinnerLoading />}
       <Slider {...settings}>
-        {img_banner.map((image) => (
-          <WrapperStyled key={image.id}>
-            <div className="container">
-              <Styled_H3>GATGETARIUM</Styled_H3>
-              <Styled_H1>{image.title}</Styled_H1>
-              <Styled_H2>{image.desctop}</Styled_H2>
-            </div>
-            <StyledImg src={image.url} alt={image.id}></StyledImg>
-          </WrapperStyled>
-        ))}
+        {message ? (
+          <Typography variant="h5" component="h2">
+            {message}
+          </Typography>
+        ) : (
+          banners?.map((image) => (
+            <WrapperStyled key={image}>
+              <StyledImg src={image} alt=""></StyledImg>
+            </WrapperStyled>
+          ))
+        )}
       </Slider>
     </StyledWrapper>
   );
@@ -65,21 +79,4 @@ const StyledImg = styled("img")(() => ({
   objectFit: "cover",
   aspectRatio: "3/2",
   mixBlendMode: "color-burn",
-}));
-
-const Styled_H3 = styled("h3")(() => ({
-  fontWeight: " 900",
-  fontSize: "24px",
-  color: "#CB11AB",
-  margin: "92px 0 24px 0",
-}));
-const Styled_H1 = styled("h1")(() => ({
-  fontFamily: "'Thasadith', sans-serif;",
-  fontStyle: "normal",
-  fontWeight: "900",
-  fontSize: "50px",
-}));
-const Styled_H2 = styled("h2")(() => ({
-  fontWeight: "400",
-  fontSize: "50px",
 }));
