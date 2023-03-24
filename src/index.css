@@ -157,3 +157,22 @@ a {
 .wrap {
   flex-wrap: wrap;
 }
+/* input:-internal-autofill-selected {
+  appearance: inherit;
+  background-image: none !important;
+  background-color: white !important;
+  color: white !important;
+}
+input:-webkit-autofill {
+  color: #2a2a2a !important;
+  background-color: white !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+  background: white !important;
+  color: #555 !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #555555 !important;
+} */

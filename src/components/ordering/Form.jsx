@@ -1,7 +1,7 @@
 import { Box, FormLabel, styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import ReactInputMask from "react-input-mask";
+import { PatternFormat } from "react-number-format";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ActionsPaymant } from "../../redux/slices/paymant-slice";
@@ -129,12 +129,13 @@ const Form = ({ handleNext, data, isChecked }) => {
             Телефон
           </FormLabel>
           <StyledInputMask
-            mask="+996(999)99-99-99"
-            placeholder="+996 (_ _ _) _ _  _ _  _ _"
             name="phoneNumber"
             value={values.phoneNumber}
             onChange={handleChange}
             className={errors.phoneNumber && "error"}
+            format="+996 (###) ### ###"
+            mask="_"
+            placeholder="+996(_ _ _) _ _  _ _  _ _"
           />
         </Box>
         {isChecked ? (
@@ -204,7 +205,7 @@ const MainContainer = styled("form")(() => ({
   },
 }));
 
-const StyledInputMask = styled(ReactInputMask)(({ theme }) => ({
+const StyledInputMask = styled(PatternFormat)(({ theme }) => ({
   marginTop: "8px",
   width: "100%",
   height: "48px",

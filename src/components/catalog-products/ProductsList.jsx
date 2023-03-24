@@ -5,7 +5,13 @@ import Button from "../UI/button/Button";
 import ProductCard from "../UI/card/ProductCard";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 
-const ProductsList = ({ data, isLoading, sortField, discountField }) => {
+const ProductsList = ({
+  data,
+  isLoading,
+  sortField,
+  discountField,
+  dataCatalog,
+}) => {
   const { size } = useSelector((state) => state.filteredCatalog);
 
   const dispatch = useDispatch();
@@ -58,6 +64,7 @@ const ProductsList = ({ data, isLoading, sortField, discountField }) => {
             product.discountPrice,
             product.productStatus
           )}
+          dataCatalog={dataCatalog}
         />
       ))}
 

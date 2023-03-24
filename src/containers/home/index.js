@@ -17,6 +17,10 @@ import {
 import Button from "../../components/UI/button/Button";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
+import {
+  getAllCompareProducts,
+  getCountCompareProduct,
+} from "../../redux/slices/compare-slice";
 
 const Home = () => {
   const {
@@ -38,7 +42,6 @@ const Home = () => {
     discount: 5,
     recomendation: 5,
   });
-
   const onClickSize = useCallback(
     (e) => {
       setSize((prev) => ({ ...prev, [e.target.id]: prev[e.target.id] + 5 }));
@@ -63,6 +66,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(getBasketProduct());
     dispatch(getFavoriteProducts());
+    dispatch(getCountCompareProduct());
+    dispatch(getAllCompareProducts());
   }, [dispatch]);
 
   return (
@@ -92,8 +97,9 @@ const Home = () => {
                       productName={product.productName}
                       productPrice={product.productPrice}
                       productRating={product.productRating}
-                      productStatus={product.productStatus}
+                      productStatus="DISCOUNT"
                       viewed={product.viewed.toString()}
+                      firstSubproductId={product.firstSubproductId[0]}
                       size={size}
                     />
                   </Grid>
@@ -143,6 +149,7 @@ const Home = () => {
                       productStatus={product.productStatus}
                       viewed={product.viewed.toString()}
                       size={size}
+                      firstSubproductId={product.firstSubproductId[0]}
                     />
                   </Grid>
                 ))}
@@ -172,7 +179,7 @@ const Home = () => {
             <Styled_Error>Error {recomenError}</Styled_Error>
           ) : (
             <Global_Card>
-              <Typography variant="h4">Рекемендуем</Typography>
+              <Typography variant="h4">Мы рекомендуем</Typography>
               <Grid container spacing={2}>
                 {recommendationProduct?.map((product) => (
                   <Grid item xs={2.4} key={product.productId}>
@@ -191,6 +198,7 @@ const Home = () => {
                       productStatus={product.productStatus}
                       viewed={product.viewed.toString()}
                       size={size}
+                      firstSubproductId={product.firstSubproductId[0]}
                     />
                   </Grid>
                 ))}
@@ -230,6 +238,7 @@ const Container_Card = styled("div")(() => ({
 const Global_Card = styled("section")(() => ({
   display: "grid",
   gap: 40,
+  minHeight: "500px",
 }));
 const Styled_Error = styled("h1")(() => ({
   color: "red",

@@ -1,5 +1,5 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
-import ReactInputMask from "react-input-mask";
+import { PatternFormat } from "react-number-format";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import { contactsData, URLMAP } from "../../utils/constants";
@@ -53,8 +53,9 @@ const Contacts = () => {
               <ContainerInput>
                 <LabelInput>Телефон</LabelInput>
                 <StyledInputMask
-                  mask="+996(999)99-99-99"
-                  placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                  format="+996 (###) ### ###"
+                  mask="_"
+                  placeholder="+996(_ _ _) _ _  _ _  _ _"
                 />
               </ContainerInput>
             </ContainerInputSeperating>
@@ -82,6 +83,7 @@ export default Contacts;
 const ContainerPage = styled("div")`
   background-color: #f4f4f4;
   padding-bottom: 120px;
+  min-height: 500px;
 `;
 
 const ContainerSeparating = styled("form")`
@@ -131,7 +133,7 @@ const StyledInput = styled(Input)(() => ({
   backgroundColor: "#ffff !important",
 }));
 
-const StyledInputMask = styled(ReactInputMask)(() => ({ theme }) => ({
+const StyledInputMask = styled(PatternFormat)(() => ({ theme }) => ({
   backgroundColor: "#ffff !important",
   width: "338px",
   height: "48px",

@@ -48,10 +48,11 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
   };
 
   const handleToggle = (brandId, title) => {
-    dispatch(catalogSliceAction.chipsFromFilter({ title, id: 1 }));
     if (subCategoryName === title) {
+      dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
       return dispatch(filteredCatalogSliceAction.subCategoryNameElse(null));
     }
+    dispatch(catalogSliceAction.chipsFromFilter({ title, id: 1 }));
     return dispatch(
       filteredCatalogSliceAction.subCategoryName({
         id: brandId,
@@ -61,6 +62,10 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
   };
 
   const handleChangeColor = (colorCode, title) => {
+    if (colors.includes(colorCode)) {
+      dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
+      return dispatch(filteredCatalogSliceAction.colors(colorCode));
+    }
     dispatch(
       catalogSliceAction.chipsFromFilter({
         title,
@@ -69,9 +74,6 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
         colorCode,
       })
     );
-    if (colors.includes(colorCode)) {
-      return dispatch(filteredCatalogSliceAction.colors(colorCode));
-    }
     return dispatch(filteredCatalogSliceAction.colorsRemove(colorCode));
   };
 
