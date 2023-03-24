@@ -27,6 +27,7 @@ import mailingSlice from "./slices/mailing-slice";
 import compareSlice from "./slices/compare-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
 import { subscribeSlice } from "./slices/subscribe-slice";
+import bannerSlice from "./slices/banner-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -46,10 +47,11 @@ const rootReducer = combineReducers({
   mailing: mailingSlice.reducer,
   compareProducts: compareSlice.reducer,
   subscribe: subscribeSlice.reducer,
+  banner: bannerSlice.reducer,
 });
 
 const persistConfig = {
-  key: "root",
+  key: "GADGETARIUM",
   storage,
   whitelist: ["auth"],
 };
