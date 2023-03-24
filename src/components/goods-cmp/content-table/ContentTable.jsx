@@ -47,7 +47,7 @@ const ContentTable = () => {
               selectedItem={choosedItems}
               isSort
             />
-            {(data.pages > 1 && data.responseList?.length < 7) || (
+            {data.pages > 1 && (
               <Pagination
                 count={data.pages}
                 color="secondary"
