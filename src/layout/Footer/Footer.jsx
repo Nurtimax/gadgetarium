@@ -133,7 +133,7 @@ const Footer = () => {
               <Typography component="li" variant="body1" color="inherit">
                 <Message />
                 <Typography variant="body1" component="p">
-                  <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>
+                  <a href="mailto:gadgetariumph@gmail.com ">Gadgetarium.kg</a>
                 </Typography>
               </Typography>
               <div>

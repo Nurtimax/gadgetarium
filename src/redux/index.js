@@ -19,8 +19,9 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { orderingSlice } from "./slices/ordering-slice";
-import { favoriteProducts } from "./slices/favorite-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
+import compareSlice from "./slices/compare-slice";
+import { favoriteProducts } from "./slices/favorite-slice";
 import { paymantSlice } from "./slices/paymant-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
 import { subscribeSlice } from "./slices/subscribe-slice";
@@ -31,12 +32,13 @@ const rootReducer = combineReducers({
   product: productSlice.reducer,
   orderProduct: ordersProduct.reducer,
   basket: basketProducts.reducer,
-  catolog: catalogSlice.reducer,
+  catalog: catalogSlice.reducer,
   ordering: orderingSlice.reducer,
   filteredCatalog: filteredCatalogSlice.reducer,
   productDetails: productDetailsSlice.reducer,
   viewed: viewedProductSlice.reducer,
   favorite: favoriteProducts.reducer,
+  compareProducts: compareSlice.reducer,
   paymant: paymantSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
   subscribe: subscribeSlice.reducer,

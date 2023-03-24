@@ -1,5 +1,6 @@
 import { Badge, styled, Tooltip, tooltipClasses } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import FunctionalIconsItemTooltipTitle from "./FunctionalIconsItemTooltipTitle";
 
 const FunctionalIconsItem = ({
@@ -10,6 +11,7 @@ const FunctionalIconsItem = ({
   iconDefault,
   focused,
   iconRemoveItem,
+  link,
   ...props
 }) => {
   const [state, setState] = useState(focused);
@@ -27,7 +29,7 @@ const FunctionalIconsItem = ({
         onClick={toggleHandler}
       >
         <StyledBadge badgeContent={badgeContent?.length} color={color}>
-          {!state ? iconDefault : iconRemoveItem}
+          <Link to={link}>{!state ? iconDefault : iconRemoveItem}</Link>
         </StyledBadge>
       </StyledTooltip>
     </>

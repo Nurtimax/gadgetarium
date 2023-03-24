@@ -43,6 +43,10 @@ import {
   getFavoriteProducts,
   postFavoriteProducts,
 } from "../../../redux/slices/favorite-slice";
+import {
+  getAllCompareProducts,
+  postCompareProducts,
+} from "../../../redux/slices/compare-slice";
 
 const ProductCard = (props) => {
   const {
@@ -60,8 +64,10 @@ const ProductCard = (props) => {
     categoryId,
     firstSubproductId,
     size,
+    dataCatalog,
     ...rest
   } = props;
+
   const basketData = useSelector((state) => state.basket.data);
 
   const { isLoading, data } = useSelector((state) => state.auth);
@@ -75,6 +81,7 @@ const ProductCard = (props) => {
   const [error, setError] = useState(null);
 
   const [text, setText] = useState(["", "", ""]);
+
   const [loginText, setLoginText] = useState("");
 
   const [dropDown, setDropDown] = useState(false);
@@ -131,23 +138,54 @@ const ProductCard = (props) => {
     }
   }, [productStatus]);
 
+  const addProductToCompare = () => {
+    if (Object.keys(data).length === 0) {
+      setLoginText("чтобы добавить в список сравнения!");
+      setModalOpen(true);
+    } else {
+      dispatch(
+        postCompareProducts({
+          size,
+          productId,
+          dataCatalog,
+        })
+      ).then(() => {
+        compared
+          ? setText([
+              "Товар удалён из сравнения!",
+              "Перейти к сравнению",
+              "/comporative",
+            ])
+          : setText([
+              "Товар добавлен в список сравнения!",
+              "Перейти к сравнению",
+              "/comporative",
+            ]);
+
+        setDropDown(true);
+      });
+    }
+  };
+
   const onComponentComporation = useMemo(() => {
     if (compared) {
       return (
         <ComporativePinkIcon
           cursor="pointer"
-          title="Добавить к сравнению"
+          title="Удалить из списка сравнения"
           width="3.5vh"
           height="3.5vh"
+          onClick={addProductToCompare}
         />
       );
     }
     return (
       <Comporation
         cursor="pointer"
-        title="Удалить из сравнения"
+        title="Добавить в список сравнения"
         width="3.5vh"
         height="3.5vh"
+        onClick={addProductToCompare}
       />
     );
   }, [compared]);
@@ -157,21 +195,23 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в избранное!");
       setModalOpen(true);
     } else {
-      dispatch(postFavoriteProducts({ size, productId })).then(() => {
-        favorite
-          ? setText([
-              "Товар удалён из избранных!",
-              "Перейти в избранное",
-              "/favorite",
-            ])
-          : setText([
-              "Товар добавлен в избранное!",
-              "Перейти в избранное",
-              "/favorite",
-            ]);
+      dispatch(postFavoriteProducts({ size, productId, dataCatalog })).then(
+        () => {
+          favorite
+            ? setText([
+                "Товар удалён из избранных!",
+                "Перейти в избранное",
+                "/favorite",
+              ])
+            : setText([
+                "Товар добавлен в избранное!",
+                "Перейти в избранное",
+                "/favorite",
+              ]);
 
-        setDropDown(true);
-      });
+          setDropDown(true);
+        }
+      );
     }
   };
 
@@ -206,6 +246,7 @@ const ProductCard = (props) => {
           dispatch(ActionauthenticationSlice.getUserData(payload));
           dispatch(getBasketProduct());
           dispatch(getFavoriteProducts());
+          dispatch(getAllCompareProducts());
 
           location.reload();
           action.resetForm();
@@ -297,7 +338,7 @@ const ProductCard = (props) => {
               onClick={addBasketHandler}
               width="65%"
               height="2.5vw"
-              title="Добавить в карзину"
+              title="Добавить в корзину"
               fontSize="0.5rem"
               icon={<CartIcon width="1.5vw" />}
             >
@@ -500,7 +541,7 @@ const StyledProductCard = styled(Card)(() => ({
   display: "grid",
   gridRowGap: "1rem",
   "&:hover": {
-    boxShadow: "0 0 10px rgba(0,0,0,0.6)",
+    boxShadow: "0 0 10px rgba(0,0,0,0.2)",
   },
   "& .carsContent": {
     display: "grid",

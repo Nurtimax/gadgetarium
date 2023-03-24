@@ -4,6 +4,9 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
+import { getBasketProduct } from "../../redux/slices/basket-slice";
+import { getAllCompareProducts } from "../../redux/slices/compare-slice";
+import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
 const UserProfileList = () => {
@@ -17,6 +20,9 @@ const UserProfileList = () => {
   const logOutHandler = (title) => () => {
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
+      dispatch(getBasketProduct());
+      dispatch(getFavoriteProducts());
+      dispatch(getAllCompareProducts());
 
       location.reload();
     }

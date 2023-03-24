@@ -27,7 +27,7 @@ const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
 
   const { data, isLoading, errorMessage, filterSlice, colorResponses } =
-    useSelector((state) => state.catolog);
+    useSelector((state) => state.catalog);
 
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const CatalogProducts = () => {
   );
 
   const handleChangeChips = (title, id, colorCode) => {
-    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
+    console.log(title);
     dispatch(
       filteredCatalogSliceAction.removeCheckedProduct({
         key: typeof id === "number" ? "subCategoryName" : id,
@@ -48,6 +48,7 @@ const CatalogProducts = () => {
         colorCode,
       })
     );
+    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
   };
 
   const handelResetAllFilters = () => {
@@ -60,14 +61,14 @@ const CatalogProducts = () => {
     dispatch(catalogSliceAction.resetAllFilters());
   }, [catalogItem]);
 
+  const catalogData = {
+    ...filteredCatalog,
+    categoryName: findedCatalogItem.title,
+    colors: filteredCatalog.colors.join(","),
+  };
+
   useEffect(() => {
-    dispatch(
-      fetchDataCatalog({
-        ...filteredCatalog,
-        categoryName: findedCatalogItem.title,
-        colors: filteredCatalog.colors.join(","),
-      })
-    );
+    dispatch(fetchDataCatalog(catalogData));
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
 
@@ -95,7 +96,7 @@ const CatalogProducts = () => {
           <Box className="chip-and-sort">
             <Box className="chip-container">
               <Box className="chips">
-                {filterSlice?.map((item) => (
+                {filterSlice.map((item) => (
                   <Button
                     className="chip"
                     key={item.id}
@@ -132,6 +133,7 @@ const CatalogProducts = () => {
           )}
 
           <ProductsList
+            dataCatalog={catalogData}
             isLoading={isLoading}
             data={data}
             sortField={filteredCatalog.fieldToSort}
