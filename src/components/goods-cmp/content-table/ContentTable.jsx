@@ -35,28 +35,28 @@ const ContentTable = () => {
   return (
     <Grid item xs={12}>
       <StyledContentTable>
-        {data.responseList?.length >= 1 ? (
-          <>
-            <StyledTable
-              countOfOrders={data.responseList?.length}
-              data={data.responseList}
-              tableHeaderTitle={tableHeader}
-              isMarked={true}
-              found={true}
-              onChange={handleChange}
-              selectedItem={choosedItems}
-              isSort
-            />
-            {data.pages > 1 && (
-              <Pagination
-                count={data.pages}
-                color="secondary"
-                onChange={handleChangePagination}
-              />
-            )}
-          </>
-        ) : (
-          <Typography>Нет продукта {localParams.productType}</Typography>
+        <StyledTable
+          countOfOrders={data.responseList?.length}
+          data={data.responseList}
+          tableHeaderTitle={tableHeader}
+          isMarked={true}
+          found={true}
+          onChange={handleChange}
+          selectedItem={choosedItems}
+          isSort
+        />
+        {!data.responseList?.length && (
+          <Typography>
+            Нет продукта {String(localParams.productType).toLowerCase()}
+          </Typography>
+        )}
+
+        {(data.pages > 1 && !data.responseList?.length) || (
+          <Pagination
+            count={data.pages}
+            color="secondary"
+            onChange={handleChangePagination}
+          />
         )}
       </StyledContentTable>
     </Grid>
