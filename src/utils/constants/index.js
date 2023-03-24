@@ -105,8 +105,16 @@ export const iconsData = [
 
 export const socialIconsData = [
   { id: 1, icon: <FaceBookIcon />, href: "https://www.facebook.com/" },
-  { id: 3, icon: <InstagramIcon />, href: "https://www.instagram.com/" },
-  { id: 2, icon: <WhatsAppIcon />, href: "https://web.whatsapp.com/" },
+  {
+    id: 3,
+    icon: <InstagramIcon />,
+    href: "https://www.instagram.com/peaksoft.house/",
+  },
+  {
+    id: 2,
+    icon: <WhatsAppIcon />,
+    href: "https://api.whatsapp.com/send/?phone=996500344433&text&type=phone_number&app_absent=0",
+  },
 ];
 
 export const contactsData = [

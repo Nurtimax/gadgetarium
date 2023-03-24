@@ -46,8 +46,8 @@ const CompareProductCard = ({
     } else {
       dispatch(
         postProductToBasket({
-          orderCount: 154,
-          id,
+          orderCount: 1,
+          productId: id,
         })
       ).then(() => {
         setText(["Товар успешно добавлен в корзину!"]);
@@ -66,7 +66,7 @@ const CompareProductCard = ({
         addedTitle={text}
         durationSnackbar={2000}
         icon={true}
-        vertical="bottom"
+        vertical="top"
         horizontal="right"
         to="/cart"
       />
