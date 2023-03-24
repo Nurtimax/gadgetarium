@@ -50,11 +50,7 @@ const CompareProductCard = ({
           id,
         })
       ).then(() => {
-        setText([
-          "Товар успешно добавлен в корзину!",
-          "Перейти в корзину",
-          "/cart",
-        ]);
+        setText(["Товар успешно добавлен в корзину!"]);
 
         setDropDown(true);
       });
