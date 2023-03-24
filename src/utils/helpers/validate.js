@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const emailRegex = "^[a-z0-9](.?[a-z0-9]){5,}@g(oogle)?mail.com$";
-const phoneRegex = /^\+996\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
+const phoneRegex = /^\+996 \(\d{3}\) \d{3} \d{3}$/;
 
 export const singUpValidateSchema = yup.object().shape({
   firstname: yup.string().min(2).max(25).required("имя обязательное поле"),
