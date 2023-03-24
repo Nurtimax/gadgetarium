@@ -155,6 +155,7 @@ const Styled_texterea = styled("textarea")(() => ({
   height: "130px",
   border: "none",
   padding: "10px",
+  resize: "none",
 }));
 
 const Styled_Raring = styled(Box)(() => ({
