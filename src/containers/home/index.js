@@ -235,6 +235,7 @@ const Container_Card = styled("div")(() => ({
 const Global_Card = styled("section")(() => ({
   display: "grid",
   gap: 40,
+  minHeight: "500px",
 }));
 const Styled_Error = styled("h1")(() => ({
   color: "red",

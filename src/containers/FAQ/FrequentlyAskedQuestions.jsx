@@ -41,6 +41,7 @@ const FAQStyled = styled(Container)(() => ({
   width: "100%",
   fontFamily: "Inter",
   backgroundColor: "#f4f4f4",
+  minHeight: "500px",
 
   "&.MuiAccordion-root": {
     width: "100%",

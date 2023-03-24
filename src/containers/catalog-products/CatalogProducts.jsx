@@ -153,6 +153,7 @@ const Svg = styled(DeleteIconInCart)(() => ({
   },
 }));
 const ContainerStyled = styled(Container)(() => ({
+  minHeight: "500px",
   "& .text_header": {
     height: "83px",
     display: "flex",

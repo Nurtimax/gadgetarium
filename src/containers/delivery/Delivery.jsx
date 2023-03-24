@@ -1,8 +1,24 @@
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Box, Container, Grid, styled, Typography } from "@mui/material";
-import React from "react";
 import { delivery, paymentMethod } from "../../utils/constants";
+import { getProductDetailThunk } from "../../redux/slices/product-details-slice.js";
+import { useParams } from "react-router-dom";
 
 const Delivery = () => {
+  const dispatch = useDispatch();
+
+  const { product } = useParams();
+
+  useEffect(() => {
+    dispatch(
+      getProductDetailThunk({
+        product,
+        attribute: "Характеристики",
+      })
+    );
+  }, [dispatch]);
+
   return (
     <DeliveryStyled>
       <Container className="d_flex column root">
@@ -86,6 +102,7 @@ const Delivery = () => {
 export default Delivery;
 
 const DeliveryStyled = styled(Box)(() => ({
+  minHeight: "500px",
   fontFamily: "Inter",
   backgroundColor: "#f4f4f4",
   height: "100vh",

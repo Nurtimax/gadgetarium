@@ -121,8 +121,8 @@ const BasketItem = ({
         availableCount={countOfSubproduct}
         onPlus={onPlus}
         onMinus={onMinus}
-        isMinusDisabled={productCount === 1}
-        isPlusDisabled={productCount === countOfSubproduct}
+        isMinusDisabled={productCount + orderCount == 1}
+        isPlusDisabled={productCount + orderCount == countOfSubproduct}
         name={productName}
         onFavorite={onFavorite}
         onDelete={onDelete}

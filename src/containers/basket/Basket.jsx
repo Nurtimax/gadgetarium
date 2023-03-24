@@ -10,6 +10,7 @@ import GadgetariumSpinnerLoading from "../../components/GadgetariumSpinnerLoadin
 import Button from "../../components/UI/button/Button";
 import PopUp from "../../components/UI/PopUp";
 import {
+  ActionBasket,
   deleteProductBasket,
   getBasketProduct,
   postProductToFavorite,
@@ -87,7 +88,7 @@ const Basket = () => {
   };
 
   const orderCount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.orderCount) + curr.productCount;
+    return Number(acc) + Number(curr.orderCount) + curr.productCount - 1;
   }, 0);
 
   const discount = sumOrderData?.reduce((acc, curr) => {
@@ -97,6 +98,20 @@ const Basket = () => {
   const price = sumOrderData?.reduce((acc, current) => {
     return acc + current.productCount * current.price;
   }, 0);
+
+  const skidka = price / discount;
+  const itogo = price - price / discount;
+
+  const addSumOrder = () => {
+    dispatch(
+      ActionBasket.addSumOrderData({
+        count: orderCount,
+        price: price,
+        discount: skidka,
+        total: itogo,
+      })
+    );
+  };
 
   return (
     <>
@@ -172,7 +187,7 @@ const Basket = () => {
                       <span>-</span>
                       <span>
                         {priceProductSeparate(
-                          Number(String(parseInt(price / discount || 0)))
+                          Number(String(parseInt(skidka || 0)))
                         )}
                       </span>
                       <p>c</p>
@@ -189,14 +204,17 @@ const Basket = () => {
                       variant="span"
                     >
                       {priceProductSeparate(
-                        Number(String(parseInt(price - price / discount || 0)))
+                        Number(String(parseInt(itogo || 0)))
                       )}
                       <p>c</p>
                     </Typography>
                   </Box>
                 </Box>
 
-                <Link to={`/${ROUTES.CART}/${ROUTES.ORDERING}`}>
+                <Link
+                  to={`/${ROUTES.CART}/${ROUTES.ORDERING}`}
+                  onClick={addSumOrder}
+                >
                   <StyledButton>Перейти к оформлению</StyledButton>
                 </Link>
               </Box>
@@ -218,6 +236,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const MainContainer = styled(Container)(({ theme }) => ({
+  minHeight: "500px",
   marginBottom: "120px",
   marginTop: "10px",
   fontFamily: "Ubuntu",

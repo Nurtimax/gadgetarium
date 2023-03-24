@@ -356,7 +356,7 @@ const ProductCard = (props) => {
           to={text[2]}
           durationSnackbar={2000}
           icon={true}
-          vertical="bottom"
+          vertical="top"
           horizontal="right"
         />
 
