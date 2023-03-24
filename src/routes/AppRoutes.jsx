@@ -30,7 +30,7 @@ const AppRoutes = () => {
           element={
             <PrivateRoute
               Component={<AdminRoutes />}
-              role={["Admin"]}
+              role={["admin"]}
               fallbackPath="/admin"
             />
           }

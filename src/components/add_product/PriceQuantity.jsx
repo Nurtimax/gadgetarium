@@ -101,11 +101,20 @@ const PriceQuantity = () => {
     <StyledPriceQuantity component="form" onSubmit={handleSubmit}>
       <Grid container spacing={2.5} className="flex">
         <Grid item>
-          <Typography>Общая цена</Typography>
+          <Typography>
+            {editData.isChecked === "countOfProduct"
+              ? "Кол-во товара"
+              : "Общая Цена"}
+          </Typography>
           <StyledInput value={value} onChange={handleChange} type="number" />
         </Grid>
         <Grid item xs={10} className="setting_price_button">
-          <StyledButton type="submit">Установить цену</StyledButton>
+          <StyledButton type="submit">
+            Установить{" "}
+            {editData.isChecked === "countOfProduct"
+              ? "кол-во товара"
+              : " Цену"}
+          </StyledButton>
         </Grid>
         <Grid item>
           {error && (
@@ -152,13 +161,13 @@ const StyledInput = styled(Input)(() => ({
   borderRadius: "6px",
 }));
 const StyledButton = styled(Button)(({ theme }) => ({
-  width: "12rem",
+  width: "15rem",
   height: "47px",
   fontSize: "1rem",
   color: "#FFFFFF !important",
   background: theme.palette.secondary.main,
   "&:first-of-type": {
-    textTransform: "capitalize",
+    // textTransform: "capitalize",
   },
   "&.next_button": {
     width: "100px",

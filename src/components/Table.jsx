@@ -7,11 +7,13 @@ import {
   TableCell,
   TableBody,
   Checkbox,
+  Box,
 } from "@mui/material";
 import { default as MUITable } from "@mui/material/Table";
 import { useMemo } from "react";
 import { useTable } from "react-table";
 import { priceProductSeparate } from "../utils/helpers/general";
+import SortContent from "./goods-cmp/sort";
 
 const defaultColumnProps = {
   style: {
@@ -20,7 +22,16 @@ const defaultColumnProps = {
   },
 };
 
-const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
+const Table = ({
+  tableHeaderTitle,
+  data,
+  isMarked,
+  found,
+  countOfOrders,
+  onChange,
+  selectedItem = [],
+  isSort = false,
+}) => {
   const columns = useMemo(() => tableHeaderTitle, []);
   const dataTable = data || [];
 
@@ -38,7 +49,10 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
               return (
                 <>
                   <div className="checkbox">
-                    <Checkbox color="secondary" />
+                    <Checkbox
+                      color="secondary"
+                      onClick={() => onChange(row.original.id)}
+                    />
                   </div>
                   <div className="ID">
                     {priceProductSeparate(Number(String(row.original.id || 0)))}
@@ -89,9 +103,12 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
   return (
     <MainContainer marked={String(isMarked)}>
       {found ? (
-        <Typography className="foundOrderText">
-          Найдено {countOfOrders} заказов
-        </Typography>
+        <Box className="align-end between">
+          <Typography className="foundOrderText">
+            Найдено {countOfOrders} заказов
+          </Typography>
+          {isSort && <SortContent />}
+        </Box>
       ) : null}
 
       <MUITable {...getTableProps()}>
@@ -132,6 +149,10 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
                 })}
                 key={i}
                 checked={isMarked}
+                id={`table_row_item_${row.original.id}`}
+                index={
+                  selectedItem.includes(row.original.id) ? row.original.id : ""
+                }
               >
                 {row.cells.map((cell, i) => (
                   <TableCell
@@ -157,10 +178,14 @@ const Table = ({ tableHeaderTitle, data, isMarked, found, countOfOrders }) => {
 
 export default Table;
 
-const StyledTableRow = styled(TableRow)(({ theme, checked }) => ({
+const StyledTableRow = styled(TableRow)(({ theme, checked, index }) => ({
   padding: "20px",
   border: `1px solid ${theme.palette.grey[600]}`,
   borderRadius: "6px",
+
+  [`&#table_row_item_${index}`]: {
+    border: `1px solid ${theme.palette.secondary.main}`,
+  },
 
   "& .checkbox": {
     display: "none",

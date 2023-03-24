@@ -627,23 +627,5 @@ export const ITEM_SORT = [
   { id: 5, title: "По уменьшению цены" },
 ];
 
-export const filterCategory = [
-  {
-    id: 1,
-    tabTitle: "Phone",
-    title: "Смартфоны(7)",
-  },
-  {
-    id: 2,
-    tabTitle: "Laptop",
-    title: "Ноутбуки (3)",
-  },
-  {
-    id: 3,
-    tabTitle: "Headphone",
-    title: "Наушники (1)",
-  },
-];
-
 export const notFoundImage =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIGbwe-jg6PydY6QXFnfHtw4KuLq448Q_AAciwxsGRZg&s";

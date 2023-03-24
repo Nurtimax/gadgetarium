@@ -20,12 +20,13 @@ import {
 import storage from "redux-persist/lib/storage";
 import { orderingSlice } from "./slices/ordering-slice";
 import viewedProductSlice from "./slices/viewed-product-slice";
-import compareSlice from "./slices/compare-slice";
-import { favoriteProducts } from "./slices/favorite-slice";
+import goodsSlice from "./slices/goods-slice";
 import { paymantSlice } from "./slices/paymant-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
+import mailingSlice from "./slices/mailing-slice";
+import compareSlice from "./slices/compare-slice";
+import { favoriteProducts } from "./slices/favorite-slice";
 import { subscribeSlice } from "./slices/subscribe-slice";
-import { contactsForm } from "./slices/contacts";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -39,15 +40,16 @@ const rootReducer = combineReducers({
   productDetails: productDetailsSlice.reducer,
   viewed: viewedProductSlice.reducer,
   favorite: favoriteProducts.reducer,
-  compareProducts: compareSlice.reducer,
+  goods: goodsSlice.reducer,
   paymant: paymantSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
+  mailing: mailingSlice.reducer,
+  compareProducts: compareSlice.reducer,
   subscribe: subscribeSlice.reducer,
-  contacts: contactsForm.reducer,
 });
 
 const persistConfig = {
-  key: "root",
+  key: "GADGETARIUM",
   storage,
   whitelist: ["auth"],
 };

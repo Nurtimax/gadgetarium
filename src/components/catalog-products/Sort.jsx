@@ -32,6 +32,7 @@ const Sort = ({ anchorElCatalog, handleCloseCatalog }) => {
   };
   const clickSortHandler = (value) => () => {
     if (value !== "По акции") {
+      handleCloseCatalog();
       dispatch(filteredCatalogSliceAction.sortField(value));
     } else {
       dispatch(filteredCatalogSliceAction.sortField(null));

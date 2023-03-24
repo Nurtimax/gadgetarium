@@ -23,13 +23,10 @@ const DescriptionOverview = () => {
   const dispatch = useDispatch();
 
   const getImageLinkHandler = async (file) => {
-    if (file.name.length > 1000000) {
-      return setError(`pdf file is larger than ${1000000} characters`);
-    }
     setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
-    return axios({
+    axios({
       method: "POST",
       url: `${SWAGGER_API}file`,
       data: bodyFormData,
@@ -71,7 +68,6 @@ const DescriptionOverview = () => {
     accept: {
       "application/pdf": [],
     },
-    maxSize: 1000000,
   });
 
   return (

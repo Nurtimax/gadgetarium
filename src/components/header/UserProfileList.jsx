@@ -9,7 +9,7 @@ import { getAllCompareProducts } from "../../redux/slices/compare-slice";
 import { getFavoriteProducts } from "../../redux/slices/favorite-slice";
 import { userProfileStatus_FAKE_DATA } from "../../utils/constants";
 
-const UserProfileList = () => {
+const UserProfileList = ({ handleClick }) => {
   const { data } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -17,7 +17,8 @@ const UserProfileList = () => {
     return data?.roleName ? "enteredLogIn" : "enter";
   }, [data?.roleName]);
 
-  const logOutHandler = (title) => () => {
+  const logOutHandler = (title) => {
+    handleClick();
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
       dispatch(getBasketProduct());
@@ -34,7 +35,7 @@ const UserProfileList = () => {
         {userProfileStatus_FAKE_DATA[isLogIn].map((status) => (
           <Grid key={status.id} item xs={12}>
             <Link to={status.link}>
-              <MenuItem onClick={logOutHandler(status.title)}>
+              <MenuItem onClick={() => logOutHandler(status.title)}>
                 {status.title}
               </MenuItem>
             </Link>

@@ -35,6 +35,7 @@ const Home = () => {
       discountError,
       recomenError,
     },
+    auth,
   } = useSelector((store) => store);
 
   const [size, setSize] = useState({
@@ -64,10 +65,12 @@ const Home = () => {
   }, [size.recomendation]);
 
   useEffect(() => {
-    dispatch(getBasketProduct());
-    dispatch(getFavoriteProducts());
-    dispatch(getCountCompareProduct());
-    dispatch(getAllCompareProducts());
+    if (auth.data.token) {
+      dispatch(getBasketProduct());
+      dispatch(getFavoriteProducts());
+      dispatch(getCountCompareProduct());
+      dispatch(getAllCompareProducts());
+    }
   }, [dispatch]);
 
   return (
