@@ -58,6 +58,7 @@ const ProductCard = (props) => {
     compared,
     productId,
     categoryId,
+    firstSubproductId,
     size,
     ...rest
   } = props;
@@ -91,13 +92,13 @@ const ProductCard = (props) => {
       setLoginText("чтобы добавить в корзину!");
       setModalOpen(true);
     } else {
-      if (basketData?.some((item) => item.id === productId)) {
+      if (basketData?.some((item) => item.id === firstSubproductId)) {
         alert("Товар уже добавлен!");
       } else {
         dispatch(
           postProductToBasket({
             orderCount: 1,
-            productId,
+            productId: firstSubproductId,
           })
         ).then(() => {
           setText([
