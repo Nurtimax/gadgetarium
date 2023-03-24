@@ -45,14 +45,14 @@ axiosInstance.interceptors.response.use(
       // logout()
       // remove user from local storage
       // reseeet redux state
-      throw new Error("500 unauthorized");
+      return Promise.reject(new Error("500 unauthorized")); // Return the error as a rejected Promise
     }
     if (error.response?.status === 403) {
       store.dispatch(ActionauthenticationSlice.authLogOut());
       // logout()
       // remove user from local storage
       // reseeet redux state
-      throw new Error("500 unauthorized");
+      return Promise.reject(new Error("403 forbidden")); // Return the error as a rejected Promise
     }
     return Promise.reject(error);
   }
