@@ -44,6 +44,7 @@ const Favorite = () => {
                 {data?.map((product, i) => (
                   <ProductCard
                     key={i}
+                    firstSubproductId={product.firstSubproductId[0]}
                     categoryId={product.categoryId}
                     compared={product.compared}
                     count={product.count}

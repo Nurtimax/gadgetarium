@@ -154,7 +154,9 @@ const Footer = () => {
           </ContactsBox>
         </BoxContainer>
         <FooterBox>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
           <FooterBlock>
             © 2022 Gadgetarium. Интернет магазин Все права защищены.
           </FooterBlock>

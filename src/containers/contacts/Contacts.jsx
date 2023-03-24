@@ -1,13 +1,51 @@
 import { Container, InputLabel, styled, Typography } from "@mui/material";
+import { useFormik } from "formik";
 import { PatternFormat } from "react-number-format";
+import { useDispatch } from "react-redux";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
+import { postContacts } from "../../redux/slices/contacts";
 import { contactsData, URLMAP } from "../../utils/constants";
+import { showErrorss } from "../../utils/helpers/catch-signup";
+import { contactsValidationSchema } from "../../utils/helpers/validate";
 
 const Contacts = () => {
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+
+  const onSubmit = (values) => {
+    const phoneNumber = values.phoneNumber
+      .split("-")
+      .join("")
+      .split("(")
+      .join("")
+      .split(")")
+      .join("");
+
+    const requestData = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      phoneNumber,
+      text: values.text,
+    };
+
+    dispatch(postContacts(requestData));
   };
+
+  const { handleSubmit, values, handleChange, errors, isSubmitting } =
+    useFormik({
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        text: "",
+      },
+      onSubmit,
+      validationSchema: contactsValidationSchema,
+      validateOnChange: false,
+    });
+
   return (
     <ContainerPage>
       <Container>
@@ -33,29 +71,52 @@ const Contacts = () => {
             </ContainerDataGadgetarium>
           </ContainerAboutShop>
 
-          <FormMainContainer>
+          <FormMainContainer onSubmit={handleSubmit}>
             <FormMainTitle variant="h1" component="h5">
               Напишите нам
             </FormMainTitle>
             <ContainerInputSeperating>
               <ContainerInput>
-                <LabelInput>Имя</LabelInput>
-                <StyledInput placeholder="Напишите ваше имя" />
+                <LabelInput htmlFor="firstName">Имя</LabelInput>
+                <StyledInput
+                  placeholder="Напишите ваше имя"
+                  type="text"
+                  name="firstName"
+                  value={values.firstName}
+                  onChange={handleChange}
+                  id="firstName"
+                />
               </ContainerInput>
               <ContainerInput>
-                <LabelInput>Фамилия</LabelInput>
-                <StyledInput placeholder="Напишите вашу фамилию" />
+                <LabelInput htmlFor="lastName">Фамилия</LabelInput>
+                <StyledInput
+                  placeholder="Напишите вашу фамилию"
+                  name="lastName"
+                  value={values.lastName}
+                  onChange={handleChange}
+                  id="lastName"
+                />
               </ContainerInput>
               <ContainerInput>
-                <LabelInput>E-mail</LabelInput>
-                <StyledInput placeholder="Напишите ваш email" />
+                <LabelInput htmlFor="email">E-mail</LabelInput>
+                <StyledInput
+                  name="email"
+                  placeholder="Напишите ваш email"
+                  value={values.email}
+                  onChange={handleChange}
+                  id="email"
+                />
               </ContainerInput>
               <ContainerInput>
-                <LabelInput>Телефон</LabelInput>
+                <LabelInput htmlFor="phoneNumber">Телефон</LabelInput>
                 <StyledInputMask
                   format="+996 (###) ### ###"
                   mask="_"
                   placeholder="+996(_ _ _) _ _  _ _  _ _"
+                  value={values.phoneNumber}
+                  onChange={handleChange}
+                  name="phoneNumber"
+                  id="phoneNumber"
                 />
               </ContainerInput>
             </ContainerInputSeperating>
@@ -64,9 +125,29 @@ const Contacts = () => {
                 <TextareaTitle variant="h1" component="h5">
                   Сообщение
                 </TextareaTitle>
-                <StyledTextarea placeholder="Напишите сообщение" />
+                <StyledTextarea
+                  placeholder="Напишите сообщение"
+                  value={values.text}
+                  onChange={handleChange}
+                  name="text"
+                  id="text"
+                />
               </ContainerTextarea>
-              <StyledButton type="submit" onClick={onSubmit}>
+
+              {showErrorss(errors) && (
+                <Typography
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "10px",
+                  }}
+                  color="error"
+                >
+                  {showErrorss(errors)}
+                </Typography>
+              )}
+
+              <StyledButton type="submit" disabled={isSubmitting}>
                 отправить
               </StyledButton>
             </>
@@ -86,12 +167,12 @@ const ContainerPage = styled("div")`
   min-height: 500px;
 `;
 
-const ContainerSeparating = styled("form")`
+const ContainerSeparating = styled("div")`
   display: flex;
   justify-content: space-between;
 `;
 
-const FormMainContainer = styled("div")`
+const FormMainContainer = styled("form")`
   padding: 60px 0 120px;
 `;
 
@@ -166,18 +247,15 @@ const StyledTextarea = styled("textarea")(({ theme }) => ({
   resize: "none",
   padding: "12px 10px",
   background: "#FFFFFF",
-  border: "1px solid #CDCDCD",
+  border: `1px solid  ${theme.palette.grey[900]}`,
   borderRadius: "6px",
   outline: "none",
   fontFamily: "Inter",
   fontWeight: "400",
   fontSize: "1rem",
-  color: "#91969E",
   " &:focus": {
     border: `0.1px solid ${theme.palette.secondary.main}`,
-    background: `${theme.palette.background.default}`,
     borderRadius: "5px",
-    color: `${theme.palette.primary.dark}`,
   },
 }));
 
