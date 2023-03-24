@@ -49,8 +49,10 @@ const Delete = ({ fullName, id }) => {
       {open && (
         <StyledModal open={openModalWindow} handleClose={handleClose}>
           <Typography className="Box" variant="div">
-            <Typography>Вы уверены, что хотите удалить товар</Typography>
-            <Typography>{fullName || "Don't have"}?</Typography>
+            <Typography>
+              Вы уверены, что хотите удалить товар пользователя
+            </Typography>
+            <Typography>({fullName || "Don't have"})?</Typography>
           </Typography>
           <Box className="flex center gap2">
             <ButtonStyled

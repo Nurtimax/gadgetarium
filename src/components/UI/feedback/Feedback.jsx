@@ -110,7 +110,9 @@ const Feedback = ({ open, onClose }) => {
                 <CircularProgress color="secondary" />
               ) : (
                 values.images.map((item) => (
-                  <img key={item} src={item} alt={item} />
+                  <div key={item}>
+                    <img src={item} alt={item} />
+                  </div>
                 ))
               )}
             </Styled_img>
@@ -155,6 +157,7 @@ const Styled_Texterea = styled("textarea")(() => ({
   fontFamily: "Inter",
   fontSize: "14px",
   border: "1px solid #CDCDCD",
+  resize: "none",
 }));
 const Styled_Box = styled(Box)(() => ({
   width: "100%",
