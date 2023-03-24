@@ -136,6 +136,8 @@ const AddProduct = () => {
 export default AddProduct;
 
 const StyledAddProduct = styled(Box)(({ theme }) => ({
+  minHeight: "500px",
+
   "& .MuiSvgIcon-root": {
     height: "56px",
     width: "56px",

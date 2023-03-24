@@ -23,25 +23,17 @@ const steps = ["Варианты доставки", "Оплата", "Обзор 
 const Ordering = () => {
   const { data, isLoading } = useSelector((state) => state.ordering);
 
-  const { data: basketData, isLoading: loading } = useSelector(
-    (state) => state.basket
-  );
+  const {
+    data: basketData,
+    isLoading: loading,
+    sumOrderData,
+  } = useSelector((state) => state.basket);
 
   const [activeStep, setActiveStep] = useState(0);
 
   const [isChecked, setIsChecked] = useState(false);
 
-  const [sumOrderData, setSumOrderData] = useState([]);
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setSumOrderData(
-      basketData?.length > 0
-        ? basketData?.map((product) => ({ ...product, productCount: 1 }))
-        : []
-    );
-  }, [basketData]);
 
   useEffect(() => {
     dispatch(getUserData());
@@ -58,18 +50,6 @@ const Ordering = () => {
   const handlePickup = () => {
     setIsChecked(false);
   };
-
-  const orderCount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.orderCount);
-  }, 0);
-
-  const discount = sumOrderData?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.amountOfDiscount);
-  }, 0);
-
-  const price = sumOrderData?.reduce((acc, current) => {
-    return Number(acc) + Number(current.productCount) * Number(current.price);
-  }, 0);
 
   return (
     <>
@@ -159,7 +139,7 @@ const Ordering = () => {
                   </Box>
 
                   <Box>
-                    <Typography>{orderCount} шт.</Typography>
+                    <Typography>{sumOrderData.count} шт.</Typography>
                     <Typography
                       className="discount"
                       style={{
@@ -169,7 +149,7 @@ const Ordering = () => {
                     >
                       –{" "}
                       {priceProductSeparate(
-                        Number(String(parseInt(price / discount)))
+                        Number(String(parseInt(sumOrderData.discount)))
                       )}
                       <li>c</li>
                     </Typography>
@@ -179,7 +159,9 @@ const Ordering = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      {priceProductSeparate(Number(String(parseInt(price))))}
+                      {priceProductSeparate(
+                        Number(String(parseInt(sumOrderData.price)))
+                      )}
                       <li>c</li>
                     </Typography>
                   </Box>
@@ -193,7 +175,7 @@ const Ordering = () => {
                     }}
                   >
                     {priceProductSeparate(
-                      Number(String(parseInt(price - price / discount)))
+                      Number(String(parseInt(sumOrderData.total)))
                     )}
                     <li>c</li>
                   </Typography>
@@ -226,7 +208,7 @@ const Ordering = () => {
 
                       <Box className="rest-text">
                         <p>Артикул: {product.vendorCode}</p>
-                        <p>Кол-во: {product.orderCount}</p>
+                        {/* <p>Кол-во: {product.color}</p> */}
                         <p>Цвет: {product.color}</p>
                       </Box>
                     </Box>
@@ -245,6 +227,7 @@ export default Ordering;
 
 const MainContainer = styled(Container)(({ theme, ischecked }) => ({
   paddingBottom: "120px",
+  minHeight: "500px",
 
   "& .product-container": {
     display: "flex",

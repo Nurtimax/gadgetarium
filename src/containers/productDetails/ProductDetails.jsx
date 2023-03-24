@@ -10,10 +10,14 @@ import ProductData from "../../components/product-details/ProductData";
 import { getDicountPrice } from "./../../utils/helpers/get-discount-price";
 import { postProductToBasket } from "../../redux/slices/basket-slice";
 import PopUp from "../../components/UI/PopUp";
+import { postFavoriteProducts } from "../../redux/slices/favorite-slice";
+import { useParams } from "react-router-dom";
 const ProductDetails = ({ data, chooseItem, count, images }) => {
   const { subproducts = [] } = data;
-  // console.log(data);
-  const [text, setText] = useState("");
+
+  const { catalogItem, product } = useParams();
+
+  const [text, setText] = useState(["", "", ""]);
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -57,7 +61,11 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
           productId: findedSubProduct.id,
         })
       ).then(() => {
-        setText("Товар успешно добавлен в корзину!");
+        setText([
+          "Товар успешно добавлен в корзину!",
+          "Перейти в корзину",
+          "/cart",
+        ]);
         setDropDown(true);
       });
     }
@@ -66,19 +74,44 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
     setDropDown(false);
   };
 
+  const attribute = location.pathname
+    .split(`/item/${catalogItem}/${product}/`)
+    .join("");
+
+  const addToFavoriteHandler = () => {
+    dispatch(postFavoriteProducts({ productId: data.id, attribute })).then(
+      () => {
+        data.favorite
+          ? setText([
+              "Товар удалён из избранных!",
+              "Перейти в избранное",
+              "/favorite",
+            ])
+          : setText([
+              "Товар добавлен в избранное!",
+              "Перейти в избранное",
+              "/favorite",
+            ]);
+
+        setDropDown(true);
+      }
+    );
+  };
+
   return (
     <>
       <PopUp
         open={dropDown}
         handleClose={closeDropDown}
-        transitionTitle="Перейти в корзину"
-        addedTitle={text}
+        addedTitle={text[0]}
+        transitionTitle={text[1]}
+        to={text[2]}
         durationSnackbar={2000}
         icon={true}
-        vertical="bottom"
+        vertical="top"
         horizontal="right"
-        to="/cart"
       />
+
       <Styled_Container>
         <Grid container>
           <Grid className="logo" item xs={12}>
@@ -186,7 +219,10 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
                         )}
 
                         <div className="between">
-                          <Component_Button variant="outlined">
+                          <Component_Button
+                            variant="outlined"
+                            onClick={addToFavoriteHandler}
+                          >
                             {data.favorite ? (
                               <HeartActiveIcon />
                             ) : (
@@ -217,6 +253,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
 export default ProductDetails;
 const Styled_Container = styled("div")(() => ({
+  minHeight: "500px",
   "& p": {
     fontFamily: "Inter",
     fontStyle: "normal",

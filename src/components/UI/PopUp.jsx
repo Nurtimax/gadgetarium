@@ -45,6 +45,7 @@ export default PopUp;
 
 const Container = styled(Snackbar)(() => ({
   "& .MuiPaper-root": {
+    marginTop: "90px",
     background: "#202027",
   },
 }));

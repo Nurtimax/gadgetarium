@@ -15,7 +15,6 @@ const Home = lazy(() => import("../containers/home"));
 const Item = lazy(() => import("../containers/item/Item"));
 const Basket = lazy(() => import("../containers/basket/Basket"));
 const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
-const OrderPage = lazy(() => import("../containers/order-page/OrderPage"));
 const SignIn = lazy(() => import("../containers/sign-in/SignIn"));
 const SignUp = lazy(() => import("../containers/sign-up/Signup"));
 const Ordering = lazy(() => import("../containers/ordering/Ordering"));
@@ -112,15 +111,6 @@ const MainRoutes = () => {
               element={
                 <Suspense fallback={<GadgetariumSpinnerLoading />}>
                   <CharacteristicsTabItem />
-                </Suspense>
-              }
-            />
-
-            <Route
-              path={ROUTES.CHECKOUT}
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <OrderPage />
                 </Suspense>
               }
             />

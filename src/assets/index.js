@@ -33,6 +33,7 @@ export { ReactComponent as DeleteIconInCart } from "./icons/delete-icon-in-cart.
 export { default as ImageProductCardInBuscket } from "./images/product-image-in-buscket.png";
 export { default as ImageEmptyBasket } from "./images/basket-empty-photo.png";
 export { default as ImageEmptyFavorite } from "./images/empty-image-in-favorite.png";
+export { default as ImageEmpty } from "./images/empty.png";
 export { ReactComponent as Comporation } from "./icons/favoritesDefoult.svg";
 export { ReactComponent as Favorites } from "./icons/comporation.svg";
 export { ReactComponent as Like } from "./icons/like.svg";

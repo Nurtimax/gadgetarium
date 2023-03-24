@@ -68,12 +68,18 @@ const deleteProductBasket = createAsyncThunk(
 const initialState = {
   data: [],
   isLoading: false,
+  sumOrderData: {},
 };
 
 const basketProducts = createSlice({
   name: "basket",
   initialState,
-  reducers: {},
+  reducers: {
+    addSumOrderData: (state, action) => {
+      state.sumOrderData = action.payload;
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(getBasketProduct.fulfilled, (state, action) => {
