@@ -65,7 +65,7 @@ const Home = () => {
   }, [size.recomendation]);
 
   useEffect(() => {
-    if (auth.userToken) {
+    if (auth.data.token) {
       dispatch(getBasketProduct());
       dispatch(getFavoriteProducts());
       dispatch(getCountCompareProduct());
