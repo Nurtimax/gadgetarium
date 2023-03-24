@@ -94,6 +94,7 @@ const Home = () => {
                       productRating={product.productRating}
                       productStatus={product.productStatus}
                       viewed={product.viewed.toString()}
+                      firstSubproductId={product.firstSubproductId[0]}
                       size={size}
                     />
                   </Grid>
@@ -143,6 +144,7 @@ const Home = () => {
                       productStatus={product.productStatus}
                       viewed={product.viewed.toString()}
                       size={size}
+                      firstSubproductId={product.firstSubproductId[0]}
                     />
                   </Grid>
                 ))}
@@ -191,6 +193,7 @@ const Home = () => {
                       productStatus={product.productStatus}
                       viewed={product.viewed.toString()}
                       size={size}
+                      firstSubproductId={product.firstSubproductId[0]}
                     />
                   </Grid>
                 ))}
