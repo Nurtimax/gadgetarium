@@ -172,13 +172,15 @@ const Basket = () => {
                       <span>-</span>
                       <span>
                         {priceProductSeparate(
-                          Number(String(price / discount || 0))
+                          Number(String(parseInt(price / discount || 0)))
                         )}
                       </span>
                       <p>c</p>
                     </span>
                     <Typography className="sum" component="span" variant="span">
-                      {priceProductSeparate(Number(String(price || 0)))}
+                      {priceProductSeparate(
+                        Number(String(parseInt(price || 0)))
+                      )}
                       <p>c</p>
                     </Typography>
                     <Typography
@@ -187,7 +189,7 @@ const Basket = () => {
                       variant="span"
                     >
                       {priceProductSeparate(
-                        Number(String(price - price / discount || 0))
+                        Number(String(parseInt(price - price / discount || 0)))
                       )}
                       <p>c</p>
                     </Typography>

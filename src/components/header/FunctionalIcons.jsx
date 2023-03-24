@@ -11,7 +11,7 @@ const FunctionalIcons = () => {
   return (
     <Box className="flex gap2 height flex-end pointer">
       {iconsData.map((icon) => (
-        <Link key={icon.id} to={icon.title}>
+        <Link key={icon.id} to={icon.link}>
           <FunctionalIconsItem
             {...icon}
             badgeContent={

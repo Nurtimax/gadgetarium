@@ -1,52 +1,91 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getById } from "../../redux/slices/private-slice";
 import HistoryCard from "./HistoryCard";
 
 const HistoryDetails = () => {
+  const dispatch = useDispatch();
+  const { dataDetails } = useSelector((state) => state.private);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(getById(id));
+  }, []);
+  const btnStatus = useMemo(() => {
+    switch (dataDetails.deliveryStatus) {
+      case "IN_PROCESS":
+        return <button className="IN_PROCESS">В процессе</button>;
+      case "WAITING":
+        return <button className="WAITING">В ожидании</button>;
+
+      default:
+        return null;
+    }
+  }, [dataDetails.deliveryStatus]);
+  const paymant = useMemo(() => {
+    switch (dataDetails.payment) {
+      case "CASH":
+        return "Наличные";
+      case "PAYMENT_WITH_CARD":
+        return "Картой при получении";
+      case "PAYMENT_OFFLINE_WITH_CARD":
+        return "Оплата картой онлайн";
+
+      default:
+        return null;
+    }
+  }, []);
   return (
     <StyledContainer>
-      <Typography variant="h4">№ 1521751218</Typography>
-      <HistoryCard />
+      <Typography variant="h4">№ {dataDetails.orderNumber}</Typography>
+      <Grid container>
+        {dataDetails.subproducts?.map((item) => (
+          <Grid item xs={2.3} key={item.productId}>
+            <HistoryCard {...item} />
+          </Grid>
+        ))}
+      </Grid>
+
       <Grid container>
         <Grid item xs={12}>
           <Typography component="span" className="status">
             Статус
           </Typography>
           <Typography className="block">
-            <button className="expectation">О ожидании</button>
-            <button className="processing">В обработке</button>
+            {btnStatus}
+            {/* <button className="expectation">О ожидании</button>
+            <button className="processing">В обработке</button> */}
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={5}>
           <span>Клиент</span>
-          <p>Максат Максатбеков</p>
+          <p>{dataDetails.fullName}</p>
           <span>Имя</span>
-          <p>Максат</p>
-          <span>Область/регион </span>
-          <p>Чуй</p>
+          <p>{dataDetails.firstName}</p>
           <span>Адрес</span>
-          <p>Исанова 55</p>
+          <p>{dataDetails.address}</p>
           <span>Телефон</span>
-          <p>+996 707 123 456</p>
+          <p>{dataDetails.phoneNumber}</p>
           <span>Email</span>
-          <p>example@gmail.com</p>
+          <p>{dataDetails.email}</p>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={7}>
           <span>Дата</span>
-          <p>23.10.22 </p>
+          <p>{dataDetails.dateOfOrder}</p>
           <span>Способ оплаты</span>
-          <p>Наличные</p>
+          <p>{paymant}</p>
           <span>Фамилия </span>
-          <p>Максатбеков</p>
-          <span>Город</span>
-          <p>Чуй </p>
+          <p>{dataDetails.lastName}</p>
         </Grid>
         <Grid item xs={12} className="total">
           <div>
-            Скидка:<span>360c</span>
+            Скидка:<span> {dataDetails.discountPrice}c</span>
           </div>
           <div>
-            Итого:<span>3560c</span>
+            Итого:<span> {dataDetails.totalSum}c</span>
           </div>
         </Grid>
       </Grid>
@@ -90,9 +129,6 @@ const StyledContainer = styled(Box)(() => ({
     color: "#033152",
     cursor: "pointer",
   },
-  "& .expectation": {
-    background: "#BDDEF1",
-  },
   "& .processing": {
     background: "#F3DAA5",
   },
@@ -103,5 +139,13 @@ const StyledContainer = styled(Box)(() => ({
   "& .block": {
     display: "flex",
     gap: "10px 10px",
+  },
+  "& .IN_PROCESS": {
+    background: "#F3DAA5",
+    color: "black",
+  },
+  "& .CANCEL": {
+    background: "red",
+    color: "#fff",
   },
 }));

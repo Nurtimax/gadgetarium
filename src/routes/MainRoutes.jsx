@@ -9,6 +9,8 @@ import PersonalArea from "../containers/vip";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
+const Paymant = lazy(() => import("../containers/paymant/Paymant"));
+const PaymantMethod = lazy(() => import("../containers/paymant/PaymantMethod"));
 const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Favorite = lazy(() => import("../containers/favorite/Favorite"));
@@ -39,6 +41,7 @@ const ReviewsTabItem = lazy(() => {
 const MainProductDetails = lazy(() => {
   return import("../containers/productDetails/MainProductDetails");
 });
+import HistoryDetails from "./../containers/history/HistoryDetails";
 
 const MainRoutes = () => {
   const { auth } = useSelector((store) => store);
@@ -126,15 +129,7 @@ const MainRoutes = () => {
                 </Suspense>
               }
             />
-            <Route
-              path={ROUTES.CART}
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <Basket />
-                </Suspense>
-              }
-            />
-            <Route path={ROUTES.ORDERING} element={<h1>Ordering</h1>} />
+
             <Route
               path="reviews"
               element={
@@ -155,6 +150,15 @@ const MainRoutes = () => {
         </Route>
 
         <Route
+          path={ROUTES.CART}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Basket />
+            </Suspense>
+          }
+        />
+
+        <Route
           path={`${ROUTES.CART}/${ROUTES.ORDERING}`}
           element={
             <Suspense fallback={<GadgetariumSpinnerLoading />}>
@@ -162,6 +166,25 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <PaymantMethod />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path={`${ROUTES.CART}/${ROUTES.PAYMANT}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Paymant />
+            </Suspense>
+          }
+        />
+
         <Route path={ROUTES.COMPATISONPRODUCT} element={<h1>comparative</h1>} />
         <Route
           path={ROUTES.DELIVERY}
@@ -199,6 +222,7 @@ const MainRoutes = () => {
         <Route path={ROUTES.VIP} element={<PersonalArea />}>
           <Route index element={<Navigate to={ROUTES.HISTORY} />} />
           <Route path={ROUTES.HISTORY} element={<History />} />
+          <Route path={`${ROUTES.HISTORY}/:id`} element={<HistoryDetails />} />
           <Route path={ROUTES.PROFILE} element={<Profile />} />
           <Route path={ROUTES.LIKE} element={<Like />} />
         </Route>

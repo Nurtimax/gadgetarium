@@ -1,17 +1,42 @@
-import { Box, styled, Typography } from "@mui/material";
-import React from "react";
+import { Box, Grid, styled, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import Button from "../../components/UI/button/Button";
 import HistoryCard from "../history/HistoryCard";
 import LikeEmpty from "./LikeEmpty";
+import { useDispatch, useSelector } from "react-redux";
+import { getFavorites } from "../../redux/slices/private-slice";
+import { useParams } from "react-router-dom";
 
 const Like = () => {
+  const { id } = useParams();
+
+  const { dataFavorites } = useSelector((state) => state.private);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFavorites(id));
+  }, []);
+
   return (
     <StyledContainer>
-      <HistoryCard />
-      <Typography className="btn">
-        <StyledButton variant="outlined">Продолжить покупки</StyledButton>
-      </Typography>
-      <LikeEmpty />
+      {dataFavorites.length > 0 ? (
+        <>
+          <Grid container>
+            {dataFavorites?.map((item) => (
+              <Grid key={item.productId} xs={2.3}>
+                <HistoryCard {...item} />
+              </Grid>
+            ))}
+          </Grid>
+
+          <Typography className="btn">
+            <StyledButton variant="outlined">Продолжить покупки</StyledButton>
+          </Typography>
+        </>
+      ) : (
+        <LikeEmpty />
+      )}
     </StyledContainer>
   );
 };

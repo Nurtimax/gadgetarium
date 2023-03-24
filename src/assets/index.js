@@ -63,3 +63,8 @@ export { ReactComponent as StarIcon } from "./icons/starIcon.svg";
 export { ReactComponent as EmptyStarIcon } from "./icons/empty.svg";
 export { ReactComponent as EmptyHistory } from "./history-empty.svg";
 export { ReactComponent as EmptyLike } from "./empty-like.svg";
+export { ReactComponent as MasterCardPaymant } from "./icons/master-card.svg";
+export { ReactComponent as Addimage } from "./icons/add-photo.svg";
+export { ReactComponent as DeleteBinLine } from "./icons/delete-bin-line.svg";
+export { ReactComponent as EditLine } from "./icons/edit-line.svg";
+export { ReactComponent as AddImage } from "./add-image.svg";

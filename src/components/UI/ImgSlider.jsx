@@ -25,7 +25,7 @@ const ImgSlider = ({ images }) => {
       <CarouselStyle infiniteLoop showStatus={false} showIndicators={false}>
         {images?.map((img) => (
           <div key={img} onClick={open}>
-            <img src={img} alt="" />
+            <img src={img} alt="photo" />
           </div>
         ))}
       </CarouselStyle>
@@ -39,12 +39,12 @@ const CarouselStyle = styled(Carousel)(() => ({
   "& .carousel-slider": {
     display: "flex",
     justifyContent: "center",
+    mixBlendMode: "darken",
   },
-  "& .thumb": {
-    border: "none",
-  },
-  "& .thumb:hover": {
+
+  "& .carousel .thumb:hover": {
     border: "2px solid #cb11ab",
+    borderRadius: "10px",
   },
 
   "& .slider-wrapper": {
@@ -59,9 +59,10 @@ const CarouselStyle = styled(Carousel)(() => ({
   "& .thumbs": {
     display: "flex",
     justifyContent: "center",
-    "& .selected": {
-      border: "2px solid #cb11ab",
-    },
+  },
+
+  "& .carousel .thumb.selected": {
+    border: "2px solid #cb11ab",
   },
 
   "& button": {

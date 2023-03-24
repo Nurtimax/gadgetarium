@@ -53,6 +53,14 @@ export const BREADCRUMBS = [
     breadcrumb: "comparison",
   },
   {
+    path: `${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`,
+    breadcrumb: "Оформление заказа",
+  },
+  {
+    path: `${ROUTES.CART}/${ROUTES.PAYMANT}`,
+    breadcrumb: "Оформление заказа",
+  },
+  {
     path: ROUTES.DELIVERY,
     breadcrumb: "Доставка",
   },
@@ -71,6 +79,10 @@ export const BREADCRUMBS = [
   {
     path: `${ROUTES.VIP}/${ROUTES.HISTORY}`,
     breadcrumb: "История заказов",
+  },
+  {
+    path: `${ROUTES.VIP}/${ROUTES.HISTORY}/:id`,
+    breadcrumb: null,
   },
   {
     path: `/${ROUTES.LIKE}`,

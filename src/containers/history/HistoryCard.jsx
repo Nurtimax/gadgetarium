@@ -2,14 +2,19 @@ import { Box, Rating, styled, Typography } from "@mui/material";
 import React from "react";
 import { EmptyStarIcon, StarIcon } from "../../assets";
 
-const HistoryCard = () => {
+const HistoryCard = ({
+  productImage,
+  productName,
+  countOfReview,
+  productPrice,
+}) => {
   return (
     <div>
-      <StyledViewedProductCard image="https://mstore.kg/wp-content/uploads/2021/11/iphone-13-pink-select-2021-1.png">
+      <StyledViewedProductCard image={productImage}>
         <Box className="image" />
         <Box className="padding info">
           <Typography component="p" className="title">
-            iphone 14 pro max
+            {productName}
           </Typography>
           <Box className="box">
             Рейтинг
@@ -22,10 +27,10 @@ const HistoryCard = () => {
               icon={<StarIcon />}
               emptyIcon={<EmptyStarIcon />}
             />
-            {/* ({productRating}) */}
+            ({countOfReview})
           </Box>
           <Typography component="h5" variant="h5" className="price">
-            {/* {priceProductSeparate(productPrice)} c */}2000c
+            {productPrice} c
           </Typography>
         </Box>
       </StyledViewedProductCard>

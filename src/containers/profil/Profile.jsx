@@ -1,15 +1,56 @@
 import { Box, Grid, styled, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
+import PassordProfile from "./PassordProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile, putProfile } from "../../redux/slices/private-slice";
+import { useFormik } from "formik";
+import ProfileImg from "./ProfileImg";
+import { singUpValidateSchema } from "../../utils/helpers/validate";
 
 const Profile = () => {
+  const [password, setPassword] = useState(false);
+
+  const { dataInfoProfile } = useSelector((state) => state.private);
+
+  const { handleChange, handleSubmit, values, setValues, setFieldValue } =
+    useFormik({
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        address: null,
+        image: "",
+      },
+      onSubmit: (value) => {
+        dispatch(putProfile(value));
+      },
+      validationSchema: singUpValidateSchema,
+      validateOnChange: false,
+    });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
+
+  const onclickHandler = () => {
+    setPassword(true);
+  };
+
+  useEffect(() => {
+    setValues(dataInfoProfile);
+  }, [dataInfoProfile]);
+
   return (
     <StyledContainer>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Grid container>
-          <Grid item xs={3}>
-            img
+          <Grid item xs={3} className="padding">
+            <ProfileImg setFieldValue={setFieldValue} values={values} />
           </Grid>
           <Grid item xs={7}>
             <Grid container>
@@ -21,13 +62,27 @@ const Profile = () => {
                   <label>
                     Имя <span>*</span>
                   </label>
-                  <StyledInput backcolor="white" placeholder="Имя" />
+                  <StyledInput
+                    backcolor="white"
+                    placeholder="Имя"
+                    name="firstName"
+                    type="text"
+                    value={values.firstName}
+                    onChange={handleChange}
+                  />
                 </Box>
                 <Box className="box">
                   <label>
                     Фамилия <span>*</span>
                   </label>
-                  <StyledInput backcolor="white" placeholder="Фамилия" />
+                  <StyledInput
+                    backcolor="white"
+                    placeholder="Фамилия"
+                    type="text"
+                    name="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={12} className="flex between block">
@@ -35,23 +90,45 @@ const Profile = () => {
                   <label>
                     E-mail <span>*</span>
                   </label>
-                  <StyledInput backcolor="white" placeholder="E-mail " />
+                  <StyledInput
+                    backcolor="white"
+                    placeholder="E-mail"
+                    type="email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                  />
                 </Box>
                 <Box className="box">
                   <label>
                     Телефон <span>*</span>
                   </label>
-                  <StyledInput backcolor="white" placeholder="Телефон" />
+                  <StyledInput
+                    backcolor="white"
+                    placeholder="Телефон"
+                    type="tel"
+                    name="phoneNumber"
+                    value={values.phoneNumber}
+                    onChange={handleChange}
+                  />
                 </Box>
               </Grid>
+
               <Grid item xs={12} className="box block">
                 <label>
                   Адрес доставки <span>*</span>
                 </label>
                 <StyleInput backcolor="white" placeholder="Адрес доставки" />
               </Grid>
+              {password && <PassordProfile />}
+
               <Grid item xs={12} className="p block">
-                <p>Сменить пароль</p>
+                {!password && (
+                  <p onClick={onclickHandler} className="pointer">
+                    Сменить пароль
+                  </p>
+                )}
+
                 <Box className="flex gap2">
                   <StyledButton variant="outlined">Назад</StyledButton>
                   <StyledButton variant="contained">Редактировать</StyledButton>
@@ -84,6 +161,9 @@ const StyledContainer = styled(Box)(() => ({
   },
   "& .block": {
     paddingTop: "10px",
+  },
+  "& .password": {
+    paddingBottom: "20px",
   },
 }));
 const StyledInput = styled(Input)(() => ({

@@ -10,9 +10,6 @@ const PersonalArea = () => {
   const onClickButton = (id) => {
     setTitle(head[id].label);
   };
-  // useEffect(() => {
-  //   setTitle(head[0].label);
-  // }, []);
   const active = useMemo(() => {
     return location.pathname.split("/vip/").join("");
   }, [location]);
