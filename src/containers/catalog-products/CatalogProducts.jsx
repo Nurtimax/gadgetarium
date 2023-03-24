@@ -40,7 +40,6 @@ const CatalogProducts = () => {
   );
 
   const handleChangeChips = (title, id, colorCode) => {
-    console.log(title);
     dispatch(
       filteredCatalogSliceAction.removeCheckedProduct({
         key: typeof id === "number" ? "subCategoryName" : id,
@@ -57,6 +56,13 @@ const CatalogProducts = () => {
   };
 
   useEffect(() => {
+    dispatch(
+      fetchDataCatalog({
+        ...filteredCatalog,
+        categoryName: findedCatalogItem.title,
+        colors: filteredCatalog.colors.join(","),
+      })
+    );
     dispatch(filteredCatalogSliceAction.resetState());
     dispatch(catalogSliceAction.resetAllFilters());
   }, [catalogItem]);
@@ -71,6 +77,11 @@ const CatalogProducts = () => {
     dispatch(fetchDataCatalog(catalogData));
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
+
+  useEffect(() => {
+    // dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
 
   return (
     <ContainerStyled>

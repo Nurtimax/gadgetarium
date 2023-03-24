@@ -223,10 +223,10 @@ export default AddBanner;
 
 const StyledModal = styled(Modal)(() => ({
   "& .MuiDialogContent-root": {
+    padding: "2.5rem 1.5rem",
     display: "flex",
     flexDirection: "column",
     gap: 24,
-    width: "544px",
     alignItems: "center",
   },
   "& .buttons": {

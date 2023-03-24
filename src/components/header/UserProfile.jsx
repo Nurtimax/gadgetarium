@@ -25,7 +25,7 @@ const UserProfile = () => {
           horizontal="left"
           classes={{ paper: "drop_paper" }}
         >
-          <UserProfileList />
+          <UserProfileList handleClick={handleClick} />
         </StyledDropDown>
       </Box>
     </Box>

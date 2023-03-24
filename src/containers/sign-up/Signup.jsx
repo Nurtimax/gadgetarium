@@ -24,12 +24,11 @@ const SignUp = () => {
 
   const onSubmit = async (values, action) => {
     const phoneNumber = values.phoneNumber
-      .split("-")
-      .join("")
       .split("(")
       .join("")
       .split(")")
-      .join("");
+      .join("")
+      .replace(/\s/g, "");
 
     const registerData = {
       ...values,

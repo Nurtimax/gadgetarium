@@ -231,6 +231,7 @@ const Forms = () => {
                   {values.subProductRequests.map((subProduct, index) => (
                     <StyledButton
                       key={index}
+                      type="button"
                       variant="outlined"
                       className={`product_button ${
                         index === Number(getProductIdParam)
@@ -256,6 +257,7 @@ const Forms = () => {
                 <StyledButton
                   className="create_product"
                   variant="text"
+                  type="button"
                   onClick={addNewProduct}
                 >
                   <PlusIcon /> Добавить продукт
@@ -421,9 +423,6 @@ const StyledFormControl = styled(Box)(() => ({
     fontSize: "16px",
     lineHeight: "19px",
     color: "#91969E",
-  },
-  "& .MuiFormLabel-asterisk": {
-    color: "red",
   },
   "& .MuiSvgIcon-root": {
     display: "none",

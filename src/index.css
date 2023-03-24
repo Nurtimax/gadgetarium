@@ -36,6 +36,14 @@ code {
 .flex-end {
   justify-content: flex-end;
 }
+.align-end {
+  display: flex;
+  align-items: flex-end;
+}
+.align-start {
+  display: flex;
+  align-items: flex-start;
+}
 .flex-start {
   display: flex;
   justify-content: flex-start;
@@ -136,6 +144,10 @@ a {
 
 .MuiPickersPopper-paper > div > div:first-of-type {
   display: none !important;
+}
+
+.MuiFormLabel-asterisk {
+  color: red;
 }
 
 .grid {

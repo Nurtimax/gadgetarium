@@ -16,10 +16,12 @@ import { useDispatch } from "react-redux";
 import Modal from "../UI/Modal";
 import useVisibility from "../../hooks/useVisibility";
 import { useNavigate } from "react-router-dom";
+import MailGenius from "./MailGenius";
 
 const AdminProfile = () => {
   const [anchorEl, toggleAnchorElHandler, open] = useDropDown();
   const [openModal, setOpenModal] = useVisibility();
+  const [openMailing, setOpenMailing] = useDropDown();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,7 +60,8 @@ const AdminProfile = () => {
         </Box>
       </StyledModal>
       <Box className="flex gap2 between">
-        <ButtonStyled>Создать рассылку</ButtonStyled>
+        <MailGenius openModal={openMailing} setOpenModal={setOpenMailing} />
+        <ButtonStyled onClick={setOpenMailing}>Создать рассылку</ButtonStyled>
         <Divider
           flexItem
           orientation="vertical"

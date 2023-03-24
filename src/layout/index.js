@@ -13,7 +13,7 @@ const Layout = () => {
           <BreadCrumbs />
         </StyledBreadcrumbsPosition>
       </Container>
-      <main>
+      <main id="main">
         <Outlet />
       </main>
       <Footer />
@@ -33,6 +33,9 @@ const StyledLayoutWrapper = styled(Box)(() => ({
   },
   "& .admin_stop": {
     padding: "0 0 6rem",
+  },
+  "& #main": {
+    minHeight: "80vh",
   },
 }));
 

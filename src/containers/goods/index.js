@@ -1,19 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AddBanner from "../../components/add_banner";
-import Button from "../../components/UI/button/Button";
-import useVisibility from "../../hooks/useVisibility";
+import { Box, Container, Grid, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddProductButton from "../../components/goods-cmp/buttons/AddProductButton";
+import ContentDatePicker from "../../components/goods-cmp/content-date-picker/ContentDatePicker";
+import ContentTab from "../../components/goods-cmp/content-tab";
+import ContentTable from "../../components/goods-cmp/content-table/ContentTable";
+import SearchItem from "../../components/goods-cmp/search/SearchItem";
+import { getProductsThunk } from "../../redux/slices/goods-slice";
 
 const Goods = () => {
-  const [openModal, setOpenModal] = useVisibility();
+  const { params } = useSelector((state) => state.goods);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (params.productType && params.page) {
+      dispatch(getProductsThunk(params));
+    }
+  }, [params]);
+
   return (
-    <div>
-      <h5>goods</h5>
-      <Button onClick={setOpenModal}>Open Banner Modal</Button>
-      <AddBanner openModal={openModal} setOpenModal={setOpenModal} />
-      <Link to="add-product/part-1">add product</Link>
-    </div>
+    <StyledGoods>
+      <Container>
+        <Grid container spacing={3} className="flex between">
+          <SearchItem />
+          <AddProductButton />
+          <ContentTab />
+          <ContentDatePicker />
+          <ContentTable />
+        </Grid>
+      </Container>
+    </StyledGoods>
   );
 };
 
 export default Goods;
+
+const StyledGoods = styled(Box)(() => ({
+  padding: "0 0 130px",
+}));
