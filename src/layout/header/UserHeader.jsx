@@ -70,7 +70,9 @@ const UserHeader = () => {
                 lg={2.5}
                 className={`${!isScroll ? "none" : ""}`}
               >
-                <Logo />
+                <Link to="/">
+                  <Logo />
+                </Link>
               </Grid>
               <Grid item xl={1.5} lg={1.6} className="flex gap2">
                 <Box className="flexgrow flex height">

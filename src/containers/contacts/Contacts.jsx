@@ -2,6 +2,7 @@ import { Container, InputLabel, styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { PatternFormat } from "react-number-format";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
 import { postContacts } from "../../redux/slices/contacts";
@@ -11,6 +12,7 @@ import { contactsValidationSchema } from "../../utils/helpers/validate";
 
 const Contacts = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
     const phoneNumber = values.phoneNumber
@@ -29,7 +31,9 @@ const Contacts = () => {
       text: values.text,
     };
 
-    dispatch(postContacts(requestData));
+    dispatch(postContacts(requestData)).then(() => {
+      navigate("/");
+    });
   };
 
   const { handleSubmit, values, handleChange, errors, isSubmitting } =
