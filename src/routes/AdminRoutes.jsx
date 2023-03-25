@@ -18,6 +18,18 @@ const PriceQuantity = lazy(() => {
 const DescriptionOverview = lazy(() => {
   return import("../components/add_product/DescriptionOverview");
 });
+const CharacteristicsTabItem = lazy(() => {
+  return import("../components/product-details/CharacteristicsTabItem");
+});
+const DescriptionTabItem = lazy(() => {
+  return import("../components/product-details/DescriptionTabItem");
+});
+const ReviewsTabItem = lazy(() => {
+  return import("../components/product-details/ReviewsTabItem");
+});
+const MainProductDetails = lazy(() => {
+  return import("../containers/productDetails/MainProductDetails");
+});
 
 const AdminRoutes = () => {
   return (
@@ -48,6 +60,41 @@ const AdminRoutes = () => {
               </Suspense>
             }
           />
+          <Route
+            path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <MainProductDetails />
+              </Suspense>
+            }
+          >
+            <Route
+              path="description"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <DescriptionTabItem />
+                </Suspense>
+              }
+            />
+            <Route
+              path="characteristics"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <CharacteristicsTabItem />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="reviews"
+              element={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <ReviewsTabItem />
+                </Suspense>
+              }
+            />
+          </Route>
+
           <Route
             path={`${ROUTES.ORDERS}/:orderId`}
             element={
