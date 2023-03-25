@@ -11,8 +11,6 @@ export const orderStatus = (orderTitle) => {
       return "В пути";
     case "IN_PROCESSING":
       return "В процессе";
-    // case "CANCEL":
-    //   return "Отменен";
 
     default:
       return null;

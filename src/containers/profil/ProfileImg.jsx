@@ -1,14 +1,20 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, CircularProgress, styled, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AddImage } from "../../assets";
 import { SWAGGER_API } from "../../utils/constants/fetch";
 
 const ProfileImg = ({ setFieldValue, values }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const getImageLinkHandler = async (file) => {
+    setIsLoading(true);
     const bodyFormData = new FormData();
     bodyFormData.append("file", file[0]);
+    if (values) {
+      removeImageLinkHandler(values);
+    }
     axios({
       method: "POST",
       url: `${SWAGGER_API}file`,
@@ -16,10 +22,11 @@ const ProfileImg = ({ setFieldValue, values }) => {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then((response) => {
-        setFieldValue("images", [...values.images, response.data.link]);
+        setFieldValue("image", response.data.link);
+        setIsLoading(false);
       })
       .catch(() => {
-        // setIsLoading(false);
+        setIsLoading(false);
       });
   };
 
@@ -29,11 +36,42 @@ const ProfileImg = ({ setFieldValue, values }) => {
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
   });
+
+  const removeImageLinkHandler = (fileLink) => {
+    setIsLoading(true);
+    axios({
+      method: "DELETE",
+      url: `${SWAGGER_API}file`,
+      data: {},
+      headers: { "Content-Type": "multipart/form-data" },
+      params: { fileLink },
+    })
+      .then(() => {
+        setFieldValue("image", "");
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <StyledImage {...getRootProps()}>
       <Typography variant="input" {...getInputProps()} />
-      <AddImage className="img" />
-      <p>Нажмите для добавления фотографии</p>
+      {values ? (
+        <Box className="flex column center">
+          {isLoading && (
+            <CircularProgress className="loading" color="secondary" />
+          )}
+          <StyledProfileImage image={values} />
+          <p className="p">Сменить фото</p>
+        </Box>
+      ) : (
+        <>
+          <AddImage className="img" />
+          <p className="pust">Нажмите для добавления фотографии</p>
+        </>
+      )}
     </StyledImage>
   );
 };
@@ -45,11 +83,31 @@ const StyledImage = styled(Box)(() => ({
   fontStyle: "normal",
   fontWeight: 500,
   fontSize: "16px",
-  "& p": {
-    color: " #91969E",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  "& .p": {
+    color: " blue",
     cursor: "pointer",
   },
   "& .img": {
     cursor: "pointer",
   },
+  "& .pust": {
+    color: "grey",
+  },
+  "& .loading": {
+    paddingTop: "10px",
+  },
+}));
+
+const StyledProfileImage = styled(Box)(({ image }) => ({
+  background: `url(${image})`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  width: "100px",
+  height: "100px",
+  borderRadius: "50%",
 }));

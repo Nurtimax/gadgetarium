@@ -40,7 +40,7 @@ const HistoryCard = ({
 
 export default HistoryCard;
 const StyledViewedProductCard = styled(Box)(({ image }) => ({
-  width: "210px",
+  width: "230px",
   height: "354px",
   borderRadius: "4px",
   background: "#FFFFFF",

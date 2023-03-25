@@ -2,14 +2,14 @@ import React, { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
-import History from "../containers/history/History";
-import Like from "../containers/like/Like";
-import Profile from "../containers/profil/Profile";
-import PersonalArea from "../containers/vip";
 import { ROUTES } from "../utils/constants/routes";
 import PrivateRoute from "./PrivateRoute";
 
 const Paymant = lazy(() => import("../containers/paymant/Paymant"));
+const Profile = lazy(() => import("../containers/profil/Profile"));
+const Like = lazy(() => import("../containers/like/Like"));
+const History = lazy(() => import("../containers/history/History"));
+const PersonalArea = lazy(() => import("../containers/vip"));
 const PaymantMethod = lazy(() => import("../containers/paymant/PaymantMethod"));
 const Layout = lazy(() => import("../layout"));
 const Delivery = lazy(() => import("../containers/delivery/Delivery"));
@@ -217,12 +217,53 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
-        <Route path={ROUTES.VIP} element={<PersonalArea />}>
+        <Route
+          path={ROUTES.VIP}
+          element={
+            <PrivateRoute
+              Component={
+                <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                  <PersonalArea />
+                </Suspense>
+              }
+              role={["Customer"]}
+              fallbackPath="/vip"
+            />
+          }
+        >
           <Route index element={<Navigate to={ROUTES.HISTORY} />} />
-          <Route path={ROUTES.HISTORY} element={<History />} />
-          <Route path={`${ROUTES.HISTORY}/:id`} element={<HistoryDetails />} />
-          <Route path={ROUTES.PROFILE} element={<Profile />} />
-          <Route path={ROUTES.LIKE} element={<Like />} />
+          <Route
+            path={ROUTES.HISTORY}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <History />
+              </Suspense>
+            }
+          />
+          <Route
+            path={`${ROUTES.HISTORY}/:id`}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <HistoryDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTES.PROFILE}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <Profile />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTES.LIKE}
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <Like />
+              </Suspense>
+            }
+          />
         </Route>
       </Route>
       <Route

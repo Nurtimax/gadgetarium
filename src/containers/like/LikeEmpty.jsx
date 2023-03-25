@@ -2,6 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { EmptyLike } from "../../assets";
 import Button from "../../components/UI/button/Button";
+import { Link } from "react-router-dom";
 
 const LikeEmpty = () => {
   return (
@@ -17,7 +18,9 @@ const LikeEmpty = () => {
           добавьте их в избранное!
         </p>
         <Typography>
-          <Button variant="contained">К покупкам</Button>
+          <Link to={`/`}>
+            <Button variant="contained">К покупкам</Button>
+          </Link>
         </Typography>
       </Typography>
     </StyledContainer>

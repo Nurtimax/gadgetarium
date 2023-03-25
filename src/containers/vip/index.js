@@ -1,22 +1,32 @@
 import { Container, styled, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { clearHistory } from "../../redux/slices/private-slice";
 import { head } from "../../utils/constants";
 import { ROUTES } from "../../utils/constants/routes";
 
 const PersonalArea = () => {
   const [title, setTitle] = useState(head[0].label);
+
   const location = useLocation();
+
+  const dispatch = useDispatch();
+
   const onClickButton = (id) => {
     setTitle(head[id].label);
   };
+
   const active = useMemo(() => {
     return location.pathname.split("/vip/").join("");
   }, [location]);
 
+  const clearHandler = () => {
+    dispatch(clearHistory());
+  };
   return (
     <StyledContainer>
-      <Typography className="header">
+      <Typography className="header" component="div">
         <Typography variant="h4">{title}</Typography>
       </Typography>
       <div className="tabs">
@@ -34,7 +44,7 @@ const PersonalArea = () => {
           ))}
         </Tabs>
         {active === ROUTES.HISTORY && (
-          <p className="pointer flex">
+          <p className="pointer flex center" onClick={clearHandler}>
             <span>&times; </span> Очистить список заказов
           </p>
         )}
@@ -68,6 +78,13 @@ const StyledContainer = styled(Container)(() => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  "& span": {
+    fontSize: "25px",
+    paddingRight: "5px",
+  },
+  // "& p:hover": {
+  //   color: "green",
+  // },
 }));
 const Tabs = styled("div")(({ theme }) => ({
   gap: "12px",

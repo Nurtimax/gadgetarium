@@ -72,6 +72,7 @@ const Styled_User = styled(Box)(() => ({
 }));
 const Styled_Img = styled("img")(() => ({
   width: "40px",
+  height: "40px",
   borderRadius: "50%",
 }));
 

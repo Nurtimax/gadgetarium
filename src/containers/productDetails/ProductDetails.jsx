@@ -41,8 +41,10 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
-    window.scroll(0, 150);
   }, [findedSubProduct]);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const plusHandler = () => {
     dispatch(ActionProductDetails.plusCount());

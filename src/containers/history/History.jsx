@@ -6,9 +6,10 @@ import { getHistoryOrders } from "../../redux/slices/private-slice";
 import HistoreEmpty from "./HistoreEmpty";
 import { Link } from "react-router-dom";
 import { orderStatus } from "../../utils/helpers/history";
+import { LinearProgress } from "@mui/material";
 const History = () => {
-  const { data } = useSelector((state) => state.private);
-  console.log(data, "aaaaaaaaaaa");
+  const { data, status } = useSelector((state) => state.private.history);
+
   const colors = {
     ["DELIVERED"]: "#299A0D",
     ["CANCEL"]: "#F53B49",
@@ -24,27 +25,35 @@ const History = () => {
 
   return (
     <>
-      {data.length > 0 ? (
-        <StyledContainer>
-          {data?.map((item) => (
-            <Link to={`/vip/history/${item.id}`} key={item.id}>
-              <Typography component="div" className="box">
-                <ul>
-                  <li className="date">{item.dateOfOrder}</li>
-                  <li className="code">№ {item.orderNumber}</li>
-                  <li className="status">
-                    <StyledStatusColor color={colors[item.orderStatus]}>
-                      {orderStatus(item.orderStatus)}
-                    </StyledStatusColor>
-                  </li>
-                </ul>
-                <span className="price">{item.totalSum} с</span>
-              </Typography>
-            </Link>
-          ))}
-        </StyledContainer>
+      {status === "panding" ? (
+        <Box sx={{ width: "80%" }}>
+          <LinearProgress color="secondary" />
+        </Box>
       ) : (
-        <HistoreEmpty />
+        <>
+          {data.length > 0 ? (
+            <StyledContainer>
+              {data?.map((item) => (
+                <Link to={`/vip/history/${item.id}`} key={item.id}>
+                  <Typography component="div" className="box">
+                    <ul>
+                      <li className="date">{item.dateOfOrder}</li>
+                      <li className="code">№ {item.orderNumber}</li>
+                      <li className="status">
+                        <StyledStatusColor color={colors[item.orderStatus]}>
+                          {orderStatus(item.orderStatus)}
+                        </StyledStatusColor>
+                      </li>
+                    </ul>
+                    <span className="price">{item.totalSum} с</span>
+                  </Typography>
+                </Link>
+              ))}
+            </StyledContainer>
+          ) : (
+            <HistoreEmpty />
+          )}
+        </>
       )}
 
       {/* <HistoryDetails /> */}

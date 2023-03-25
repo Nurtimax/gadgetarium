@@ -1,4 +1,11 @@
-import { Box, Grid, styled, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  FormLabel,
+  Grid,
+  styled,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/UI/button/Button";
 import Input from "../../components/UI/input/Input";
@@ -7,30 +14,42 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile, putProfile } from "../../redux/slices/private-slice";
 import { useFormik } from "formik";
 import ProfileImg from "./ProfileImg";
-import { singUpValidateSchema } from "../../utils/helpers/validate";
+import { orderingValidateSchemaWithAdreess } from "../../utils/helpers/validate";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [password, setPassword] = useState(false);
 
-  const { dataInfoProfile } = useSelector((state) => state.private);
+  const { data, status } = useSelector((state) => state.private.profile);
+  const { statuss } = useSelector((state) => state.private.putProfile);
 
-  const { handleChange, handleSubmit, values, setValues, setFieldValue } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        address: null,
-        image: "",
-      },
-      onSubmit: (value) => {
-        dispatch(putProfile(value));
-      },
-      validationSchema: singUpValidateSchema,
-      validateOnChange: false,
-    });
-
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    setValues,
+    setFieldValue,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      address: "",
+      image: "",
+    },
+    onSubmit: (value) => {
+      dispatch(putProfile(value)).then((res) => {
+        if (res.payload.status === "ok") {
+          return toast.success("Пользователь успешно обновлен");
+        }
+        return toast.error("Что-то не так с сервером или данными");
+      });
+    },
+    validationSchema: orderingValidateSchemaWithAdreess,
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,103 +61,146 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    setValues(dataInfoProfile);
-  }, [dataInfoProfile]);
+    setValues((prevState) => ({ ...prevState, ...data }));
+  }, [data]);
 
   return (
-    <StyledContainer>
-      <form onSubmit={handleSubmit}>
-        <Grid container>
-          <Grid item xs={3} className="padding">
-            <ProfileImg setFieldValue={setFieldValue} values={values} />
-          </Grid>
-          <Grid item xs={7}>
+    <>
+      {status === "pending" ? (
+        <Box sx={{ width: "100%" }} className="flex center">
+          <CircularProgress color="secondary" />
+        </Box>
+      ) : (
+        <StyledContainer>
+          <form onSubmit={handleSubmit}>
             <Grid container>
-              <Grid item xs={12}>
-                <Typography component="h4">Личные данные</Typography>
+              <Grid item xs={3} className="padding">
+                <ProfileImg
+                  setFieldValue={setFieldValue}
+                  values={values.image}
+                />
               </Grid>
-              <Grid item xs={12} className="flex between block">
-                <Box className="box">
-                  <label>
-                    Имя <span>*</span>
-                  </label>
-                  <StyledInput
-                    backcolor="white"
-                    placeholder="Имя"
-                    name="firstName"
-                    type="text"
-                    value={values.firstName}
-                    onChange={handleChange}
-                  />
-                </Box>
-                <Box className="box">
-                  <label>
-                    Фамилия <span>*</span>
-                  </label>
-                  <StyledInput
-                    backcolor="white"
-                    placeholder="Фамилия"
-                    type="text"
-                    name="lastName"
-                    value={values.lastName}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={12} className="flex between block">
-                <Box className="box">
-                  <label>
-                    E-mail <span>*</span>
-                  </label>
-                  <StyledInput
-                    backcolor="white"
-                    placeholder="E-mail"
-                    type="email"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                  />
-                </Box>
-                <Box className="box">
-                  <label>
-                    Телефон <span>*</span>
-                  </label>
-                  <StyledInput
-                    backcolor="white"
-                    placeholder="Телефон"
-                    type="tel"
-                    name="phoneNumber"
-                    value={values.phoneNumber}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </Grid>
+              <Grid item xs={6}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Typography component="h4">Личные данные</Typography>
+                  </Grid>
+                  <Grid item xs={12} className="flex between ">
+                    <Box className="box">
+                      <FormLabel required>Имя</FormLabel>
+                      <StyledInput
+                        backcolor="white"
+                        placeholder="Имя"
+                        name="firstName"
+                        type="text"
+                        value={values.firstName || ""}
+                        onChange={handleChange}
+                        error={Boolean(errors.firstName)}
+                        className={
+                          errors.firstName && touched.firstName ? "error" : ""
+                        }
+                      />
+                      {errors.firstName && touched.firstName && (
+                        <p className="errors">{errors.firstName}</p>
+                      )}
+                    </Box>
+                    <Box className="box">
+                      <FormLabel required>Фамилия</FormLabel>
+                      <StyledInput
+                        backcolor="white"
+                        placeholder="Фамилия"
+                        type="text"
+                        name="lastName"
+                        value={values.lastName || ""}
+                        onChange={handleChange}
+                        error={Boolean(errors.lastName)}
+                      />
+                      {errors.lastName && touched.lastName && (
+                        <p className="errors">{errors.lastName}</p>
+                      )}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} className="flex between ">
+                    <Box className="box">
+                      <FormLabel required>E-mail</FormLabel>
+                      <StyledInput
+                        backcolor="white"
+                        placeholder="Напишите email"
+                        type="email"
+                        name="email"
+                        value={values.email || ""}
+                        onChange={handleChange}
+                        error={Boolean(errors.email)}
+                      />
+                      {errors.email && touched.email && (
+                        <p className="errors">{errors.email}</p>
+                      )}
+                    </Box>
+                    <Box className="box">
+                      <FormLabel required>Телефон</FormLabel>
+                      <StyledInput
+                        backcolor="white"
+                        placeholder="+996(_ _ _) _ _  _ _  _ _"
+                        type="tel"
+                        name="phoneNumber"
+                        value={values.phoneNumber || ""}
+                        onChange={handleChange}
+                        className={errors.phoneNumber ? "error" : ""}
+                      />
+                      {errors.phoneNumber && touched.phoneNumber && (
+                        <p className="errors">{errors.phoneNumber}</p>
+                      )}
+                    </Box>
+                  </Grid>
 
-              <Grid item xs={12} className="box block">
-                <label>
-                  Адрес доставки <span>*</span>
-                </label>
-                <StyleInput backcolor="white" placeholder="Адрес доставки" />
-              </Grid>
-              {password && <PassordProfile />}
+                  <Grid item xs={12} className="box ">
+                    <FormLabel required>Адрес доставки</FormLabel>
+                    <StyleInput
+                      backcolor="white"
+                      placeholder="Адрес доставки"
+                      name="address"
+                      value={values.address}
+                      onChange={handleChange}
+                      className={errors.address ? "error" : ""}
+                    />
+                    {errors.address && touched.address && (
+                      <p className="errors">{errors.address}</p>
+                    )}
+                  </Grid>
 
-              <Grid item xs={12} className="p block">
-                {!password && (
-                  <p onClick={onclickHandler} className="pointer">
-                    Сменить пароль
-                  </p>
-                )}
+                  <Grid item xs={12} className="p ">
+                    {!password && (
+                      <>
+                        <p onClick={onclickHandler} className="pointer">
+                          Сменить пароль
+                        </p>
 
-                <Box className="flex gap2">
-                  <StyledButton variant="outlined">Назад</StyledButton>
-                  <StyledButton variant="contained">Редактировать</StyledButton>
-                </Box>
+                        <Box className="flex between gap2">
+                          <StyledButton variant="outlined">Назад</StyledButton>
+                          <StyledButton variant="contained">
+                            {statuss === "pending" ? (
+                              <CircularProgress color="secondary" />
+                            ) : (
+                              "Редактировать"
+                            )}
+                          </StyledButton>
+                        </Box>
+                      </>
+                    )}
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
+          </form>
+          <Grid container>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={6}>
+              {password && <PassordProfile />}
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </StyledContainer>
+        </StyledContainer>
+      )}
+    </>
   );
 };
 
@@ -152,18 +214,23 @@ const StyledContainer = styled(Box)(() => ({
     },
   },
   "& .box": {
-    width: "330px",
+    width: "338px",
     display: "grid",
     gap: "10px 0px",
+    padding: "5px 0",
   },
-  "& span": {
+
+  "& .password": {
+    paddingBottom: "10px",
+  },
+  "& .error": {
+    border: "1px solid red",
+  },
+  "& .errors": {
     color: "red",
   },
-  "& .block": {
-    paddingTop: "10px",
-  },
-  "& .password": {
-    paddingBottom: "20px",
+  "& .errors:hover": {
+    color: "red",
   },
 }));
 const StyledInput = styled(Input)(() => ({
@@ -174,5 +241,5 @@ const StyleInput = styled(Input)(() => ({
 }));
 
 const StyledButton = styled(Button)(() => ({
-  width: "330px",
+  width: "338px",
 }));

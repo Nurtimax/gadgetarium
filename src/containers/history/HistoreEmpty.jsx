@@ -1,9 +1,20 @@
 import { Box, styled, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { EmptyHistory } from "../../assets";
 import Button from "../../components/UI/button/Button";
+import { Link } from "react-router-dom";
+import { getProfile } from "../../redux/slices/private-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const HistoreEmpty = () => {
+  const dispatch = useDispatch();
+
+  const { data } = useSelector((state) => state.private.profile);
+  console.log(data);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
   return (
     <StyledContainer>
       <Typography className="svg">
@@ -14,12 +25,17 @@ const HistoreEmpty = () => {
         <h5>Здесь пока пусто</h5>
         <p>Здесь будет храниться история ваших заказов.</p>
         <Typography>
-          <Button variant="contained">К покупкам</Button>
+          <Link to={`/`}>
+            <Button variant="contained">К покупкам</Button>
+          </Link>
         </Typography>
       </Typography>
       <Typography component="div" className="block2">
-        <p className="user">Азамат Азаматов</p>
-        <p className="email">aza@gmail.com +996 (400) 88-88-88</p>
+        <p className="user">
+          {data.firstName} {data.lastName}
+        </p>
+        <p className="email">{data.email}</p>
+        <p>{data.phoneNumber}</p>
         <StyledButton>Выйти</StyledButton>
       </Typography>
     </StyledContainer>
