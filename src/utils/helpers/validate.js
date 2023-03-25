@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const emailRegex = "^[a-z0-9](.?[a-z0-9]){5,}@g(oogle)?mail.com$";
-const phoneRegex = /^\+996\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
+const phoneRegex = /^\+996 \(\d{3}\) \d{3} \d{3}$/;
 
 export const singUpValidateSchema = yup.object().shape({
   firstname: yup.string().min(2).max(25).required("имя обязательное поле"),
@@ -105,4 +105,29 @@ export const paymantValidateSchema = yup.object().shape({
   expiryDate: yup.string().required("Дата обязательное поле!"),
   cvc: yup.string().required("СVC обязательное поле!"),
   userName: yup.string().required("Имя владельца обязательное поле!"),
+});
+
+export const contactsValidationSchema = yup.object().shape({
+  firstName: yup.string().required("Имя обязательное поле!"),
+  lastName: yup.string().required("Фамилия обязательное поле!"),
+
+  phoneNumber: yup
+    .string()
+    .max(19, "Номер телефона должен быть не более 13 символов!")
+    .min(13)
+    .required("Номер телефона обязательное поле!")
+    .test("valid-phone", "Неправильный формат номера телефона!", (value) => {
+      if (!value) return true;
+      const phone = value.replace(/[^0-9]/g, "");
+      return phone.length === 12 && phone[0] === "9";
+    }),
+
+  email: yup
+    .string()
+    .email()
+    .matches(
+      emailRegex,
+      "Адрес электронной почты должен быть в формате ...@gmail.com!"
+    )
+    .required("Электронная почта обязательное поле!"),
 });

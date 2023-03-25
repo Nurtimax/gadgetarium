@@ -35,3 +35,19 @@ export const showErrors = (errors) => {
   }
   return errorMessage;
 };
+
+export const showErrorss = (errors) => {
+  let errorMessage = null;
+  if (Object.keys(errors).length > 1) {
+    errorMessage = "Пожалуйста заполните все поля!";
+  } else if (errors?.firstName) {
+    errorMessage = errors?.firstName;
+  } else if (errors?.lastName) {
+    errorMessage = errors?.lastName;
+  } else if (errors?.phoneNumber) {
+    errorMessage = errors?.phoneNumber;
+  } else if (errors?.email) {
+    errorMessage = errors?.email;
+  }
+  return errorMessage;
+};

@@ -12,6 +12,7 @@ const Delivery = lazy(() => import("../containers/delivery/Delivery"));
 const Favorite = lazy(() => import("../containers/favorite/Favorite"));
 const Contacts = lazy(() => import("../containers/contacts/Contacts"));
 const Home = lazy(() => import("../containers/home"));
+const Compare = lazy(() => import("../containers/compare/Compare.jsx"));
 const Item = lazy(() => import("../containers/item/Item"));
 const Basket = lazy(() => import("../containers/basket/Basket"));
 const AboutStore = lazy(() => import("../containers/about-store/AboutStore"));
@@ -151,7 +152,14 @@ const MainRoutes = () => {
             </Suspense>
           }
         />
-
+        <Route
+          path={ROUTES.COMPATISONPRODUCT}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <Compare />
+            </Suspense>
+          }
+        />
         <Route
           path={`${ROUTES.CART}/${ROUTES.PAYMANT_METHOD}`}
           element={

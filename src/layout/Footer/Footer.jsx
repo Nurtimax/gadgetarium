@@ -6,8 +6,26 @@ import Button from "./../../components/UI/button/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/routes";
 import { Link as Scroll } from "react-scroll";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
+import { useDispatch } from "react-redux";
+import { postEmail } from "../../redux/slices/subscribe-slice";
 
 const Footer = () => {
+  const dispatch = useDispatch();
+
+  const [value, setValue] = useState("");
+
+  const [searchTerm] = useDebounce(value, 1000);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(postEmail({ email: searchTerm }));
+
+    setValue("");
+  };
+
   return (
     <FooterStyled>
       <CssBaseline />
@@ -74,16 +92,35 @@ const Footer = () => {
           <ContactsBox>
             <FooterFormBlock>
               <Title> Расскажем об акциях и скидках </Title>
-              <Typography component="div">
-                <Input type="email" placeholder="Email" />
-                <Button width="130px" height="34px" variant="contained">
-                  Подписаться
-                </Button>
+              <Typography
+                component="form"
+                className="container-form"
+                onSubmit={handleSubmit}
+              >
+                <StyledInput className="int">
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                  />
+                </StyledInput>
+
+                <StyledBtn className="btn">
+                  <Button
+                    width="130px"
+                    height="33px"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Подписаться
+                  </Button>
+                </StyledBtn>
               </Typography>
 
               <p>
-                Нажимая на кнопку «подписаться» Вы соглашаетесь на обработку
-                персональных данных
+                Нажимая на кнопку «подписаться» Вы соглашаетесь <br /> на
+                обработку персональных данных
               </p>
             </FooterFormBlock>
             <Contacts>
@@ -96,7 +133,7 @@ const Footer = () => {
               <Typography component="li" variant="body1" color="inherit">
                 <Message />
                 <Typography variant="body1" component="p">
-                  <a href="mailto:zumanovaliser814@gmail.com">Gadgetarium.kg</a>
+                  <a href="mailto:gadgetariumph@gmail.com ">Gadgetarium.kg</a>
                 </Typography>
               </Typography>
               <div>
@@ -117,7 +154,9 @@ const Footer = () => {
           </ContactsBox>
         </BoxContainer>
         <FooterBox>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
           <FooterBlock>
             © 2022 Gadgetarium. Интернет магазин Все права защищены.
           </FooterBlock>
@@ -128,6 +167,27 @@ const Footer = () => {
 };
 
 export default Footer;
+
+const StyledInput = styled("div")(() => ({
+  "&.int": {
+    background: "white",
+    borderRadius: "4px 0px 0px 4px",
+  },
+
+  "& .MuiInputBase-root.input.focused": {
+    border: "none",
+  },
+  "& .MuiInputBase-root.input": {
+    border: "none",
+  },
+}));
+
+const StyledBtn = styled("div")(() => ({
+  "&.btn": {
+    background: "#e20fbe",
+    borderRadius: " 0px 4px 4px 0px",
+  },
+}));
 
 const FooterStyled = styled("footer")(() => ({
   width: "100%",
@@ -220,19 +280,16 @@ const FooterFormBlock = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  "& input": {
-    width: "50%",
-    display: "inline",
+
+  "& .container-form": {
+    display: "flex",
   },
-  "& button": {
-    display: "inline",
-  },
+
   "& p": {
     marginTop: "10px",
     lineHeight: "20px",
     color: "#ffffff",
     fontSize: "14px",
-    width: "350px",
     alignItems: "flex-start",
   },
 }));

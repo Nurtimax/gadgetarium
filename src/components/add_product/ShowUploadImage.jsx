@@ -42,9 +42,9 @@ const StyledImg = styled(Box)(({ theme }) => ({
   "& img": {
     height: "100%",
     objectFit: "contain",
-    mixBlendMode: "color-burn",
     borderRadius: 5,
     aspectRatio: "1/1",
+    mixBlendMode: "darken",
   },
   "& .change_image": {
     position: "absolute",

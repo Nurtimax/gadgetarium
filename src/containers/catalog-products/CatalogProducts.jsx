@@ -98,8 +98,25 @@ const CatalogProducts = () => {
         waterProofs: filteredCatalog.waterProofs.join(","),
       })
     );
+    dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
+
+  const catalogData = {
+    ...filteredCatalog,
+    categoryName: findedCatalogItem.title,
+    colors: filteredCatalog.colors.join(","),
+  };
+
+  useEffect(() => {
+    dispatch(fetchDataCatalog(catalogData));
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
+
+  useEffect(() => {
+    // dispatch(filteredCatalogSliceAction.resetState());
+    dispatch(catalogSliceAction.resetAllFilters());
+  }, [catalogItem]);
 
   return (
     <ContainerStyled>
@@ -162,6 +179,7 @@ const CatalogProducts = () => {
           )}
 
           <ProductsList
+            dataCatalog={catalogData}
             isLoading={isLoading}
             data={data}
             sortField={filteredCatalog.fieldToSort}

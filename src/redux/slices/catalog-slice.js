@@ -56,6 +56,7 @@ const catalogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(fetchDataCatalog.fulfilled, (state, action) => {
         state.data.products = action.payload.data;
         state.isLoading = false;

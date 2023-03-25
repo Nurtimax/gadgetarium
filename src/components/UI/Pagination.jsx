@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 
 const PAGE_INDEX = "page_index";
 
-const Pagination = ({ count = 10 }) => {
+const Pagination = ({ count, onChange }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParams = searchParams.get(PAGE_INDEX);
   const [pageIndex, setPageIndex] = useState(Number(pageParams));
@@ -22,10 +22,15 @@ const Pagination = ({ count = 10 }) => {
     }
   }, [pageParams]);
 
+  useEffect(() => {
+    onChange(Number(pageParams) || 1);
+  }, []);
+
   const changeHandler = (_, index) => {
     setPageIndex(index);
     searchParams.set(PAGE_INDEX, index);
     setSearchParams(searchParams);
+    onChange(index);
   };
 
   return (

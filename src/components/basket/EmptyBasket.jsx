@@ -11,7 +11,6 @@ const EmptyBasket = () => {
   const {
     data: orderData,
     personalData,
-    dateOfOrder,
     status,
   } = useSelector((state) => state.paymant);
 
@@ -42,8 +41,7 @@ const EmptyBasket = () => {
           </div>
 
           <div>
-            Ваш заявка №{orderData?.orderNumber} от
-            {dateOfOrder}
+            Ваша заявка №{orderData?.orderNumber} от - {orderData.dateOfOrder} -
             оформлена
             <br />
             Вся актуальная информация о статусе исполнения <br /> заказа придет

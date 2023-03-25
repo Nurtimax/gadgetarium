@@ -6,12 +6,7 @@ const SocialIcons = () => {
   return (
     <StyledSocialIcons className="flex gap2 height pointer flex-end">
       {socialIconsData.map(({ id, icon, href }) => (
-        <Badge
-          badgeContent={4}
-          color="info"
-          key={id}
-          classes={{ colorInfo: "badgeColor" }}
-        >
+        <Badge color="info" key={id} classes={{ colorInfo: "badgeColor" }}>
           <a href={href}>{icon}</a>
         </Badge>
       ))}
