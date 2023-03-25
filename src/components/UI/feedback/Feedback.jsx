@@ -27,7 +27,7 @@ const Feedback = ({ open, onClose }) => {
     initialValues: {
       productGrade: 0,
       reviewComment: "",
-      images: [""],
+      images: [],
       product,
     },
     onSubmit: (values) => {
@@ -109,7 +109,7 @@ const Feedback = ({ open, onClose }) => {
               {isLoading ? (
                 <CircularProgress color="secondary" />
               ) : (
-                values.images.map((item) => (
+                values.images?.map((item) => (
                   <div key={item}>
                     <img src={item} alt={item} />
                   </div>
