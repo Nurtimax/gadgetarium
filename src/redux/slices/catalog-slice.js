@@ -50,41 +50,6 @@ const catalogSlice = createSlice({
   name: "catalogSlice",
   initialState,
   reducers: {
-    chipsFromFilter: (state, action) => {
-      const isHave = state.filterSlice.some(
-        (state) => state.id === action.payload.id
-      );
-
-      const isTitle = state.filterSlice.some(
-        (state) => state.title === action.payload.title
-      );
-
-      if (action.payload.id === "colors") {
-        state.filterSlice = [...state.filterSlice, action.payload];
-      } else {
-        if (isTitle) {
-          state.filterSlice = state.filterSlice.filter(
-            (slice) => slice.id !== action.payload.id
-          );
-        }
-        if (isHave) {
-          const updateState = state.filterSlice.map((slice) => {
-            if (slice.id === action.payload.id) {
-              return action.payload;
-            }
-            return slice;
-          });
-          state.filterSlice = updateState;
-        } else {
-          state.filterSlice = [...state.filterSlice, action.payload];
-        }
-      }
-    },
-    chipsFromFilterRemove: (state, action) => {
-      state.filterSlice = state.filterSlice.filter(
-        (slice) => slice.title !== action.payload.title
-      );
-    },
     resetAllFilters: (state) => {
       state.filterSlice = [];
     },

@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
   product: productSlice.reducer,
   orderProduct: ordersProduct.reducer,
   basket: basketProducts.reducer,
-  catolog: catalogSlice.reducer,
+  catalog: catalogSlice.reducer,
   ordering: orderingSlice.reducer,
   filteredCatalog: filteredCatalogSlice.reducer,
   productDetails: productDetailsSlice.reducer,

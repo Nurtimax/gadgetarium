@@ -14,7 +14,7 @@ export const catalogProductData = [
     },
     categories: [
       {
-        filterCharacteristicsKey: "memory",
+        filterCharacteristicsKey: "memories",
         id: 2,
         type: "Объем памяти (GB)",
         subCategory: [
@@ -30,7 +30,7 @@ export const catalogProductData = [
       {
         id: 3,
         type: "Объем оперативной памяти (GB)",
-        filterCharacteristicsKey: "ram",
+        filterCharacteristicsKey: "rams",
         subCategory: [
           { id: 11, title: 3 },
           { id: 12, title: 4 },
@@ -64,7 +64,7 @@ export const catalogProductData = [
       {
         id: 2,
         type: "Процессор ноутбука",
-        filterCharacteristicsKey: "laptopCPU",
+        filterCharacteristicsKey: "laptopCPUs",
         subCategory: [
           { id: 1, title: "Intel Core i3" },
           { id: 2, title: "Intel Core i5" },
@@ -76,7 +76,7 @@ export const catalogProductData = [
           { id: 8, title: "Intel Quad Core" },
           { id: 9, title: "Intel Dual Core" },
           { id: 10, title: "AMD Ryzen 3 3250U" },
-          { id: 10, title: "AMD Ryzen 5" },
+          { id: 15, title: "AMD Ryzen 5" },
           { id: 11, title: "Intel Core i7-8565U" },
           { id: 12, title: "AMD Ryzen 7 4700U" },
           { id: 13, title: "Apple M1" },
@@ -87,7 +87,7 @@ export const catalogProductData = [
       {
         id: 3,
         type: "Разрешение экрана",
-        filterCharacteristicsKey: "screenResolution",
+        filterCharacteristicsKey: "screenResolutionss",
         subCategory: [
           { id: 1, title: "1024x600" },
           { id: 2, title: "1280x800" },
@@ -104,7 +104,7 @@ export const catalogProductData = [
       {
         id: 5,
         type: "Объем памяти (GB)",
-        filterCharacteristicsKey: "memory",
+        filterCharacteristicsKey: "memories",
         subCategory: [
           { id: 11, title: 2 },
           { id: 22, title: 4 },
@@ -116,7 +116,7 @@ export const catalogProductData = [
       {
         id: 6,
         type: "Объем оперативной памяти (GB)",
-        filterCharacteristicsKey: "ram",
+        filterCharacteristicsKey: "rams",
         subCategory: [
           { id: 16, title: 2 },
           { id: 17, title: 4 },
@@ -129,7 +129,7 @@ export const catalogProductData = [
       {
         id: 7,
         type: "Размер экрана (дюйм)",
-        filterCharacteristicsKey: "screenSize",
+        filterCharacteristicsKey: "screenSizes",
         subCategory: [
           { id: 1, title: 11.6 },
           { id: 2, title: 13.3 },
@@ -166,7 +166,7 @@ export const catalogProductData = [
       {
         id: 3,
         type: "Разрешение экрана",
-        filterCharacteristicsKey: "screenResolution",
+        filterCharacteristicsKey: "screenResolutions",
         subCategory: [
           { id: 10, title: "1600x900" },
           { id: 20, title: "1366x768" },
@@ -180,7 +180,7 @@ export const catalogProductData = [
       {
         id: 5,
         type: "Объем памяти (GB)",
-        filterCharacteristicsKey: "memory",
+        filterCharacteristicsKey: "memories",
         subCategory: [
           { id: 12, title: 8 },
           { id: 21, title: 16 },
@@ -193,7 +193,7 @@ export const catalogProductData = [
       {
         id: 6,
         type: "Объем оперативной памяти (GB)",
-        filterCharacteristicsKey: "ram",
+        filterCharacteristicsKey: "rams",
         subCategory: [
           { id: 31, title: 3 },
           { id: 32, title: 4 },
@@ -205,7 +205,7 @@ export const catalogProductData = [
       {
         id: 7,
         type: "Размер экрана (дюйм)",
-        filterCharacteristicsKey: "screenSize",
+        filterCharacteristicsKey: "screenSizes",
         subCategory: [
           { id: 41, title: 14 },
           { id: 42, title: 15 },
@@ -221,7 +221,7 @@ export const catalogProductData = [
       {
         id: 8,
         type: "Диагональ экрана (дюйм)",
-        filterCharacteristicsKey: "screenDiagonal",
+        filterCharacteristicsKey: "screenDiagonals",
         subCategory: [
           { id: 1, title: "0 - 2" },
           { id: 2, title: "3 - 5" },
@@ -233,7 +233,7 @@ export const catalogProductData = [
       {
         id: 9,
         type: "Емкость аккумулятора планшета, мА/ч",
-        filterCharacteristicsKey: "batteryCapacity",
+        filterCharacteristicsKey: "batteryCapacities",
         subCategory: [
           { id: 1, title: "0 - 2399мА/час" },
           { id: 2, title: "2400 - 4799 мА/час" },
@@ -260,7 +260,7 @@ export const catalogProductData = [
       {
         id: 3,
         type: "Беспроводные интерфейсы",
-        filterCharacteristicsKey: "wirelessInterface",
+        filterCharacteristicsKey: "wirelessInterfaces",
         subCategory: [
           { id: 1, title: "Bluetooth" },
           { id: 2, title: "Wi-Fi" },
@@ -271,7 +271,7 @@ export const catalogProductData = [
       {
         id: 5,
         type: "Объем памяти (GB)",
-        filterCharacteristicsKey: "memory",
+        filterCharacteristicsKey: "memories",
         subCategory: [
           { id: 13, title: 4 },
           { id: 28, title: 8 },
@@ -282,7 +282,7 @@ export const catalogProductData = [
       {
         id: 6,
         type: "Форма корпуса",
-        filterCharacteristicsKey: "caseShape",
+        filterCharacteristicsKey: "caseShapes",
         subCategory: [
           { id: 1, title: "Квадратная" },
           { id: 2, title: "Круглая" },
@@ -293,7 +293,7 @@ export const catalogProductData = [
       {
         id: 7,
         type: "Материал браслета/ремешка",
-        filterCharacteristicsKey: "braceletMaterial",
+        filterCharacteristicsKey: "braceletMaterials",
         subCategory: [
           { id: 1, title: "Силикон" },
           { id: 2, title: "Кожа" },
@@ -307,7 +307,7 @@ export const catalogProductData = [
       {
         id: 8,
         type: "Материал корпуса",
-        filterCharacteristicsKey: "housingMaterial",
+        filterCharacteristicsKey: "housingMaterials",
         subCategory: [
           { id: 1, title: "Акриловый" },
           { id: 2, title: "Алюминий" },
@@ -321,7 +321,7 @@ export const catalogProductData = [
       {
         id: 9,
         type: "Пол",
-        filterCharacteristicsKey: "gender",
+        filterCharacteristicsKey: "genders",
         subCategory: [
           { id: 1, title: "Унисекс" },
           { id: 2, title: "Женский" },
@@ -331,7 +331,7 @@ export const catalogProductData = [
       {
         id: 10,
         type: "Водонепроницаемые",
-        filterCharacteristicsKey: "waterProof",
+        filterCharacteristicsKey: "waterProofs",
         subCategory: [
           { id: 1, title: "Да" },
           { id: 2, title: "Нет" },
@@ -340,7 +340,7 @@ export const catalogProductData = [
       {
         id: 11,
         type: "Диагональ дисплея (дюйм)",
-        filterCharacteristicsKey: "screenDiagonal",
+        filterCharacteristicsKey: "screenDiagonals",
         subCategory: [
           { id: 1, title: 1.2 },
           { id: 2, title: 1.22 },
@@ -353,4 +353,22 @@ export const catalogProductData = [
       },
     ],
   },
+];
+
+export const CATALOG_PRODUCTS_FILTERS_KEYS = [
+  "subCategoryNames",
+  "colors",
+  "memories",
+  "rams",
+  "laptopCPUs",
+  "screenSizes",
+  "screenResolutions",
+  "screenDiagonals",
+  "batteryCapacities",
+  "wirelessInterfaces",
+  "caseShapes",
+  "braceletMaterials",
+  "housingMaterials",
+  "genders",
+  "waterProofs",
 ];

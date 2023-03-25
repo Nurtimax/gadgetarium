@@ -15,21 +15,44 @@ import { catalogMenu_FAKE_DATA } from "../../utils/constants";
 import Sort from "../../components/catalog-products/Sort";
 import {
   catalogSliceAction,
-  fetchColorCatalog,
   fetchDataCatalog,
+  fetchColorCatalog,
 } from "../../redux/slices/catalog-slice.js";
 import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import ProductsList from "../../components/catalog-products/ProductsList";
 import FilterProducts from "../../components/catalog-products/FilterProducts";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { CATALOG_PRODUCTS_FILTERS_KEYS } from "../../utils/constants/catalog-product-filter";
+import { useState } from "react";
 
 const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
 
-  const { data, isLoading, errorMessage, filterSlice, colorResponses } =
-    useSelector((state) => state.catolog);
+  const { data, isLoading, errorMessage, colorResponses } = useSelector(
+    (state) => state.catalog
+  );
 
   const dispatch = useDispatch();
+
+  const [chips, setChips] = useState([]);
+
+  useEffect(() => {
+    const getChips = CATALOG_PRODUCTS_FILTERS_KEYS.reduce((acc, current) => {
+      const newChips = filteredCatalog[current].map((chip) => chip);
+      const result = newChips.reduce((childAcc, item) => {
+        return [
+          ...childAcc,
+          {
+            key: current,
+            title: item,
+            id: Math.round(Math.random() * 1000000),
+          },
+        ];
+      }, []);
+      return [...acc, ...result];
+    }, []);
+    setChips(getChips);
+  }, [filteredCatalog]);
 
   const [sortEL, setSortEl] = useDropDown();
 
@@ -38,17 +61,6 @@ const CatalogProducts = () => {
   const findedCatalogItem = catalogMenu_FAKE_DATA.find(
     (catalog) => catalog.id === Number(catalogItem)
   );
-
-  const handleChangeChips = (title, id, colorCode) => {
-    dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
-    dispatch(
-      filteredCatalogSliceAction.removeCheckedProduct({
-        key: typeof id === "number" ? "subCategoryName" : id,
-        title,
-        colorCode,
-      })
-    );
-  };
 
   const handelResetAllFilters = () => {
     dispatch(filteredCatalogSliceAction.resetState());
@@ -60,12 +72,30 @@ const CatalogProducts = () => {
     dispatch(catalogSliceAction.resetAllFilters());
   }, [catalogItem]);
 
+  const removeCatalogValueByChips = (key, title) => {
+    dispatch(filteredCatalogSliceAction.removeByChip({ key, title }));
+  };
+
   useEffect(() => {
     dispatch(
       fetchDataCatalog({
         ...filteredCatalog,
         categoryName: findedCatalogItem.title,
         colors: filteredCatalog.colors.join(","),
+        subCategoryNames: filteredCatalog.subCategoryNames.join(","),
+        memories: filteredCatalog.memories.join(","),
+        rams: filteredCatalog.rams.join(","),
+        laptopCPUs: filteredCatalog.laptopCPUs.join(","),
+        screenSizes: filteredCatalog.screenSizes.join(","),
+        screenResolutions: filteredCatalog.screenResolutions.join(","),
+        screenDiagonals: filteredCatalog.screenDiagonals.join(","),
+        batteryCapacities: filteredCatalog.batteryCapacities.join(","),
+        wirelessInterfaces: filteredCatalog.wirelessInterfaces.join(","),
+        caseShapes: filteredCatalog.caseShapes.join(","),
+        braceletMaterials: filteredCatalog.braceletMaterials.join(","),
+        housingMaterials: filteredCatalog.housingMaterials.join(","),
+        genders: filteredCatalog.genders.join(","),
+        waterProofs: filteredCatalog.waterProofs.join(","),
       })
     );
     dispatch(fetchColorCatalog({ categoryId: catalogItem }));
@@ -95,12 +125,12 @@ const CatalogProducts = () => {
           <Box className="chip-and-sort">
             <Box className="chip-container">
               <Box className="chips">
-                {filterSlice?.map((item) => (
+                {chips?.map((item) => (
                   <Button
                     className="chip"
                     key={item.id}
                     onClick={() =>
-                      handleChangeChips(item.title, item.id, item?.colorCode)
+                      removeCatalogValueByChips(item.key, item.title)
                     }
                   >
                     {item.title}
@@ -183,15 +213,30 @@ const ContainerStyled = styled(Container)(() => ({
     paddingBottom: "80px",
   },
   "& .product-container": {
-    width: "1240px",
+    width: "80%",
   },
   "& .chip-and-sort": {
     display: "flex",
     justifyContent: "space-between",
     paddingBottom: "18px",
   },
-  "& .chip-container": { display: "flex" },
-  "& .chips": { width: "100%", display: "flex", gap: "12px" },
+  "& .chip-container": {
+    display: "flex",
+    width: "57vw",
+    overflow: "auto",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+    "& .chip": {
+      minWidth: "13%",
+    },
+  },
+
+  "& .chips": {
+    width: "100%",
+    display: "flex",
+    gap: "12px",
+  },
   "& .sort-container": {
     display: "flex",
     alignItems: "center",
@@ -208,7 +253,7 @@ const ContainerStyled = styled(Container)(() => ({
   },
   "& .chip": {
     display: "flex",
-    gap: "10px",
+    justifyContent: "space-around",
     height: "32px",
     borderRadiuse: "0px",
     background: "#E8E8E8",
