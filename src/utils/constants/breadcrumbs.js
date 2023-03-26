@@ -81,6 +81,10 @@ export const BREADCRUMBS = [
     breadcrumb: "История заказов",
   },
   {
+    path: `${ROUTES.VIP}/${ROUTES.HISTORY}/:id`,
+    breadcrumb: null,
+  },
+  {
     path: `/${ROUTES.LIKE}`,
     breadcrumb: "Избранное",
   },

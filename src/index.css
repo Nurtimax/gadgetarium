@@ -157,6 +157,7 @@ a {
 .wrap {
   flex-wrap: wrap;
 }
+
 /* input:-internal-autofill-selected {
   appearance: inherit;
   background-image: none !important;

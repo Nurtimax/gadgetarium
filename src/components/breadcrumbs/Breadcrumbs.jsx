@@ -15,11 +15,30 @@ const BreadCrumbs = () => {
     );
   }, [breadcrumbs]);
 
+  const vipBreadcrumbs = useMemo(() => {
+    return breadcrumbs.filter((breadcrumb) =>
+      breadcrumb.key.split("/").includes("vip")
+    );
+  }, [breadcrumbs]);
+
   if (adminBreadcrumbs.length !== 0) {
     return (
       <Breadcrumbs separator={<KeyboardDoubleArrowRightIcon fontSize="6px" />}>
         {adminBreadcrumbs.length > 1 &&
           adminBreadcrumbs.map(({ match, breadcrumb }) => (
+            <NavLink key={match.pathname} to={match.pathname}>
+              {breadcrumb}
+            </NavLink>
+          ))}
+      </Breadcrumbs>
+    );
+  }
+
+  if (vipBreadcrumbs.length !== 0) {
+    return (
+      <Breadcrumbs separator={<KeyboardDoubleArrowRightIcon fontSize="6px" />}>
+        {vipBreadcrumbs.length > 1 &&
+          vipBreadcrumbs.map(({ match, breadcrumb }) => (
             <NavLink key={match.pathname} to={match.pathname}>
               {breadcrumb}
             </NavLink>
