@@ -21,6 +21,7 @@ const UserProfileList = ({ handleClick }) => {
     handleClick();
     if (title === "Выйти") {
       dispatch(ActionauthenticationSlice.authLogOut());
+
       dispatch(getBasketProduct());
       dispatch(getFavoriteProducts());
       dispatch(getAllCompareProducts());

@@ -69,7 +69,9 @@ const ProfileImg = ({ setFieldValue, values }) => {
       ) : (
         <>
           <AddImage className="img" />
-          <p className="pust">Нажмите для добавления фотографии</p>
+          <p className="pust">
+            Нажмите для <br /> добавления фотографии
+          </p>
         </>
       )}
     </StyledImage>

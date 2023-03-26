@@ -84,10 +84,12 @@ export const putPassword = createAsyncThunk(
 );
 export const clearHistory = createAsyncThunk(
   "private/clearHistory",
-  async () => {
+  async (_, { dispatch }) => {
     try {
       const response = await axiosInstance.delete("personals");
       const result = await response.data;
+
+      dispatch(getHistoryOrders());
 
       return result;
     } catch (error) {

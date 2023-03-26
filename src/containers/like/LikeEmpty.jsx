@@ -12,14 +12,16 @@ const LikeEmpty = () => {
       </Typography>
 
       <Typography component="div" className="block">
-        <h5>В ИЗБРАННОМ ПОКА ПУСТО</h5>
+        <h5>В избранном пока пусто</h5>
         <p>
           Воспользуйтесь поиском или каталогом, выберите нужные товары и
           добавьте их в избранное!
         </p>
         <Typography>
           <Link to={`/`}>
-            <Button variant="contained">К покупкам</Button>
+            <Button variant="contained" width={141}>
+              К покупкам
+            </Button>
           </Link>
         </Typography>
       </Typography>
@@ -46,6 +48,12 @@ const StyledContainer = styled(Box)(() => ({
     display: "grid",
     justifyContent: "center",
     textAlign: "center",
-    gap: "20px 0",
+    gap: "10px 0",
+
+    "& h5": {
+      fontFamily: "Inter",
+      fontWeight: "500",
+      fontSize: "24px",
+    },
   },
 }));
