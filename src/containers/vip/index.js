@@ -1,12 +1,14 @@
 import { Container, styled, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { clearHistory } from "../../redux/slices/private-slice";
 import { head } from "../../utils/constants";
 import { ROUTES } from "../../utils/constants/routes";
 
 const PersonalArea = () => {
+  const { data } = useSelector((state) => state.private.history);
+
   const [title, setTitle] = useState(head[0].label);
 
   const location = useLocation();
@@ -43,11 +45,13 @@ const PersonalArea = () => {
             </Link>
           ))}
         </Tabs>
-        {active === ROUTES.HISTORY && (
-          <p className="pointer flex center" onClick={clearHandler}>
-            <span>&times; </span> Очистить список заказов
-          </p>
-        )}
+        {data.length > 0
+          ? active === ROUTES.HISTORY && (
+              <p className="pointer flex center" onClick={clearHandler}>
+                <span>&times; </span> Очистить список заказов
+              </p>
+            )
+          : null}
       </div>
 
       <Outlet />

@@ -1,8 +1,8 @@
 import {
   Box,
   CircularProgress,
-  FormLabel,
   Grid,
+  InputLabel,
   styled,
   Typography,
 } from "@mui/material";
@@ -16,6 +16,8 @@ import { useFormik } from "formik";
 import ProfileImg from "./ProfileImg";
 import { orderingValidateSchemaWithAdreess } from "../../utils/helpers/validate";
 import { toast } from "react-toastify";
+import { PatternFormat } from "react-number-format";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [password, setPassword] = useState(false);
@@ -80,6 +82,7 @@ const Profile = () => {
                   values={values.image}
                 />
               </Grid>
+
               <Grid item xs={6}>
                 <Grid container>
                   <Grid item xs={12}>
@@ -87,7 +90,7 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12} className="flex between ">
                     <Box className="box">
-                      <FormLabel required>Имя</FormLabel>
+                      <StyledLabel>Имя</StyledLabel>
                       <StyledInput
                         backcolor="white"
                         placeholder="Имя"
@@ -105,7 +108,7 @@ const Profile = () => {
                       )}
                     </Box>
                     <Box className="box">
-                      <FormLabel required>Фамилия</FormLabel>
+                      <StyledLabel>Фамилия</StyledLabel>
                       <StyledInput
                         backcolor="white"
                         placeholder="Фамилия"
@@ -122,7 +125,7 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12} className="flex between ">
                     <Box className="box">
-                      <FormLabel required>E-mail</FormLabel>
+                      <StyledLabel>E-mail</StyledLabel>
                       <StyledInput
                         backcolor="white"
                         placeholder="Напишите email"
@@ -137,11 +140,11 @@ const Profile = () => {
                       )}
                     </Box>
                     <Box className="box">
-                      <FormLabel required>Телефон</FormLabel>
-                      <StyledInput
-                        backcolor="white"
+                      <StyledLabel>Телефон</StyledLabel>
+                      <StyledInputMask
+                        format="+996 (###) ### ###"
+                        mask="_"
                         placeholder="+996(_ _ _) _ _  _ _  _ _"
-                        type="tel"
                         name="phoneNumber"
                         value={values.phoneNumber || ""}
                         onChange={handleChange}
@@ -154,7 +157,7 @@ const Profile = () => {
                   </Grid>
 
                   <Grid item xs={12} className="box ">
-                    <FormLabel required>Адрес доставки</FormLabel>
+                    <StyledLabel>Адрес доставки</StyledLabel>
                     <StyleInput
                       backcolor="white"
                       placeholder="Адрес доставки"
@@ -176,7 +179,12 @@ const Profile = () => {
                         </p>
 
                         <Box className="flex between gap2">
-                          <StyledButton variant="outlined">Назад</StyledButton>
+                          <Link to="/">
+                            <StyledButton variant="outlined">
+                              Назад
+                            </StyledButton>
+                          </Link>
+
                           <StyledButton variant="contained">
                             {statuss === "pending" ? (
                               <CircularProgress color="secondary" />
@@ -206,6 +214,7 @@ const Profile = () => {
 
 export default Profile;
 const StyledContainer = styled(Box)(() => ({
+  paddingBottom: "120px",
   "& .p": {
     textAlign: "end",
     "& p": {
@@ -233,13 +242,49 @@ const StyledContainer = styled(Box)(() => ({
     color: "red",
   },
 }));
+
 const StyledInput = styled(Input)(() => ({
-  width: "99%",
+  width: "338px",
+  height: "48px",
+  backgroundColor: "#ffff !important",
 }));
+
 const StyleInput = styled(Input)(() => ({
+  height: "48px",
+  backgroundColor: "#ffff !important",
   width: "99.5%",
 }));
 
 const StyledButton = styled(Button)(() => ({
   width: "338px",
+}));
+
+const StyledLabel = styled(InputLabel)(() => ({
+  fontFamily: "Inter",
+  fontWeight: "400",
+  fontSize: "16px",
+  color: " #384255",
+  "&:after": {
+    content: '" *"',
+    color: "red",
+  },
+}));
+
+const StyledInputMask = styled(PatternFormat)(() => ({ theme }) => ({
+  backgroundColor: "#ffff !important",
+  width: "338px",
+  height: "48px",
+  "&": {
+    border: `0.1px solid ${theme.palette.grey[900]}`,
+    background: `${theme.palette.background.default}`,
+    borderRadius: "5px",
+    padding: "0 10px",
+  },
+  "&:focus": {
+    border: `0.1px solid ${theme.palette.secondary.main}`,
+    background: `${theme.palette.background.default}`,
+    borderRadius: "5px",
+    color: `${theme.palette.primary.dark}`,
+    outline: "none",
+  },
 }));

@@ -1,4 +1,4 @@
-import { Box, FormLabel, Grid, styled, Typography } from "@mui/material";
+import { Box, Grid, InputLabel, styled, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -38,7 +38,7 @@ const PassordProfile = () => {
         <Grid container>
           <Grid item xs={12} className="box ">
             <Box className="box">
-              <FormLabel required>Старый пароль</FormLabel>
+              <StyledLabel>Старый пароль</StyledLabel>
               <StyledInput
                 backcolor="white"
                 placeholder="Старый пароль"
@@ -72,7 +72,7 @@ const PassordProfile = () => {
           </Grid>
           <Grid item xs={12} className="box ">
             <Box className="box">
-              <FormLabel required>Новый пароль</FormLabel>
+              <StyledLabel>Новый пароль</StyledLabel>
               <StyledInput
                 backcolor="white"
                 placeholder="Новый пароль"
@@ -106,7 +106,7 @@ const PassordProfile = () => {
           </Grid>
           <Grid item xs={12} className="box password">
             <Box className="box">
-              <FormLabel required>Подтвердите новый пароль</FormLabel>
+              <StyledLabel>Подтвердите новый пароль</StyledLabel>
               <StyledInput
                 backcolor="white"
                 placeholder="Подтвердите новый пароль"
@@ -141,6 +141,7 @@ const PassordProfile = () => {
             <Link to={`/`}>
               <StyledButton variant="outlined">Назад</StyledButton>
             </Link>
+
             <StyledButton variant="contained">Редактировать</StyledButton>
           </Box>
         </Grid>
@@ -150,8 +151,22 @@ const PassordProfile = () => {
 };
 
 export default PassordProfile;
+
+const StyledLabel = styled(InputLabel)(() => ({
+  fontFamily: "Inter",
+  fontWeight: "400",
+  fontSize: "16px",
+  color: " #384255",
+  "&:after": {
+    content: '" *"',
+    color: "red",
+  },
+}));
+
 const StyledInput = styled(Input)(() => ({
   width: "99%",
+  height: "48px",
+  backgroundColor: "#ffff !important",
 }));
 const StyledButton = styled(Button)(() => ({
   width: "338px",
