@@ -25,7 +25,6 @@ const CompareTable = ({
   const { compareByCategoryId, isLoading } = useSelector(
     (state) => state.compareProducts
   );
-
   return (
     <BoxStyled>
       {isLoading ? (
@@ -78,6 +77,7 @@ const CompareTable = ({
                   <TableCell className="tr_image">
                     <CompareProductCard
                       paramsCompare={paramsCompare}
+                      subproductId={product.subproductId.join("")}
                       {...product}
                     />
                   </TableCell>

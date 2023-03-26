@@ -75,7 +75,6 @@ const CatalogProducts = () => {
   const removeCatalogValueByChips = (key, title) => {
     dispatch(filteredCatalogSliceAction.removeByChip({ key, title }));
   };
-  console.log(findedCatalogItem.title, "proverka");
 
   useEffect(() => {
     dispatch(

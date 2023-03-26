@@ -23,7 +23,6 @@ const CompareProductCard = ({
 }) => {
   const basketData = useSelector((state) => state.basket.data);
   const [dropDown, setDropDown] = useState(false);
-
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();

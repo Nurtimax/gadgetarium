@@ -102,6 +102,20 @@ const Item = styled(Paper)(({ theme }) => ({
   top: "100%",
   fontSize: "1rem",
   zIndex: "100",
+  maxHeight: "260px",
+  overflow: "auto",
+
+  "::-webkit-scrollbar": { width: "8px" },
+
+  "::-webkit-scrollbar-track": {
+    background: "#E8E8E8",
+    borderRadius: "4px",
+  },
+  "::-webkit-scrollbar-thumb": {
+    height: "130px",
+    background: " rgba(145, 150, 158, 0.5)",
+    borderRadius: "4px",
+  },
   "& .item:hover": { backgroundColor: "red" },
 }));
 const BoxStyled = styled(Box)(() => ({

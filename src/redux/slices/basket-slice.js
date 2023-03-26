@@ -45,7 +45,6 @@ const postProductToFavorite = createAsyncThunk(
       const result = await response.data;
 
       dispatch(getBasketProduct());
-
       return result;
     } catch (error) {
       return error;
