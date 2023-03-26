@@ -1,4 +1,5 @@
 import { Box, Container, styled } from "@mui/material";
+import { motion } from "framer-motion";
 import { Outlet } from "react-router-dom";
 import BreadCrumbs from "../components/breadcrumbs/Breadcrumbs";
 import Footer from "./Footer/Footer";
@@ -6,7 +7,12 @@ import UserHeader from "./header/UserHeader";
 
 const Layout = () => {
   return (
-    <StyledLayoutWrapper>
+    <StyledLayoutWrapper
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <UserHeader />
       <Container>
         <StyledBreadcrumbsPosition className="flex">

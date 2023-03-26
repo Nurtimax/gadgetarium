@@ -270,7 +270,12 @@ const ProductCard = (props) => {
   });
 
   return (
-    <StyledProductCard {...rest}>
+    <StyledProductCard
+      {...rest}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <CardActions>
         <Grid className="between" container>
           {sortStatus}

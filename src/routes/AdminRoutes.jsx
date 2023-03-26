@@ -19,16 +19,16 @@ const DescriptionOverview = lazy(() => {
   return import("../components/add_product/DescriptionOverview");
 });
 const CharacteristicsTabItem = lazy(() => {
-  return import("../components/product-details/CharacteristicsTabItem");
+  return import("../components/admin-product-details/CharacteristicsTabItem");
 });
 const DescriptionTabItem = lazy(() => {
-  return import("../components/product-details/DescriptionTabItem");
+  return import("../components/admin-product-details/DescriptionTabItem");
 });
 const ReviewsTabItem = lazy(() => {
-  return import("../components/product-details/ReviewsTabItem");
+  return import("../components/admin-product-details/ReviewsTabItem");
 });
 const MainProductDetails = lazy(() => {
-  return import("../containers/productDetails/MainProductDetails");
+  return import("../containers/admin-product-details/AdminMainProductDetails");
 });
 
 const AdminRoutes = () => {
@@ -61,41 +61,6 @@ const AdminRoutes = () => {
             }
           />
           <Route
-            path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
-            element={
-              <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                <MainProductDetails />
-              </Suspense>
-            }
-          >
-            <Route
-              path="description"
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <DescriptionTabItem />
-                </Suspense>
-              }
-            />
-            <Route
-              path="characteristics"
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <CharacteristicsTabItem />
-                </Suspense>
-              }
-            />
-
-            <Route
-              path="reviews"
-              element={
-                <Suspense fallback={<GadgetariumSpinnerLoading />}>
-                  <ReviewsTabItem />
-                </Suspense>
-              }
-            />
-          </Route>
-
-          <Route
             path={`${ROUTES.ORDERS}/:orderId`}
             element={
               <Suspense fallback={<GadgetariumSpinnerLoading />}>
@@ -109,6 +74,40 @@ const AdminRoutes = () => {
             element={
               <Suspense fallback={<GadgetariumSpinnerLoading />}>
                 <ReviewRating />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route
+          path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <MainProductDetails />
+            </Suspense>
+          }
+        >
+          <Route
+            path="description"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <DescriptionTabItem />
+              </Suspense>
+            }
+          />
+          <Route
+            path="characteristics"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <CharacteristicsTabItem />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="reviews"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <ReviewsTabItem />
               </Suspense>
             }
           />

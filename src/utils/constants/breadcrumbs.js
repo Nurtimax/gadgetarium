@@ -1,4 +1,5 @@
 import AdminOrdersBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/AdminOrdersBreadcrumbs";
+import AdminProductDetailBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/AdminProductDetailBreadcrumbs";
 import UserCatalogBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogBreadcrumbs";
 import UserCatalogItemBreadcrumbs from "../../components/breadcrumbs/dynamic-detail/UserCatalogItemBreadcrumbs";
 import { ROUTES } from "./routes";
@@ -98,6 +99,22 @@ export const BREADCRUMBS = [
   },
   {
     path: `${ROUTES.ADMIN}/${ROUTES.ORDERS}`,
+    breadcrumb: null,
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.PRODUCT}`,
+    breadcrumb: AdminProductDetailBreadcrumbs,
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.PRODUCT}/description`,
+    breadcrumb: null,
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.PRODUCT}/reviews`,
+    breadcrumb: null,
+  },
+  {
+    path: `${ROUTES.ADMIN}/${ROUTES.GOODS}/${ROUTES.PRODUCT}/characteristics`,
     breadcrumb: null,
   },
   {

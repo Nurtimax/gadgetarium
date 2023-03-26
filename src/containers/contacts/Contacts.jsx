@@ -8,9 +8,15 @@ import { postContacts } from "../../redux/slices/contacts";
 import { contactsData, URLMAP } from "../../utils/constants";
 import { showErrorss } from "../../utils/helpers/catch-signup";
 import { contactsValidationSchema } from "../../utils/helpers/validate";
+import { animateScroll as Scroll } from "react-scroll";
+import { useEffect } from "react";
 
 const Contacts = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const onSubmit = (values) => {
     const phoneNumber = values.phoneNumber

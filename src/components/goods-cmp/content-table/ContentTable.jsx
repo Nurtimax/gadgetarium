@@ -7,9 +7,7 @@ import Table from "../../Table";
 import Pagination from "../../UI/Pagination";
 
 const ContentTable = () => {
-  const { data, localParams, choosedItems } = useSelector(
-    (state) => state.goods
-  );
+  const { data, choosedItems } = useSelector((state) => state.goods);
 
   const dispatch = useDispatch();
 
@@ -45,11 +43,7 @@ const ContentTable = () => {
           selectedItem={choosedItems}
           isSort
         />
-        {!data.responseList?.length && (
-          <Typography>
-            Нет продукта {String(localParams.productType).toLowerCase()}
-          </Typography>
-        )}
+        {!data.responseList?.length && <Typography>Нет продукта</Typography>}
 
         {(data.pages > 1 && !data.responseList?.length) || (
           <Pagination

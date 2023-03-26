@@ -15,8 +15,7 @@ export const tableHeader = [
       flex: 0.5,
     },
     Cell: ({ row }) => {
-      const image = row.original.productImage;
-      return <TableCellImage image={image} />;
+      return <TableCellImage {...row.original} />;
     },
   },
   {

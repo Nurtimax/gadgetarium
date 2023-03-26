@@ -31,7 +31,10 @@ const SignUp = () => {
       .replace(/\s/g, "");
 
     const registerData = {
-      ...values,
+      firstname: values.firstname,
+      lastname: values.lastname,
+      email: values.email,
+      password: values.password,
       phoneNumber,
     };
 

@@ -126,6 +126,7 @@ const OrdersTabs = ({ searchTerm }) => {
           {isPaginationMounted && (
             <Pagination
               count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
+              onChange={() => {}}
             />
           )}
         </>

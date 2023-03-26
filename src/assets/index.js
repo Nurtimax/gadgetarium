@@ -69,3 +69,4 @@ export { ReactComponent as MasterCardPaymant } from "./icons/master-card.svg";
 export { ReactComponent as Addimage } from "./icons/add-photo.svg";
 export { ReactComponent as DeleteBinLine } from "./icons/delete-bin-line.svg";
 export { ReactComponent as EditLine } from "./icons/edit-line.svg";
+export { ReactComponent as DownloadPDFIcon } from "./icons/downloadDocumentPDF.svg";
