@@ -75,6 +75,7 @@ const CatalogProducts = () => {
   const removeCatalogValueByChips = (key, title) => {
     dispatch(filteredCatalogSliceAction.removeByChip({ key, title }));
   };
+  console.log(findedCatalogItem.title, "proverka");
 
   useEffect(() => {
     dispatch(
@@ -106,6 +107,20 @@ const CatalogProducts = () => {
     ...filteredCatalog,
     categoryName: findedCatalogItem.title,
     colors: filteredCatalog.colors.join(","),
+    subCategoryNames: filteredCatalog.subCategoryNames.join(","),
+    memories: filteredCatalog.memories.join(","),
+    rams: filteredCatalog.rams.join(","),
+    laptopCPUs: filteredCatalog.laptopCPUs.join(","),
+    screenSizes: filteredCatalog.screenSizes.join(","),
+    screenResolutions: filteredCatalog.screenResolutions.join(","),
+    screenDiagonals: filteredCatalog.screenDiagonals.join(","),
+    batteryCapacities: filteredCatalog.batteryCapacities.join(","),
+    wirelessInterfaces: filteredCatalog.wirelessInterfaces.join(","),
+    caseShapes: filteredCatalog.caseShapes.join(","),
+    braceletMaterials: filteredCatalog.braceletMaterials.join(","),
+    housingMaterials: filteredCatalog.housingMaterials.join(","),
+    genders: filteredCatalog.genders.join(","),
+    waterProofs: filteredCatalog.waterProofs.join(","),
   };
 
   useEffect(() => {
@@ -114,7 +129,6 @@ const CatalogProducts = () => {
   }, [findedCatalogItem, filteredCatalog, catalogItem]);
 
   useEffect(() => {
-    // dispatch(filteredCatalogSliceAction.resetState());
     dispatch(catalogSliceAction.resetAllFilters());
   }, [catalogItem]);
 

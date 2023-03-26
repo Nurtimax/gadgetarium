@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  text: null,
   fieldToSort: null,
   discountField: null,
   size: 12,
@@ -29,13 +28,6 @@ const filteredCatalogSlice = createSlice({
   reducers: {
     sortField: (state, action) => {
       state.fieldToSort = action.payload;
-    },
-
-    changeByKey: (state, action) => {
-      return {
-        ...state,
-        [action.payload.key]: action.payload.value,
-      };
     },
 
     discountField: (state, action) => {

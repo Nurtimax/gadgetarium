@@ -8,12 +8,14 @@ const Search = ({
   position = "end",
   showBackground = false,
   placeholder,
+  onKeyUp,
   ...rest
 }) => {
   return (
     <OutlinedInputStyled
       {...rest}
       value={value}
+      onKeyUp={onKeyUp}
       onChange={onChange}
       placeholder={placeholder}
       className={showBackground ? "showBackground" : ""}

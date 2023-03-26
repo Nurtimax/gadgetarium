@@ -1,36 +1,45 @@
 import { Box, Paper, Stack, styled, Typography } from "@mui/material";
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import Search from "../UI/Search";
 import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataCatalog } from "../../redux/slices/catalog-slice";
+import { useNavigate } from "react-router-dom";
+import { getSearch } from "../../redux/slices/search-slice";
 
 const SearchItem = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [searchTerm] = useDebounce(searchValue, 1000);
+
+  const [searchTerm] = useDebounce(searchValue, 1);
+
+  const inputRef = useRef(null);
 
   const dispatch = useDispatch();
 
-  const { products } = useSelector((state) => state.catalog.data);
-  const filteredCatalog = useSelector((state) => state.filteredCatalog);
+  const navigate = useNavigate();
+
+  const { products } = useSelector((state) => state.search.data);
 
   useEffect(() => {
     if (searchTerm) {
-      dispatch(fetchDataCatalog({ ...filteredCatalog, text: searchTerm }));
+      dispatch(getSearch({ searchText: searchTerm, size: 100 }));
     } else {
-      dispatch(
-        fetchDataCatalog({
-          ...filteredCatalog,
-          text: null,
-          minPrice: null,
-          maxPrice: null,
-          size: 0,
-        })
-      );
+      dispatch(getSearch({ searchText: null, size: null }));
     }
-  }, [searchTerm, filteredCatalog]);
+  }, [searchTerm]);
+
+  const chooseProductHandler = (id) => {
+    products.productCardResponses.find((product) => {
+      if (product.productId === id) {
+        navigate(
+          `/item/${product.categoryId}/${product.productId}/description`
+        );
+      }
+    });
+    setSearchValue("");
+    inputRef.current.blur();
+  };
 
   return (
     <Stack spacing={1} position="relative">
@@ -39,11 +48,32 @@ const SearchItem = () => {
         placeholder="Поиск по каталогу магазина"
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
+        onKeyUp={(e) => {
+          e.preventDefault();
+          if (e.key === "Enter") {
+            if (products.productCardResponses.length !== 1) {
+              navigate(`item/${products.productCardResponses[0].categoryId}`);
+            } else {
+              products.productCardResponses.find((product) => {
+                navigate(
+                  `/item/${product.categoryId}/${product.productId}/description`
+                );
+              });
+            }
+            setSearchValue("");
+            inputRef.current.blur();
+          }
+        }}
+        inputRef={inputRef}
       />
-      {products.productCardResponses.length ? (
-        <Item>
-          {products.productCardResponses?.map((item) => (
-            <BoxStyled key={item.productId}>
+      {products?.productCardResponses?.length ? (
+        <Item className="item">
+          {products?.productCardResponses?.map((item) => (
+            <BoxStyled
+              key={item.productId}
+              name={item.productId}
+              onClick={() => chooseProductHandler(item.productId)}
+            >
               <StyledTableCellImage className="flex-start">
                 <img src={item.productImage} alt="" className="image" />
               </StyledTableCellImage>
@@ -61,7 +91,8 @@ const SearchItem = () => {
 export default SearchItem;
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: "rgba(255,255,255, 1)",
+
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "left",
@@ -71,8 +102,10 @@ const Item = styled(Paper)(({ theme }) => ({
   top: "100%",
   fontSize: "1rem",
   zIndex: "100",
+  "& .item:hover": { backgroundColor: "red" },
 }));
 const BoxStyled = styled(Box)(() => ({
+  width: "100%",
   display: "flex",
   alignItems: "center",
   gap: "8px",
@@ -80,6 +113,9 @@ const BoxStyled = styled(Box)(() => ({
     fontFamily: "Inter",
     fontWeight: "600",
     fontSize: "16px",
+  },
+  "&:hover": {
+    background: "#f1f1f2",
   },
 }));
 
