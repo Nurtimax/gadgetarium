@@ -78,6 +78,8 @@ const OrdersTabs = ({ searchTerm }) => {
     dispatch(getOrderProducts(requestParams));
   }, [requestParams]);
 
+  const onChange = () => {};
+
   useEffect(() => {
     request();
   }, [request]);
@@ -119,6 +121,7 @@ const OrdersTabs = ({ searchTerm }) => {
 
         {isPaginationMounted && (
           <Pagination
+            onChange={onChange}
             count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
           />
         )}

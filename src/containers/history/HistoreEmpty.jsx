@@ -30,16 +30,21 @@ const HistoreEmpty = () => {
         <p>Здесь будет храниться история ваших заказов.</p>
         <Typography>
           <Link to={`/`}>
-            <Button variant="contained">К покупкам</Button>
+            <Button variant="contained" width="147px">
+              К покупкам
+            </Button>
           </Link>
         </Typography>
       </Typography>
       <Typography component="div" className="block2">
         <p className="user">
-          {data.firstName} {data.lastName}
+          {data.firstName} <br /> {data.lastName}
         </p>
+        <br />
         <p className="email">{data.email}</p>
         <p>{data.phoneNumber}</p>
+
+        <br />
 
         <StyledButton onClick={logOutHandler}>Выйти</StyledButton>
       </Typography>

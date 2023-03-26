@@ -4,12 +4,13 @@ import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import React from "react";
 import { ROUTES } from "../utils/constants/routes";
 import Admin from "../containers/admin";
+import ReviewRating from "../containers/review-rating/ReviewRating";
 
 const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
 const Orders = lazy(() => import("../containers/orders/Orders"));
 const AdminLayout = lazy(() => import("../layout/admin"));
 const Goods = lazy(() => import("../containers/goods"));
-const ReviewRating = lazy(() => import("../containers/review-rating"));
+
 const OrderItem = lazy(() => import("../components/orders/OrderItem"));
 const Forms = lazy(() => import("../components/add_product/Forms"));
 const PriceQuantity = lazy(() => {

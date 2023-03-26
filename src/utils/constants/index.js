@@ -555,6 +555,12 @@ export const head = [
   { id: 3, label: "Профиль", link: ROUTES.PROFILE },
 ];
 
+export const tabsReview = [
+  { id: 1, label: "Все отзывы", title: "a" },
+  { id: 2, label: "Неотвеченные", title: "b" },
+  { id: 3, label: "Отвеченные", title: "c" },
+];
+
 export const OrdersTableListData = [
   {
     id: 1,
