@@ -6,15 +6,7 @@ const phoneRegex = /^\+996 \(\d{3}\) \d{3} \d{3}$/;
 export const singUpValidateSchema = yup.object().shape({
   firstname: yup.string().min(2).max(25).required("имя обязательное поле"),
   lastname: yup.string().min(2).max(25).required("фамилия обязательное поле"),
-  phoneNumber: yup
-    .string()
-    .max(19, "номер телефона должен быть не более 13 символов")
-    .min(13)
-    .matches(
-      phoneRegex,
-      "Номер телефона должен быть в формате +996(XXX)XX-XX-XX"
-    )
-    .required("Номер телефона обязательное поле"),
+  phoneNumber: yup.string().required("Номер телефона обязательное поле"),
   email: yup
     .string()
     .email()
@@ -35,6 +27,29 @@ export const singUpValidateSchema = yup.object().shape({
     .required("Подтвердите пароль обязательное поле"),
 });
 
+export const updateProfileValidateSchema = yup.object().shape({
+  firstName: yup.string().min(2).max(25).required("имя обязательное поле"),
+  lastName: yup.string().min(2).max(25).required("фамилия обязательное поле"),
+  phoneNumber: yup
+    .string()
+    .max(19, "номер телефона должен быть не более 13 символов")
+    .min(8)
+    .matches(
+      phoneRegex,
+      "Номер телефона должен быть в формате +996(XXX)XX-XX-XX"
+    )
+    .required("Номер телефона обязательное поле"),
+  email: yup
+    .string()
+    .email()
+    .matches(
+      emailRegex,
+      "адрес электронной почты должен быть в формате ...@gmail.com"
+    )
+    .required("Электронная почта обязательное поле"),
+
+  address: yup.string().min(5).max(40).required("Адрес обязательное поле"),
+});
 export const singInValidateSchema = yup.object().shape({
   email: yup
     .string()
@@ -96,8 +111,7 @@ export const orderingValidateSchemaWithAdreess = yup.object().shape({
       "Адрес электронной почты должен быть в формате ...@gmail.com!"
     )
     .required("Электронная почта обязательное поле!"),
-
-  address: yup.string().required("Имя обязательное поле!"),
+  address: yup.string().required("Адрес обязательное поле!"),
 });
 
 export const paymantValidateSchema = yup.object().shape({
@@ -105,6 +119,14 @@ export const paymantValidateSchema = yup.object().shape({
   expiryDate: yup.string().required("Дата обязательное поле!"),
   cvc: yup.string().required("СVC обязательное поле!"),
   userName: yup.string().required("Имя владельца обязательное поле!"),
+});
+export const change = yup.object().shape({
+  currentPassword: yup.string().required("Старый пароль обязательное поле!"),
+  newPassword: yup.string().required("Новый пароль обязательное поле!"),
+  password: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Пароли должны совпадать")
+    .required("Требуется подтверждение пароля"),
 });
 
 export const contactsValidationSchema = yup.object().shape({

@@ -1,6 +1,7 @@
-import { Box, Grid, styled, Typography } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ImageEmpty } from "../../../assets";
 import { actionGoodSlice } from "../../../redux/slices/goods-slice";
 import { tableHeader } from "../../../utils/constants/content-table";
 import Table from "../../Table";
@@ -43,7 +44,7 @@ const ContentTable = () => {
           selectedItem={choosedItems}
           isSort
         />
-        {!data.responseList?.length && <Typography>Нет продукта</Typography>}
+        {!data.responseList?.length && <Image src={ImageEmpty} alt="empty" />}
 
         {(data.pages > 1 && !data.responseList?.length) || (
           <Pagination
@@ -62,3 +63,7 @@ export default ContentTable;
 const StyledContentTable = styled(Box)(() => ({}));
 
 const StyledTable = styled(Table)(() => ({}));
+
+const Image = styled("img")(() => ({
+  paddingLeft: "20%",
+}));

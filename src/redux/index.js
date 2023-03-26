@@ -23,12 +23,14 @@ import viewedProductSlice from "./slices/viewed-product-slice";
 import goodsSlice from "./slices/goods-slice";
 import { paymantSlice } from "./slices/paymant-slice";
 import addBannerImageSlice from "./slices/add-banners-slice";
+import { privateSlice } from "./slices/private-slice";
 import mailingSlice from "./slices/mailing-slice";
 import compareSlice from "./slices/compare-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
 import { subscribeSlice } from "./slices/subscribe-slice";
 import bannerSlice from "./slices/banner-slice";
 import adminProductDetailsSlice from "./slices/admin-product-details-slice";
+import { reviewRating } from "./slices/review-rating-slice";
 
 const rootReducer = combineReducers({
   auth: reducerAuthenticationSlice,
@@ -45,11 +47,13 @@ const rootReducer = combineReducers({
   goods: goodsSlice.reducer,
   paymant: paymantSlice.reducer,
   addBanner: addBannerImageSlice.reducer,
+  private: privateSlice.reducer,
   mailing: mailingSlice.reducer,
   compareProducts: compareSlice.reducer,
   subscribe: subscribeSlice.reducer,
   banner: bannerSlice.reducer,
   adminProductDetails: adminProductDetailsSlice.reducer,
+  reviewRating: reviewRating.reducer,
 });
 
 const persistConfig = {

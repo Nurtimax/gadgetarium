@@ -165,7 +165,7 @@ const SliderContainer = styled("div")`
   }
 
   .slick-list {
-    height: 60vh;
+    height: 70vh;
   }
 `;
 
@@ -179,7 +179,7 @@ const Image = styled("div")`
 `;
 
 const ContainerText = styled(Container)`
-  padding-top: 60px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   gap: 60px;

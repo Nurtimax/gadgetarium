@@ -41,8 +41,10 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
 
   useEffect(() => {
     dispatch(ActionProductDetails.setDetails(findedSubProduct));
-    window.scroll(0, 150);
   }, [findedSubProduct]);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const plusHandler = () => {
     dispatch(ActionProductDetails.plusCount());
@@ -57,7 +59,7 @@ const ProductDetails = ({ data, chooseItem, count, images }) => {
     } else {
       dispatch(
         postProductToBasket({
-          orderCount: findedSubProduct.countOfSubproduct,
+          orderCount: count,
           productId: findedSubProduct.id,
         })
       ).then(() => {

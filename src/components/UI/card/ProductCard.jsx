@@ -94,6 +94,13 @@ const ProductCard = (props) => {
     setDropDown(false);
   };
 
+  const signInDetails = () => {
+    if (Object.keys(data).length === 0) {
+      setLoginText("чтобы посмотреть детально!");
+      setModalOpen(true);
+    }
+  };
+
   const addBasketHandler = () => {
     if (Object.keys(data).length === 0) {
       setLoginText("чтобы добавить в корзину!");
@@ -298,7 +305,7 @@ const ProductCard = (props) => {
           src={productImage}
           title={productName}
           alt={productName}
-          onClick={addBasketHandler}
+          onClick={signInDetails}
         />
       )}
 

@@ -47,7 +47,7 @@ const ReviewsTabItem = () => {
         <Grid container spacing={10}>
           {data.attribute?.Отзывы?.length === 0 ? (
             <Grid item xs={7}>
-              Отзывы нет
+              Отзывов нет
             </Grid>
           ) : (
             data.attribute?.Отзывы?.map((user) => (

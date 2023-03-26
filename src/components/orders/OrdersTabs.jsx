@@ -15,7 +15,6 @@ import {
 } from "../../utils/helpers/general";
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
-import GadgetariumSpinnerLoading from "../GadgetariumSpinnerLoading";
 import { useCallback } from "react";
 import { ImageEmpty } from "../../assets";
 
@@ -23,8 +22,6 @@ const OrdersTabs = ({ searchTerm }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
     (state) => state.orderProduct.data
   );
-
-  const isLoading = useSelector((state) => state.orderProduct.isLoading);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const orderStatus = searchParams.get("orderStatus") || "WAITING";
@@ -81,56 +78,35 @@ const OrdersTabs = ({ searchTerm }) => {
     dispatch(getOrderProducts(requestParams));
   }, [requestParams]);
 
+  const onChange = () => {};
+
   useEffect(() => {
     request();
   }, [request]);
 
   return (
     <div>
-      {isLoading ? (
-        <GadgetariumSpinnerLoading />
-      ) : (
-        <>
-          <Tabs>
-            {TAB_ITEMS_ORDER.map((tab, i) => (
-              <button
-                key={i}
-                name={tab.tabTitle}
-                disabled={orderStatus === `${tab.tabTitle}`}
-                onClick={handleTabClick}
-              >
-                {tab.title} {checkTabName(tab.title, orderStatusAndSize || {})}
-              </button>
-            ))}
-          </Tabs>
-
-          <DatePicker date={dates} setDate={setDates} />
-
+      <>
+        <Tabs>
           {TAB_ITEMS_ORDER.map((tab, i) => (
-            <div key={i}>
-              {orderStatus === `${tab.tabTitle}` &&
-                (data.length < 1 ? (
-                  <Image src={ImageEmpty} alt="empty" />
-                ) : (
-                  <Table
-                    tableHeaderTitle={OrdersTableHeaderTitle}
-                    data={tableData}
-                    isMarked={false}
-                    found={true}
-                    countOfOrders={countOfOrders}
-                  />
-                ))}
-            </div>
+            <button
+              key={i}
+              name={tab.tabTitle}
+              disabled={orderStatus === `${tab.tabTitle}`}
+              onClick={handleTabClick}
+            >
+              {tab.title} {checkTabName(tab.title, orderStatusAndSize || {})}
+            </button>
           ))}
+        </Tabs>
 
-          {isPaginationMounted && (
-            <Pagination
-              count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
-              onChange={() => {}}
-            />
-          )}
-        </>
-      )}
+        {isPaginationMounted && (
+          <Pagination
+            count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
+            onChange={() => {}}
+          />
+        )}
+      </>
     </div>
   );
 };

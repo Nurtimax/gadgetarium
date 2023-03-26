@@ -14,7 +14,7 @@ export const postAddFeedback = createAsyncThunk(
       const response = await axiosInstance.post("users/review", params);
       const result = response.data;
       if (response.status === 200) {
-        toast.success("Вы успешно оставили отзыв");
+        toast.success("Ваш отзыв был успешно отправлен!");
         dispatch(
           getProductDetailThunk({
             product: params.product,
