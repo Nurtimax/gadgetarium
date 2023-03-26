@@ -5,12 +5,16 @@ import Button from "../../components/UI/button/Button";
 import { Link } from "react-router-dom";
 import { getProfile } from "../../redux/slices/private-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { ActionauthenticationSlice } from "../../redux/slices/authentication-slice";
 
 const HistoreEmpty = () => {
   const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.private.profile);
-  console.log(data);
+
+  const logOutHandler = () => {
+    dispatch(ActionauthenticationSlice.authLogOut());
+  };
 
   useEffect(() => {
     dispatch(getProfile());
@@ -26,17 +30,23 @@ const HistoreEmpty = () => {
         <p>Здесь будет храниться история ваших заказов.</p>
         <Typography>
           <Link to={`/`}>
-            <Button variant="contained">К покупкам</Button>
+            <Button variant="contained" width="147px">
+              К покупкам
+            </Button>
           </Link>
         </Typography>
       </Typography>
       <Typography component="div" className="block2">
         <p className="user">
-          {data.firstName} {data.lastName}
+          {data.firstName} <br /> {data.lastName}
         </p>
+        <br />
         <p className="email">{data.email}</p>
         <p>{data.phoneNumber}</p>
-        <StyledButton>Выйти</StyledButton>
+
+        <br />
+
+        <StyledButton onClick={logOutHandler}>Выйти</StyledButton>
       </Typography>
     </StyledContainer>
   );
@@ -61,7 +71,13 @@ const StyledContainer = styled(Box)(() => ({
     display: "grid",
     justifyContent: "center",
     textAlign: "center",
-    gap: "5px 0",
+    gap: "15px 0",
+
+    "& h5": {
+      fontFamily: "Inter",
+      fontWeight: "500",
+      fontSize: "24px",
+    },
   },
   "& .block2": {
     width: "150px",

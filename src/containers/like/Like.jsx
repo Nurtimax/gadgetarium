@@ -29,9 +29,9 @@ const Like = () => {
         <StyledContainer>
           {data.length > 0 ? (
             <>
-              <Grid container>
+              <Grid container className="container">
                 {data?.map((item) => (
-                  <Grid key={item.productId} xs={2.3}>
+                  <Grid key={item.productId}>
                     <HistoryCard {...item} />
                   </Grid>
                 ))}
@@ -60,6 +60,12 @@ const StyledContainer = styled(Box)(() => ({
     display: "flex",
     justifyContent: "center",
     padding: "70px 0",
+  },
+
+  "& .container": {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "30px",
   },
 }));
 const StyledButton = styled(Button)(() => ({
