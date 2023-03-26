@@ -17,11 +17,16 @@ import Form from "../../components/ordering/Form";
 import { getUserData } from "../../redux/slices/ordering-slice";
 import { ROUTES } from "../../utils/constants/routes";
 import { priceProductSeparate } from "../../utils/helpers/general";
+import { animateScroll as Scroll } from "react-scroll";
 
 const steps = ["Варианты доставки", "Оплата", "Обзор заказа"];
 
 const Ordering = () => {
   const { data, isLoading } = useSelector((state) => state.ordering);
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const {
     data: basketData,

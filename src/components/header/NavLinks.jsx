@@ -7,7 +7,10 @@ const NavLinks = ({ page = [], ...rest }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const params = page.find((item) => `/${item.to}` === location.pathname);
+  const params = page.find(
+    (item) =>
+      item.to === location.pathname.split("/").join("").split("admin").join("")
+  );
   const tabsValue = params?.theme ? params.theme : page[0].theme;
 
   const isChoosed = useMemo(() => {

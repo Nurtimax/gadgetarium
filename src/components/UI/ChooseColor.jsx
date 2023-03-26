@@ -21,7 +21,7 @@ const StyledChooseColor = styled(Box)(({ color, theme }) => ({
     width: "26px",
     height: "26px",
     borderRadius: "50%",
-    boxShadow: "1px 1px 4px 1px rgba(0,0,0,0.5)",
+    boxShadow: "1px 1px 4px 1px rgba(0,0,0,0.2)",
     display: "flex",
     margin: "2px",
     cursor: "pointer",
@@ -29,6 +29,6 @@ const StyledChooseColor = styled(Box)(({ color, theme }) => ({
   "& .actived": {
     border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: "50%",
-    boxShadow: "1px 1px 4px 1px rgba(0,0,0,0.5)",
+    boxShadow: "1px 1px 4px 1px rgba(0,0,0,0.2)",
   },
 }));

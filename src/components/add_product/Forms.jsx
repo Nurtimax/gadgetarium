@@ -127,6 +127,10 @@ const Forms = () => {
     return null;
   }, [values, getProductIdParam]);
 
+  useEffect(() => {
+    delete findedSubProductData?.characteristics?.["[object Object]"];
+  }, [findedSubProductData]);
+
   const color = findedSubProductData ? findedSubProductData.color : "";
 
   const colorError = useMemo(() => {

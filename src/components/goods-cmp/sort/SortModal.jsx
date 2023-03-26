@@ -29,11 +29,16 @@ const SortModal = ({ anchorElCatalog, handleCloseCatalog }) => {
     (value, e) => {
       if (value !== "По акции") {
         handleCloseCatalog();
-        dispatch(actionGoodSlice.changeParams({ value, key: "fieldToSort" }));
-        dispatch(
-          actionGoodSlice.changeParams({ key: "discountField", value: null })
-        );
-        return setAnchorEl(e);
+        if (fieldToSort === value) {
+          return dispatch(
+            actionGoodSlice.changeParams({ value: null, key: "fieldToSort" })
+          );
+        } else {
+          dispatch(actionGoodSlice.changeParams({ value, key: "fieldToSort" }));
+          return dispatch(
+            actionGoodSlice.changeParams({ key: "discountField", value: null })
+          );
+        }
       }
       return setAnchorEl(e);
     },

@@ -346,6 +346,20 @@ export const TAB_ITEMS = [
   },
 ];
 
+export const ADMIN_TAB_ITEMS = [
+  {
+    id: 1,
+    param: "description",
+    label: "Описание",
+  },
+  {
+    id: 2,
+    param: "characteristics",
+    label: "Характеристики",
+  },
+  { id: 3, param: "reviews", label: "Отзывы" },
+];
+
 export const SEARCH_PARAMS = {
   CONTENT: "content",
 };
