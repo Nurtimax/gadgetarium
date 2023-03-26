@@ -51,7 +51,11 @@ const Form = ({ handleNext, data, isChecked }) => {
     isSubmitting,
   } = useFormik({
     initialValues: {
-      ...data,
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      address: "",
     },
     validationSchema: schema,
     validateOnChange: false,
@@ -59,10 +63,7 @@ const Form = ({ handleNext, data, isChecked }) => {
   });
 
   useEffect(() => {
-    setValues({
-      ...values,
-      ...data,
-    });
+    setValues((prevState) => ({ ...prevState, ...data }));
   }, []);
 
   useEffect(() => {
