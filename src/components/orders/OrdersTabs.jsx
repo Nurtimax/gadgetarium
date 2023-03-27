@@ -3,11 +3,11 @@ import { styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { TAB_ITEMS_ORDER } from "../../utils/constants";
-import { OrdersTableHeaderTitle } from "../../utils/constants/orderTable";
+// import { OrdersTableHeaderTitle } from "../../utils/constants/orderTable";
 import { getOrderProducts } from "../../redux/slices/orders-slice";
 import { format } from "date-fns";
-import DatePicker from "./DatePicker";
-import Table from "../Table";
+// import DatePicker from "./DatePicker";
+// import Table from "../Table";
 import {
   checkTabName,
   isPaginationCountHandler,
@@ -16,7 +16,7 @@ import {
 import { useDebounce } from "use-debounce";
 import Pagination from "../UI/Pagination";
 import { useCallback } from "react";
-import { ImageEmpty } from "../../assets";
+// import { ImageEmpty } from "../../assets";
 
 const OrdersTabs = ({ searchTerm }) => {
   const { orderResponses, orderStatusAndSize, countOfOrders } = useSelector(
@@ -30,6 +30,8 @@ const OrdersTabs = ({ searchTerm }) => {
   const data = orderResponses || [];
 
   const tableData = useMemo(() => orderResponses, [orderResponses]);
+
+  console.log(tableData, data, countOfOrders);
 
   const [dates, setDates] = useState([null, null]);
 
@@ -78,7 +80,9 @@ const OrdersTabs = ({ searchTerm }) => {
     dispatch(getOrderProducts(requestParams));
   }, [requestParams]);
 
-  const onChange = () => {};
+  const onChange = () => {
+    setDates([null, null]);
+  };
 
   useEffect(() => {
     request();
@@ -103,7 +107,7 @@ const OrdersTabs = ({ searchTerm }) => {
         {isPaginationMounted && (
           <Pagination
             count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
-            onChange={() => {}}
+            onChange={onChange}
           />
         )}
       </>
@@ -113,9 +117,9 @@ const OrdersTabs = ({ searchTerm }) => {
 
 export default OrdersTabs;
 
-const Image = styled("img")(() => ({
-  paddingLeft: "20%",
-}));
+// const Image = styled("img")(() => ({
+//   paddingLeft: "20%",
+// }));
 
 const Tabs = styled("div")(({ theme }) => ({
   display: "flex",
