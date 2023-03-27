@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { DeleteIcon, EditIcon } from "../../../assets";
+import { DeleteIcon } from "../../../assets";
 import { removeProductsThunk } from "../../../redux/slices/goods-slice";
 
 const TableCellEditAndDelete = ({ id }) => {
@@ -21,9 +21,6 @@ const TableCellEditAndDelete = ({ id }) => {
 
   return (
     <StyledTableCellEditAndDelete className="flex-start gap2">
-      <Box className="pointer edit_icon">
-        <EditIcon />
-      </Box>
       <Box className="pointer delete_icon" onClick={removeProducts}>
         <DeleteIcon />
       </Box>

@@ -1,7 +1,8 @@
 import { Box, Container, styled, Typography } from "@mui/material";
 import AccordionComponents from "../../components/UI/AccordionComponents";
 import { title } from "../../utils/constants/listQuestions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { animateScroll as Scroll } from "react-scroll";
 
 const FrequentlyAskedQuestions = () => {
   const [expanded, setExpanded] = useState(false);
@@ -9,6 +10,10 @@ const FrequentlyAskedQuestions = () => {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   return (
     <FAQStyled>

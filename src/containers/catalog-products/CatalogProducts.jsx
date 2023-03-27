@@ -25,6 +25,7 @@ import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-sl
 import { CATALOG_PRODUCTS_FILTERS_KEYS } from "../../utils/constants/catalog-product-filter";
 import { useState } from "react";
 import ColorName from "../../components/add_product/fields/ColorName";
+import { animateScroll as Scroll } from "react-scroll";
 
 const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
@@ -71,6 +72,7 @@ const CatalogProducts = () => {
   useEffect(() => {
     dispatch(filteredCatalogSliceAction.resetState());
     dispatch(catalogSliceAction.resetAllFilters());
+    Scroll.scrollTo(0);
   }, [catalogItem]);
 
   const removeCatalogValueByChips = (key, title) => {

@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { getProductDetailThunk } from "../../redux/slices/product-details-slice";
 import { Box, styled } from "@mui/material";
 import ReactPlayer from "react-player";
+
 const DescriptionTabItem = () => {
   const { product } = useParams();
 
-  const { data } = useSelector((state) => state.productDetails);
+  const { data } = useSelector((state) => state.adminProductDetails);
 
   const dispatch = useDispatch();
 

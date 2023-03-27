@@ -125,7 +125,7 @@ const BoxStyled = styled(Box)(() => ({
 }));
 
 const ProductCardStyled = styled(ProductCard)(() => ({
-  width: "246.5px !important",
+  width: "240.5px !important",
 
   "& .loading-style": {
     width: "100%",

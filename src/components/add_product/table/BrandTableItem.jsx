@@ -33,7 +33,7 @@ const StyledBrandTableItem = styled(Box)(() => ({
       width: "20px",
       height: "20px",
       objectFit: "contain",
-      mixBlendMode: "color-burn",
+      mixBlendMode: "darken",
     },
   },
 }));

@@ -41,6 +41,15 @@ const CarouselStyle = styled(Carousel)(() => ({
     justifyContent: "center",
     mixBlendMode: "darken",
   },
+  "& .thumbs li": {
+    height: "80px",
+    "& img": {
+      aspectRatio: "1/1",
+      objectFit: "contain",
+      height: "100%",
+      width: "100%",
+    },
+  },
 
   "& .carousel .thumb:hover": {
     border: "2px solid #cb11ab",
