@@ -24,6 +24,7 @@ import FilterProducts from "../../components/catalog-products/FilterProducts";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
 import { CATALOG_PRODUCTS_FILTERS_KEYS } from "../../utils/constants/catalog-product-filter";
 import { useState } from "react";
+import ColorName from "../../components/add_product/fields/ColorName";
 
 const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
@@ -163,7 +164,12 @@ const CatalogProducts = () => {
                       removeCatalogValueByChips(item.key, item.title)
                     }
                   >
-                    {item.title}
+                    {item.key === "colors" ? (
+                      <ColorName color={item.title} />
+                    ) : (
+                      item.title
+                    )}
+
                     <Svg />
                   </Button>
                 ))}
