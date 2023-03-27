@@ -74,7 +74,7 @@ const WrapperStyled = styled("div")(() => ({
   },
 }));
 const StyledImg = styled("img")(() => ({
-  height: "600px",
+  height: "500px",
   width: "100%",
   objectFit: "cover",
   aspectRatio: "3/2",
