@@ -9,6 +9,7 @@ export const getProductDetailThunk = createAsyncThunk(
         params: {
           id: data.product,
           attribute: data.attribute,
+          size: data.size,
         },
       });
 

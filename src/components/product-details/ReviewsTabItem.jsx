@@ -1,4 +1,11 @@
-import { Box, Grid, Rating, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Rating,
+  styled,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../UI/button/Button";
@@ -9,6 +16,7 @@ import ReviewsTabSlice from "./ReviewsTabSlice";
 
 const ReviewsTabItem = () => {
   const [reviewCount, setReviewCount] = useState(0);
+  const [size, setSize] = useState(2);
 
   const [isShowModal, setIsShowModal] = useState(false);
 
@@ -19,8 +27,8 @@ const ReviewsTabItem = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProductDetailThunk({ product, attribute: "Отзывы" }));
-  }, [dispatch, product]);
+    dispatch(getProductDetailThunk({ product, attribute: "Отзывы", size }));
+  }, [dispatch, product, size]);
 
   useEffect(() => {
     let review = 0;
@@ -29,6 +37,10 @@ const ReviewsTabItem = () => {
     }
     setReviewCount(review);
   }, [data.reviewCount]);
+
+  const onClickSize = () => {
+    setSize((prev) => prev + 2);
+  };
 
   const onClickOpenModal = () => {
     setIsShowModal(true);
@@ -44,26 +56,40 @@ const ReviewsTabItem = () => {
         <Feedback open={isShowModal} onClose={onClickCloseModal} />
       )}
       <Styled_Wrapper>
-        <Grid container spacing={10}>
-          {data.attribute?.Отзывы?.length === 0 ? (
-            <Grid item xs={7}>
-              Отзывов нет
-            </Grid>
-          ) : (
-            data.attribute?.Отзывы?.map((user) => (
-              <Grid item xs={7} key={user.id}>
-                <Typography variant="h1" className="title">
-                  Отзывы
-                </Typography>
-                <ReviewsTabSlice {...user} />
-                <Typography component="div" className="flex center padding">
-                  <Button variant="outlined">Показать еще</Button>
-                </Typography>
+        <Grid container spacing={0}>
+          <Grid item xs={7.5}>
+            {data.attribute?.Отзывы?.length === 0 ? (
+              <Grid item xs={7}>
+                Отзывов нет
               </Grid>
-            ))
-          )}
+            ) : (
+              <Container>
+                <Grid container>
+                  <Grid item xs={11} className="map">
+                    <Typography variant="h1" className="title">
+                      Отзывы
+                    </Typography>
+                    {data.attribute?.Отзывы?.map((user) => (
+                      <Grid item xs={12} key={user.id}>
+                        <ReviewsTabSlice {...user} />
+                      </Grid>
+                    ))}
 
-          <Grid item xs={5}>
+                    <Typography component="div" className="flex center padding">
+                      <Button
+                        variant="outlined"
+                        onClick={onClickSize}
+                        disabled={size !== data.attribute?.Отзывы?.length}
+                      >
+                        Показать еще
+                      </Button>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Container>
+            )}
+          </Grid>
+          <Grid item xs={4.5}>
             <Box className="ratingBlock">
               <Grid container>
                 <Grid item xs={6}>

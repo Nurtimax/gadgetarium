@@ -17,7 +17,6 @@ const AnswerComment = ({
   id,
 }) => {
   const [content, setContent] = useState(productGrade);
-
   const [value, setValue] = useState(answer);
 
   const [isEditing, setIsEditing] = useState(false);
