@@ -20,6 +20,7 @@ import {
 } from "../../redux/slices/add-product-slice";
 import { ROUTES } from "../../utils/constants/routes";
 import Button from "../../components/UI/button/Button";
+import { format } from "date-fns";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -36,23 +37,32 @@ const AddProduct = () => {
     initialValues: PRODUCT_INITIALSTATE,
     validationSchema: PRODUCT_INITIALSTATESCHEMA,
     onSubmit: (values, action) => {
-      dispatch(addProductThunk(values))
+      dispatch(
+        addProductThunk({
+          ...values,
+          dateOfIssue: format(new Date(values.dateOfIssue), "yy-MM-dd"),
+        })
+      )
         .unwrap()
         .then((response) => {
           if (response.status === "ok") {
             navigate(`${ROUTES.ADMIN}/${ROUTES.GOODS}`);
             toast.success(response.message);
+            dispatch(ActionAddProductSlice.resetAllValues());
+            action.resetForm();
           }
         })
         .catch((error) => toast.error(error.message));
-      dispatch(ActionAddProductSlice.resetAllValues());
-      action.resetForm();
     },
     validateOnChange: false,
   });
 
   useEffect(() => {
-    setValues((prevState) => ({ ...prevState, ...AllValues }));
+    setValues((prevState) => ({
+      ...prevState,
+      ...AllValues,
+      productVendorCode: Math.round(Math.random() * 1000000),
+    }));
   }, [AllValues]);
 
   useEffect(() => {
@@ -92,6 +102,10 @@ const AddProduct = () => {
     },
   ];
 
+  const cancelAllHandler = () => {
+    dispatch(ActionAddProductSlice.resetAllValues());
+  };
+
   return (
     <StyledAddProduct>
       <Container>
@@ -118,7 +132,11 @@ const AddProduct = () => {
           <Box component="form" onSubmit={handleSubmit}>
             <Grid container className="padding" width="54.5vw">
               <Grid item xs={12} className="flex gap2 flex-end">
-                <StyledButton className="cancel_button" type="button">
+                <StyledButton
+                  className="cancel_button"
+                  type="button"
+                  onClick={cancelAllHandler}
+                >
                   Отменить
                 </StyledButton>
                 <StyledButton className="add_button" type="submit">

@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import React from "react";
 
 const TableCellDateFormat = ({ createAt }) => {
-  const dateFormat = format(new Date(createAt), "dd.mm.yyyy");
+  const dateFormat = format(new Date(createAt), "dd.MM.yyyy");
   const dateHourFormat = format(new Date(createAt), "hh:mm");
   return (
     <StyledTableCellDateFormat className="flex-start column">

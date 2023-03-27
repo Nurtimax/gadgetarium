@@ -17,6 +17,7 @@ import {
 } from "../../redux/slices/basket-slice";
 import { ROUTES } from "../../utils/constants/routes";
 import { priceProductSeparate } from "../../utils/helpers/general";
+import { animateScroll as Scroll } from "react-scroll";
 
 const Basket = () => {
   const { data, isLoading } = useSelector((state) => state.basket);
@@ -29,6 +30,10 @@ const Basket = () => {
   const [sumOrderData, setSumOrderData] = useState([]);
   const [text, setText] = useState("");
   const [dropDown, setDropDown] = useState(false);
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   useEffect(() => {
     setSumOrderData(

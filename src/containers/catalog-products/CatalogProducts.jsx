@@ -22,6 +22,7 @@ import { ArrowDownIcon, DeleteIconInCart } from "../../assets";
 import ProductsList from "../../components/catalog-products/ProductsList";
 import FilterProducts from "../../components/catalog-products/FilterProducts";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { animateScroll as Scroll } from "react-scroll";
 
 const CatalogProducts = () => {
   const filteredCatalog = useSelector((state) => state.filteredCatalog);
@@ -54,6 +55,10 @@ const CatalogProducts = () => {
     dispatch(filteredCatalogSliceAction.resetState());
     dispatch(catalogSliceAction.resetAllFilters());
   };
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   useEffect(() => {
     dispatch(

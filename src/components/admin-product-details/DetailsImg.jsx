@@ -4,7 +4,6 @@ import Modal from "../UI/Modal";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { motion } from "framer-motion";
 const DetailsImg = ({ open, state, handleClose, images }) => {
   return (
     <Styled_Wrapper
@@ -12,10 +11,6 @@ const DetailsImg = ({ open, state, handleClose, images }) => {
       state={state}
       handleClose={handleClose}
       classes={{ paper: "show_photo" }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      component={motion.div}
     >
       <CarouselStyle infiniteLoop showStatus={false} showIndicators={false}>
         {images?.map((img) => (

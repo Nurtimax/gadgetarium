@@ -2,11 +2,14 @@ import { Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { priceProductSeparate } from "../../../utils/helpers/general";
 
-const TableCellCurrentPrice = ({ currentPrice }) => {
+const TableCellCurrentPrice = ({ currentPrice, productPrice }) => {
   return (
     <StyledTableCellCurrentPrice className="flex-start">
       <Typography classes={{ root: "current_price" }} variant="body1">
-        {priceProductSeparate(currentPrice)}c
+        {currentPrice === 0
+          ? priceProductSeparate(productPrice)
+          : priceProductSeparate(currentPrice)}
+        c
       </Typography>
     </StyledTableCellCurrentPrice>
   );
