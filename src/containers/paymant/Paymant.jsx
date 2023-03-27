@@ -15,6 +15,8 @@ import { ROUTES } from "../../utils/constants/routes";
 import { priceProductSeparate } from "../../utils/helpers/general";
 import { getBasketProduct } from "../../redux/slices/basket-slice";
 import { postOrdering } from "../../redux/slices/paymant-slice";
+import { animateScroll as Scroll } from "react-scroll";
+import { toast } from "react-toastify";
 
 const steps = ["Варианты доставки", "Оплата", "Обзор заказа"];
 
@@ -22,6 +24,10 @@ const Paymant = () => {
   const { personalData, personalCardData } = useSelector(
     (state) => state.paymant
   );
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const { data: basketData, sumOrderData: sumData } = useSelector(
     (state) => state.basket
@@ -68,9 +74,13 @@ const Paymant = () => {
         orderType: personalData.orderType,
         subproductsId: ordersId,
       })
-    );
-
-    navigate("/cart");
+    )
+      .then(() => {
+        navigate("/cart");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (

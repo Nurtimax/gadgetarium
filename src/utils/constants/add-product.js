@@ -24,6 +24,7 @@ export const PRODUCT_INITIALSTATE = {
     },
   ],
   pdf: "",
+  dateOfIssue: "",
 };
 export const ADDPRODUCT_INITIALSTATE = {
   productName: "",

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IconNext, IconPrev } from "../../assets";
-import { Container, styled, Typography } from "@mui/material";
+import { Box, Container, styled, Typography } from "@mui/material";
 import Map from "../../assets/images/kyrgyzstan's-map.jpg";
 import { dataAboutStore, dataDigitalBestSeller } from "../../utils/constants";
+import { animateScroll as Scroll } from "react-scroll";
 
 const SampleNextArrow = ({ onClick, style, className }) => {
   return (
@@ -42,6 +43,10 @@ const SamplePrevArrow = ({ onClick, style, className }) => {
 
 const AboutStore = () => {
   const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const settings = {
     infinity: true,
@@ -114,7 +119,7 @@ const AboutStore = () => {
 
 export default AboutStore;
 
-const BoxMain = styled("div")`
+const BoxMain = styled(Box)`
   min-height: 500px;
   width: 100%;
   max-width: 1424px;

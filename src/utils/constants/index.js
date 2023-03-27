@@ -346,6 +346,20 @@ export const TAB_ITEMS = [
   },
 ];
 
+export const ADMIN_TAB_ITEMS = [
+  {
+    id: 1,
+    param: "description",
+    label: "Описание",
+  },
+  {
+    id: 2,
+    param: "characteristics",
+    label: "Характеристики",
+  },
+  { id: 3, param: "reviews", label: "Отзывы" },
+];
+
 export const SEARCH_PARAMS = {
   CONTENT: "content",
 };
@@ -553,6 +567,12 @@ export const head = [
   { id: 1, label: "История заказов", link: ROUTES.HISTORY },
   { id: 2, label: "Избранное", link: ROUTES.LIKE },
   { id: 3, label: "Профиль", link: ROUTES.PROFILE },
+];
+
+export const tabsReview = [
+  { id: 1, label: "Все отзывы", title: "a" },
+  { id: 2, label: "Неотвеченные", title: "b" },
+  { id: 3, label: "Отвеченные", title: "c" },
 ];
 
 export const OrdersTableListData = [

@@ -78,6 +78,8 @@ const OrdersTabs = ({ searchTerm }) => {
     dispatch(getOrderProducts(requestParams));
   }, [requestParams]);
 
+  const onChange = () => {};
+
   useEffect(() => {
     request();
   }, [request]);
@@ -98,28 +100,10 @@ const OrdersTabs = ({ searchTerm }) => {
           ))}
         </Tabs>
 
-        <DatePicker date={dates} setDate={setDates} />
-
-        {TAB_ITEMS_ORDER.map((tab, i) => (
-          <div key={i}>
-            {orderStatus === `${tab.tabTitle}` &&
-              (data.length < 1 ? (
-                <Image src={ImageEmpty} alt="empty" />
-              ) : (
-                <Table
-                  tableHeaderTitle={OrdersTableHeaderTitle}
-                  data={tableData}
-                  isMarked={false}
-                  found={true}
-                  countOfOrders={countOfOrders}
-                />
-              ))}
-          </div>
-        ))}
-
         {isPaginationMounted && (
           <Pagination
             count={isPaginationCountHandler(orderStatus, orderStatusAndSize)}
+            onChange={() => {}}
           />
         )}
       </>

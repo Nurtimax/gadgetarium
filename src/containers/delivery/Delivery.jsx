@@ -4,9 +4,14 @@ import { Box, Container, Grid, styled, Typography } from "@mui/material";
 import { delivery, paymentMethod } from "../../utils/constants";
 import { getProductDetailThunk } from "../../redux/slices/product-details-slice.js";
 import { useParams } from "react-router-dom";
+import { animateScroll as Scroll } from "react-scroll";
 
 const Delivery = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const { product } = useParams();
 

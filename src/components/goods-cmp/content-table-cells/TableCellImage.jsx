@@ -1,10 +1,13 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
-const TableCellImage = ({ image }) => {
+const TableCellImage = ({ productImage, id }) => {
   return (
     <StyledTableCellImage className="flex-start">
-      <img src={image} alt="" className="image" />
+      <Link to={`${id}/description`}>
+        <img src={productImage} alt="" className="image" />
+      </Link>
     </StyledTableCellImage>
   );
 };

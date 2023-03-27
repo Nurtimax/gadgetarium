@@ -146,7 +146,7 @@ const MailGenius = ({ openModal, setOpenModal }) => {
               Название рассылки
             </FormLabel>
             <StyledInput
-              placeholder="Введите название бренда"
+              placeholder="Введите название рассылки"
               value={values.mailingName}
               onChange={handleChange}
               name="mailingName"
@@ -155,7 +155,7 @@ const MailGenius = ({ openModal, setOpenModal }) => {
               Описание рассылки
             </FormLabel>
             <StyledInput
-              placeholder="Введите название бренда"
+              placeholder="Введите описание рассылки"
               value={values.description}
               onChange={handleChange}
               name="description"

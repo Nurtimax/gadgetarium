@@ -4,12 +4,13 @@ import GadgetariumSpinnerLoading from "../components/GadgetariumSpinnerLoading";
 import React from "react";
 import { ROUTES } from "../utils/constants/routes";
 import Admin from "../containers/admin";
+import ReviewRating from "../containers/review-rating/ReviewRating";
 
 const AddProduct = lazy(() => import("../containers/add-product/AddProduct"));
 const Orders = lazy(() => import("../containers/orders/Orders"));
 const AdminLayout = lazy(() => import("../layout/admin"));
 const Goods = lazy(() => import("../containers/goods"));
-const ReviewRating = lazy(() => import("../containers/review-rating"));
+
 const OrderItem = lazy(() => import("../components/orders/OrderItem"));
 const Forms = lazy(() => import("../components/add_product/Forms"));
 const PriceQuantity = lazy(() => {
@@ -17,6 +18,18 @@ const PriceQuantity = lazy(() => {
 });
 const DescriptionOverview = lazy(() => {
   return import("../components/add_product/DescriptionOverview");
+});
+const CharacteristicsTabItem = lazy(() => {
+  return import("../components/admin-product-details/CharacteristicsTabItem");
+});
+const DescriptionTabItem = lazy(() => {
+  return import("../components/admin-product-details/DescriptionTabItem");
+});
+const ReviewsTabItem = lazy(() => {
+  return import("../components/admin-product-details/ReviewsTabItem");
+});
+const MainProductDetails = lazy(() => {
+  return import("../containers/admin-product-details/AdminMainProductDetails");
 });
 
 const AdminRoutes = () => {
@@ -62,6 +75,40 @@ const AdminRoutes = () => {
             element={
               <Suspense fallback={<GadgetariumSpinnerLoading />}>
                 <ReviewRating />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route
+          path={`${ROUTES.GOODS}/${ROUTES.PRODUCT}`}
+          element={
+            <Suspense fallback={<GadgetariumSpinnerLoading />}>
+              <MainProductDetails />
+            </Suspense>
+          }
+        >
+          <Route
+            path="description"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <DescriptionTabItem />
+              </Suspense>
+            }
+          />
+          <Route
+            path="characteristics"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <CharacteristicsTabItem />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="reviews"
+            element={
+              <Suspense fallback={<GadgetariumSpinnerLoading />}>
+                <ReviewsTabItem />
               </Suspense>
             }
           />

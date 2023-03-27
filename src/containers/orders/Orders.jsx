@@ -1,12 +1,17 @@
 import { Container, styled } from "@mui/material";
 import Search from "../../components/UI/Search";
 import OrdersTabs from "../../components/orders/OrdersTabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
+import { animateScroll as Scroll } from "react-scroll";
 
 const Orders = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm] = useDebounce(searchValue, 1000);
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   return (
     <>

@@ -101,6 +101,12 @@ const addProductSlice = createSlice({
     getErrors: (state, action) => {
       state.error = action.payload;
     },
+    resetAllValues: (state) => {
+      state.values = {};
+      state.activeStep = 0;
+      state.error = {};
+      state.addProductFirstPart = {};
+    },
   },
   extraReducers: (builder) => {
     builder

@@ -11,9 +11,14 @@ import {
   deleteFavoriteAllProducts,
   getFavoriteProducts,
 } from "../../redux/slices/favorite-slice";
+import { animateScroll as Scroll } from "react-scroll";
 
 const Favorite = () => {
   const { data, isLoading } = useSelector((state) => state.favorite);
+
+  useEffect(() => {
+    Scroll.scrollTo(0);
+  }, []);
 
   const dispatch = useDispatch();
 
