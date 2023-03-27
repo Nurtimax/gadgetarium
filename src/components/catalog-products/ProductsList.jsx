@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, CircularProgress, styled } from "@mui/material";
+import { Box, CircularProgress, styled, Typography } from "@mui/material";
 import Button from "../UI/button/Button";
 import ProductCard from "../UI/card/ProductCard";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
+import { ImageEmptyBasket } from "../../assets";
 
 const ProductsList = ({
   data,
@@ -43,30 +44,50 @@ const ProductsList = ({
 
   return (
     <BoxStyled>
-      {data.products.productCardResponses?.map((product) => (
-        <ProductCardStyled
-          categoryId={product.categoryId}
-          compared={product.compared}
-          count={product.count}
-          countOfReview={product.countOfReview}
-          discountPrice={product.discountPrice}
-          favorite={product.favorite}
-          productId={product.productId}
-          productImage={product.productImage}
-          productName={product.productName}
-          productPrice={product.productPrice}
-          productRating={product.productRating}
-          viewed={product.viewed.toString()}
-          key={product.productId}
-          productStatus={changeProductStatusHelper(
-            sortField,
-            discountField,
-            product.discountPrice,
-            product.productStatus
-          )}
-          dataCatalog={dataCatalog}
-        />
-      ))}
+      {data.products.productCardResponses.length === 0 ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            gap: "30px",
+            paddingTop: "100px",
+          }}
+        >
+          <img src={ImageEmptyBasket} alt="no-found-product" />
+          <Typography variant="h4" component="body1">
+            Товара пока нет
+          </Typography>
+        </div>
+      ) : (
+        data.products.productCardResponses?.map((product) => (
+          <ProductCardStyled
+            categoryId={product.categoryId}
+            compared={product.compared}
+            count={product.count}
+            countOfReview={product.countOfReview}
+            discountPrice={product.discountPrice}
+            favorite={product.favorite}
+            productId={product.productId}
+            productImage={product.productImage}
+            productName={product.productName}
+            productPrice={product.productPrice}
+            productRating={product.productRating}
+            viewed={product.viewed.toString()}
+            key={product.productId}
+            firstSubproductId={product.firstSubproductId.join(",")}
+            productStatus={changeProductStatusHelper(
+              sortField,
+              discountField,
+              product.discountPrice,
+              product.productStatus
+            )}
+            dataCatalog={dataCatalog}
+          />
+        ))
+      )}
+      {}
 
       {isLoading ? (
         <Box className="loading-style">

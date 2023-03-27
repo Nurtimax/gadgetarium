@@ -12,8 +12,6 @@ import {
   Slider,
   styled,
   Container,
-  Checkbox,
-  FormControlLabel,
 } from "@mui/material";
 import Colors from "./Colors";
 import SubproductsFilter from "./SubproductsFilter";
@@ -22,13 +20,13 @@ import { ArrowDownIcon, ArrowUpIcon } from "../../assets";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { priceProductSeparate } from "../../utils/helpers/general";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
-import { catalogSliceAction } from "../../redux/slices/catalog-slice";
+import SubcategoryName from "./SubcategoryName";
 
 const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
   const [value, setValue] = useState();
-  const [showCategory, setShowCategory] = useState(true);
+  const [showCategory, setShowCategory] = useState(5);
 
-  const { subCategoryName, minPrice, maxPrice, colors } = useSelector(
+  const { subCategoryNames, minPrice, maxPrice, colors } = useSelector(
     (state) => state.filteredCatalog
   );
 
@@ -43,37 +41,29 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
   }, [catalogItem]);
 
   const showDataHandler = (_, value) => {
-    setShowCategory((prev) => !prev);
+    if (showCategory === 5) {
+      setShowCategory(
+        (prevState) =>
+          prevState + findedCatalogFilter.category.subCategory?.length ||
+          colorResponses?.length
+      );
+    } else {
+      setShowCategory(5);
+    }
     setValue(value);
   };
 
-  const handleToggle = (brandId, title) => {
-    if (subCategoryName === title) {
-      dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
-      return dispatch(filteredCatalogSliceAction.subCategoryNameElse(null));
+  const handleToggle = (_, title) => {
+    if (subCategoryNames.includes(title)) {
+      return dispatch(filteredCatalogSliceAction.subCategoryNameElse(title));
     }
-    dispatch(catalogSliceAction.chipsFromFilter({ title, id: 1 }));
-    return dispatch(
-      filteredCatalogSliceAction.subCategoryName({
-        id: brandId,
-        title: title,
-      })
-    );
+    return dispatch(filteredCatalogSliceAction.subCategoryName(title));
   };
 
-  const handleChangeColor = (colorCode, title) => {
+  const handleChangeColor = (colorCode) => {
     if (colors.includes(colorCode)) {
-      dispatch(catalogSliceAction.chipsFromFilterRemove({ title }));
       return dispatch(filteredCatalogSliceAction.colors(colorCode));
     }
-    dispatch(
-      catalogSliceAction.chipsFromFilter({
-        title,
-        key: "colors",
-        id: "colors",
-        colorCode,
-      })
-    );
     return dispatch(filteredCatalogSliceAction.colorsRemove(colorCode));
   };
 
@@ -105,45 +95,16 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {showCategory
-                ? findedCatalogFilter.category.subCategory
-                    .slice(0, 5)
-                    .map((category) => (
-                      <Box key={category.id} className="subcategory-box">
-                        <FormControlLabel
-                          className="form-control-label"
-                          label={category.categoryName}
-                          control={
-                            <Checkbox
-                              color="secondary"
-                              checked={
-                                subCategoryName === category.categoryName
-                              }
-                              onClick={() =>
-                                handleToggle(category.id, category.categoryName)
-                              }
-                            />
-                          }
-                        />
-                      </Box>
-                    ))
-                : findedCatalogFilter.category.subCategory.map((item) => (
-                    <Box key={item.id} className="subcategory-box">
-                      <FormControlLabel
-                        className="form-control-label"
-                        label={item.categoryName}
-                        control={
-                          <Checkbox
-                            color="secondary"
-                            checked={subCategoryName === item.categoryName}
-                            onClick={() =>
-                              handleToggle(item.id, item.categoryName)
-                            }
-                          />
-                        }
-                      />
-                    </Box>
-                  ))}
+              {findedCatalogFilter.category.subCategory
+                .slice(0, showCategory)
+                .map((category) => (
+                  <SubcategoryName
+                    key={category.id}
+                    subCategoryNames={subCategoryNames}
+                    handleToggle={handleToggle}
+                    {...category}
+                  />
+                ))}
             </AccordionDetails>
             {findedCatalogFilter.category.subCategory?.length > 5 ? (
               <Button
@@ -151,7 +112,7 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
                 onClick={() => showDataHandler()}
                 className="show-more-button"
               >
-                {showCategory ? (
+                {showCategory < 6 ? (
                   <>
                     <ArrowDownIconStyled />
                     Еще {findedCatalogFilter.category.subCategory?.length - 5}
@@ -181,11 +142,11 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
               <Box className="price-box">
                 <Button className="price-button" variant="outlined">
                   <span className="span-styled">от</span>
-                  500
+                  {priceProductSeparate(Number(String(minPrice)))}
                 </Button>
                 <Button className="price-button" variant="outlined">
                   <span className="span-styled">до</span>
-                  {priceProductSeparate(Number(String(250000)))}
+                  {priceProductSeparate(Number(String(maxPrice)))}
                 </Button>
               </Box>
 
@@ -214,7 +175,7 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {colorResponses?.map((category) => (
+              {colorResponses.slice(0, showCategory).map((category) => (
                 <Colors
                   key={category.colorName}
                   handleChangeColor={handleChangeColor}
@@ -229,10 +190,10 @@ const FilterProducts = ({ handelResetAllFilters, colorResponses }) => {
                 onClick={() => showDataHandler()}
                 className="show-more-button"
               >
-                {showCategory ? (
+                {showCategory < 6 ? (
                   <>
                     <ArrowDownIconStyled />
-                    Еще
+                    Еще {colorResponses?.length - 5}
                   </>
                 ) : (
                   <>

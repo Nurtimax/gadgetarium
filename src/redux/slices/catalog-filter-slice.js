@@ -3,24 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   fieldToSort: null,
   discountField: null,
-  subCategoryName: null,
+  size: 12,
   minPrice: 500,
   maxPrice: 250000,
+  subCategoryNames: [],
   colors: [],
-  memory: null,
-  ram: null,
-  laptopCPU: null,
-  screenSize: null,
-  screenResolutionOfLap: null,
-  screenDiagonal: null,
-  batteryCapacity: null,
-  wirelessInterface: null,
-  caseShape: null,
-  braceletMaterial: null,
-  housingMaterial: null,
-  gender: null,
-  waterProof: null,
-  size: 12,
+  memories: [],
+  rams: [],
+  laptopCPUs: [],
+  screenSizes: [],
+  screenResolutions: [],
+  screenDiagonals: [],
+  batteryCapacities: [],
+  wirelessInterfaces: [],
+  caseShapes: [],
+  braceletMaterials: [],
+  housingMaterials: [],
+  genders: [],
+  waterProofs: [],
 };
 const filteredCatalogSlice = createSlice({
   name: "filteredCatalogSlice",
@@ -34,10 +34,12 @@ const filteredCatalogSlice = createSlice({
       state.discountField = action.payload;
     },
     subCategoryName: (state, action) => {
-      state.subCategoryName = action.payload.title;
+      state.subCategoryNames = [...state.subCategoryNames, action.payload];
     },
     subCategoryNameElse: (state, action) => {
-      state.subCategoryName = action.payload;
+      state.subCategoryNames = state.subCategoryNames.filter(
+        (category) => category !== action.payload
+      );
     },
     minPriceProduct: (state, action) => {
       state.minPrice = action.payload;
@@ -55,16 +57,20 @@ const filteredCatalogSlice = createSlice({
       state.size = state.size + action.payload;
     },
     editCharacteristics: (state, action) => {
-      if (action.payload.title === state[String(action.payload.key)]) {
-        return {
-          ...state,
-          [action.payload.key]: null,
-        };
-      }
-
       return {
         ...state,
-        [action.payload.key]: action.payload.title,
+        [action.payload.key]: [
+          ...state[action.payload.key],
+          action.payload.title,
+        ],
+      };
+    },
+    editCharacteristicsElse: (state, action) => {
+      return {
+        ...state,
+        [action.payload.key]: state[action.payload.key].filter(
+          (key) => key !== action.payload.title
+        ),
       };
     },
     resetState: () => {
@@ -85,6 +91,11 @@ const filteredCatalogSlice = createSlice({
           [action.payload.key]: null,
         };
       }
+    },
+    removeByChip: (state, action) => {
+      state[action.payload.key] = state[action.payload.key].filter(
+        (item) => item !== action.payload.title
+      );
     },
   },
 });

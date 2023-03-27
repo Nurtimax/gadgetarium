@@ -29,6 +29,7 @@ import compareSlice from "./slices/compare-slice";
 import { favoriteProducts } from "./slices/favorite-slice";
 import { subscribeSlice } from "./slices/subscribe-slice";
 import bannerSlice from "./slices/banner-slice";
+import searchSlice from "./slices/search-slice";
 import adminProductDetailsSlice from "./slices/admin-product-details-slice";
 import { reviewRating } from "./slices/review-rating-slice";
 
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   compareProducts: compareSlice.reducer,
   subscribe: subscribeSlice.reducer,
   banner: bannerSlice.reducer,
+  search: searchSlice.reducer,
   adminProductDetails: adminProductDetailsSlice.reducer,
   reviewRating: reviewRating.reducer,
 });

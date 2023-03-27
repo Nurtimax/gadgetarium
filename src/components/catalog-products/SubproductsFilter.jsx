@@ -13,35 +13,40 @@ import {
 } from "@mui/material";
 import { ArrowDownIcon, ArrowUpIcon } from "../../assets";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { changeCaseShape } from "../../utils/helpers/general";
 import { filteredCatalogSliceAction } from "../../redux/slices/catalog-filter-slice";
-import { catalogSliceAction } from "../../redux/slices/catalog-slice";
+import { changeCaseShape } from "../../utils/helpers/general";
 
 const SubproductsFilter = ({
   type,
   subCategory = [],
   filterCharacteristicsKey,
 }) => {
-  const [showResult, setShowResult] = useState(true);
   const [value, setValue] = useState();
+  const [visibilityCount, setVisibilityCount] = useState(5);
 
   const state = useSelector((state) => state.filteredCatalog);
 
   const dispatch = useDispatch();
 
   const showDataHandler = (_, value) => {
-    setShowResult((prev) => !prev);
+    if (visibilityCount === 5) {
+      setVisibilityCount((prevState) => prevState + subCategory.length);
+    } else {
+      setVisibilityCount(5);
+    }
     setValue(value);
   };
 
   const handleToggle = (title) => {
-    dispatch(
-      catalogSliceAction.chipsFromFilter({
-        title,
-        id: filterCharacteristicsKey,
-      })
-    );
-    dispatch(
+    if (state[filterCharacteristicsKey]?.includes(title)) {
+      return dispatch(
+        filteredCatalogSliceAction.editCharacteristicsElse({
+          key: filterCharacteristicsKey,
+          title,
+        })
+      );
+    }
+    return dispatch(
       filteredCatalogSliceAction.editCharacteristics({
         key: filterCharacteristicsKey,
         title,
@@ -64,54 +69,31 @@ const SubproductsFilter = ({
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {showResult
-            ? subCategory.slice(0, 5).map((title) => (
-                <Box key={title.id} className="subcategory-box">
-                  <FormControlLabel
-                    className="form-control-label"
-                    label={title.title}
-                    control={
-                      <Checkbox
-                        color="secondary"
-                        checked={
-                          state[filterCharacteristicsKey] ===
-                          changeCaseShape(title.title)
-                        }
-                        onClick={() =>
-                          handleToggle(changeCaseShape(title.title))
-                        }
-                      />
-                    }
+          {subCategory.slice(0, visibilityCount).map((item) => (
+            <Box key={item.id} className="subcategory-box">
+              <FormControlLabel
+                className="form-control-label"
+                label={item.title}
+                control={
+                  <Checkbox
+                    color="secondary"
+                    checked={state[filterCharacteristicsKey]?.includes(
+                      item.title
+                    )}
+                    onClick={() => handleToggle(changeCaseShape(item.title))}
                   />
-                </Box>
-              ))
-            : subCategory.map((item) => (
-                <Box key={item.id} className="subcategory-box">
-                  <FormControlLabel
-                    className="form-control-label"
-                    label={item.title}
-                    control={
-                      <Checkbox
-                        color="secondary"
-                        checked={
-                          state[filterCharacteristicsKey] ===
-                          changeCaseShape(item.title)
-                        }
-                        onClick={() =>
-                          handleToggle(changeCaseShape(item.title))
-                        }
-                      />
-                    }
-                  />
-                </Box>
-              ))}
+                }
+              />
+            </Box>
+          ))}
+
           {subCategory?.length > 5 ? (
             <Button
               value={value}
               onClick={() => showDataHandler()}
               className="show-more-button"
             >
-              {showResult ? (
+              {visibilityCount < 6 ? (
                 <>
                   <ArrowDownIconStyled />
                   Еще {subCategory?.length - 5}

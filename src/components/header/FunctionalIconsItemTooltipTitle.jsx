@@ -235,6 +235,10 @@ const StyledMainContainer = styled(Box)(({ theme, length }) => ({
     gap: "8px",
     overflowY: length > 3 ? "scroll" : "auto",
     height: length > 3 ? "300px" : "",
+
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
   },
 
   "& .item-box": {
