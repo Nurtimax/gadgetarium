@@ -56,9 +56,7 @@ const Catalog = ({ anchorElCatalog, handleCloseCatalog }) => {
   };
 
   const subCatalogHandler = (subCatalogTitle) => {
-    dispatch(
-      filteredCatalogSliceAction.subCategoryName({ title: subCatalogTitle })
-    );
+    dispatch(filteredCatalogSliceAction.subCategoryName(subCatalogTitle));
     navigate(`/item/${subMenuCatalog.id}`);
     closeHandler();
   };
