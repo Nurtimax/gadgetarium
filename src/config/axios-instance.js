@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(response);
   },
   (error) => {
-    if (error.response?.status === 500) {
+    if (error.response?.status === 401) {
       store.dispatch(ActionauthenticationSlice.authLogOut());
       // logout()
       // remove user from local storage
