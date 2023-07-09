@@ -1,29 +1,58 @@
-# Gadjetarium
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Gadgetarium
+![Alt text](/src/assets/icons/logo.svg "Optional title")
 
-## Available Scripts
+Gadgetarium is an internet store that allows users to browse and purchase a wide range of products, add them to their cart, create a list of favorite items, and compare them. The store administrator has the ability to manage products, including adding, modifying, and deleting items, as well as managing discounts and order statuses.
 
-In the project directory, you can run:
+## Features
+ * **Product Catalog:** Gadgetarium offers users a diverse range of products available for purchase. Users can easily navigate through various categories and use filtering and sorting options to find the desired items.
 
-### `npm install`
+* **Shopping Cart:** Users can add products to their shopping cart, review the items, and proceed to checkout to complete the purchase.
 
-It installs all required dependencies included in package.json file
+* **Favorites List:** Gadgetarium provides a feature for users to create a list of their favorite products. This allows users to save items for future reference or comparison.
 
-### `npm start`
+* **Product Comparison:** Users can compare multiple products side by side, enabling them to make informed decisions about which item best suits their needs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* **Order Tracking:** Users can track the status of their orders and view delivery information, including the current status of the shipment.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* **Admin Dashboard:** The store administrator has access to a dedicated admin dashboard. From there, they can manage the product inventory, including adding new items, modifying existing ones, and removing products. The admin dashboard also allows for the management of discounts and order statuses.
 
-### `npm build`
+* **Data Visualization:** The system provides the store administrator with informative graphs and charts to visualize sales, product popularity, and other relevant statistics. This helps in making data-driven decisions for inventory management and business strategy.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
+* **Frontend:** Gadgetarium is built using modern web technologies such as *HTML*, *CSS*, and *JavaScript*. The frontend utilizes frameworks like *React*  to create a dynamic and interactive user interface.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* **Backend:** The server-side logic is implemented using a backend framework such as Java. This handles tasks such as processing user requests, managing the database, and performing business logic.
 
-[Link to docs](https://app.clickup.com/9007017624/v/dc/8cdrbmr-23/8cdrbmr-43)
+* **Database:** Gadgetarium utilizes a database system like *MySQL*, *PostgreSQL*,  to store product information, user data, and order details.
+
+* **Payment Gateway Integration:** To facilitate secure online transactions, Gadgetarium integrates with popular payment gateways such as  Stripe.
+
+* **Deployment:** The application can be deployed on cloud platforms like Amazon Web Services (AWS). Continuous Integration/Continuous Deployment (CI/CD) practices can be used to streamline the deployment process.
+
+## Getting Started
+To run Gadgetarium locally or deploy it to a server, follow these steps:
+
+1. Clone the repository: git clone [https://github.com/your-username/gadgetarium.git](https://github.com/Nurtimax/gadgetarium.git)
+2. Install the necessary dependencies for the frontend and backend.
+3. Set up the database and configure the connection details in the backend.
+4. Configure any environment variables required for the project.
+5. Build and start the frontend and backend servers.
+6. Access Gadgetarium in your web browser at http://localhost:3000 (or https://gadgetarium.vercel.app/).
+   
+   For detailed installation instructions and additional configuration options, please refer to the project's documentation.
+
+## Contributing
+Contributions to Gadgetarium are welcome! If you find any issues or have suggestions for improvements, please submit them through the project's issue tracker. If you would like to contribute code, please follow the guidelines outlined in the CONTRIBUTING.md file.
+
+## License
+Gadgetarium is released under the MIT License. Feel free to modify and use the project for your own purposes.
+
+## Acknowledgements
+We would like to express our gratitude to the open source community for providing the tools and libraries that made this project possible. We would also like to thank the contributors and beta testers for their valuable feedback and contributions.
+
+## Contact
+If you have any questions, suggestions, or inquiries, please contact our support team at maksatbeknurtilek@gmail.com.
+
+___
+Visit our website at https://gadgetarium.vercel.app/ to start exploring our exciting range of gadgets!
